@@ -27,4 +27,3 @@ function* getAllClientsSaga() {
 }
 
 export default getAllClientsSaga;
-// TODO: Don't forget to add worker function to _root.saga.js !!!
