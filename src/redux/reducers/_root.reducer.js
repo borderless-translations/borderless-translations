@@ -5,6 +5,7 @@ import allClients from './allClients.reducer';
 import allContractors from './allContractors.reducer';
 import allProjects from './allProjects.reducer';
 import client from './client.reducer';
+import contractor from './contractor.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   allContractors, // Array of all contractors
   allProjects, // Array of all projects
   client, // Object containing data for a single client
+  contractor, // Object containing data for a single contractor
 });
 
 export default rootReducer;

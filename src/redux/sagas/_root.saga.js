@@ -6,6 +6,7 @@ import getAllClientsSaga from './getAllClients.saga';
 import getAllContractorsSaga from './getAllContractors.saga';
 import getAllProjectsSaga from './getAllProjects.saga';
 import getClientSaga from './getClient.saga';
+import getContractorSaga from './getContractor.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     getAllContractorsSaga(), // Fetch then store all contractors in reducer allContractors
     getAllProjectsSaga(), // Fetch then store all projects in reducer allProjects
     getClientSaga(), // Fetch then store a single client in reducer client
+    getContractorSaga(), // Fetch then store a single contractor in reducer contractor
   ]);
 }
