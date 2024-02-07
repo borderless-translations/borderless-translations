@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 
 
 function AdminContractorPage() {
@@ -45,19 +46,18 @@ useEffect(() => {
                     <th>Rate per word</th>
                     <th>Rate per minute</th>
                     <th>Availability</th>
-                    <th>Edit</th>
                 </tr>
             </thead>
             {/* names of keys may change depending on DB */}
         {contractorsList.map((contractor, i) => {
-            return <tr key={i}>
-                    <td>{contractor.name}</td>
-                    <td>{contractor.languages}</td>
-                    <td>{contractor.skills}</td>
-                    <td>{contractor.rate_per_word}</td>
-                    <td>{contractor.rate_per_minute}</td>
-                    <td>{contractor.availability}</td>
-                    {/* <td>{edit button here}</td> */}
+            return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
+                     <Link to={`/contractor/details/${id}`}><AdminContractorDetailsPage/></Link>
+                        <td>{contractor.name}</td>
+                        <td>{contractor.languages}</td>
+                        <td>{contractor.skills}</td>
+                        <td>{contractor.rate_per_word}</td>
+                        <td>{contractor.rate_per_minute}</td>
+                        <td>{contractor.availability}</td>
                    </tr>
         })}
         </table>
