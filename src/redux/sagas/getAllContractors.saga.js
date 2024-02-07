@@ -10,9 +10,9 @@ function* getAllContractors() {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get('/api/example', config);
+        const response = yield axios.get('/api/contractor', config);
 
-        // Puts the response in the reducer allClients
+        // Puts the response in the reducer allContractors
         yield put({ type: 'SET_ALL_CONTRACTORS', payload: response.data });
 
     }

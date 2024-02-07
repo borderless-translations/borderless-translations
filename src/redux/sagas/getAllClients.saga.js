@@ -10,7 +10,7 @@ function* getAllClients() {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get('/api/example', config);
+        const response = yield axios.get('/api/client', config);
 
         // Puts the response in the reducer allClients
         yield put({ type: 'SET_ALL_CLIENTS', payload: response.data });
