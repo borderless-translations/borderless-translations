@@ -1,8 +1,10 @@
 import { takeLatest } from 'redux-saga/effects';
 
+
 function* sendEmail(action) {
     // TODO: Add API key from client
-    const mailchimpClient = require("@mailchimp/mailchimp_transactional")("YOUR_API_KEY");
+    const mailchimpApiKey = import.meta.env.VITE_MAILCHIMP_API_KEY;
+    const mailchimpClient = require("@mailchimp/mailchimp_transactional")(mailchimpApiKey);
 
     const message = {
         message: {
