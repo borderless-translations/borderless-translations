@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminClientMain from '../AdminClientMain/AdminClientMain';
+import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
 
 import './App.css';
 
@@ -70,11 +71,19 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows Admin Client Main Page else shows LoginPage
             exact
             path="/client"
           >
             <AdminClientMain />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Client Details Page else shows LoginPage
+            exact
+            path="/client/details/:id"
+          >
+            <AdminClientDetails />
           </ProtectedRoute>
 
           <Route
