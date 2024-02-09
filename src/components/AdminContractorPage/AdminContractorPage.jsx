@@ -9,10 +9,11 @@ function AdminContractorPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const [toggleAddContractor, setToggleAddContractor ] = useState(false);
-    const contractorsList = useSelector(store => store.contractors);
+    const allContractors = useSelector(store => store.allContractors);
 
     const getContractors = () => {
-        dispatch({type: 'FETCH_CONTRACTORS'});
+        // Grabs list of all contractors from store
+        dispatch({type: 'GET_ALL_CONTRACTORS'});
     }
 
     const addContractor = () => {
@@ -22,7 +23,7 @@ function AdminContractorPage() {
 
     const handleDetails = (id) => {
         // Will grab details from store
-        dispatch({type: 'FETCH_CONTRACTOR_DETAILS', payload: id})
+        dispatch({type: 'GET_CONTRACTOR', payload: id})
         history.push(`/contractor/details/${id}`)
     }
 
@@ -49,7 +50,7 @@ useEffect(() => {
                 </tr>
             </thead>
             {/* names of keys may change depending on DB */}
-        {contractorsList.map((contractor, i) => {
+        {allContractors.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
                      <Link to={`/contractor/details/${id}`}><AdminContractorDetailsPage/></Link>
                         <td>{contractor.name}</td>
