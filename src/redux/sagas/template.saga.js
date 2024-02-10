@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// TODO: Rename templateDunction and replace with the new name in 'yield takeLatest()'
+// TODO: Rename templateFunction and replace with the new name in 'yield takeLatest()'
 function* templateFunction() {
     try {
         // the config includes credentials which allow the server session to recognize the user

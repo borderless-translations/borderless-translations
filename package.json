@@ -1,11 +1,12 @@
 {
-  "name": "prime-solo-project",
+  "name": "borderless-translations",
   "version": "1.0.0",
   "private": true,
   "engines": {
     "node": "18.x"
   },
   "dependencies": {
+    "@mailchimp/mailchimp_transactional": "^1.0.57",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.0.0",
