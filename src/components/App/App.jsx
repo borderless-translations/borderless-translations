@@ -21,6 +21,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminClientMain from '../AdminClientMain/AdminClientMain';
 import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
+import AdminProjectPage from '../AdminProjectPage/AdminProjectPage';
+import AdminProjectDetails from '../AdminProjectDetails/AdminProjectDetails';
 
 import './App.css';
 
@@ -69,6 +71,22 @@ function App() {
           >
             <InfoPage />
           </ProtectedRoute>
+
+          <ProtectedRoute
+
+            exact
+            path="/project"
+            >
+              <AdminProjectPage />
+            </ProtectedRoute>
+
+          <ProtectedRoute
+
+            exact
+            path="/project/details/:id"
+          >
+            <AdminProjectDetails />
+          </ProtectedRoute>  
 
           <ProtectedRoute
             // logged in shows Admin Client Main Page else shows LoginPage
