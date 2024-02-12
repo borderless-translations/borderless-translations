@@ -6,6 +6,13 @@ import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContr
 
 function AdminContractorPage() {
 
+    // Sample data for testing
+    const contractorList = [
+        {id: 2, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
+        {id: 3, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
+        {id: 4, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
+    ]
+
     const dispatch = useDispatch();
     const history = useHistory();
     const [toggleAddContractor, setToggleAddContractor ] = useState(false);
@@ -50,15 +57,15 @@ useEffect(() => {
                 </tr>
             </thead>
             {/* names of keys may change depending on DB */}
-        {allContractors.map((contractor, i) => {
+        {contractorList.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
                      <Link to={`/contractor/details/${id}`}><AdminContractorDetailsPage/></Link>
                         <td>{contractor.name}</td>
                         <td>{contractor.languages}</td>
-                        <td>{contractor.skills}</td>
-                        <td>{contractor.rate_per_word}</td>
-                        <td>{contractor.rate_per_minute}</td>
-                        <td>{contractor.availability}</td>
+                        {/* <td>{contractor.skills}</td> */}
+                        {/* <td>{contractor.rate_per_word}</td> */}
+                        <td>{contractor.timezone}</td>
+                        <td>{contractor.available}</td>
                    </tr>
         })}
         </table>
