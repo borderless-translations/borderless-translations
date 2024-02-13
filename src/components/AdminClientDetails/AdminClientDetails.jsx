@@ -17,6 +17,7 @@ function AdminClientDetails() {
         dispatch({ type: "GET_CLIENT", payload: params.id });
     }, [params.id]);
 
+    // Make this functional and remove dummy data when database is functional
     // const client = useSelector(store => store.client);
 
     //Dummy data delete when database is functional
@@ -45,9 +46,9 @@ function AdminClientDetails() {
 
             <button onClick={() => handleEditClient(client)}>Edit Client</button>
 
-
             <button onClick={() => history.push("/client")}>Return to Client List</button>
 
+            {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null)}} defaultValues={client} />}
             
         </div>
     );
