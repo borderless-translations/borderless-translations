@@ -5,7 +5,7 @@ import "./ContractorProfileSettings.css";
 function ContractorProfileSettings() {
 
     const dispatch = useDispatch();
-    // const user = useSelector(store => store.user);
+    // const user = useSelector(store => store.contractor);
     // Dummy data
     const user = {
         name: 'Contractor Name', 
@@ -31,7 +31,7 @@ function ContractorProfileSettings() {
     const [writtenRate, setWrittenRate] = useState(user.writtenRate);
     const [minuteRate, setMinuteRate] = useState(user.minuteRate);
 
-    // Saves updated settings
+    // Saves updated contractor settings
     const saveUser = () => {
         let userUpdate = {
             username: name,
