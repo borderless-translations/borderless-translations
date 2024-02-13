@@ -80,13 +80,13 @@ CREATE TABLE "contractor_services" (
 
 
 
-CREATE TABLE "users" (
+CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
 	"username" VARCHAR NOT NULL,
 	"password" VARCHAR NOT NULL,
-	"type" VARCHAR NOT NULL,
-	"created_at" DATE NOT NULL,
-	CONSTRAINT "users_pk" PRIMARY KEY ("id")
+	"type" VARCHAR DEFAULT 'contractor',
+	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "user_pk" PRIMARY KEY ("id")
 );
 
 
@@ -118,12 +118,12 @@ CREATE TABLE "rates" (
 	CONSTRAINT "rates_pk" PRIMARY KEY ("id")
 );
 
-ALTER TABLE "clients" ADD CONSTRAINT "clients_fk0" FOREIGN KEY ("id") REFERENCES "users"("id");
+ALTER TABLE "clients" ADD CONSTRAINT "clients_fk0" FOREIGN KEY ("id") REFERENCES "user"("id");
 
-ALTER TABLE "projects" ADD CONSTRAINT "projects_fk0" FOREIGN KEY ("admin_id") REFERENCES "users"("id");
+ALTER TABLE "projects" ADD CONSTRAINT "projects_fk0" FOREIGN KEY ("admin_id") REFERENCES "user"("id");
 ALTER TABLE "projects" ADD CONSTRAINT "projects_fk1" FOREIGN KEY ("client_id") REFERENCES "clients"("id");
 
-ALTER TABLE "contractor_profile" ADD CONSTRAINT "contractor_profile_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "contractor_profile" ADD CONSTRAINT "contractor_profile_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 ALTER TABLE "contractor_profile" ADD CONSTRAINT "contractor_profile_fk1" FOREIGN KEY ("language_profile") REFERENCES "languages"("id");
 
 ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk0" FOREIGN KEY ("project_id") REFERENCES "projects"("id");
@@ -140,7 +140,7 @@ ALTER TABLE "contractor_services" ADD CONSTRAINT "contractor_services_fk0" FOREI
 ALTER TABLE "contractor_services" ADD CONSTRAINT "contractor_services_fk1" FOREIGN KEY ("contractor_id") REFERENCES "contractor_profile"("user_id");
 
 
-ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk1" FOREIGN KEY ("from_language_id") REFERENCES "languages"("id");
 ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk2" FOREIGN KEY ("to_language_id") REFERENCES "languages"("id");
 
