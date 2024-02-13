@@ -10,6 +10,8 @@ const passport = require('./strategies/user.strategy');
 // Route Includes
 const userRouter = require('./routes/user.router');
 
+const projectRouter = require('./routes/project.router');
+
 // Express Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -24,6 +26,8 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
+
+app.use('/api/project', projectRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
