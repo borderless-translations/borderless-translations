@@ -8,24 +8,6 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-// Function to check if a user is an admin
-function checkAdmin(userId){
-    router.get('/', (req,res) => {
-        let querytext = `
-            SELECT "user"."type" from "user"
-            WHERE "user"."id" = $1
-        `;
-        pool.query(querytext,[userId])
-        .then((result) => {
-            let userType = result.rows[0];
-            userType == 'admin' ? true : false;
-        })
-        .catch((error) => {
-            console.error("Error in checking user auth status", error);
-        })
-    })
-}
-
 /**
  * GET route template
  */
