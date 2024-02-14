@@ -117,6 +117,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
             console.error("Error in PUT", error);
             res.sendStatus(500);
         })
+})
 
 // PUT contractor settings
 // Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
@@ -143,7 +144,5 @@ router.put('/settings', rejectUnauthenticated, (req, res) => {
 	})
 	;
 });
-
-
 
 module.exports = router;
