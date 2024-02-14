@@ -19,6 +19,16 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import AdminClientMain from '../AdminClientMain/AdminClientMain';
+import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
+import AdminProjectPage from '../AdminProjectPage/AdminProjectPage';
+import AdminProjectDetails from '../AdminProjectDetails/AdminProjectDetails';
+import AdminContractorPage from '../AdminContractorPage/AdminContractorPage';
+import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
+import ContractorDashboard from '../ContractorDashboard/ContractorDashboard';
+import ContractorProfileSettings from '../ContractorProfileSettings/ContractorProfileSettings';
+import ContractorProjectDetails from '../ContractorProjectDetails/ContractorProjectDetails';
+
 
 import './App.css';
 
@@ -66,6 +76,80 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+
+            exact
+            path="/project"
+            >
+              <AdminProjectPage />
+            </ProtectedRoute>
+
+          <ProtectedRoute
+
+            exact
+            path="/project/details/:id"
+          >
+            <AdminProjectDetails />
+          </ProtectedRoute>  
+
+          <ProtectedRoute
+            // logged in shows Admin Client Main Page else shows LoginPage
+            exact
+            path="/client"
+          >
+            <AdminClientMain />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Client Details Page else shows LoginPage
+            exact
+            path="/client/details/:id"
+          >
+            <AdminClientDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Contractors Page else shows LoginPage
+            exact 
+            path="/admin/contractors"
+          >
+            <AdminContractorPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Contractors Details Page else shows LoginPage
+            exact 
+            path="/admin/contractors/details/:id"
+          >
+            <AdminContractorDetailsPage />
+          </ProtectedRoute>
+
+          {/* Contractor routes start here */}
+          
+          <ProtectedRoute
+            // logged in shows Contractor Dashboard else shows LoginPage
+            exact 
+            path="/dashboard"
+          >
+            <ContractorDashboard />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Contractor Profile Settings Page else shows LoginPage
+            exact 
+            path="/profile"
+          >
+            <ContractorProfileSettings />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Contractor Project Details Page else shows LoginPage
+            exact
+            path="/project/details/:id"
+          >
+            <ContractorProjectDetails />
           </ProtectedRoute>
 
           <Route

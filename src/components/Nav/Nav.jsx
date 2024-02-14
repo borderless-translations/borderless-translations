@@ -31,11 +31,28 @@ function Nav() {
           </Link>
         )}
 
+        {/* If a user is logged in as contractor, show these links */}
+        {(user.id && user.type === 'contractor') && (
+          <>
+            <Link className="navLink" to="/dashboard">
+              Dashboard
+            </Link>
+
+            <Link className="navLink" to="/profile">
+              Profile
+            </Link>
+          </>
+        )}
+
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
             <Link className="navLink" to="/user">
               Home
+            </Link>
+
+            <Link className="navLink" to="/admin/contractors">
+              Contractors
             </Link>
 
             <Link className="navLink" to="/info">
