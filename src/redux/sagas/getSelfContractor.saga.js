@@ -9,11 +9,9 @@ function* getContractorSelf() {
             withCredentials: true,
         };
 
-        // TODO: Set to correct URL and request type
         const response = yield axios.get(`/api/contractor/self`, config);
 
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] });
-
     }
     catch (error) {
         console.error('GET for contractor self has failed.', error);
