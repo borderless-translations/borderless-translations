@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* createNewClient(action) {
+function* updateClient(action) {
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
@@ -20,9 +20,9 @@ function* createNewClient(action) {
     }
 }
 
-// Worker function  - Saga: will be fired on "CREATE_NEW_CLIENT" actions
-function* createNewClientSaga() {
-    yield takeLatest('CREATE_NEW_CLIENT', createNewClient);
+// Worker function  - Saga: will be fired on "UPDATE_CLIENT" actions
+function* updateClientSaga() {
+    yield takeLatest('UPDATE_CLIENT', updateClient);
 }
 
-export default createNewClientSaga;
+export default updateClientSaga;
