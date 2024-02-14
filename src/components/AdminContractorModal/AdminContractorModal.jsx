@@ -10,18 +10,19 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
+        console.log(contractor);
     };
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // if (defaultValues === null) {
-        //     dispatch({ type: 'ADD_CLIENT', payload: client });
-        //     console.log("Sent client information to server");
-        // } else {
-        //     dispatch({ type: "UPDATE_CLIENT", payload: client });
-        //     console.log("Updated client information on server", client);
-        // }
+        if (defaultValues === null) {
+            dispatch({ type: 'ADD_CONTRACTOR', payload: contractor });
+            console.log("Sent contractor information to server");
+        } else {
+            dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
+            console.log("Updated contractor information on server", contractor);
+        }
         setContractor({ name: "", contact: "", email: "", phone: "", timezone: "", available: true});
         closeModal();
     };

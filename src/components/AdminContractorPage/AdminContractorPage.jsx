@@ -71,7 +71,7 @@ useEffect(() => {
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td><button onClick={handleAvail}>{contractor.available ? "Available" : "Unavailable"}</button></td>
+                        <td><button onClick={() => handleAvail(contractor.id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
                         <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
                    </tr>
         })}
