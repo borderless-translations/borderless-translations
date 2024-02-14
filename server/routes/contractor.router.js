@@ -43,6 +43,23 @@ router.get('/:id', requireAdmin, (req, res) => {
     ;
 });
 
+// TODO: Needs updated column names
+// GET contractor id/names without additional info
+router.get('/list', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT "contractor_profile"."id", "contractor_profile"."name" FROM "contractor_profile";
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
 // GET contractor info for requesting user only.
 // Does not require admin status
 router.get('/self', rejectUnauthenticated, (req, res) => {
