@@ -31,7 +31,9 @@ function ContractorProfileSettings() {
     const [writtenRate, setWrittenRate] = useState(user.writtenRate);
     const [minuteRate, setMinuteRate] = useState(user.minuteRate);
 
+
     // Saves updated contractor settings
+
     const saveUser = () => {
         let userUpdate = {
             username: name,
