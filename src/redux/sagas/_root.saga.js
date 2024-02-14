@@ -11,6 +11,7 @@ import getProjectSaga from './getProject.saga';
 import sendEmailSaga from './sendEmail.saga';
 import getClientProjectsSaga from './getClientProjects.saga';
 import getContractorSelfSaga from './getSelfContractor.saga';
+import createNewClientSaga from './createNewClient.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -33,5 +34,6 @@ export default function* rootSaga() {
     sendEmailSaga(), // Sends message object via Mailchimp API
     getClientProjectsSaga(), // Fetch then store all projects for a specific client in clientProjects reducer
     getContractorSelfSaga(), // Fetch contractor details for logged in user. Stores in reducer contractor.
+    createNewClientSaga(), // POST new client to DB. Does not download updated list. Use seperate call.
   ]);
 }
