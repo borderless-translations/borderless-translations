@@ -33,7 +33,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <lable htmlFor="client">Contractor:</lable>
+                        <label htmlFor="client">Contractor:</label>
                         <input
                             name="client"
                             type="text"
@@ -42,7 +42,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="contact">Contact:</lable>
+                        <label htmlFor="contact">Contact:</label>
                         <input
                             name="contact"
                             type="text"
@@ -51,7 +51,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="email">E-Mail:</lable>
+                        <label htmlFor="email">E-Mail:</label>
                         <input
                             name="email"
                             type="text"
@@ -60,7 +60,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="phone">Phone:</lable>
+                        <label htmlFor="phone">Phone:</label>
                         <input
                             name="phone"
                             type="text"
@@ -69,7 +69,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="timezone">Timezone:</lable>
+                        <label htmlFor="timezone">Timezone:</label>
                         <input
                             name="name"
                             type="timezone"
@@ -78,7 +78,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="available">Available:</lable>
+                        <label htmlFor="available">Available:</label>
                         <input
                             name="name"
                             type="available"

@@ -37,6 +37,8 @@ useEffect(() => {
     refreshPage();
 }, [])
 
+// TODO: When requesting from DB, need project_language.contractor_id matched with contractor.id
+
 // TODO: Add editability to contractor details page
 // Page should include: Contact name, country, timezone
 // contact info (email, phone), languages, specialty
@@ -50,6 +52,9 @@ useEffect(() => {
             <p><strong>Languages:</strong> {languages}</p>
             <p><strong>Available:</strong><button onClick={handleAvail}>{currentDetails.available ? "Available" : "Unavailable"}</button></p>
             <button onClick={editContractor}>Edit</button>
+            <h3>Current Projects</h3>
+
+            <h3>Completed Projects</h3>
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={currentDetails} />}
