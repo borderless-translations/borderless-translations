@@ -39,7 +39,7 @@ router.get('/:id', requireAdmin, (req, res) => {
 });
 
 // GET client name by id with no additional info
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/list', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 	    SELECT "clients"."id", "clients"."name" FROM "clients";
 	`;
