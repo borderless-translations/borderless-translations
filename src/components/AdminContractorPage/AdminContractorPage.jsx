@@ -59,7 +59,7 @@ useEffect(() => {
         {contractorList.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
                         <td>{contractor.name}</td>
-                        <td>{contractor.languages}</td>
+                        <td>{contractor.languages.join(', ')}</td>
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>

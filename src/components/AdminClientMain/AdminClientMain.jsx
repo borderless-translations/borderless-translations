@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
+import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
 
 function AdminClientMain() {
@@ -14,21 +15,22 @@ const clients = [
   {id: 1, name: "Client 1", bidding_projects: 3, open_projects: 2, complete_projects: 1},
   {id: 2, name: "Client 2", bidding_projects: 2, open_projects: 1, complete_projects: 1},
   {id: 3, name: "Client 3", bidding_projects: 1, open_projects: 0, complete_projects: 1},
-
-
 ]
-
-
 
 useEffect(() => {
   dispatch({ type: "GET_ALL_CLIENTS" });
 }, []);
 
+const [modalOpen, setModalOpen] = useState(false);
 
+const handleAddClient = () => {
+  setModalOpen(true)
+}
 
   return (
     <div className="container">
       <h2>Admin Client Main</h2>
+      <button onClick={() => handleAddClient()}>Add Client</button>
       <table>
         <thead>
           <tr>
@@ -53,6 +55,9 @@ useEffect(() => {
           })}
         </tbody>
       </table>
+
+      {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false)}} defaultValues={null} />}
+
     </div>
   );
 };

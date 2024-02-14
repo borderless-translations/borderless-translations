@@ -16,10 +16,12 @@ function AdminContractorDetailsPage() {
     ]
 
     let currentDetails = contractorList[(id - 2)]
-
+    let languages = currentDetails.languages.join(', ')
     const refreshPage = () => {
         dispatch({type: 'GET_CONTRACTOR', payload: id})
     }
+
+    // TODO: Availability toggle with PUT request
 
 
 useEffect(() => {
@@ -33,7 +35,7 @@ useEffect(() => {
             <h1>Admin Contractor Details View</h1>
             <p><strong>Contractor Name:</strong> {currentDetails.name}</p>
             <p><strong>Timezone:</strong> {currentDetails.timezone}</p>
-            <p><strong>Languages:</strong> {currentDetails.languages}</p>
+            <p><strong>Languages:</strong> {languages}</p>
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
         </>
     )
