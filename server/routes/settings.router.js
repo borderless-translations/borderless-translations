@@ -2,10 +2,7 @@ const express = require('express');
 const {
   rejectUnauthenticated, requireAdmin
 } = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
-const userStrategy = require('../strategies/user.strategy');
-
 const router = express.Router();
 
 // GET all languages
@@ -251,7 +248,5 @@ router.delete('/contractor/language/:id', rejectUnauthenticated, (req, res) => {
 		})
 	;
 });
-
-
 
 module.exports = router;
