@@ -13,6 +13,7 @@ const contractorRouter = require('./routes/contractor.router');
 const projectRouter = require('./routes/project.router');
 const clientRouter = require('./routes/client.router');
 
+
 // Express Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

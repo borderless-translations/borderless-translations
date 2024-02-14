@@ -13,16 +13,16 @@ const router = express.Router();
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-	})
-	.catch((error) => {
-		console.error("Error in GET", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+		})
+		.catch((error) => {
+			console.error("Error in GET", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
@@ -31,17 +31,17 @@ router.get('/', rejectUnauthenticated, (req, res) => {
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-		res.sendStatus(201)
-	})
-	.catch((error) => {
-		console.error("Error in POST", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(201)
+		})
+		.catch((error) => {
+			console.error("Error in POST", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
@@ -50,17 +50,17 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in PUT", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
@@ -69,17 +69,17 @@ router.put('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in DELETE", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in DELETE", error);
+			res.sendStatus(500);
+		})
 	;
 });
 

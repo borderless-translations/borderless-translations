@@ -5,23 +5,24 @@ import "./ContractorProfileSettings.css";
 function ContractorProfileSettings() {
 
     const dispatch = useDispatch();
-    // const user = useSelector(store => store.user);
+    // const user = useSelector(store => store.contractor);
     // Dummy data
     const user = {
         name: 'Contractor Name', 
-        availability: true, 
-        phone: '1 222-333-4455', 
+        available: true, 
+        linkedIn: 'contractorname',
         email: 'email@email.email', 
         timezone: 'UTC -6:00', 
         languagePairs: [],
         skills: [],
         services: [],
         writtenRate: 0,
-        minuteRate: 0}
+        minuteRate: 0,
+        lastLogin: '2024-02-02'}
 
-    const [availability, setAvailability] = useState(user.availability);
+    const [availability, setAvailability] = useState(user.available);
     const [name, setName] = useState(user.name);
-    const [phone, setPhone] = useState(user.phone);
+    const [linkedIn, setLinkedIn] = useState(user.linkedIn);
     const [email, setEmail] = useState(user.email);
     const [timezone, setTimezone] = useState(user.timezone);
     const [languagePairs, setlanguagePairs] = useState(user.languagePairs);
@@ -30,11 +31,14 @@ function ContractorProfileSettings() {
     const [writtenRate, setWrittenRate] = useState(user.writtenRate);
     const [minuteRate, setMinuteRate] = useState(user.minuteRate);
 
+
+    // Saves updated contractor settings
+
     const saveUser = () => {
         let userUpdate = {
             username: name,
-            availability: availability,
-            phone: phone,
+            available: availability,
+            linkedIn: linkedIn,
             email: email,
             timezone: timezone,
             languagePairs: languagePairs,
@@ -44,18 +48,20 @@ function ContractorProfileSettings() {
             minuteRate: minuteRate
         }
         dispatch({ type: 'UPDATE_USER', payload: userUpdate });
+        console.log(userUpdate);
     }
 
     return (
         <div className="container">
+            <h2>Profile Settings</h2>
             <div className="contractor-contact">
-                <h2>Contact Information</h2>
+                <h3>Contact Information</h3>
                 <p>Availability</p>
                 <input type="checkbox" checked={availability} onClick={() => setAvailability(!availability)} />
                 <p>Name</p>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                <p>Phone</p>
-                <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <p>LinkedIn</p>
+                <input type="text" value={linkedIn} onChange={(e) => setLinkedIn(e.target.value)} />
                 <p>Email</p>
                 <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <p>Timezone</p>
@@ -70,26 +76,26 @@ function ContractorProfileSettings() {
             </div>
 
             <div className="contractor-skills">
-                <h2>Skills</h2>
+                <h3>Skills</h3>
                 <p>Language Pairs</p>
-                <select value={languagePairs} onChange={(e) => setlanguagePairs(e.target.value)} >
+                <select multiple onChange={(e) => setlanguagePairs(e.target.value)} >
                     <option value="ENG --> JPN">ENG -- JPN</option>
                     <option value="JPN --> ENG">JPN -- ENG</option>
                 </select>
                 <p>Skill Set</p>
-                <select value={skills} onChange={(e) => setSkills(e.target.value)} >
+                <select multiple onChange={(e) => setSkills(e.target.value)} >
                     <option value="medical">Medical Translation</option>
                     <option value="literary">Literary Translation</option>
                 </select>
                 <p>Services</p>
-                <select value={services} onChange={(e) => setServices(e.target.value)} >
+                <select multiple value={services} onChange={(e) => setServices(e.target.value)} >
                     <option value="Subtitles">Subtitles</option>
                     <option value="Interpreting">Interpreting</option>
                 </select>
             </div>
 
             <div className="contractor-rates">
-                <h2>Rates</h2>
+                <h3>Rates</h3>
                 <p>Written</p>
                 $<input type="text" value={writtenRate} onChange={(e) => setWrittenRate(e.target.value)} />  per word
                 <p>Audio / Video</p>
