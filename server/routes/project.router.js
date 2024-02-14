@@ -61,6 +61,107 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
     ;
 });
 
+// GET ongoing projects
+router.get('/ongoing', rejectUnauthenticated, (req, res) => {
+	let querytext = `SELECT * FROM projects 
+        WHERE translator_status != 'complete' 
+        OR proofreader_status != 'complete'
+        ORDER BY due_at ASC; 
+	`;
+	pool.query(querytext)
+	.then((result) => {
+		res.send(result.rows);
+	})
+	.catch((error) => {
+		console.error("Error in GET /contractor/project/ongoing", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
+// GET completed projects
+router.get('/completed', rejectUnauthenticated, (req, res) => {
+	let querytext = `SELECT * FROM projects 
+        WHERE translator_status = 'complete' 
+        AND proofreader_status = 'complete'
+        ORDER BY due_at ASC; 
+	`;
+	pool.query(querytext)
+	.then((result) => {
+		res.send(result.rows);
+	})
+	.catch((error) => {
+		console.error("Error in GET /contractor/project/completed", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
+// PUT project flagged status
+router.put('/flagged', rejectUnauthenticated, (req, res) => {
+	let querytext = `UPDATE projects SET "flagged" = !flagged
+        WHERE "id" = ${req.body.params.id};`;
+	pool.query(querytext)
+	.then((result) => {
+		res.sendStatus(200)
+	})
+	.catch((error) => {
+		console.error("Error in PUT /contractor/project/flagged", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
+// PUT project notes
+router.put('/notes', rejectUnauthenticated, (req, res) => {
+    let notes = req.body.params.notes;
+	let querytext = `UPDATE projects SET "notes" = ${notes}
+        WHERE "id" = ${req.body.params.id};`;
+	pool.query(querytext)
+	.then((result) => {
+		res.sendStatus(200)
+	})
+	.catch((error) => {
+		console.error("Error in PUT /contractor/project/notes", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
+// PUT project translator status
+router.put('/status/translator', rejectUnauthenticated, (req, res) => {
+    let translatorStatus = req.body.params.translatorStatus;
+
+	let querytext = `UPDATE projects SET "translator_status" = ${translatorStatus} 
+        WHERE "id" = ${req.body.params.id};`;
+	pool.query(querytext)
+	.then((result) => {
+		res.sendStatus(200)
+	})
+	.catch((error) => {
+		console.error("Error in PUT /contractor/project/status/translator", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
+// PUT project proofreader status
+router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
+    let proofreaderStatus = req.body.params.proofreaderStatus;
+
+	let querytext = `UPDATE projects SET "proofreader_status" = ${proofreaderStatus}
+        WHERE "id" = ${req.body.params.id};`;
+	pool.query(querytext)
+	.then((result) => {
+		res.sendStatus(200)
+	})
+	.catch((error) => {
+		console.error("Error in PUT /contractor/project/status/proofreader", error);
+		res.sendStatus(500);
+	})
+	;
+});
+
 // TODO: Needs finalized columns for table
 /**
  * POST route template
