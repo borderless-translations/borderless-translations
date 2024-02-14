@@ -5,10 +5,11 @@ CREATE TABLE "clients" (
 	"client" INTEGER NOT NULL,
 	"contact" TEXT NOT NULL,
 	"country" TEXT NOT NULL,
-	"timezone" DATE NOT NULL,
+	"timezone" VARCHAR NOT NULL,
+	"location" TEXT,
 	"email" VARCHAR NOT NULL,
 	"phone" VARCHAR NOT NULL,
-	"client_notes" TEXT,
+	"client_notes" VARCHAR,
 	"created_at" DATE NOT NULL,
 	CONSTRAINT "clients_pk" PRIMARY KEY ("id")
 );
@@ -31,8 +32,10 @@ CREATE TABLE "projects" (
 CREATE TABLE "contractor_profile" (
 	"id" SERIAL NOT NULL,
 	"user_id" INTEGER NOT NULL,
+	"contractor_name" VARCHAR NOT NULL,
 	"available" BOOLEAN NOT NULL,
-	"timezone" DATE NOT NULL,
+	"timezone" VARCHAR NOT NULL,
+	"location" TEXT,
 	"language_profile" INTEGER NOT NULL,
 	"linkedIn" TEXT NOT NULL,
 	"status" TEXT NOT NULL,
@@ -57,7 +60,7 @@ CREATE TABLE "project_language" (
 	"translator_notes" TEXT,
 	"service_id" INTEGER NOT NULL,
 	"service_notes" TEXT,
-	"file_link" TEXT,
+	"file_link" VARCHAR,
 	CONSTRAINT "project_language_pk" PRIMARY KEY ("id")
 );
 
@@ -118,32 +121,15 @@ CREATE TABLE "rates" (
 	CONSTRAINT "rates_pk" PRIMARY KEY ("id")
 );
 
-ALTER TABLE "clients" ADD CONSTRAINT "clients_fk0" FOREIGN KEY ("id") REFERENCES "user"("id");
+INSERT INTO "languages" ("name", "tier")
+VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),('Croation', '1'),('Serbian', '1'),
+('Czech', '1'),('Slovak', '1'),('Polish', '1'),('Bulgarian', '1'),('Hungarian', '1'),
+('French', '2'),('English', '2'),('Ukranian', '2'),('Turkish', '2'),('Greek', '2'),('Vietnamese', '2'),('Khmer', '2'),
+('Simplified Chinese', '3'),('German', '3'),('Duth', '3'),('Arabic', '3'),('Hebrew', '3'),
+('Japanese', '4'),('Korean', '4'),('Finnish', '4'),('Danish', '4'),('Swedish', '4'),('Norwegian', '4');
 
-ALTER TABLE "projects" ADD CONSTRAINT "projects_fk0" FOREIGN KEY ("admin_id") REFERENCES "user"("id");
-ALTER TABLE "projects" ADD CONSTRAINT "projects_fk1" FOREIGN KEY ("client_id") REFERENCES "clients"("id");
-
-ALTER TABLE "contractor_profile" ADD CONSTRAINT "contractor_profile_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "contractor_profile" ADD CONSTRAINT "contractor_profile_fk1" FOREIGN KEY ("language_profile") REFERENCES "languages"("id");
-
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk0" FOREIGN KEY ("project_id") REFERENCES "projects"("id");
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk1" FOREIGN KEY ("contractor_id") REFERENCES "contractor_profile"("user_id");
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk2" FOREIGN KEY ("proofreader_id") REFERENCES "contractor_profile"("user_id");
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk3" FOREIGN KEY ("from_language_id") REFERENCES "languages"("id");
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk4" FOREIGN KEY ("to_language_id") REFERENCES "languages"("id");
-ALTER TABLE "project_language" ADD CONSTRAINT "project_language_fk5" FOREIGN KEY ("service_id") REFERENCES "services"("id");
+INSERT INTO "services" ("type")
+VALUES ('Translations'),('Video'),('SRT'),('Copy Editing'),('Proofreading');
 
 
-ALTER TABLE "services" ADD CONSTRAINT "services_fk0" FOREIGN KEY ("id") REFERENCES "project_language"("id");
-
-ALTER TABLE "contractor_services" ADD CONSTRAINT "contractor_services_fk0" FOREIGN KEY ("service_id") REFERENCES "services"("id");
-ALTER TABLE "contractor_services" ADD CONSTRAINT "contractor_services_fk1" FOREIGN KEY ("contractor_id") REFERENCES "contractor_profile"("user_id");
-
-
-ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk1" FOREIGN KEY ("from_language_id") REFERENCES "languages"("id");
-ALTER TABLE "contractor_language" ADD CONSTRAINT "contractor_language_fk2" FOREIGN KEY ("to_language_id") REFERENCES "languages"("id");
-
-ALTER TABLE "rates" ADD CONSTRAINT "rates_fk0" FOREIGN KEY ("service_id") REFERENCES "services"("id");
-ALTER TABLE "rates" ADD CONSTRAINT "rates_fk1" FOREIGN KEY ("tier") REFERENCES "languages"("id");
 
