@@ -34,6 +34,7 @@ function AdminContractorPage() {
         dispatch({type: 'SET_AVAILABLE', payload: id})
     }
 
+    //! This will break the page until other side is fully set up
     // const handleDetails = (id) => {
     //     // Will grab details from store
     //     dispatch({type: 'GET_CONTRACTOR', payload: id})
@@ -51,7 +52,7 @@ useEffect(() => {
         <button onClick={addContractor}>Add Contractor</button>
         {/* Conditional formatting. If toggle is true, display dialog */}
         <p>Table of Contractors here</p>
-        <table>
+        <table className="adminContractorTable">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -61,6 +62,7 @@ useEffect(() => {
                     <th>Availability</th>
                 </tr>
             </thead>
+            <tbody>
             {/* names of keys may change depending on DB */}
         {contractorList.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
@@ -69,10 +71,11 @@ useEffect(() => {
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td><button onClick={handleAvail}>{contractor.available ? "Available" : "Unavailable"}</button></td>
+                        <td><button onClick={() => handleAvail(contractor.id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
                         <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
                    </tr>
         })}
+        </tbody>
         </table>
         {toggleAddContractor && <AdminContractorModal closeModal={() => { setToggleAddContractor(!toggleAddContractor)}} defaultValues={null} />}
         </div>
