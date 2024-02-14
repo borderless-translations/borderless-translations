@@ -38,6 +38,22 @@ router.get('/:id', requireAdmin, (req, res) => {
 	;
 });
 
+// GET client name by id with no additional info
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    SELECT "clients"."id", "clients"."name" FROM "clients";
+	`;
+	pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET", error);
+            res.sendStatus(500);
+        })
+	;
+});
+
 // TODO: Need finalized columns for POST
 /**
  * POST route template
