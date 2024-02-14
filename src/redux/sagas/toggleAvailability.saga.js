@@ -26,4 +26,3 @@ function* toggleAvailabilitySaga() {
 }
 
 export default toggleAvailabilitySaga;
-// TODO: Don't forget to add worker function to _root.saga.js !!!

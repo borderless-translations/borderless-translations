@@ -119,6 +119,23 @@ router.put('/', rejectUnauthenticated, (req, res) => {
         })
 })
 
+// Toggle availability for self
+router.put('/availability', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    UPDATE "contractor_profile"
+        SET "availability" = NOT "availability"
+        WHERE "contractor_profile"."user_id" = $1;
+	`;
+	pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+})
+
 // PUT contractor settings
 // Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
 router.put('/settings', rejectUnauthenticated, (req, res) => {
