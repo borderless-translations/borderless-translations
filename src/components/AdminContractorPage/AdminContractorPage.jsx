@@ -34,11 +34,11 @@ function AdminContractorPage() {
         dispatch({type: 'SET_AVAILABLE', payload: id})
     }
 
-    const handleDetails = (id) => {
-        // Will grab details from store
-        dispatch({type: 'GET_CONTRACTOR', payload: id})
-        history.push(`/contractor/details/${id}`)
-    }
+    // const handleDetails = (id) => {
+    //     // Will grab details from store
+    //     dispatch({type: 'GET_CONTRACTOR', payload: id})
+    //     history.push(`/contractor/details/${id}`)
+    // }
 
 useEffect(() => {
     getContractors();
@@ -69,7 +69,7 @@ useEffect(() => {
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td><button onClick={handleAvail}>{contractor.available ? "Available" : "Not Available"}</button></td>
+                        <td><button onClick={handleAvail}>{contractor.available ? "Available" : "Unavailable"}</button></td>
                         <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
                    </tr>
         })}

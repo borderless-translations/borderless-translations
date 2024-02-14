@@ -23,7 +23,11 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_CONTRACTOR', payload: id})
     }
 
-    // TODO: Availability toggle with PUT request
+    const handleAvail = (id) => {
+        console.log('Set available to the opposite')
+        dispatch({type: 'SET_AVAILABLE', payload: id})
+    }
+
     const editContractor = () => {
         setToggleEditContractor(!toggleEditContractor);
     }
@@ -44,6 +48,7 @@ useEffect(() => {
             <p><strong>Contractor Name:</strong> {currentDetails.name}</p>
             <p><strong>Timezone:</strong> {currentDetails.timezone}</p>
             <p><strong>Languages:</strong> {languages}</p>
+            <p><strong>Available:</strong><button onClick={handleAvail}>{currentDetails.available ? "Available" : "Unavailable"}</button></p>
             <button onClick={editContractor}>Edit</button>
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 

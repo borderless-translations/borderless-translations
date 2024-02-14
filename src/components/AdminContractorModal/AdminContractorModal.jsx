@@ -6,11 +6,12 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [contractor, setContractor] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "" });
+        let [contractor, setContractor] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "", available: true });
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
     };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -21,7 +22,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
         //     dispatch({ type: "UPDATE_CLIENT", payload: client });
         //     console.log("Updated client information on server", client);
         // }
-        setContractor({ name: "", contact: "", email: "", phone: "", timezone: "" });
+        setContractor({ name: "", contact: "", email: "", phone: "", timezone: "", available: true});
         closeModal();
     };
 
@@ -74,6 +75,15 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                             type="timezone"
                             value={contractor.timezone}
                             onChange={(event) => handleChangeFor("timezone", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <lable htmlFor="available">Available:</lable>
+                        <input
+                            name="name"
+                            type="available"
+                            value={contractor.available ? "Available" : "Unavailable"}
+                            onChange={(event) => handleChangeFor("available", event.target.value)}
                         />
                     </div>
                     <button type="submit">Save</button>
