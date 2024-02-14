@@ -32,8 +32,6 @@ function AdminClientDetails() {
         setModalOpen(true);
     };
 
-
-
     return (
         <div className="container">
             <h2>Admin Client Details</h2>

@@ -10,15 +10,15 @@ function AdminClientModal({ closeModal, defaultValues }) {
 
     const handleChangeFor = (key, value) => {
         setClient({ ...client, [key]: value });
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (defaultValues === null) {
-            dispatch({ type: '', payload: client });
+            dispatch({ type: 'ADD_CLIENT', payload: client });
             console.log("Sent client information to server");
         } else {
-            dispatch({ type: "update", payload: client });
+            dispatch({ type: "UPDATE_CLIENT", payload: client });
             console.log("Updated client information on server", client);
         }
         setClient({ name: "", contact: "", email: "", phone: "", timezone: "" });
