@@ -117,7 +117,33 @@ router.put('/', rejectUnauthenticated, (req, res) => {
             console.error("Error in PUT", error);
             res.sendStatus(500);
         })
+
+// PUT contractor settings
+// Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
+router.put('/settings', rejectUnauthenticated, (req, res) => {
+	let querytext = `UPDATE contractor_profile SET available = ${req.body.params.available}, 
+        name = ${req.body.params.name}, 
+        linkedIn = ${req.body.params.linkedIn}, 
+        email = ${req.body.params.email}, 
+        timezone = ${req.body.params.timezone}, 
+        language_pairs: ${req.body.params.languagePairs}
+        skills = ${req.body.params.skills},
+        services = ${req.body.params.services},
+        written_rate = ${req.body.params.writtenRate},
+        minute_rate = ${req.body.params.minuteRate}
+        WHERE id = ${req.body.params.id}
+	`;
+	pool.query(querytext)
+	.then((result) => {
+		res.sendStatus(200)
+	})
+	.catch((error) => {
+		console.error("Error in PUT /contractor/settings", error);
+		res.sendStatus(500);
+	})
 	;
 });
+
+
 
 module.exports = router;
