@@ -1,9 +1,122 @@
 const express = require('express');
 const {
-  rejectUnauthenticated,
+  rejectUnauthenticated, requireAdmin
 } = require('../modules/authentication-middleware');
+
 const pool = require('../modules/pool');
 const router = express.Router();
+
+// GET all contractors. Requires admin status
+router.get('/', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_profile"
+        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
+        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
+    `;
+    pool.query(querytext)
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET all contractors", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET specific contractor info. Requires admin status
+router.get('/:id', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_profile"
+        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
+        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
+        WHERE "contractor_profile"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// TODO: Needs updated column names
+// GET contractor id/names without additional info
+router.get('/list', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT "contractor_profile"."id", "contractor_profile"."name" FROM "contractor_profile";
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET contractor info for requesting user only.
+// Does not require admin status
+router.get('/self', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_profile"
+        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
+        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
+        WHERE "contractor_profile"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// TODO: Need finalized columns to create POST
+/**
+ * POST route template
+ */
+router.post('/', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    // QUERY GOES HERE
+	`;
+	pool.query(querytext,[])
+        .then((result) => {
+            // Code to send goes here
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error("Error in POST", error);
+            res.sendStatus(500);
+        })
+	;
+});
+
+// TODO: Need finalized columns to create PUT
+/**
+ * PUT route template
+ */
+router.put('/', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    // QUERY GOES HERE
+	`;
+	pool.query(querytext,[])
+        .then((result) => {
+            // Code to send goes here
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
 
 // PUT contractor settings
 // Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
@@ -31,119 +144,6 @@ router.put('/settings', rejectUnauthenticated, (req, res) => {
 	;
 });
 
-// GET ongoing projects
-router.get('/project/ongoing', rejectUnauthenticated, (req, res) => {
-	let querytext = `SELECT * FROM projects 
-        WHERE translator_status != 'complete' 
-        OR proofreader_status != 'complete'
-        ORDER BY due_at ASC; 
-	`;
-	pool.query(querytext)
-	.then((result) => {
-		res.send(result.rows);
-	})
-	.catch((error) => {
-		console.error("Error in GET /contractor/project/ongoing", error);
-		res.sendStatus(500);
-	})
-	;
-});
 
-// GET completed projects
-router.get('/project/completed', rejectUnauthenticated, (req, res) => {
-	let querytext = `SELECT * FROM projects 
-        WHERE translator_status = 'complete' 
-        AND proofreader_status = 'complete'
-        ORDER BY due_at ASC; 
-	`;
-	pool.query(querytext)
-	.then((result) => {
-		res.send(result.rows);
-	})
-	.catch((error) => {
-		console.error("Error in GET /contractor/project/completed", error);
-		res.sendStatus(500);
-	})
-	;
-});
-
-// GET project details
-router.get('/project/:id', rejectUnauthenticated, (req, res) => {
-	let querytext = `SELECT * FROM projects WHERE id = ${req.params.id}`;
-	pool.query(querytext)
-	.then((result) => {
-		res.send(result.rows);
-	})
-	.catch((error) => {
-		console.error("Error in GET /contractor/project", error);
-		res.sendStatus(500);
-	})
-	;
-});
-
-// PUT project flagged status
-router.put('/project/flagged', rejectUnauthenticated, (req, res) => {
-	let querytext = `UPDATE projects SET "flagged" = !flagged
-        WHERE "id" = ${req.body.params.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/flagged", error);
-		res.sendStatus(500);
-	})
-	;
-});
-
-// PUT project notes
-router.put('/project/notes', rejectUnauthenticated, (req, res) => {
-    let notes = req.body.params.notes;
-	let querytext = `UPDATE projects SET "notes" = ${notes}
-        WHERE "id" = ${req.body.params.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/notes", error);
-		res.sendStatus(500);
-	})
-	;
-});
-
-// PUT project translator status
-router.put('/project/status/translator', rejectUnauthenticated, (req, res) => {
-    let translatorStatus = req.body.params.translatorStatus;
-
-	let querytext = `UPDATE projects SET "translator_status" = ${translatorStatus} 
-        WHERE "id" = ${req.body.params.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/status/translator", error);
-		res.sendStatus(500);
-	})
-	;
-});
-
-// PUT project proofreader status
-router.put('/project/status/proofreader', rejectUnauthenticated, (req, res) => {
-    let proofreaderStatus = req.body.params.proofreaderStatus;
-
-	let querytext = `UPDATE projects SET "proofreader_status" = ${proofreaderStatus}
-        WHERE "id" = ${req.body.params.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/status/proofreader", error);
-		res.sendStatus(500);
-	})
-	;
-});
 
 module.exports = router;
