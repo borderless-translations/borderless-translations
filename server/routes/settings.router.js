@@ -112,4 +112,56 @@ router.delete('/service/:id', requireAdmin, (req, res) => {
 	;
 });
 
+// GET all rates
+router.get('/rate', requireAdmin, (req, res) => {
+	let querytext = `
+		SELECT * FROM "rates";
+	`;
+	pool.query(querytext,[])
+		.then((result) => {
+			res.send(result.rows);
+		})
+		.catch((error) => {
+			console.error("Error in GET", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+// POST new language
+router.post('/rate', requireAdmin, (req, res) => {
+	let querytext = `
+		INSERT INTO "rates" ("rate", "service_id", "tier")
+        VALUES ($1, $2, $3);
+	`;
+	pool.query(querytext,[req.body.rate, req.body.service_id, req.body.tier])
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(201)
+		})
+		.catch((error) => {
+			console.error("Error in POST new language", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+// DELETE language from table
+router.delete('/rate/:id', requireAdmin, (req, res) => {
+	let querytext = `
+		DELETE FROM "rates"
+        WHERE "id" = $1;
+	`;
+	pool.query(querytext,[req.params.id])
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in DELETE", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
 module.exports = router;
