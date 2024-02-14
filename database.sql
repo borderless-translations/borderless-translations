@@ -83,13 +83,13 @@ CREATE TABLE "contractor_services" (
 
 
 
-CREATE TABLE "users" (
+CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
 	"username" VARCHAR NOT NULL,
 	"password" VARCHAR NOT NULL,
-	"type" VARCHAR NOT NULL,
-	"created_at" DATE NOT NULL,
-	CONSTRAINT "users_pk" PRIMARY KEY ("id")
+	"type" VARCHAR DEFAULT 'contractor',
+	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "user_pk" PRIMARY KEY ("id")
 );
 
 
@@ -120,8 +120,6 @@ CREATE TABLE "rates" (
 	"tier" INTEGER NOT NULL,
 	CONSTRAINT "rates_pk" PRIMARY KEY ("id")
 );
-
-
 
 INSERT INTO "languages" ("name", "tier")
 VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),('Croation', '1'),('Serbian', '1'),
