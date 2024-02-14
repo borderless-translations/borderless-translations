@@ -28,11 +28,11 @@ function AdminContractorPage() {
         setToggleAddContractor(!toggleAddContractor);
     }
 
-    const handleDetails = (id) => {
-        // Will grab details from store
-        dispatch({type: 'GET_CONTRACTOR', payload: id})
-        history.push(`/contractor/details/${id}`)
-    }
+    // const handleDetails = (id) => {
+    //     // Will grab details from store
+    //     dispatch({type: 'GET_CONTRACTOR', payload: id})
+    //     history.push(`/contractor/details/${id}`)
+    // }
 
 useEffect(() => {
     getContractors();
@@ -51,30 +51,23 @@ useEffect(() => {
                     <th>Name</th>
                     <th>Languages</th>
                     <th>Skill Set</th>
-                    <th>Rate per word</th>
-                    <th>Rate per minute</th>
+                    <th>Timezone</th>
                     <th>Availability</th>
                 </tr>
             </thead>
             {/* names of keys may change depending on DB */}
         {contractorList.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
-                     <Link to={`/contractor/details/${id}`}><AdminContractorDetailsPage/></Link>
                         <td>{contractor.name}</td>
                         <td>{contractor.languages}</td>
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td>{contractor.available}</td>
+                        <td>{contractor.available ? "Available" : "Not Available"}</td>
+                        <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
                    </tr>
         })}
         </table>
-        {/* Click on contractor to get taken to /details/:id for that contractor
-        onClick={() => handleDetails(id)}
-        Buttons for editing contractor details will be within the contractor details page 
-        <Link to={`/contractor/details/${id}}><AdminContractorDetailsPage></Link>
-        
-        */}
         </>
     );
 }

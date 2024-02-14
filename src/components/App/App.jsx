@@ -21,9 +21,12 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminClientMain from '../AdminClientMain/AdminClientMain';
 import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
+import AdminContractorPage from '../AdminContractorPage/AdminContractorPage';
+import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import ContractorDashboard from '../ContractorDashboard/ContractorDashboard';
 import ContractorProfileSettings from '../ContractorProfileSettings/ContractorProfileSettings';
 import ContractorProjectDetails from '../ContractorProjectDetails/ContractorProjectDetails';
+
 
 import './App.css';
 
@@ -87,6 +90,22 @@ function App() {
             path="/client/details/:id"
           >
             <AdminClientDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Contractors Page else shows LoginPage
+            exact 
+            path="/admin/contractors"
+          >
+            <AdminContractorPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Contractors Details Page else shows LoginPage
+            exact 
+            path="/admin/contractors/details/:id"
+          >
+            <AdminContractorDetailsPage />
           </ProtectedRoute>
 
           {/* Contractor routes start here */}

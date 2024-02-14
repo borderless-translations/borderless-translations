@@ -51,6 +51,10 @@ function Nav() {
               Home
             </Link>
 
+            <Link className="navLink" to="/admin/contractors">
+              Contractors
+            </Link>
+
             <Link className="navLink" to="/info">
               Info Page
             </Link>

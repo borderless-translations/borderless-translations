@@ -4,9 +4,18 @@ import {useHistory, useParams} from 'react-router-dom';
 
 function AdminContractorDetailsPage() {
 
+    const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
     const contractorDetails = useSelector(store => store.contractor);
+
+    const contractorList = [
+        {id: 2, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
+        {id: 3, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
+        {id: 4, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
+    ]
+
+    let currentDetails = contractorList[(id - 2)]
 
     const refreshPage = () => {
         dispatch({type: 'GET_CONTRACTOR', payload: id})
@@ -22,7 +31,10 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            {JSON.stringify(contractorDetails)}
+            <p><strong>Contractor Name:</strong> {currentDetails.name}</p>
+            <p><strong>Timezone:</strong> {currentDetails.timezone}</p>
+            <p><strong>Languages:</strong> {currentDetails.languages}</p>
+            <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
         </>
     )
 }
