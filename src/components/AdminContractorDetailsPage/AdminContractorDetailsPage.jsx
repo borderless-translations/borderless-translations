@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
+import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 
 function AdminContractorDetailsPage() {
 
@@ -8,6 +9,7 @@ function AdminContractorDetailsPage() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const contractorDetails = useSelector(store => store.contractor);
+    const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
     const contractorList = [
         {id: 2, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
@@ -22,6 +24,9 @@ function AdminContractorDetailsPage() {
     }
 
     // TODO: Availability toggle with PUT request
+    const editContractor = () => {
+        setToggleEditContractor(!toggleEditContractor);
+    }
 
 
 useEffect(() => {
@@ -29,6 +34,9 @@ useEffect(() => {
 }, [])
 
 // TODO: Add editability to contractor details page
+// Page should include: Contact name, country, timezone
+// contact info (email, phone), languages, specialty
+// Current projects and completed projects
 
     return (
         <>
@@ -36,7 +44,10 @@ useEffect(() => {
             <p><strong>Contractor Name:</strong> {currentDetails.name}</p>
             <p><strong>Timezone:</strong> {currentDetails.timezone}</p>
             <p><strong>Languages:</strong> {languages}</p>
+            <button onClick={editContractor}>Edit</button>
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+
+            {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={currentDetails} />}
         </>
     )
 }

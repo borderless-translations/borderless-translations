@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
-
+import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 
 function AdminContractorPage() {
 
@@ -24,22 +24,28 @@ function AdminContractorPage() {
     }
 
     const addContractor = () => {
-        // toggle dialog pop-up here
+        // toggle modal pop-up here
+        console.log('you clicked Add Contractor', toggleAddContractor)
         setToggleAddContractor(!toggleAddContractor);
     }
 
-    // const handleDetails = (id) => {
-    //     // Will grab details from store
-    //     dispatch({type: 'GET_CONTRACTOR', payload: id})
-    //     history.push(`/contractor/details/${id}`)
-    // }
+    const handleAvail = (id) => {
+        console.log('Set available to the opposite')
+        dispatch({type: 'SET_AVAILABLE', payload: id})
+    }
+
+    const handleDetails = (id) => {
+        // Will grab details from store
+        dispatch({type: 'GET_CONTRACTOR', payload: id})
+        history.push(`/contractor/details/${id}`)
+    }
 
 useEffect(() => {
     getContractors();
 }, []);
 
     return (
-        <>
+        <div className="container">
         <h1>Contractor View</h1>
         {/* Button to add contractor, pops up add contractor dialog */}
         <button onClick={addContractor}>Add Contractor</button>
@@ -63,12 +69,13 @@ useEffect(() => {
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td>{contractor.available ? "Available" : "Not Available"}</td>
+                        <td><button onClick={handleAvail}>{contractor.available ? "Available" : "Not Available"}</button></td>
                         <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
                    </tr>
         })}
         </table>
-        </>
+        {toggleAddContractor && <AdminContractorModal closeModal={() => { setToggleAddContractor(!toggleAddContractor)}} defaultValues={null} />}
+        </div>
     );
 }
 
