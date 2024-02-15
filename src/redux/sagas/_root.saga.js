@@ -16,6 +16,7 @@ import updateClientSaga from './updateClient.saga';
 import toggleAvailabilitySaga from './toggleAvailability.saga';
 import toggleAvailabilityAdminSaga from './toggleAvailabilityAdmin.saga';
 import createNewProjectSaga from './createNewProject.saga';
+import updateProjectSaga from './updateProject.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -27,8 +28,8 @@ import createNewProjectSaga from './createNewProject.saga';
 export default function* rootSaga() {
   yield all([
     loginSaga(), // login saga is now registered
-    registrationSaga(),
-    userSaga(),
+    registrationSaga(), // Create new user
+    userSaga(), // GET User info
     getAllClientsSaga(), // Fetch then store all clients in reducer allClients
     getAllContractorsSaga(), // Fetch then store all contractors in reducer allContractors
     getAllProjectsSaga(), // Fetch then store all projects in reducer allProjects
@@ -43,5 +44,6 @@ export default function* rootSaga() {
     toggleAvailabilitySaga(), // Toggles current availabity for authenticated user. Stores updated object in reducer contractor.
     toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     createNewProjectSaga(), // Creates new project in DB. Does not GET. Use additional saga.
+    updateProjectSaga(), // Updates project details in DB. Stores updated project in reducer project
   ]);
 }
