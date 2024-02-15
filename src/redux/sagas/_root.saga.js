@@ -15,6 +15,7 @@ import createNewClientSaga from './createNewClient.saga';
 import updateClientSaga from './updateClient.saga';
 import toggleAvailabilitySaga from './toggleAvailability.saga';
 import toggleAvailabilityAdminSaga from './toggleAvailabilityAdmin.saga';
+import updateContractorSaga from './updateContractor.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -41,5 +42,6 @@ export default function* rootSaga() {
     updateClientSaga(), // Update client info in DB. Needs full client object in payload. Stores updated object in reducer client
     toggleAvailabilitySaga(), // Toggles current availabity for authenticated user. Stores updated object in reducer contractor.
     toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
+    updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
   ]);
 }

@@ -16,7 +16,7 @@ function* updateClient(action) {
         yield put({ type: 'SET_CLIENT', payload: response.data[0] });
     }
     catch (error) {
-        console.error('Error in POST new client.', error);
+        console.error('Error in PUT update client.', error);
     }
 }
 

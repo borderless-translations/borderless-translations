@@ -138,7 +138,7 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
     ;
 })
 
-// Toggle availability for self
+// Toggle availability for admin
 router.put('/availability-admin', requireAdmin, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile"
