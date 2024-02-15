@@ -100,7 +100,7 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 // PUT project flagged status
 router.put('/flagged', rejectUnauthenticated, (req, res) => {
 	let querytext = `UPDATE projects SET "flagged" = !flagged
-        WHERE "id" = ${req.body.params.id};`;
+        WHERE "id" = ${req.body.id};`;
 	pool.query(querytext)
 	.then((result) => {
 		res.sendStatus(200)
@@ -114,9 +114,9 @@ router.put('/flagged', rejectUnauthenticated, (req, res) => {
 
 // PUT project notes
 router.put('/notes', rejectUnauthenticated, (req, res) => {
-    let notes = req.body.params.notes;
+    let notes = req.body.notes;
 	let querytext = `UPDATE projects SET "notes" = ${notes}
-        WHERE "id" = ${req.body.params.id};`;
+        WHERE "id" = ${req.body.id};`;
 	pool.query(querytext)
 	.then((result) => {
 		res.sendStatus(200)
@@ -130,10 +130,10 @@ router.put('/notes', rejectUnauthenticated, (req, res) => {
 
 // PUT project translator status
 router.put('/status/translator', rejectUnauthenticated, (req, res) => {
-    let translatorStatus = req.body.params.translatorStatus;
+    let translatorStatus = req.body.translatorStatus;
 
 	let querytext = `UPDATE projects SET "translator_status" = ${translatorStatus} 
-        WHERE "id" = ${req.body.params.id};`;
+        WHERE "id" = ${req.body.id};`;
 	pool.query(querytext)
 	.then((result) => {
 		res.sendStatus(200)
@@ -147,10 +147,10 @@ router.put('/status/translator', rejectUnauthenticated, (req, res) => {
 
 // PUT project proofreader status
 router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
-    let proofreaderStatus = req.body.params.proofreaderStatus;
+    let proofreaderStatus = req.body.proofreaderStatus;
 
 	let querytext = `UPDATE projects SET "proofreader_status" = ${proofreaderStatus}
-        WHERE "id" = ${req.body.params.id};`;
+        WHERE "id" = ${req.body.id};`;
 	pool.query(querytext)
 	.then((result) => {
 		res.sendStatus(200)
