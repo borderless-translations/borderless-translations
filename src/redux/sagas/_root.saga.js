@@ -21,6 +21,7 @@ import addProjectNoteSaga from './addProjectNote.saga';
 import getCompletedProjectsSaga from './getCompletedProjects.saga';
 import getOngoingProjectsSaga from './getOngoingProjects.saga';
 import toggleProjectFlagSaga from './toggleProjectFlag.saga';
+import updateTranslatorStatusSaga from './updateTranslatorStatus.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -53,5 +54,6 @@ export default function* rootSaga() {
     getCompletedProjectsSaga(), // GET route for completed projects. Requires admin. Stored in completedProjects.reducer
     getOngoingProjectsSaga(), // GET route for ongoing projects. Requires admin. Stored in ongoingProjects.reducer
     toggleProjectFlagSaga(), // PUT route toggling flag feature on project. Stores updated project in project.reducer.
+    updateTranslatorStatusSaga(), // PUT route updating status of translator progress. Stores updated project in project.reducer.
   ]);
 }
