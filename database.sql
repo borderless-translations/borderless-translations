@@ -115,7 +115,7 @@ CREATE TABLE "languages" (
 
 CREATE TABLE "rates" (
 	"id" SERIAL NOT NULL,
-	"rate" DECIMAL NOT NULL,
+	"rate" VARCHAR NOT NULL,
 	"service_id" INTEGER NOT NULL,
 	"tier" INTEGER NOT NULL,
 	CONSTRAINT "rates_pk" PRIMARY KEY ("id")
@@ -131,5 +131,12 @@ VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),(
 INSERT INTO "services" ("type")
 VALUES ('Translations'),('Video'),('SRT'),('Copy Editing'),('Proofreading');
 
+INSERT INTO "rates" ("rate","service_id","tier")
+VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-0.19','1','4'),
+('5.00-8.00','2','1'),('7.00-9.00','2','2'),('9.00-13.00','2','3'),('13.00-16.00','2','4'),
+('5.00-8.00','3','1'),('7.00-9.00','3','2'),('9.00-13.00','3','3'),('13.00-16.00','3','4'),
+('50% of listed price','4','1'),('50% of listed price','4','2'),('50% of listed price','4','3'),('50% of listed price','4','4'),
+('50% of listed price','5','1'),('50% of listed price','5','2'),('50% of listed price','5','3'),('50% of listed price','5','4');
 
-
+INSERT INTO "users" ("username","password","type")
+VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc','Contractor'),('Robin', '321xyz','Contractor'),('Brock','a1b2c3','Admin'),('J','c3b2a1','Proofreader');
