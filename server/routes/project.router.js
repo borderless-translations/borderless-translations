@@ -6,7 +6,6 @@ const {
 const pool = require('../modules/pool');
 const router = express.Router();
 
-
 // Get all projects. Requires admin
 router.get('/', requireAdmin, (req, res) => {
     let querytext = `
@@ -100,8 +99,8 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 // PUT project flagged status
 router.put('/flagged', rejectUnauthenticated, (req, res) => {
 	let querytext = `UPDATE projects SET "flagged" = !flagged
-        WHERE "id" = ${req.body.id};`;
-	pool.query(querytext)
+        WHERE "id" = $1;`;
+	pool.query(querytext, [req.body.id])
 	.then((result) => {
 		res.sendStatus(200)
 	})
@@ -115,50 +114,48 @@ router.put('/flagged', rejectUnauthenticated, (req, res) => {
 // PUT project notes
 router.put('/notes', rejectUnauthenticated, (req, res) => {
     let notes = req.body.notes;
-	let querytext = `UPDATE projects SET "notes" = ${notes}
-        WHERE "id" = ${req.body.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/notes", error);
-		res.sendStatus(500);
-	})
+	let querytext = `UPDATE projects SET "notes" = $1
+        WHERE "id" = $2;`;
+	pool.query(querytext, [notes, req.body.id])
+		.then((result) => {
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in PUT /contractor/project/notes", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
 // PUT project translator status
 router.put('/status/translator', rejectUnauthenticated, (req, res) => {
     let translatorStatus = req.body.translatorStatus;
-
-	let querytext = `UPDATE projects SET "translator_status" = ${translatorStatus} 
-        WHERE "id" = ${req.body.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/status/translator", error);
-		res.sendStatus(500);
-	})
+	let querytext = `UPDATE projects SET "translator_status" = $1
+        WHERE "id" = $2;`;
+	pool.query(querytext, [req.body.translatorStatus, req.body.id])
+		.then((result) => {
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in PUT /contractor/project/status/translator", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
 // PUT project proofreader status
 router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
     let proofreaderStatus = req.body.proofreaderStatus;
-
-	let querytext = `UPDATE projects SET "proofreader_status" = ${proofreaderStatus}
-        WHERE "id" = ${req.body.id};`;
-	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/project/status/proofreader", error);
-		res.sendStatus(500);
-	})
+	let querytext = `UPDATE projects SET "proofreader_status" = $1
+        WHERE "id" = $2;`;
+	pool.query(querytext,[proofreaderStatus, req.body.id])
+		.then((result) => {
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in PUT /contractor/project/status/proofreader", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
@@ -171,14 +168,14 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 	// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-		res.sendStatus(201)
-	})
-	.catch((error) => {
-		console.error("Error in POST", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(201)
+		})
+		.catch((error) => {
+			console.error("Error in POST", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
@@ -191,14 +188,14 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 	// QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
-	.then((result) => {
-		// Code to send goes here
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT", error);
-		res.sendStatus(500);
-	})
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in PUT", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
