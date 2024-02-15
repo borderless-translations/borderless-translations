@@ -2,20 +2,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
-import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
+
 
 function AdminContractorPage() {
 
     // Sample data for testing
     const contractorList = [
-        {id: 2, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
-        {id: 3, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
-        {id: 4, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
+        {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
+        {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
+        {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
     ]
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const [toggleAddContractor, setToggleAddContractor ] = useState(false);
     const allContractors = useSelector(store => store.allContractors);
 
     const getContractors = () => {
@@ -23,15 +22,9 @@ function AdminContractorPage() {
         dispatch({type: 'GET_ALL_CONTRACTORS'});
     }
 
-    const addContractor = () => {
-        // toggle modal pop-up here
-        console.log('you clicked Add Contractor', toggleAddContractor)
-        setToggleAddContractor(!toggleAddContractor);
-    }
-
     const handleAvail = (id) => {
-        console.log('Set available to the opposite')
-        dispatch({type: 'SET_AVAILABLE', payload: id})
+        console.log('Set available to the opposite, user_id', id)
+        dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
     }
 
     //! This will break the page until other side is fully set up
@@ -48,9 +41,6 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
-        {/* Button to add contractor, pops up add contractor dialog */}
-        <button onClick={addContractor}>Add Contractor</button>
-        {/* Conditional formatting. If toggle is true, display dialog */}
         <p>Table of Contractors here</p>
         <table className="adminContractorTable">
             <thead>
@@ -65,19 +55,18 @@ useEffect(() => {
             <tbody>
             {/* names of keys may change depending on DB */}
         {contractorList.map((contractor, i) => {
-            return <tr onClick={() => handleDetails(contractor.id)} key={contractor.id}>
+            return <tr onClick={() => handleDetails(contractor.user_id)} key={contractor.user_id}>
                         <td>{contractor.name}</td>
                         <td>{contractor.languages.join(', ')}</td>
                         {/* <td>{contractor.skills}</td> */}
                         {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.timezone}</td>
-                        <td><button onClick={() => handleAvail(contractor.id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
-                        <td><Link to={`/admin/contractors/details/${contractor.id}`}>Details</Link></td>
+                        <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
+                        <td><Link to={`/admin/contractors/details/${contractor.user_id}`}>Details</Link></td>
                    </tr>
         })}
         </tbody>
         </table>
-        {toggleAddContractor && <AdminContractorModal closeModal={() => { setToggleAddContractor(!toggleAddContractor)}} defaultValues={null} />}
         </div>
     );
 }
