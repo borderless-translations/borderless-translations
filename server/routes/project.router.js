@@ -61,7 +61,7 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 });
 
 // GET ongoing projects
-router.get('/ongoing', rejectUnauthenticated, (req, res) => {
+router.get('/ongoing', requireAdmin, (req, res) => {
 	let querytext = `SELECT * FROM projects 
         WHERE translator_status != 'complete' 
         OR proofreader_status != 'complete'
@@ -72,14 +72,14 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 		res.send(result.rows);
 	})
 	.catch((error) => {
-		console.error("Error in GET /contractor/project/ongoing", error);
+		console.error("Error in GET /api/project/ongoing", error);
 		res.sendStatus(500);
 	})
 	;
 });
 
 // GET completed projects
-router.get('/completed', rejectUnauthenticated, (req, res) => {
+router.get('/completed', requireAdmin, (req, res) => {
 	let querytext = `SELECT * FROM projects 
         WHERE translator_status = 'complete' 
         AND proofreader_status = 'complete'
@@ -90,7 +90,7 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 		res.send(result.rows);
 	})
 	.catch((error) => {
-		console.error("Error in GET /contractor/project/completed", error);
+		console.error("Error in GET /api/project/completed", error);
 		res.sendStatus(500);
 	})
 	;
@@ -105,7 +105,7 @@ router.put('/flagged', rejectUnauthenticated, (req, res) => {
 		res.sendStatus(200)
 	})
 	.catch((error) => {
-		console.error("Error in PUT /contractor/project/flagged", error);
+		console.error("Error in PUT /api/project/flagged", error);
 		res.sendStatus(500);
 	})
 	;
@@ -121,7 +121,7 @@ router.put('/notes', rejectUnauthenticated, (req, res) => {
 			res.sendStatus(200)
 		})
 		.catch((error) => {
-			console.error("Error in PUT /contractor/project/notes", error);
+			console.error("Error in PUT /api/project/notes", error);
 			res.sendStatus(500);
 		})
 	;
@@ -132,12 +132,12 @@ router.put('/status/translator', rejectUnauthenticated, (req, res) => {
     let translatorStatus = req.body.translatorStatus;
 	let querytext = `UPDATE projects SET "translator_status" = $1
         WHERE "id" = $2;`;
-	pool.query(querytext, [req.body.translatorStatus, req.body.id])
+	pool.query(querytext, [translatorStatus, req.body.id])
 		.then((result) => {
 			res.sendStatus(200)
 		})
 		.catch((error) => {
-			console.error("Error in PUT /contractor/project/status/translator", error);
+			console.error("Error in PUT /api/project/status/translator", error);
 			res.sendStatus(500);
 		})
 	;
@@ -153,7 +153,7 @@ router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
 			res.sendStatus(200)
 		})
 		.catch((error) => {
-			console.error("Error in PUT /contractor/project/status/proofreader", error);
+			console.error("Error in PUT /api/project/status/proofreader", error);
 			res.sendStatus(500);
 		})
 	;

@@ -18,6 +18,7 @@ import toggleAvailabilityAdminSaga from './toggleAvailabilityAdmin.saga';
 import createNewProjectSaga from './createNewProject.saga';
 import updateProjectSaga from './updateProject.saga';
 import addProjectNoteSaga from './addProjectNote.saga';
+import getCompletedProjectsSaga from './getCompletedProjects.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -47,5 +48,6 @@ export default function* rootSaga() {
     createNewProjectSaga(), // Creates new project in DB. Does not GET. Use additional saga.
     updateProjectSaga(), // Updates project details in DB. Stores updated project in project.reducer
     addProjectNoteSaga(), // PUT route adding note to project in DB. Stores updated project in project.reducer
+    getCompletedProjectsSaga(), // GET route for completed projects. Requires admin. Stored in completedProjects.reducer
   ]);
 }
