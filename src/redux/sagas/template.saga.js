@@ -11,7 +11,7 @@ function* templateFunction() {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get('/api/example', config);
+        const response = yield axios.get(`/api/example`, config);
 
         // TODO: Hand off the data to the correct reducer by changing the type below or delete if unneeded
         yield put({ type: 'SET_EXAMPLE', payload: response.data });
