@@ -25,6 +25,7 @@ import updateTranslatorStatusSaga from './updateTranslatorStatus.saga';
 import updateProofreaderStatusSaga from './updateProofreaderStatus.saga';
 import updateContractorSaga from './updateContractor.saga';
 import setUserAuthSaga from './setUserAuth.saga';
+import getAllLanguagesSaga from './getAllProjects.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -64,5 +65,6 @@ export default function* rootSaga() {
     toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
+    getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
   ]);
 }
