@@ -28,6 +28,9 @@ import setUserAuthSaga from './setUserAuth.saga';
 import getAllLanguagesSaga from './getAllProjects.saga';
 import createNewLanguageSaga from './createNewLanguage.saga';
 import deleteLanguageSaga from './deleteLanguage.saga';
+import getAllServicesSaga from './getAllServices.saga';
+import createNewServiceSaga from './createNewService.saga';
+import deleteServiceSaga from './deleteService.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -70,5 +73,8 @@ export default function* rootSaga() {
     getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
     createNewLanguageSaga(), // POST for new language. GETs updated list and stores in allLanguages.reducer.
     deleteLanguageSaga(), // DELETE language from DB. GETs updated list and stores in allLanguages.reducer.
+    getAllServicesSaga(), // GET all services from DB. Stores info in allServices.reducer.
+    createNewServiceSaga(), // POST new service to DB. Calls getAllServices.saga to get updated list.
+    deleteServiceSaga(), // DELETE new service from DB. Calls getAllServices.saga to get updated list.
   ]);
 }
