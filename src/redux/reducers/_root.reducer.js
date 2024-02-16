@@ -12,6 +12,7 @@ import completedProjects from './completedProjects.reducer';
 import ongoingProjects from './ongoingProjects.reducer';
 import allLanguages from './allLanguages.reducer';
 import allServices from './allServices.reducer';
+import allRates from './allRates.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   ongoingProjects, // Array containing all ongoing projects
   allLanguages, // Array containing all languages available
   allServices, // Array containing all services
+  allRates, // Array containing all rates
 });
 
 export default rootReducer;
