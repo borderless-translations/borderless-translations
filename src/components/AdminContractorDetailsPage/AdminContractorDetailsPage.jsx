@@ -9,7 +9,7 @@ function AdminContractorDetailsPage() {
     const dispatch = useDispatch();
     const { id } = useParams();
     //! This will fetch current contractor details from store
-    //const contractorDetails = useSelector(store => store.contractor);
+    const contractorDetails = useSelector(store => store.contractor);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
     const contractorList = [
@@ -20,8 +20,8 @@ function AdminContractorDetailsPage() {
     ]
 
     // Currently only displaying these details.
-    let currentDetails = contractorList[0]
-    let languages = currentDetails.languages.join(', ')
+    // let currentDetails = contractorList[0]
+    // let languages = currentDetails.languages.join(', ')
     const refreshPage = () => {
         console.log('This is the ID', id)
         // Currently an error in this dispatch
@@ -63,28 +63,30 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             <button onClick={handleAdmin}>Make Admin</button>
-            <p><strong>Contractor Name:</strong> {currentDetails.name}</p>
-            <p><strong>Timezone:</strong> {currentDetails.timezone}</p>
+            <p><strong>Contractor Name:</strong> {contractorDetails.name}</p>
+            <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
             <p><strong>Languages:</strong> {languages}</p>
-            <p><strong>Available:</strong><button onClick={()  => handleAvail(currentDetails.user_id)}>{currentDetails.available ? "Available" : "Unavailable"}</button></p>
+            <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             <button onClick={editContractor}>Edit</button>
             {/* <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>
-            <p><strong>Project Name:</strong> {currentDetails.project[0].name}, <strong>Languages:</strong> {currentDetails.project[0].language}, <strong>Status:</strong> {currentDetails.project[0].status}</p> */}
-            {currentDetails.project.map((project, i) => {
+            <p><strong>Project Name:</strong> {contractorDetails.project[0].name}, <strong>Languages:</strong> {contractorDetails.project[0].language}, <strong>Status:</strong> {contractorDetails.project[0].status}</p> */}
+            {contractorDetails.project.map((project, i) => {
                 return (project.status === 'Completed' ?
                 <>
+                {/* Make this a table */}
                 <h3>Completed Projects</h3>
                 <p>{project.name} - {project.language} - {project.status}</p>
                 </> :
                 <>
+                {/* Make this another table */}
                 <h3>Current Projects</h3>
                 <p>{project.name} - {project.language} - {project.status}</p>
                 </>
             )})}
             {/* <h3>Completed Projects</h3>
             <p>This is where the contractor's old/completed projects should be displayed.</p>
-            <p><strong>Project Name:</strong> {currentDetails.project[1].name}, <strong>Languages:</strong> {currentDetails.project[1].language}, <strong>Status:</strong> {currentDetails.project[1].status}</p> */}
+            <p><strong>Project Name:</strong> {contractorDetails.project[1].name}, <strong>Languages:</strong> {contractorDetails.project[1].language}, <strong>Status:</strong> {currentDetails.project[1].status}</p> */}
 
             
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>

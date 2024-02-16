@@ -7,11 +7,11 @@ import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContr
 function AdminContractorPage() {
 
     // Sample data for testing
-    const contractorList = [
-        {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
-        {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
-        {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
-    ]
+    // const contractorList = [
+    //     {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
+    //     {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
+    //     {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
+    // ]
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -28,11 +28,12 @@ function AdminContractorPage() {
     }
 
     //! This will break the page until other side is fully set up
-    // const handleDetails = (id) => {
-    //     // Will grab details from store
-    //     dispatch({type: 'GET_CONTRACTOR', payload: id})
-    //     history.push(`/contractor/details/${id}`)
-    // }
+    const handleDetails = (id) => {
+        // Will grab details from store
+        console.log(allContractors)
+        // dispatch({type: 'GET_CONTRACTOR', payload: id})
+        // history.push(`/contractor/details/${id}`)
+    }
 
 useEffect(() => {
     getContractors();
@@ -41,6 +42,7 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
+        <button onClick={() => handleDetails(5)}>Click Me</button>
         <p>Table of Contractors here</p>
         <table className="adminContractorTable">
             <thead>
@@ -48,19 +50,25 @@ useEffect(() => {
                     <th>Name</th>
                     <th>Languages</th>
                     <th>Skill Set</th>
+                    <th>Location</th>
                     <th>Timezone</th>
+                    <th>Written Rate</th>
+                    <th>A/V Rate</th>
                     <th>Availability</th>
                 </tr>
             </thead>
             <tbody>
             {/* names of keys may change depending on DB */}
-        {contractorList.map((contractor, i) => {
+        {allContractors.map((contractor, i) => {
             return <tr onClick={() => handleDetails(contractor.user_id)} key={contractor.user_id}>
-                        <td>{contractor.name}</td>
-                        <td>{contractor.languages.join(', ')}</td>
-                        {/* <td>{contractor.skills}</td> */}
+                        <td>{contractor.contractor_name}</td>
+                        <td>{contractor.languages}</td>
+                        <td>{contractor.language_profile}</td>
                         {/* <td>{contractor.rate_per_word}</td> */}
+                        <td>{contractor.location}</td>
                         <td>{contractor.timezone}</td>
+                        <td>${contractor.base_written_rate}/hr</td>
+                        <td>${contractor.base_audio_video_rate}/hr</td>
                         <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
                         <td><Link to={`/admin/contractors/details/${contractor.user_id}`}>Details</Link></td>
                    </tr>

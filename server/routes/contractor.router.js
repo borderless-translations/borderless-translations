@@ -9,12 +9,13 @@ const router = express.Router();
 // GET all contractors. Requires admin status
 router.get('/', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_profile"
-        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
-        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
+    SELECT * FROM "contractor_profile"
+    JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
+    JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
     `;
     pool.query(querytext)
         .then((result) => {
+            console.log('Result rows', result.rows)
             res.send(result.rows);
         })
         .catch((error) => {
@@ -138,7 +139,7 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
     ;
 })
 
-// Toggle availability for self
+// Toggle availability for admin
 router.put('/availability-admin', requireAdmin, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile"
