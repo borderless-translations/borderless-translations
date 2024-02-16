@@ -40,18 +40,18 @@ router.post('/language', requireAdmin, (req, res) => {
 });
 
 // DELETE language from table
-router.delete('/language/:id', requireAdmin, (req, res) => {
+router.delete('/language', requireAdmin, (req, res) => {
 	let querytext = `
 		DELETE FROM "languages"
         WHERE "id" = $1;
 	`;
-	pool.query(querytext,[req.params.id])
+	pool.query(querytext,[req.body.id])
 		.then((result) => {
 			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {
-			console.error("Error in DELETE", error);
+			console.error("Error in DELETE language.", error);
 			res.sendStatus(500);
 		})
 	;
