@@ -32,6 +32,8 @@ import getAllServicesSaga from './getAllServices.saga';
 import createNewServiceSaga from './createNewService.saga';
 import deleteServiceSaga from './deleteService.saga';
 import getAllRatesSaga from './getAllRates.saga';
+import createNewRateSaga from './createNewRate.saga';
+import deleteRateSaga from './deleteRate.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -78,5 +80,7 @@ export default function* rootSaga() {
     createNewServiceSaga(), // POST new service to DB. Calls getAllServices.saga to get updated list.
     deleteServiceSaga(), // DELETE new service from DB. Calls getAllServices.saga to get updated list.
     getAllRatesSaga(), // GET all rates from DB. Stores info in allRates.reducer.
+    createNewRateSaga(), // POST new rate to DB. Calls getAllRates.saga to get updated list.
+    deleteRateSaga(), // DELETE rate from DB. Calls getAllRates.saga to get updated list.
   ]);
 }
