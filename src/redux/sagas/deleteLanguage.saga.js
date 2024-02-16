@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* createNewLanguage(action) {
+function* deleteLanguage(action) {
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        // Adding new language to DB. Requires admin.
-        yield axios.post(`/api/settings/language`, action.payload, config);
+        // Removing language from DB. Requires Admin
+        yield axios.delete(`/api/settings/language`, action.payload, config);
         // GET for updated list
         const response = yield axios.get(`/api/settings/language`, config);
         // Storing updated list in allLanguages.reducer
@@ -21,9 +21,9 @@ function* createNewLanguage(action) {
     }
 }
 
-// Worker function  - Saga: will be fired on "CREATE_NEW_LANGUAGE" actions
-function* createNewLanguageSaga() {
-    yield takeLatest('CREATE_NEW_LANGUAGE', createNewLanguage);
+// Worker function  - Saga: will be fired on "DELETE_LANGUAGE" actions
+function* deleteLanguageSaga() {
+    yield takeLatest('DELETE_LANGUAGE', deleteLanguage);
 }
 
-export default createNewLanguageSaga;
+export default deleteLanguageSaga;

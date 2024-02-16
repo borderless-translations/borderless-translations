@@ -27,6 +27,7 @@ import updateContractorSaga from './updateContractor.saga';
 import setUserAuthSaga from './setUserAuth.saga';
 import getAllLanguagesSaga from './getAllProjects.saga';
 import createNewLanguageSaga from './createNewLanguage.saga';
+import deleteLanguageSaga from './deleteLanguage.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -68,5 +69,6 @@ export default function* rootSaga() {
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
     getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
     createNewLanguageSaga(), // POST for new language. GETs updated list and stores in allLanguages.reducer.
+    deleteLanguageSaga(), // DELETE language from DB. GETs updated list and stores in allLanguages.reducer.
   ]);
 }
