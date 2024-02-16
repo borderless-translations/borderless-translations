@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* getAllLanguages(action) {
+function* getAllLanguages() {
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {

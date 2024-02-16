@@ -73,7 +73,7 @@ router.get('/service', rejectUnauthenticated, (req, res) => {
 	;
 });
 
-// POST new language
+// POST new service
 router.post('/service', requireAdmin, (req, res) => {
 	let querytext = `
 		INSERT INTO "services" ("type")
@@ -91,13 +91,13 @@ router.post('/service', requireAdmin, (req, res) => {
 	;
 });
 
-// DELETE language from table
-router.delete('/service/:id', requireAdmin, (req, res) => {
+// DELETE service from table
+router.delete('/service', requireAdmin, (req, res) => {
 	let querytext = `
 		DELETE FROM "services"
         WHERE "id" = $1;
 	`;
-	pool.query(querytext,[req.params.id])
+	pool.query(querytext,[req.body.id])
 		.then((result) => {
 			// Code to send goes here
 			res.sendStatus(200)
@@ -125,7 +125,7 @@ router.get('/rate', requireAdmin, (req, res) => {
 	;
 });
 
-// POST new language
+// POST new rate
 router.post('/rate', requireAdmin, (req, res) => {
 	let querytext = `
 		INSERT INTO "rates" ("rate", "service_id", "tier")
@@ -143,7 +143,7 @@ router.post('/rate', requireAdmin, (req, res) => {
 	;
 });
 
-// DELETE language from table
+// DELETE rate from table
 router.delete('/rate/:id', requireAdmin, (req, res) => {
 	let querytext = `
 		DELETE FROM "rates"
@@ -195,7 +195,7 @@ router.get('/:id/language', requireAdmin, (req, res) => {
 });
 
 // GET contractor_languages for self
-router.get('/:id/language', rejectUnauthenticated, (req, res) => {
+router.get('/self/language', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 		SELECT * FROM "contractor_language"
         WHERE "user_id" = $1;
@@ -229,7 +229,7 @@ router.post('/contractor/language', requireAdmin, (req, res) => {
 	;
 });
 
-// DELETE language from table
+// DELETE contractor_language from table
 router.delete('/contractor/language/:id', rejectUnauthenticated, (req, res) => {
     let querytext = `
 		DELETE FROM "contractor_language"
