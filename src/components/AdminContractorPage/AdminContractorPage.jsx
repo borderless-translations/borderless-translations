@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
+import './AdminContractorPage.css';
 
 
 function AdminContractorPage() {
@@ -44,7 +45,6 @@ useEffect(() => {
         <h1>Contractor View</h1>
         <button onClick={() => handleDetails()}>Click Me</button>
         <p>Table of Contractors here</p>
-        {JSON.stringify(allContractors)}
         <table className="adminContractorTable">
             <thead>
                 <tr>

@@ -12,16 +12,6 @@ function AdminContractorDetailsPage() {
     const contractorDetails = useSelector(store => store.contractor);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
-    // const contractorList = [
-    //     {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'], 
-    //     project: [{name: 'Amity Island Diving Co', language: 'English to Fish', status: 'Incomplete'}, {name: 'Spin City', language: 'German to Dutch German', status: 'Completed'}] },
-    //     {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
-    //     {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
-    // ]
-
-    // Currently only displaying these details.
-    // let currentDetails = contractorList[0]
-    // let languages = currentDetails.languages.join(', ')
     const refreshPage = () => {
         console.log('This is the ID', id)
         // Currently an error in this dispatch
@@ -65,6 +55,7 @@ useEffect(() => {
             {JSON.stringify(contractorDetails)}
             <button onClick={handleAdmin}>Make Admin</button>
             <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
+            <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
             <p><strong>Languages:</strong> </p>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
