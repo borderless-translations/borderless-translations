@@ -27,6 +27,7 @@ function AdminContractorDetailsPage() {
 
     const handleAdmin = () => {
         //SweetAlert here confirming
+        if (contractorDetails.type === 'contractor') {
         Swal.fire({
             title: "Are you sure you want this person to be an admin?",
             text: "They will have access to everything on this site",
@@ -47,7 +48,29 @@ function AdminContractorDetailsPage() {
                 icon: "success"
               });
             }
-          });
+          })} else {
+            Swal.fire({
+                title: "Are you sure you want to remove this person's admin status?",
+                text: "This action will restrict their access to only their projects.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, they do not need admin status"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    const userAuth = {id: id, type: 'contractor'}
+                    console.log('userAuth right now is', userAuth);
+                    dispatch({type: 'SET_USER_AUTH', payload: userAuth})
+                    refreshPage();
+                  Swal.fire({
+                    title: "Contractor Status!",
+                    text: "This contractor is no longer an admin.",
+                    icon: "success"
+                  });
+                }
+              })
+          };
         
         
     }
@@ -77,7 +100,8 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
-            <button onClick={handleAdmin}>Make Admin</button>
+            {contractorDetails.type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
+             <button onClick={handleAdmin}>Make Admin</button>}
             <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
             <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>

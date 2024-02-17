@@ -26,9 +26,11 @@ router.get('/', requireAdmin, (req, res) => {
 router.get('/:id', requireAdmin, (req, res) => {
     console.log('req.params.id is', req.params.id)
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT "contractor_profile".*, "user"."type", "languages"."name" FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
+        JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
+        JOIN "languages" on "languages"."id" = "contractor_profile"."language_profile"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
@@ -118,27 +120,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
         })
     ;
 })
-
-// Toggle Admin status for contractor
-router.put('/contractor-admin/:id', rejectUnauthenticated, (req, res) => {
-    console.log('params.id', req.params.id)
-	let querytext = `
-	    UPDATE "user"
-        SET "type" = 'admin'
-        WHERE "id" = $1;
-	`;
-	pool.query(querytext,[req.params.id])
-        .then((result) => {
-            // Code to send goes here
-            res.sendStatus(200)
-        })
-        .catch((error) => {
-            console.error("Error in PUT", error);
-            res.sendStatus(500);
-        })
-    ;
-})
-
 // Toggle availability for self
 router.put('/availability', rejectUnauthenticated, (req, res) => {
 	let querytext = `
