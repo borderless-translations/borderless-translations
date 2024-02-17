@@ -129,7 +129,8 @@ VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),(
 ('Japanese', '4'),('Korean', '4'),('Finnish', '4'),('Danish', '4'),('Swedish', '4'),('Norwegian', '4');
 
 INSERT INTO "services" ("type")
-VALUES ('Translations'),('Video'),('SRT'),('Copy Editing'),('Proofreading');
+VALUES ('Audio/Visual Transcription'),('English Closed Caption'),('Global Translated Subtitles'),
+('Non-Fiction Episodic Format Sheet (Chryon List)'),('As-Broadcast Script'),('Interpretation');
 
 INSERT INTO "rates" ("rate","service_id","tier")
 VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-0.19','1','4'),
