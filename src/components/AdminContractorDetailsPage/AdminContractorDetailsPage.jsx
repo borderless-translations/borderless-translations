@@ -29,7 +29,7 @@ function AdminContractorDetailsPage() {
     }
 
     const handleAvail = () => {
-        console.log('Set available to the opposite')
+        console.log('Set available to the opposite', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
     }
 
@@ -64,7 +64,7 @@ useEffect(() => {
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
             <button onClick={handleAdmin}>Make Admin</button>
-            <p><strong>Contractor Name:</strong> {contractorDetails.name}</p>
+            <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
             <p><strong>Languages:</strong> </p>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>

@@ -9,7 +9,7 @@ function* toggleAvailabilityAdmin(action) {
             withCredentials: true,
         };
 
-        yield axios.put('/api/contractor/availability-admin', config); // Toggles availability for self
+        yield axios.put(`/api/contractor/availability-admin/${action.payload}`, config); // Toggles availability for self
         console.log('Toggle avail admin', action.payload)
         const response = yield axios.get(`/api/contractor/${action.payload}`, config); // getting updated contractor info
 

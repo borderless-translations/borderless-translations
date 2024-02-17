@@ -24,6 +24,7 @@ router.get('/', requireAdmin, (req, res) => {
 
 // GET specific contractor info. Requires admin status
 router.get('/:id', requireAdmin, (req, res) => {
+    console.log('req.params.id is', req.params.id)
     let querytext = `
         SELECT * FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
@@ -137,13 +138,14 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
 })
 
 // Toggle availability for admin
-router.put('/availability-admin', requireAdmin, (req, res) => {
+router.put('/availability-admin/:id', requireAdmin, (req, res) => {
+    console.log('req.params.id is', req.params.id)
 	let querytext = `
 	    UPDATE "contractor_profile"
         SET "available" = NOT "available"
         WHERE "contractor_profile"."user_id" = $1;
 	`;
-	pool.query(querytext,[req.body.id])
+	pool.query(querytext,[req.params.id])
         .then((result) => {
             res.sendStatus(200)
         })
