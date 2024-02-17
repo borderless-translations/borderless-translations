@@ -31,8 +31,8 @@ function AdminContractorPage() {
     const handleDetails = (id) => {
         // Will grab details from store
         console.log(allContractors)
-        // dispatch({type: 'GET_CONTRACTOR', payload: id})
-        // history.push(`/contractor/details/${id}`)
+        dispatch({type: 'GET_CONTRACTOR', payload: id})
+        history.push(`/contractor/details/${id}`)
     }
 
 useEffect(() => {
@@ -42,8 +42,9 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
-        <button onClick={() => handleDetails(5)}>Click Me</button>
+        <button onClick={() => handleDetails()}>Click Me</button>
         <p>Table of Contractors here</p>
+        {JSON.stringify(allContractors)}
         <table className="adminContractorTable">
             <thead>
                 <tr>
@@ -60,7 +61,7 @@ useEffect(() => {
             <tbody>
             {/* names of keys may change depending on DB */}
         {allContractors.map((contractor, i) => {
-            return <tr onClick={() => handleDetails(contractor.user_id)} key={contractor.user_id}>
+            return <tr key={contractor.user_id}>
                         <td>{contractor.contractor_name}</td>
                         <td>{contractor.languages}</td>
                         <td>{contractor.language_profile}</td>
@@ -70,7 +71,7 @@ useEffect(() => {
                         <td>${contractor.base_written_rate}/hr</td>
                         <td>${contractor.base_audio_video_rate}/hr</td>
                         <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
-                        <td><Link to={`/admin/contractors/details/${contractor.user_id}`}>Details</Link></td>
+                        <td><Link to={`/admin/contractors/details/${contractor.user_id}`}><button onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></td>
                    </tr>
         })}
         </tbody>
