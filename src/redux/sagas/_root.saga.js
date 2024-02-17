@@ -25,6 +25,15 @@ import updateTranslatorStatusSaga from './updateTranslatorStatus.saga';
 import updateProofreaderStatusSaga from './updateProofreaderStatus.saga';
 import updateContractorSaga from './updateContractor.saga';
 import setUserAuthSaga from './setUserAuth.saga';
+import getAllLanguagesSaga from './getAllProjects.saga';
+import createNewLanguageSaga from './createNewLanguage.saga';
+import deleteLanguageSaga from './deleteLanguage.saga';
+import getAllServicesSaga from './getAllServices.saga';
+import createNewServiceSaga from './createNewService.saga';
+import deleteServiceSaga from './deleteService.saga';
+import getAllRatesSaga from './getAllRates.saga';
+import createNewRateSaga from './createNewRate.saga';
+import deleteRateSaga from './deleteRate.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -64,5 +73,14 @@ export default function* rootSaga() {
     toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
+    getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
+    createNewLanguageSaga(), // POST for new language. GETs updated list and stores in allLanguages.reducer.
+    deleteLanguageSaga(), // DELETE language from DB. GETs updated list and stores in allLanguages.reducer.
+    getAllServicesSaga(), // GET all services from DB. Stores info in allServices.reducer.
+    createNewServiceSaga(), // POST new service to DB. Calls getAllServices.saga to get updated list.
+    deleteServiceSaga(), // DELETE new service from DB. Calls getAllServices.saga to get updated list.
+    getAllRatesSaga(), // GET all rates from DB. Stores info in allRates.reducer.
+    createNewRateSaga(), // POST new rate to DB. Calls getAllRates.saga to get updated list.
+    deleteRateSaga(), // DELETE rate from DB. Calls getAllRates.saga to get updated list.
   ]);
 }
