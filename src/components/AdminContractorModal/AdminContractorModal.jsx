@@ -6,13 +6,12 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [contractor, setContractor] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "", available: true });
+        let [contractor, setContractor] = useState(defaultValues);
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
         console.log(contractor);
     };
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,7 +22,14 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
             console.log("Updated contractor information on server", contractor);
         }
-        setContractor({ name: "", contact: "", email: "", phone: "", timezone: "", available: true});
+        setContractor({ 
+            name: "", 
+            contact: "", 
+            email: "", 
+            phone: "", 
+            timezone: "", 
+            available: true
+    });
         closeModal();
     };
 
@@ -38,7 +44,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         <input
                             name="client"
                             type="text"
-                            value={contractor.name}
+                            value={contractor.contractor_name}
                             onChange={(event) => handleChangeFor("name", event.target.value)}
                         />
                     </div>

@@ -26,10 +26,10 @@ function AdminContractorDetailsPage() {
     }
 
     const handleAdmin = () => {
-        //SweetAlert here confirming
-        if (contractorDetails.type === 'contractor') {
+        // Handles both granting and removing admin status
+        if (contractorDetails.user_type === 'contractor') {
         Swal.fire({
-            title: "Are you sure you want this person to be an admin?",
+            title: "Are you sure you want to grant admin status to this person?",
             text: "They will have access to everything on this site",
             icon: "warning",
             showCancelButton: true,
@@ -93,19 +93,19 @@ useEffect(() => {
 
 // TODO: Conditional for whether a project is in the current or completed sections
 
-// TODO: Add Admin toggle and confirm dialogue to details page.
-// GET USER TYPE BEFOREHAND TO KNOW WHETHER CONTRACTOR IS ADMIN OR NOT
 
     return (
         <>
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
-            {contractorDetails.type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
-             <button onClick={handleAdmin}>Make Admin</button>}
+            {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
+            {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
+             <button onClick={handleAdmin}>Grant Admin status</button>}
             <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
             <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
-            <p><strong>Languages:</strong> </p>
+            <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
+            <p><strong>Services:</strong> {contractorDetails.service_type}</p>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             <button onClick={editContractor}>Edit</button>
             {/* <h3>Current Projects</h3>
@@ -129,7 +129,7 @@ useEffect(() => {
             
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
-            {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={currentDetails} />}
+            {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
         </>
     )
 }

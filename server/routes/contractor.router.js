@@ -26,11 +26,14 @@ router.get('/', requireAdmin, (req, res) => {
 router.get('/:id', requireAdmin, (req, res) => {
     console.log('req.params.id is', req.params.id)
     let querytext = `
-        SELECT "contractor_profile".*, "user"."type", "languages"."name" FROM "contractor_profile"
+        SELECT "contractor_profile".*, "user"."type" AS "user_type", "languages"."name" AS "language_name", 
+        "services"."type" AS "service_type"
+        FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
         JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
-        JOIN "languages" on "languages"."id" = "contractor_profile"."language_profile"
+        JOIN "languages" ON "languages"."id" = "contractor_profile"."language_profile"
+        JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
