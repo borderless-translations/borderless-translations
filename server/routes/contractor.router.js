@@ -24,7 +24,6 @@ router.get('/', requireAdmin, (req, res) => {
 
 // GET specific contractor info. Requires admin status
 router.get('/:id', requireAdmin, (req, res) => {
-    console.log('req.params.id is', req.params.id)
     let querytext = `
         SELECT "contractor_profile".*, "user"."type" AS "user_type", "languages"."name" AS "language_name", 
         "services"."type" AS "service_type"
@@ -108,9 +107,13 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * PUT route template
  */
-router.put('/', rejectUnauthenticated, (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+    // ! Pull language IDs and service IDs in order to make changes. They have to be toggle options
+    // ! They cannot be typed. Need relational connection in database
 	let querytext = `
-	    // QUERY GOES HERE
+	    UPDATE "contractor_profile"
+        SET "contractor_name" = $1, "location" = $2, "timezone" = $3, "linkedIn" = $4,
+        "services" = $5, "languages" = $6
 	`;
 	pool.query(querytext,[])
         .then((result) => {

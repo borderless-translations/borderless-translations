@@ -9,7 +9,7 @@ function* updateContractor(action) {
             withCredentials: true,
         };
 
-        yield axios.put(`/api/contractor/${action.payload.id}`, action.payload, config); // PUT contractor object
+        yield axios.put(`/api/contractor/${action.payload.user_id}`, action.payload, config); // PUT contractor object
         const response = yield axios.get(`/api/contractor/${action.payload.id}`, config) // Retrieve updated contractor object
 
         // Adding updated client data to reducer client
