@@ -9,7 +9,7 @@ function* toggleAvailability(action) {
             withCredentials: true,
         };
 
-        yield axios.put('/api/contractor/availability', config); // Toggles availability for self
+        yield axios.put('/api/contractor/availability', action.payload, config); // Toggles availability for self
         const response = yield axios.get(`/api/contractor/self`, config); // getting self info
 
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] }); // updating self in contractor reducer
