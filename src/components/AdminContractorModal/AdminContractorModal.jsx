@@ -15,21 +15,22 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (defaultValues === null) {
-            dispatch({ type: 'ADD_CONTRACTOR', payload: contractor });
-            console.log("Sent contractor information to server");
-        } else {
-            dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
-            console.log("Updated contractor information on server", contractor);
-        }
-        setContractor({ 
-            name: "", 
-            contact: "", 
-            email: "", 
-            phone: "", 
-            timezone: "", 
-            available: true
-    });
+        console.log('Contractor values are', contractor);
+    //     if (defaultValues === null) {
+    //         dispatch({ type: 'ADD_CONTRACTOR', payload: contractor });
+    //         console.log("Sent contractor information to server");
+    //     } else {
+    //         dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
+    //         console.log("Updated contractor information on server", contractor);
+    //     }
+    //     setContractor({ 
+    //         contractor_name: "", 
+    //         contact: "", 
+    //         email: "", 
+    //         phone: "", 
+    //         timezone: "", 
+    //         available: true
+    // });
         closeModal();
     };
 
@@ -40,12 +41,12 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="client">Contractor:</label>
+                        <label htmlFor="contractor_name">Contractor:</label>
                         <input
-                            name="client"
+                            name="contractor_name"
                             type="text"
                             value={contractor.contractor_name}
-                            onChange={(event) => handleChangeFor("name", event.target.value)}
+                            onChange={(event) => handleChangeFor("contractor_name", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -85,12 +86,21 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="available">Available:</label>
+                        <label htmlFor="service_type">Services:</label>
                         <input
                             name="name"
-                            type="available"
-                            value={contractor.available ? "Available" : "Unavailable"}
-                            onChange={(event) => handleChangeFor("available", event.target.value)}
+                            type="service_type"
+                            value={contractor.service_type}
+                            onChange={(event) => handleChangeFor("service_type", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="language_name">Languages:</label>
+                        <input
+                            name="name"
+                            type="language_name"
+                            value={contractor.language_name}
+                            onChange={(event) => handleChangeFor("language_name", event.target.value)}
                         />
                     </div>
                     <button type="submit">Save</button>

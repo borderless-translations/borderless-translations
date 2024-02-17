@@ -28,7 +28,6 @@ function AdminContractorPage() {
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
     }
 
-    //! This will break the page until other side is fully set up
     const handleDetails = (id) => {
         // Will grab details from store
         console.log(allContractors)
@@ -43,7 +42,6 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
-        <button onClick={() => handleDetails()}>Click Me</button>
         <p>Table of Contractors here</p>
         <table className="adminContractorTable">
             <thead>
