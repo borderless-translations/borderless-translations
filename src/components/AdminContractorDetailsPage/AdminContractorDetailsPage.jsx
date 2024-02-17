@@ -37,12 +37,10 @@ function AdminContractorDetailsPage() {
             confirmButtonText: "Yes, give them the power"
           }).then((result) => {
             if (result.isConfirmed) {
-                console.log('ID right now is', id);
-                axios.put(`/api/contractor/contractor-admin/${id}`)
-                .then((result) => {
-                    refreshPage();
-                    console.log('Contractor set to Admin');
-                })
+                const userAuth = {id: id, type: 'admin'}
+                console.log('userAuth right now is', userAuth);
+                dispatch({type: 'SET_USER_AUTH', payload: userAuth})
+                refreshPage();
               Swal.fire({
                 title: "Admin Status!",
                 text: "This contractor is now an admin.",
@@ -51,7 +49,7 @@ function AdminContractorDetailsPage() {
             }
           });
         
-        // dispatch({type: 'TOGGLE_ADMIN', payload: id})
+        
     }
 
     const editContractor = () => {
@@ -73,6 +71,7 @@ useEffect(() => {
 // TODO: Conditional for whether a project is in the current or completed sections
 
 // TODO: Add Admin toggle and confirm dialogue to details page.
+// GET USER TYPE BEFOREHAND TO KNOW WHETHER CONTRACTOR IS ADMIN OR NOT
 
     return (
         <>
