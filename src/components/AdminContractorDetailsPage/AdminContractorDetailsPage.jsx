@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 function AdminContractorDetailsPage() {
 
@@ -25,8 +27,31 @@ function AdminContractorDetailsPage() {
 
     const handleAdmin = () => {
         //SweetAlert here confirming
-        console.log('ID right now is', id)
-        dispatch({type: 'TOGGLE_ADMIN', payload: id})
+        Swal.fire({
+            title: "Are you sure you want this person to be an admin?",
+            text: "They will have access to everything on this site",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, give them the power"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('ID right now is', id);
+                axios.put(`/api/contractor/contractor-admin/${id}`)
+                .then((result) => {
+                    refreshPage();
+                    console.log('Contractor set to Admin');
+                })
+              Swal.fire({
+                title: "Admin Status!",
+                text: "This contractor is now an admin.",
+                icon: "success"
+              });
+            }
+          });
+        
+        // dispatch({type: 'TOGGLE_ADMIN', payload: id})
     }
 
     const editContractor = () => {
