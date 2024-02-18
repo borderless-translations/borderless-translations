@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
+import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import Swal from 'sweetalert2';
 import axios from "axios";
 
@@ -12,14 +13,19 @@ function AdminContractorDetailsPage() {
     const { id } = useParams();
     //! This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor);
+    const completedProjects = useSelector(store => store.completedProjects);
+    const ongoingProjects = useSelector(store => store.ongoingProjects);
     const [selectedServices, setSelectedServices] = useState([contractorDetails.service_id]);
     const allServices = useSelector(store => store.allServices);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
+    const [toggleEditServices, setToggleEditServices] = useState(false);
+    const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
 
     const refreshPage = () => {
         console.log('This is the ID', id)
-        // Currently an error in this dispatch
         dispatch({type: 'GET_CONTRACTOR', payload: id });
+        dispatch({type: 'GET_COMPLETED_PROJECTS', payload: id});
+        dispatch({type: 'GET_ONGOING_PROJECTS', payload: id});
         dispatch({type: 'GET_ALL_SERVICES'});
         dispatch({type: 'GET_ALL_LANGUAGES'});
     }
@@ -29,9 +35,11 @@ function AdminContractorDetailsPage() {
 
         setSelectedServices((selectedServices) => {
             if (isChecked) {
+                console.log(serviceId, "is checked")
                 return [... selectedServices, serviceId];
             } else {
-                return selectedServices.filter((id) => id !== serviceId)
+                console.log(serviceId, 'not checked')
+                return selectedServices.filter((serviceId) => serviceId !== serviceId)
             }
         });
     };
@@ -94,11 +102,14 @@ function AdminContractorDetailsPage() {
     const editContractor = () => {
         setToggleEditContractor(!toggleEditContractor);
     }
+    const editContractorServices = () => {
+        setToggleEditServices(!toggleEditServices);
+    }
 
 
 useEffect(() => {
     refreshPage();
-}, [])
+}, [selectedServices]);
 
 
 // TODO: Add editability to contractor details page
@@ -120,7 +131,10 @@ useEffect(() => {
             <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
             <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
+            <button onClick={editContractor}>Edit Contractor Info</button>
+            <br/>
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
+            <button onClick={editContractor}>Edit Contractor Languages</button>
             <p><div className="form-group">
                     <label htmlFor="service_type"><strong>Services:</strong>
                         {allServices.map((service, i) => (
@@ -129,15 +143,16 @@ useEffect(() => {
                                     name="service"
                                     value={service.id}
                                     type="checkbox"
-                                    checked={selectedServices.includes(service.id)}
-                                    onClick={handleCheckboxChange}
+                                    checked={selectedServices.includes(service.id) ? "checked" : ""}
+                                    onChange={handleCheckboxChange}
                                 />{service.type}
                             </div>
                         ))}</label>
                         </div>
             </p>
+            <button onClick={editContractorServices}>Edit Contractor Services</button>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
-            <button onClick={editContractor}>Edit</button>
+            
             {/* <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>
             <p><strong>Project Name:</strong> {contractorDetails.project[0].name}, <strong>Languages:</strong> {contractorDetails.project[0].language}, <strong>Status:</strong> {contractorDetails.project[0].status}</p> */}
@@ -160,6 +175,8 @@ useEffect(() => {
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
+            {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}
+            {toggleEditLanguages && <AdminContractorLanguagesModal closeModal={() => { setToggleEditLanguages(!toggleEditLanguages)}} defaultValues={contractorDetails} />}
         </>
     )
 }
