@@ -117,6 +117,43 @@ router.put('/', rejectUnauthenticated, (req, res) => {
             console.error("Error in PUT", error);
             res.sendStatus(500);
         })
+    ;
+})
+
+// Toggle availability for self
+router.put('/availability', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    UPDATE "contractor_profile"
+        SET "availability" = NOT "availability"
+        WHERE "contractor_profile"."user_id" = $1;
+	`;
+	pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+    ;
+})
+
+// Toggle availability for admin
+router.put('/availability-admin', requireAdmin, (req, res) => {
+	let querytext = `
+	    UPDATE "contractor_profile"
+        SET "availability" = NOT "availability"
+        WHERE "contractor_profile"."user_id" = $1;
+	`;
+	pool.query(querytext,[req.body.id])
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+    ;
 })
 
 // PUT contractor settings
@@ -135,13 +172,13 @@ router.put('/settings', rejectUnauthenticated, (req, res) => {
         WHERE id = ${req.body.params.id}
 	`;
 	pool.query(querytext)
-	.then((result) => {
-		res.sendStatus(200)
-	})
-	.catch((error) => {
-		console.error("Error in PUT /contractor/settings", error);
-		res.sendStatus(500);
-	})
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT /contractor/settings", error);
+            res.sendStatus(500);
+        })
 	;
 });
 
