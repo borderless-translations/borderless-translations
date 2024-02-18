@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
+import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
 import Swal from 'sweetalert2';
 import axios from "axios";
 
@@ -105,6 +106,9 @@ function AdminContractorDetailsPage() {
     const editContractorServices = () => {
         setToggleEditServices(!toggleEditServices);
     }
+    const editContractorLanguages = () => {
+        setToggleEditLanguages(!toggleEditLanguages);
+    }
 
 
 useEffect(() => {
@@ -134,7 +138,7 @@ useEffect(() => {
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
-            <button onClick={editContractor}>Edit Contractor Languages</button>
+            <button onClick={editContractorLanguages}>Edit Contractor Languages</button>
             <p><div className="form-group">
                     <label htmlFor="service_type"><strong>Services:</strong>
                         {allServices.map((service, i) => (
