@@ -12,7 +12,6 @@ function AdminContractorDetailsPage() {
     const { id } = useParams();
     //! This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor);
-    const allLanguages = useSelector(store => store.allLanguages);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
     const refreshPage = () => {
@@ -100,7 +99,6 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
-            {JSON.stringify(allLanguages)}
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}

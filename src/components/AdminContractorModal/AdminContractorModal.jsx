@@ -6,6 +6,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
     let [contractor, setContractor] = useState(defaultValues);
+    const [toggleLanguage, setToggleLanguage] = useState(true)
     const allServices = useSelector(store => store.allServices);
     const allLanguages = useSelector(store => store.allLanguages);
 
@@ -85,9 +86,10 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                             </div>
                         ))}
                         </div>
-                    <div className="form-group">
-                        {JSON.stringify(allLanguages)}
+                    <div className="language-div form-group">
                         <label htmlFor="language_name">Languages:</label>
+                        {toggleLanguage ? <>
+                        <br/>
                         {allLanguages.map((language, i) => (
                             <div key={i}>
                                 <input 
@@ -95,9 +97,9 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                                     type="checkbox"
                                     checked={contractor.language_name == language.name ? "checked" : ''}
                                     onChange={() => handleChangeFor(contractor.language_name, language.name)}
-                                />{service.type}
+                                />{language.name}
                             </div>
-                        ))}
+                        ))}</> : ''}
                     </div>
                     <button type="submit">Save</button>
                 </form>

@@ -42,3 +42,10 @@
     margin-bottom: 0.2rem;
     margin-right: 1rem;
 }
+
+.language-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: aqua;
+}

@@ -8,7 +8,7 @@ function* updateContractor(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+        console.log(action.payload)
         yield axios.put(`/api/contractor/${action.payload.user_id}`, action.payload, config); // PUT contractor object
         const response = yield axios.get(`/api/contractor/${action.payload.id}`, config) // Retrieve updated contractor object
 
