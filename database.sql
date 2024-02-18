@@ -139,5 +139,5 @@ VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-
 ('50% of listed price','4','1'),('50% of listed price','4','2'),('50% of listed price','4','3'),('50% of listed price','4','4'),
 ('50% of listed price','5','1'),('50% of listed price','5','2'),('50% of listed price','5','3'),('50% of listed price','5','4');
 
-INSERT INTO "users" ("username","password","type")
+INSERT INTO "user" ("username","password","type")
 VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc','Contractor'),('Robin', '321xyz','Contractor'),('Brock','a1b2c3','Admin'),('J','c3b2a1','Proofreader');
