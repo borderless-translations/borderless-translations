@@ -8,6 +8,11 @@ import client from './client.reducer';
 import contractor from './contractor.reducer';
 import project from './project.reducer';
 import clientProjects from './clientProjects.reducer';
+import completedProjects from './completedProjects.reducer';
+import ongoingProjects from './ongoingProjects.reducer';
+import allLanguages from './allLanguages.reducer';
+import allServices from './allServices.reducer';
+import allRates from './allRates.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,6 +30,11 @@ const rootReducer = combineReducers({
   contractor, // Object containing data for a single contractor
   project, // Object containing data for a single project
   clientProjects, // Array containing all the projects for a single client
+  completedProjects, // Array containing all completed projects
+  ongoingProjects, // Array containing all ongoing projects
+  allLanguages, // Array containing all languages available
+  allServices, // Array containing all services
+  allRates, // Array containing all rates
 });
 
 export default rootReducer;

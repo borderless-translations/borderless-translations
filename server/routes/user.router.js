@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-  rejectUnauthenticated,
+  rejectUnauthenticated, requireAdmin
 } = require('../modules/authentication-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
@@ -45,6 +45,21 @@ router.post('/logout', (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
+});
+
+router.put('/auth', requireAdmin, (req,res) => {
+  let queryText = `
+    UPDATE "user"
+    SET "type" = $1
+    WHERE "id" = $2;
+  `;
+  pool.query(queryText,[req.body.type, req.body.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.error("Error in PUT auth level.", error)
+    })
 });
 
 module.exports = router;
