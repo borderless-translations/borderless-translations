@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
-
-        let [contractor, setContractor] = useState(defaultValues);
+    let [contractor, setContractor] = useState(defaultValues);
+    const allServices = useSelector(store => store.allServices);
+    const allLanguages = useSelector(store => store.allLanguages);
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
@@ -72,22 +73,31 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="service_type">Services:</label>
-                        <input
-                            name="name"
-                            type="service_type"
-                            value={contractor.service_type}
-                            onChange={(event) => handleChangeFor("service_type", event.target.value)}
-                        />
-                    </div>
+                    <label htmlFor="service_type">Services:</label>
+                        {allServices.map((service, i) => (
+                            <div key={i}>
+                                <input 
+                                    name={service.type}
+                                    type="checkbox"
+                                    checked={contractor.service_type == service.type ? "checked" : ''}
+                                    onChange={() => handleChangeFor(contractor.service_type, service.type)}
+                                />{service.type}
+                            </div>
+                        ))}
+                        </div>
                     <div className="form-group">
+                        {JSON.stringify(allLanguages)}
                         <label htmlFor="language_name">Languages:</label>
-                        <input
-                            name="name"
-                            type="language_name"
-                            value={contractor.language_name}
-                            onChange={(event) => handleChangeFor("language_name", event.target.value)}
-                        />
+                        {allLanguages.map((language, i) => (
+                            <div key={i}>
+                                <input 
+                                    name={language.name}
+                                    type="checkbox"
+                                    checked={contractor.language_name == language.name ? "checked" : ''}
+                                    onChange={() => handleChangeFor(contractor.language_name, language.name)}
+                                />{service.type}
+                            </div>
+                        ))}
                     </div>
                     <button type="submit">Save</button>
                 </form>

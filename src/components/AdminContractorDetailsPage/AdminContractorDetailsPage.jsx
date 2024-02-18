@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import axios from "axios";
 
 function AdminContractorDetailsPage() {
 
@@ -12,12 +12,15 @@ function AdminContractorDetailsPage() {
     const { id } = useParams();
     //! This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor);
+    const allLanguages = useSelector(store => store.allLanguages);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
     const refreshPage = () => {
         console.log('This is the ID', id)
         // Currently an error in this dispatch
-        dispatch({type: 'GET_CONTRACTOR', payload: id })
+        dispatch({type: 'GET_CONTRACTOR', payload: id });
+        dispatch({type: 'GET_ALL_SERVICES'});
+        dispatch({type: 'GET_ALL_LANGUAGES'});
     }
 
     const handleAvail = () => {
@@ -84,7 +87,6 @@ useEffect(() => {
     refreshPage();
 }, [])
 
-// TODO: When requesting from DB, need project_language.contractor_id matched with contractor.id
 
 // TODO: Add editability to contractor details page
 // Page should include: Contact name, country, timezone
@@ -98,6 +100,7 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
+            {JSON.stringify(allLanguages)}
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}

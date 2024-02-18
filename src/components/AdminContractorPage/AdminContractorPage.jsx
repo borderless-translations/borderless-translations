@@ -17,10 +17,12 @@ function AdminContractorPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const allContractors = useSelector(store => store.allContractors);
+    const allLanguages = useSelector(store => store.allLanguages);
 
     const getContractors = () => {
         // Grabs list of all contractors from store
         dispatch({type: 'GET_ALL_CONTRACTORS'});
+        dispatch({type: 'GET_ALL_LANGUAGES'});
     }
 
     const handleAvail = (id) => {
@@ -42,6 +44,7 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
+        {JSON.stringify(allLanguages)}
         <p>Table of Contractors here</p>
         <table className="adminContractorTable">
             <thead>
