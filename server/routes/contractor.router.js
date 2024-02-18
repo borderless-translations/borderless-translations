@@ -26,7 +26,7 @@ router.get('/', requireAdmin, (req, res) => {
 router.get('/:id', requireAdmin, (req, res) => {
     let querytext = `
         SELECT "contractor_profile".*, "user"."type" AS "user_type", "languages"."name" AS "language_name", 
-        "services"."type" AS "service_type"
+        "services"."id" AS "service_id"
         FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
@@ -111,11 +111,13 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     // ! Pull language IDs and service IDs in order to make changes. They have to be toggle options
     // ! They cannot be typed. Need relational connection in database
 	let querytext = `
-	    UPDATE "contractor_profile"
-        SET "contractor_name" = $1, "location" = $2, "timezone" = $3, "linkedIn" = $4,
-        "services" = $5, "languages" = $6
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext,[
+        req.body.contractor_name,
+        req.body.location,
+        req.body.timezone,
+        req.body.linkedIn,
+    ])
         .then((result) => {
             // Code to send goes here
             res.sendStatus(200)

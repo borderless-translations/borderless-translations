@@ -7,12 +7,26 @@ function AdminContractorModal({ closeModal, defaultValues }) {
     const dispatch = useDispatch();
     let [contractor, setContractor] = useState(defaultValues);
     const [toggleLanguage, setToggleLanguage] = useState(true)
+    const [selectedServices, setSelectedServices] = useState([]);
     const allServices = useSelector(store => store.allServices);
     const allLanguages = useSelector(store => store.allLanguages);
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
         console.log(contractor);
+    };
+
+    const handleCheckboxChange = (event) => {
+        const serviceId = event.target.value;
+        const isChecked = event.target.checked;
+
+        setSelectedServices((prevServices) => {
+            if (isChecked) {
+                return [... prevServices, serviceId];
+            } else {
+                return prevServices.filter((id) => id !== serviceId)
+            }
+        });
     };
 
     const handleSubmit = (event) => {
@@ -78,10 +92,11 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         {allServices.map((service, i) => (
                             <div key={i}>
                                 <input 
-                                    name={service.type}
+                                    name="service"
+                                    value={service.id}
                                     type="checkbox"
-                                    checked={contractor.service_type == service.type ? "checked" : ''}
-                                    onChange={() => handleChangeFor(contractor.service_type, service.type)}
+                                    checked={selectedServices.includes(service.id)}
+                                    onChange={handleCheckboxChange}
                                 />{service.type}
                             </div>
                         ))}

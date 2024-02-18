@@ -12,6 +12,8 @@ function AdminContractorDetailsPage() {
     const { id } = useParams();
     //! This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor);
+    const [selectedServices, setSelectedServices] = useState([contractorDetails.service_id]);
+    const allServices = useSelector(store => store.allServices);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
 
     const refreshPage = () => {
@@ -21,6 +23,18 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_ALL_SERVICES'});
         dispatch({type: 'GET_ALL_LANGUAGES'});
     }
+    const handleCheckboxChange = (event) => {
+        const serviceId = event.target.value;
+        const isChecked = event.target.checked;
+
+        setSelectedServices((selectedServices) => {
+            if (isChecked) {
+                return [... selectedServices, serviceId];
+            } else {
+                return selectedServices.filter((id) => id !== serviceId)
+            }
+        });
+    };
 
     const handleAvail = () => {
         console.log('Set available to the opposite', id)
@@ -99,6 +113,7 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             {JSON.stringify(contractorDetails)}
+            <p>{selectedServices}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
@@ -106,7 +121,21 @@ useEffect(() => {
             <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
-            <p><strong>Services:</strong> {contractorDetails.service_type}</p>
+            <p><div className="form-group">
+                    <label htmlFor="service_type"><strong>Services:</strong>
+                        {allServices.map((service, i) => (
+                            <div key={i}>
+                                <input 
+                                    name="service"
+                                    value={service.id}
+                                    type="checkbox"
+                                    checked={selectedServices.includes(service.id)}
+                                    onClick={handleCheckboxChange}
+                                />{service.type}
+                            </div>
+                        ))}</label>
+                        </div>
+            </p>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             <button onClick={editContractor}>Edit</button>
             {/* <h3>Current Projects</h3>
