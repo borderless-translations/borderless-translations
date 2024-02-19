@@ -6,25 +6,22 @@ function AdminContractorServicesModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
     let [contractor, setContractor] = useState(defaultValues);
-    const [selectedServices, setSelectedServices] = useState([contractor.service_id]);
+    const [selectedServices, setSelectedServices] = useState([]);
     const allServices = useSelector(store => store.allServices);
 
     const handleCheckboxChange = (event) => {
-        const serviceId = event.target.value;
+        const {value, checked} = event.target;
         const isChecked = event.target.checked;
-        console.log(selectedServices)
-        console.log('serviceId is', serviceId)
+        console.log(`${value} is ${checked}`)
 
-        setSelectedServices((prevSelectedServices) => {
             if (isChecked) {
-                console.log(serviceId, "is checked")
-                return [... prevSelectedServices, serviceId];
+                setSelectedServices([...selectedServices, value])
             } else {
-                console.log(serviceId, 'not checked')
-                return prevSelectedServices.filter((selectedServiceId) => selectedServiceId !== serviceId)
+                setSelectedServices(selectedServices.filter(
+                        (event) => event !== value
+                    )
+                )
             }   
-        });
-        console.log('After State Update', selectedServices);
     };
 
     const handleSubmit = (event) => {
@@ -45,10 +42,9 @@ function AdminContractorServicesModal({ closeModal, defaultValues }) {
                         {allServices.map((service, i) => (
                             <div key={i}>
                                 <input 
-                                    name="service"
+                                    name="services"
                                     value={service.id}
                                     type="checkbox"
-                                    checked={selectedServices.includes(service.id)}
                                     onChange={handleCheckboxChange}
                                 />{service.type}
                             </div>
