@@ -10,7 +10,7 @@ function* getContractor(action) {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get(`/api/contractor/${action.payload.id}`, config);
+        const response = yield axios.get(`/api/contractor/${action.payload}`, config);
 
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] });
 
