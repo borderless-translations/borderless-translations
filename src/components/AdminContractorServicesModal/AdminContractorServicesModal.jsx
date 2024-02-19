@@ -12,16 +12,19 @@ function AdminContractorServicesModal({ closeModal, defaultValues }) {
     const handleCheckboxChange = (event) => {
         const serviceId = event.target.value;
         const isChecked = event.target.checked;
+        console.log(selectedServices)
+        console.log('serviceId is', serviceId)
 
-        setSelectedServices((selectedServices) => {
+        setSelectedServices((prevSelectedServices) => {
             if (isChecked) {
                 console.log(serviceId, "is checked")
-                return [... selectedServices, serviceId];
+                return [... prevSelectedServices, serviceId];
             } else {
                 console.log(serviceId, 'not checked')
-                return selectedServices.filter((serviceId) => serviceId !== serviceId)
-            }
+                return prevSelectedServices.filter((selectedServiceId) => selectedServiceId !== serviceId)
+            }   
         });
+        console.log('After State Update', selectedServices);
     };
 
     const handleSubmit = (event) => {

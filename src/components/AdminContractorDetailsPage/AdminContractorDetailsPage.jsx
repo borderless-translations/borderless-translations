@@ -16,7 +16,7 @@ function AdminContractorDetailsPage() {
     const contractorDetails = useSelector(store => store.contractor);
     const completedProjects = useSelector(store => store.completedProjects);
     const ongoingProjects = useSelector(store => store.ongoingProjects);
-    const [selectedServices, setSelectedServices] = useState([contractorDetails.service_id]);
+    const [selectedServices, setSelectedServices] = useState([])
     const allServices = useSelector(store => store.allServices);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
@@ -31,18 +31,18 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_ALL_LANGUAGES'});
     }
     const handleCheckboxChange = (event) => {
-        const serviceId = event.target.value;
+        const {value, checked} = event.target;
         const isChecked = event.target.checked;
+        console.log(`${value} is ${checked}`)
 
-        setSelectedServices((selectedServices) => {
             if (isChecked) {
-                console.log(serviceId, "is checked")
-                return [... selectedServices, serviceId];
+                setSelectedServices([...selectedServices, value])
             } else {
-                console.log(serviceId, 'not checked')
-                return selectedServices.filter((serviceId) => serviceId !== serviceId)
-            }
-        });
+                setSelectedServices(selectedServices.filter(
+                        (event) => event !== value
+                    )
+                )
+            }   
     };
 
     const handleAvail = () => {
@@ -110,10 +110,13 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
+useEffect(() => {
+    console.log('After State Update', selectedServices);
+}, [selectedServices])
 
 useEffect(() => {
     refreshPage();
-}, [selectedServices]);
+}, []);
 
 
 // TODO: Add editability to contractor details page
@@ -144,10 +147,9 @@ useEffect(() => {
                         {allServices.map((service, i) => (
                             <div key={i}>
                                 <input 
-                                    name="service"
+                                    name="services"
                                     value={service.id}
                                     type="checkbox"
-                                    checked={selectedServices.includes(service.id) ? "checked" : ""}
                                     onChange={handleCheckboxChange}
                                 />{service.type}
                             </div>
@@ -157,9 +159,9 @@ useEffect(() => {
             <button onClick={editContractorServices}>Edit Contractor Services</button>
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             
-            {/* <h3>Current Projects</h3>
+            <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>
-            <p><strong>Project Name:</strong> {contractorDetails.project[0].name}, <strong>Languages:</strong> {contractorDetails.project[0].language}, <strong>Status:</strong> {contractorDetails.project[0].status}</p> */}
+            {/* <p><strong>Project Name:</strong> {contractorDetails.project[0].name}, <strong>Languages:</strong> {contractorDetails.project[0].language}, <strong>Status:</strong> {contractorDetails.project[0].status}</p> */}
             {/* {contractorDetails.project.map((project, i) => {
                 return (project.status === 'Completed' ?
                 <>
@@ -171,9 +173,9 @@ useEffect(() => {
                 <p>{project.name} - {project.language} - {project.status}</p>
                 </>
             )})} */}
-            {/* <h3>Completed Projects</h3>
+            <h3>Completed Projects</h3>
             <p>This is where the contractor's old/completed projects should be displayed.</p>
-            <p><strong>Project Name:</strong> {contractorDetails.project[1].name}, <strong>Languages:</strong> {contractorDetails.project[1].language}, <strong>Status:</strong> {currentDetails.project[1].status}</p> */}
+            {/* <p><strong>Project Name:</strong> {contractorDetails.project[1].name}, <strong>Languages:</strong> {contractorDetails.project[1].language}, <strong>Status:</strong> {currentDetails.project[1].status}</p> */}
 
             
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>

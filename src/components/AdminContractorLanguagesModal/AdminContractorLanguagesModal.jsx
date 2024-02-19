@@ -12,6 +12,7 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
     const handleCheckboxChange = (event) => {
         const languageId = event.target.value;
         const isChecked = event.target.checked;
+        console.log(selectedLanguages)
 
         setSelectedLanguages((selectedLanguages) => {
             if (isChecked) {
