@@ -14,8 +14,6 @@ CREATE TABLE "clients" (
 	CONSTRAINT "clients_pk" PRIMARY KEY ("id")
 );
 
-
-
 CREATE TABLE "projects" (
 	"id" SERIAL NOT NULL,
 	"admin_id" INTEGER NOT NULL,
@@ -26,8 +24,6 @@ CREATE TABLE "projects" (
 	"due_at" DATE NOT NULL,
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
-
-
 
 CREATE TABLE "contractor_profile" (
 	"id" SERIAL NOT NULL,

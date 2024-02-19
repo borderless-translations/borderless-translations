@@ -39,7 +39,7 @@ const handleAddClient = () => {
             return (
               <tr key={client.id}>
                 <td>
-                  <Link to={`/client/details/${client.id}`}>{client.name}</Link>  
+                  <Link to={`/client/details/${client.id}`}>{client.client}</Link>  
                 </td>
                 <td>{client.bidding_projects}</td>
                 <td>{client.open_projects}</td>
