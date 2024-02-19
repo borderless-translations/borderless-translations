@@ -6,7 +6,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [client, setClient] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "" });
+        let [client, setClient ] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "" });
 
     const handleChangeFor = (key, value) => {
         setClient({ ...client, [key]: value });
@@ -32,7 +32,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <lable htmlFor="client">Client:</lable>
+                        <label htmlFor="client">Client:</label>
                         <input
                             name="client"
                             type="text"
@@ -41,7 +41,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="contact">Contact:</lable>
+                        <label htmlFor="contact">Contact:</label>
                         <input
                             name="contact"
                             type="text"
@@ -50,7 +50,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="email">E-Mail:</lable>
+                        <label htmlFor="email">E-Mail:</label>
                         <input
                             name="email"
                             type="text"
@@ -59,7 +59,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="phone">Phone:</lable>
+                        <label htmlFor="phone">Phone:</label>
                         <input
                             name="phone"
                             type="text"
@@ -68,7 +68,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="timezone">Name:</lable>
+                        <label htmlFor="timezone">Name:</label>
                         <input
                             name="name"
                             type="timezone"

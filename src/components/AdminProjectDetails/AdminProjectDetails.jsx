@@ -20,7 +20,7 @@ function AdminProjectDetails(){
         <>
         <h1>Hello World</h1>
 
-        <button onClick={() => history.push("/project")}>Return to Project List</button>
+        <button onClick={() => history.push("/admin/project")}>Return to Project List</button>
         </>
     )
 }

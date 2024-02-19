@@ -1,10 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import { Card, CardContent, Typography, Paper, Grid, Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
 
 
 
@@ -20,14 +21,25 @@ function AdminProjectPage(){
         {id: 3, name: "Mayo Clinic", area_expertise: "Science - Medical", media: "Video", service: "Closed Captions", contract_status: "Signed", from_language: "English", to_language: "Korean"},
     ]
 
+    // const segments = [
+    //     {id: 1, segmentName: "Conditionals", translator: "Brock Nelson", status: "Available", proofreader: }
+    // ]
     useEffect(() => {
         dispatch({ type: 'GET_ALL_PROJECTS' })       
       }, []);
+
+
+      const [modalOpen, setModalOpen] = useState(false);
+
+      const handleAddProject = () => {
+        setModalOpen(true)
+      }
 
     return(
         <>
         <div>
             <h2>Admin Project Main</h2>
+            <button onClick={() => handleAddProject()}>Add Project</button>
             <table>
                 <thead>
                     <tr>
@@ -72,6 +84,7 @@ function AdminProjectPage(){
                     })}
                 </tbody>
             </table>
+            {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false)}} defaultValues={null} />}
         </div>
         </>
     )  
