@@ -33,6 +33,7 @@ CREATE TABLE "contractor_profile" (
 	"id" SERIAL NOT NULL,
 	"user_id" INTEGER NOT NULL,
 	"contractor_name" VARCHAR NOT NULL,
+	"phone" VARCHAR NOT NULL,
 	"available" BOOLEAN NOT NULL,
 	"timezone" VARCHAR NOT NULL,
 	"location" TEXT,
@@ -41,7 +42,7 @@ CREATE TABLE "contractor_profile" (
 	"status" TEXT NOT NULL,
 	"via" TEXT NOT NULL,
 	"signed_nda" BOOLEAN NOT NULL,
-	"notes" TEXT NOT NULL,
+	"notes" TEXT,
 	"base_written_rate" DECIMAL NOT NULL,
 	"base_audio_video_rate" DECIMAL NOT NULL,
 	CONSTRAINT "contractor_profile_pk" PRIMARY KEY ("user_id")
