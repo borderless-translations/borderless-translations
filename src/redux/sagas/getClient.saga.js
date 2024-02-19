@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
-import { useDispatch } from 'react-redux';
 
 function* getClient(action) {
-    const dispatch = useDispatch();
+   
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
@@ -15,7 +14,7 @@ function* getClient(action) {
         const response = yield axios.get(`/api/client/${action.payload.id}`, config);
 
         // Calling getClientProjects saga
-        dispatch({type: "GET_CLIENT_PROJECTS", payload: {id: action.payload.id}});
+        yield put ({type: "GET_CLIENT_PROJECTS", payload: {id: action.payload.id}});
 
         // adding client data to reducer client
         yield put({ type: 'SET_CLIENT', payload: response.data[0] });

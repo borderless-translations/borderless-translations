@@ -11,7 +11,7 @@ function* getAllContractors() {
 
         // TODO: Set to correct URL and request type
         const response = yield axios.get('/api/contractor', config);
-
+        console.log('This is your response data', response.data)
         // Puts the response in the reducer allContractors
         yield put({ type: 'SET_ALL_CONTRACTORS', payload: response.data });
 
