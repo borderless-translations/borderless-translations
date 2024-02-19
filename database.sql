@@ -143,3 +143,6 @@ VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-
 
 INSERT INTO "user" ("username","password","type")
 VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc','Contractor'),('Robin', '321xyz','Contractor'),('Brock','a1b2c3','Admin'),('J','c3b2a1','Proofreader');
+
+INSERT INTO "client" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
+VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
