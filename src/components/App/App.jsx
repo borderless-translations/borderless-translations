@@ -81,7 +81,7 @@ function App() {
           <ProtectedRoute
 
             exact
-            path="/project"
+            path="/admin/project"
             >
               <AdminProjectPage />
             </ProtectedRoute>

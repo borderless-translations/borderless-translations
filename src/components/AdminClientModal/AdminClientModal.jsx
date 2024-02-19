@@ -8,6 +8,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
 
         let [client, setClient] = useState(defaultValues || { client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
 
+
     const handleChangeFor = (key, value) => {
         setClient({ ...client, [key]: value });
     };
@@ -50,7 +51,11 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
+
+                        <label htmlFor="email">E-Mail:</label>
+
                         <label htmlFor="country">Country:</label>
+
                         <input
                             name="country"
                             type="text"
@@ -86,7 +91,11 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
+
+                        <label htmlFor="timezone">Name:</label>
+
                         <label htmlFor="client_notes">Client Notes:</label>
+
                         <input
                             name="client_notes"
                             type="text"
