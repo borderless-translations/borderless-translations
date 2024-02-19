@@ -15,11 +15,11 @@ function AdminClientDetails() {
 
     
     useEffect(() => {
-        dispatch({ type: "GET_CLIENT", payload: params.id });
+        dispatch({ type: "GET_CLIENT", payload:{id: params.id }});
     }, [params.id]);
 
     useEffect(() => {
-        dispatch({ type:"GET_CLIENT_PROJECTS", payload: params.id });
+        dispatch({ type:"GET_CLIENT_PROJECTS", payload:{id: params.id }});
     }, [params.id]);
 
 
@@ -36,7 +36,7 @@ function AdminClientDetails() {
             projectsByStatus: projects.filter(project => project.project_status === status)
         }));
         setSortedProjects(sorted);
-    }, [client])
+    }, [clientProjects])
 
     // Controls for operating the modal
     const [modalOpen, setModalOpen] = useState(false);
@@ -56,8 +56,6 @@ function AdminClientDetails() {
             <p>{client.email}</p>
             <p>{client.phone}</p>
             <p>{client.timezone}</p>
-
-
 
 
             <button onClick={() => handleEditClient(client)}>Edit Client</button>
