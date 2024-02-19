@@ -6,11 +6,11 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // GET all languages
-router.get('/language', rejectUnauthenticated, (req, res) => {
+router.get('/language', requireAdmin, (req, res) => {
 	let querytext = `
 		SELECT * FROM "languages";
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext)
 		.then((result) => {
 			res.send(result.rows);
 		})

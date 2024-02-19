@@ -98,7 +98,7 @@ function App() {
           <ProtectedRoute
             // logged in shows Admin Client Main Page else shows LoginPage
             exact
-            path="/client"
+            path="/admin/client"
           >
             <AdminClientMain />
           </ProtectedRoute>

@@ -8,7 +8,7 @@ function* getAllLanguages() {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+        
         const response = yield axios.get(`/api/settings/language`, config); // GET languages from DB. Requires admin
 
         // Stores result in allLanguages.reducer
