@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
-import { useDispatch } from 'react-redux';
 
 function* getClient(action) {
    
