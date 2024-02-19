@@ -24,6 +24,7 @@ CREATE TABLE "projects" (
 	"duration" TEXT,
 	"created_at" DATE NOT NULL,
 	"due_at" DATE NOT NULL,
+	"status" VARCHAR NOT NULL,
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
 
