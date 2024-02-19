@@ -8,11 +8,11 @@ function* updateContractor(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
-        yield axios.put(`/api/contractor/${action.payload.id}`, action.payload, config); // PUT contractor object
+        console.log(action.payload)
+        yield axios.put(`/api/contractor/${action.payload.user_id}`, action.payload, config); // PUT contractor object
         const response = yield axios.get(`/api/contractor/${action.payload.id}`, config) // Retrieve updated contractor object
 
-        // Adding updated client data to reducer client
+        // Adding updated contractor data to reducer contractor
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] });
     }
     catch (error) {
@@ -20,7 +20,7 @@ function* updateContractor(action) {
     }
 }
 
-// Worker function  - Saga: will be fired on "UPDATE_CLIENT" actions
+// Worker function  - Saga: will be fired on "UPDATE_CONTRACTOR" actions
 function* updateContractorSaga() {
     yield takeLatest('UPDATE_CONTRACTOR', updateContractor);
 }

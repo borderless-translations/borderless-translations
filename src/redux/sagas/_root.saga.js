@@ -25,7 +25,7 @@ import updateTranslatorStatusSaga from './updateTranslatorStatus.saga';
 import updateProofreaderStatusSaga from './updateProofreaderStatus.saga';
 import updateContractorSaga from './updateContractor.saga';
 import setUserAuthSaga from './setUserAuth.saga';
-import getAllLanguagesSaga from './getAllProjects.saga';
+import getAllLanguagesSaga from './getAllLanguages.saga';
 import createNewLanguageSaga from './createNewLanguage.saga';
 import deleteLanguageSaga from './deleteLanguage.saga';
 import getAllServicesSaga from './getAllServices.saga';

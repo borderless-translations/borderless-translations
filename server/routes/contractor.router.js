@@ -24,11 +24,15 @@ router.get('/', requireAdmin, (req, res) => {
 
 // GET specific contractor info. Requires admin status
 router.get('/:id', requireAdmin, (req, res) => {
-    console.log('req.params.id is', req.params.id)
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT "contractor_profile".*, "user"."type" AS "user_type", "languages"."name" AS "language_name", 
+        "services"."id" AS "service_id"
+        FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
+        JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
+        JOIN "languages" ON "languages"."id" = "contractor_profile"."language_profile"
+        JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
@@ -103,11 +107,17 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * PUT route template
  */
-router.put('/', rejectUnauthenticated, (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+    // ! Pull language IDs and service IDs in order to make changes. They have to be toggle options
+    // ! They cannot be typed. Need relational connection in database
 	let querytext = `
-	    // QUERY GOES HERE
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext,[
+        req.body.contractor_name,
+        req.body.location,
+        req.body.timezone,
+        req.body.linkedIn,
+    ])
         .then((result) => {
             // Code to send goes here
             res.sendStatus(200)
@@ -118,7 +128,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
         })
     ;
 })
-
 // Toggle availability for self
 router.put('/availability', rejectUnauthenticated, (req, res) => {
 	let querytext = `

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
+import './AdminContractorPage.css';
 
 
 function AdminContractorPage() {
@@ -16,10 +17,12 @@ function AdminContractorPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const allContractors = useSelector(store => store.allContractors);
+    const allLanguages = useSelector(store => store.allLanguages);
 
     const getContractors = () => {
         // Grabs list of all contractors from store
         dispatch({type: 'GET_ALL_CONTRACTORS'});
+        dispatch({type: 'GET_ALL_LANGUAGES'});
     }
 
     const handleAvail = (id) => {
@@ -27,7 +30,6 @@ function AdminContractorPage() {
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
     }
 
-    //! This will break the page until other side is fully set up
     const handleDetails = (id) => {
         // Will grab details from store
         console.log(allContractors)
@@ -42,9 +44,8 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
-        <button onClick={() => handleDetails()}>Click Me</button>
+        {JSON.stringify(allLanguages)}
         <p>Table of Contractors here</p>
-        {JSON.stringify(allContractors)}
         <table className="adminContractorTable">
             <thead>
                 <tr>

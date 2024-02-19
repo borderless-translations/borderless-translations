@@ -1,0 +1,11 @@
+.adminContractorTable, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    color: black;
+    margin: 5px;
+  }
+
+  th, td {
+    margin: 5px;
+    padding: 5px;
+  }
