@@ -8,7 +8,7 @@ function* createNewClient(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+        
         yield axios.post('/api/client', action.payload); // POST new client
 
     }

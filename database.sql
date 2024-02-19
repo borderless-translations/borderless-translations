@@ -2,15 +2,15 @@
 
 CREATE TABLE "clients" (
 	"id" SERIAL NOT NULL,
-	"client" INTEGER NOT NULL,
-	"contact" TEXT NOT NULL,
-	"country" TEXT NOT NULL,
-	"timezone" VARCHAR NOT NULL,
+	"client" VARCHAR(255) NOT NULL,
+	"contact" VARCHAR(255) NOT NULL,
+	"country" VARCHAR(150),
+	"timezone" VARCHAR(64),
 	"location" TEXT,
-	"email" VARCHAR NOT NULL,
-	"phone" VARCHAR NOT NULL,
-	"client_notes" VARCHAR,
-	"created_at" DATE NOT NULL,
+	"email" VARCHAR(320),
+	"phone" VARCHAR(50),
+	"client_notes" TEXT,
+	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "clients_pk" PRIMARY KEY ("id")
 );
 
@@ -141,3 +141,6 @@ VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-
 
 INSERT INTO "user" ("username","password","type")
 VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc','Contractor'),('Robin', '321xyz','Contractor'),('Brock','a1b2c3','Admin'),('J','c3b2a1','Proofreader');
+
+
+
