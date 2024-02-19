@@ -28,6 +28,7 @@ import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContr
 import ContractorDashboard from '../ContractorDashboard/ContractorDashboard';
 import ContractorProfileSettings from '../ContractorProfileSettings/ContractorProfileSettings';
 import ContractorProjectDetails from '../ContractorProjectDetails/ContractorProjectDetails';
+import Settings from '../Settings/Settings';
 
 
 import './App.css';
@@ -150,6 +151,14 @@ function App() {
             path="/project/details/:id"
           >
             <ContractorProjectDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Admin Settings Page else shows LoginPage
+            exact 
+            path="/settings"
+          >
+            <Settings />
           </ProtectedRoute>
 
           <Route
