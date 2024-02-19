@@ -6,7 +6,8 @@ function AdminClientModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [client, setClient ] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "" });
+        let [client, setClient] = useState(defaultValues || { client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
+
 
     const handleChangeFor = (key, value) => {
         setClient({ ...client, [key]: value });
@@ -15,13 +16,13 @@ function AdminClientModal({ closeModal, defaultValues }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (defaultValues === null) {
-            dispatch({ type: 'ADD_CLIENT', payload: client });
-            console.log("Sent client information to server");
+            dispatch({ type: 'CREATE_NEW_CLIENT', payload: client });
+            console.log("Sent client information to server", client);
         } else {
             dispatch({ type: "UPDATE_CLIENT", payload: client });
             console.log("Updated client information on server", client);
         }
-        setClient({ name: "", contact: "", email: "", phone: "", timezone: "" });
+        setClient({client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: ""});
         closeModal();
     };
 
@@ -36,8 +37,8 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         <input
                             name="client"
                             type="text"
-                            value={client.name}
-                            onChange={(event) => handleChangeFor("name", event.target.value)}
+                            value={client.client}
+                            onChange={(event) => handleChangeFor("client", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -50,10 +51,32 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
+
+                        <label htmlFor="email">E-Mail:</label>
+
+                        <label htmlFor="country">Country:</label>
+
+                        <input
+                            name="country"
+                            type="text"
+                            value={client.country}
+                            onChange={(event) => handleChangeFor("country", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="timezone">Time Zone:</label>
+                        <input
+                            name="timezone"
+                            type="text"
+                            value={client.timezone}
+                            onChange={(event) => handleChangeFor("timezone", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="email">E-Mail:</label>
                         <input
                             name="email"
-                            type="text"
+                            type="email"
                             value={client.email}
                             onChange={(event) => handleChangeFor("email", event.target.value)}
                         />
@@ -68,12 +91,16 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
+
                         <label htmlFor="timezone">Name:</label>
+
+                        <label htmlFor="client_notes">Client Notes:</label>
+
                         <input
-                            name="name"
-                            type="timezone"
-                            value={client.timezone}
-                            onChange={(event) => handleChangeFor("timezone", event.target.value)}
+                            name="client_notes"
+                            type="text"
+                            value={client.client_notes}
+                            onChange={(event) => handleChangeFor("client_notes", event.target.value)}
                         />
                     </div>
                     <button type="submit">Save</button>

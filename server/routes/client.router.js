@@ -59,19 +59,25 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
-	let querytext = `
-	    // QUERY GOES HERE
-	`;
-	pool.query(querytext,[])
-        .then((result) => {
-            // Code to send goes here
-            res.sendStatus(201)
-        })
+	const queryText = `
+	   INSERT INTO "clients" ("client", "contact", "country", "timezone", "location", "email", "phone", "client_notes") 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+    const queryValues = [
+        req.body.client,
+        req.body.contact,
+        req.body.country,
+        req.body.timezone,
+        req.body.location,
+        req.body.email,
+        req.body.phone,
+        req.body.client_notes
+    ];
+	pool.query(queryText, queryValues)
+        .then(() => {res.sendStatus(201)})
         .catch((error) => {
             console.error("Error in POST", error);
             res.sendStatus(500);
-        })
-	;
+        });
 });
 
 // TODO: Need finalized columns for PUT

@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
-
-        let [contractor, setContractor] = useState(defaultValues || { name: "", contact: "", email: "", phone: "", timezone: "", available: true });
+    let [contractor, setContractor] = useState(defaultValues);
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
+        console.log(contractor);
     };
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // if (defaultValues === null) {
-        //     dispatch({ type: 'ADD_CLIENT', payload: client });
-        //     console.log("Sent client information to server");
-        // } else {
-        //     dispatch({ type: "UPDATE_CLIENT", payload: client });
-        //     console.log("Updated client information on server", client);
-        // }
-        setContractor({ name: "", contact: "", email: "", phone: "", timezone: "", available: true});
+        dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
+        console.log("Updated contractor information on server", contractor);
         closeModal();
     };
 
@@ -33,16 +26,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <lable htmlFor="client">Contractor:</lable>
+                        <label htmlFor="contractor_name">Contractor:</label>
                         <input
-                            name="client"
+                            name="contractor_name"
                             type="text"
-                            value={contractor.name}
-                            onChange={(event) => handleChangeFor("name", event.target.value)}
+                            value={contractor.contractor_name}
+                            onChange={(event) => handleChangeFor("contractor_name", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="contact">Contact:</lable>
+                        <label htmlFor="contact">Contact:</label>
                         <input
                             name="contact"
                             type="text"
@@ -51,7 +44,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="email">E-Mail:</lable>
+                        <label htmlFor="email">E-Mail:</label>
                         <input
                             name="email"
                             type="text"
@@ -60,7 +53,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="phone">Phone:</lable>
+                        <label htmlFor="phone">Phone:</label>
                         <input
                             name="phone"
                             type="text"
@@ -69,21 +62,12 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <lable htmlFor="timezone">Timezone:</lable>
+                        <label htmlFor="timezone">Timezone:</label>
                         <input
                             name="name"
                             type="timezone"
                             value={contractor.timezone}
                             onChange={(event) => handleChangeFor("timezone", event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <lable htmlFor="available">Available:</lable>
-                        <input
-                            name="name"
-                            type="available"
-                            value={contractor.available ? "Available" : "Unavailable"}
-                            onChange={(event) => handleChangeFor("available", event.target.value)}
                         />
                     </div>
                     <button type="submit">Save</button>
