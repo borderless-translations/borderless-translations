@@ -9,7 +9,9 @@ const router = express.Router();
 // GET all contractors. Requires admin status
 router.get('/', requireAdmin, (req, res) => {
     let querytext = `
-    SELECT * FROM "contractor_profile";
+        SELECT * FROM "contractor_profile"
+        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
+        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
     `;
     pool.query(querytext)
         .then((result) => {
@@ -24,14 +26,9 @@ router.get('/', requireAdmin, (req, res) => {
 // GET specific contractor info. Requires admin status
 router.get('/:id', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT "contractor_profile".*, "user"."type" AS "user_type", "languages"."name" AS "language_name", 
-        "services"."id" AS "service_id"
-        FROM "contractor_profile"
+        SELECT * FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
-        JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
-        JOIN "languages" ON "languages"."id" = "contractor_profile"."language_profile"
-        JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
@@ -106,17 +103,11 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * PUT route template
  */
-router.put('/:id', rejectUnauthenticated, (req, res) => {
-    // ! Pull language IDs and service IDs in order to make changes. They have to be toggle options
-    // ! They cannot be typed. Need relational connection in database
+router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
+	    // QUERY GOES HERE
 	`;
-	pool.query(querytext,[
-        req.body.contractor_name,
-        req.body.location,
-        req.body.timezone,
-        req.body.linkedIn,
-    ])
+	pool.query(querytext,[])
         .then((result) => {
             // Code to send goes here
             res.sendStatus(200)
@@ -127,6 +118,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
         })
     ;
 })
+
 // Toggle availability for self
 router.put('/availability', rejectUnauthenticated, (req, res) => {
 	let querytext = `
@@ -146,14 +138,13 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
 })
 
 // Toggle availability for admin
-router.put('/availability-admin/:id', requireAdmin, (req, res) => {
-    console.log('req.params.id is', req.params.id)
+router.put('/availability-admin', requireAdmin, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile"
         SET "available" = NOT "available"
         WHERE "contractor_profile"."user_id" = $1;
 	`;
-	pool.query(querytext,[req.params.id])
+	pool.query(querytext,[req.body.id])
         .then((result) => {
             res.sendStatus(200)
         })
@@ -168,13 +159,13 @@ router.put('/availability-admin/:id', requireAdmin, (req, res) => {
 // Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
 router.put('/settings', rejectUnauthenticated, (req, res) => {
 	let querytext = `UPDATE contractor_profile SET available = ${req.body.params.available}, 
-        name = ${req.body.params.name}, 
+        contractor_name = ${req.body.params.name}, 
         linkedIn = ${req.body.params.linkedIn}, 
-        email = ${req.body.params.email}, 
+        // email = ${req.body.params.email}, 
         timezone = ${req.body.params.timezone}, 
-        language_pairs: ${req.body.params.languagePairs}
-        skills = ${req.body.params.skills},
-        services = ${req.body.params.services},
+        language_profile = ${req.body.params.languagePairs},
+        // skills = ${req.body.params.skills},
+        // services = ${req.body.params.services},
         written_rate = ${req.body.params.writtenRate},
         minute_rate = ${req.body.params.minuteRate}
         WHERE id = ${req.body.params.id}

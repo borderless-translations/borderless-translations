@@ -9,7 +9,6 @@ function ContractorDashboard() {
     const user = useSelector(store => store.user);
     const ongoingProjects = useSelector(store => store.ongoingProjects);
     const completedProjects = useSelector(store => store.completedProjects);
-    console.log(ongoingProjects, completedProjects);
 
     const toProject = (projectId) => {
         const action = { type: 'GET_PROJECT', payload: projectId };
@@ -18,7 +17,7 @@ function ContractorDashboard() {
             history.push(`/user/project/details/${projectId}`);
         }, 500);
     }
-
+    
     const role = (project) => {
         if (user.id === project.contractor_id) {
             return 'Translator'
@@ -31,7 +30,7 @@ function ContractorDashboard() {
     useEffect(() => {
         dispatch({ type: "GET_ONGOING_PROJECTS" });
         dispatch({ type: "GET_COMPLETED_PROJECTS" });
-      }, []);
+      }, [user.id]);
 
     return (
         <div className="container">
