@@ -8,7 +8,7 @@ function SettingsLanguage() {
 
     useEffect(() => {
         dispatch({ type: 'GET_ALL_LANGUAGES' });
-    }, [dispatch]);
+    }, []);
 
     const [editLanguageId, setEditLanguageId] = useState(null);
     const [editLanguageName, setEditLanguageName] = useState('');

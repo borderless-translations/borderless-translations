@@ -8,7 +8,8 @@ const router = express.Router();
 // GET all languages
 router.get('/language', requireAdmin, (req, res) => {
 	let querytext = `
-		SELECT * FROM "languages";
+		SELECT * FROM "languages" 
+		ORDER BY "name" ASC;
 	`;
 	pool.query(querytext)
 		.then((result) => {
