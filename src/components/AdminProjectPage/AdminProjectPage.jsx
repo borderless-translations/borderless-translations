@@ -21,6 +21,8 @@ function AdminProjectPage(){
         {id: 3, name: "Mayo Clinic", area_expertise: "Science - Medical", media: "Video", service: "Closed Captions", contract_status: "Signed", from_language: "English", to_language: "Korean"},
     ]
 
+    // const projects = useSelector(store => store.allProjects);
+
     // const segments = [
     //     {id: 1, segmentName: "Conditionals", translator: "Brock Nelson", status: "Available", proofreader: }
     // ]
@@ -35,6 +37,13 @@ function AdminProjectPage(){
         setModalOpen(true)
       }
 
+    const [projectToEdit, setProjectToEdit] = useState(null); 
+
+      const handleEditProject = (project) => {
+        setModalOpen(true)
+        setProjectToEdit(project)
+      }
+
     return(
         <>
         <div>
@@ -44,17 +53,11 @@ function AdminProjectPage(){
                 <thead>
                     <tr>
                         <td>Name</td>
-                        <br/>
                         <td>Area of Expertise</td>
-                        <br/>
                         <td>Media</td>
-                        <br/>
                         <td>Service</td>
-                        <br/>
                         <td>Contract Status</td>
-                        <br/>
-                        <td>From Language</td>
-                        <br/>
+                        <td>From Language</td>                      
                         <td>To Language</td>
                     </tr>
                 </thead>
@@ -65,26 +68,19 @@ function AdminProjectPage(){
                                 <td>
                                     <Link to={`/project/details/${project.id}`}>{project.name}</Link>
                                 </td>
-                                <br/>
                                 <td>{project.area_expertise}</td>
-                                <br/>
                                 <td>{project.media}</td>
-                                <br/>
                                 <td>{project.service}</td>
-                                <br/>
                                 <td>{project.contract_status}</td>
-                                <br/>
-                                <td>{project.from_language}</td>
-                                <br/>
+                                <td>{project.from_language}</td> 
                                 <td>{project.to_language}</td>
-                                <br/>
-                                <button>Edit Project</button>
+                                <button onClick={() => handleEditProject(project)}>Edit Project</button>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
-            {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false)}} defaultValues={null} />}
+            {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null)}} defaultValues={projectToEdit} />}
         </div>
         </>
     )  
