@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import "./ContractorDashboard.css";
@@ -6,50 +6,19 @@ import "./ContractorDashboard.css";
 function ContractorDashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
-    // const ongoingProjects = useSelector(store => store.ongoingProjects);
-    // const completedProjects = useSelector(store => store.completedProjects);
-    // Dummy data
-    const ongoingProjects = [
-        {
-            id: 1,
-            client: 'Client Name', 
-            description: 'Short project description goes here', 
-            role: 'Translator',
-            status: 'In progress',
-            due: '02-14-2024'
-        },
-        {
-            id: 2,
-            client: 'Client Name', 
-            description: 'Short project description goes here', 
-            role: 'Proofreader',
-            status: 'Not started',
-            due: '03-14-2024'
-        }
-    ]
-    const completedProjects = [
-        {
-            id: 3,
-            client: 'Client Name', 
-            description: 'Short project description goes here', 
-            role: 'Translator',
-            status: 'Complete',
-            due: '02-01-2024'
-        },
-        {
-            id: 4,
-            client: 'Client Name', 
-            description: 'Short project description goes here', 
-            role: 'Proofreader',
-            status: 'Complete',
-            due: '02-05-2024'
-        }
-    ]
+    const user = useSelector(store => store.user);
+    const ongoingProjects = useSelector(store => store.ongoingProjects);
+    const completedProjects = useSelector(store => store.completedProjects);
 
     const toProject = (projectId) => {
         dispatch({ type: 'SET_PROJECT', payload: projectId  });
         history.push(`/project/details/${projectId}`)
     }
+
+    useEffect(() => {
+        dispatch({ type: "GET_ONGOING_PROJECTS" });
+        dispatch({ type: "GET_COMPLETED_PROJECTS" });
+    }, [user.id]);
 
     return (
         <div className="container">
