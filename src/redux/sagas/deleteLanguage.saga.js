@@ -9,7 +9,7 @@ function* deleteLanguage(action) {
             withCredentials: true,
         };
         // Removing language from DB. Requires Admin
-        yield axios.delete(`/api/settings/language`, action.payload, config);
+        yield axios.delete(`/api/settings/language`, {data: action.payload, config});
         // GET for updated list
         const response = yield axios.get(`/api/settings/language`, config);
         // Storing updated list in allLanguages.reducer
@@ -17,7 +17,7 @@ function* deleteLanguage(action) {
 
     }
     catch (error) {
-        console.error('Error in POST createNewLanguage.', error);
+        console.error('Error in deleteLanguage.', error);
     }
 }
 

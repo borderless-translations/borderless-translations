@@ -63,6 +63,11 @@ function Nav() {
               Info Page
             </Link>
 
+            <Link className="navLink" to="/settings">
+              Settings Page
+            </Link>
+
+
             <LogOutButton className="navLink" />
           </>
         )}

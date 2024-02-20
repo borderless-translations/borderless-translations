@@ -18,8 +18,7 @@ router.get('/', requireAdmin, (req, res) => {
         .catch((error) => {
             console.error("Error in GET all contractors", error);
             res.sendStatus(500);
-        })
-    ;
+        });
 });
 
 // GET specific contractor info. Requires admin status
