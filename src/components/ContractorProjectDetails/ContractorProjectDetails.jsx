@@ -6,26 +6,8 @@ import "./ContractorProjectDetails.css";
 function ContractorProjectDetails() {
     const dispatch = useDispatch();
     const params = useParams();
-    // const user = useSelector(store => store.user);
-    // const project = useSelector(store => store.project);
-    // Dummy data
-    const user = {id: 3};
-    const project = {
-        client: 'Client Name', 
-        description: 'Description of project goes here.', 
-        deadline: 'dd/mm/yyyy', 
-        type: 'text/audio/video', 
-        length: '# of words', 
-        quote: '$$$$$', 
-        languages: 'Language 1 --> Language 2', 
-        translator: 'Translator 1',
-        translatorId: 3, 
-        proofreader: 'Proofreader 2',
-        proofreaderId: 4,
-        translatorStatus: 'not started',
-        proofreaderStatus: 'not started',
-        notes: 'These are the notes'
-    }
+    const user = useSelector(store => store.user);
+    const project = useSelector(store => store.project);
     const [notes, setNotes] = useState(project.notes);
     const [flagged, setFlagged] = useState(project.flagged);
     const [buttonStatus, setStatus] = useState('');
@@ -114,7 +96,7 @@ function ContractorProjectDetails() {
 
     useEffect(() => {
         setButtonStatus();
-        dispatch({ type: "GET_PROJECT", payload: params.id });
+        // dispatch({ type: "GET_PROJECT", payload: params.id });
     }, [params.id]);
 
     return (
