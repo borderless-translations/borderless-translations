@@ -45,6 +45,7 @@ router.delete('/language', requireAdmin, (req, res) => {
 		DELETE FROM "languages"
         WHERE "id" = $1;
 	`;
+	
 	pool.query(querytext,[req.body.id])
 		.then((result) => {
 			// Code to send goes here
