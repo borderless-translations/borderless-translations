@@ -20,9 +20,9 @@ CREATE TABLE "projects" (
 	"client_id" INTEGER NOT NULL,
 	"description" TEXT,
 	"duration" TEXT,
-	"created_at" DATE NOT NULL,
+	"created_at" DATE DEFAULT CURRENT_TIMESTAMP, 
 	"due_at" DATE NOT NULL,
-	"status" VARCHAR NOT NULL,
+	"status" VARCHAR DEFAULT 'NOT STARTED',
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
 
@@ -30,15 +30,14 @@ CREATE TABLE "contractor_profile" (
 	"id" SERIAL NOT NULL,
 	"user_id" INTEGER NOT NULL,
 	"contractor_name" VARCHAR NOT NULL,
-	"phone" VARCHAR NOT NULL,
-	"available" BOOLEAN NOT NULL,
-	"timezone" VARCHAR NOT NULL,
+	"phone" VARCHAR,
+	"available" BOOLEAN DEFAULT TRUE,
+	"timezone" VARCHAR,
 	"location" TEXT,
-	"language_profile" INTEGER NOT NULL,
-	"linkedIn" TEXT NOT NULL,
-	"status" TEXT NOT NULL,
-	"via" TEXT NOT NULL,
-	"signed_nda" BOOLEAN NOT NULL,
+	"linkedIn" TEXT,
+	"status" VARCHAR,
+	"via" TEXT,
+	"signed_nda" BOOLEAN DEFAULT FALSE,
 	"notes" TEXT,
 	"base_written_rate" DECIMAL NOT NULL,
 	"base_audio_video_rate" DECIMAL NOT NULL,
@@ -54,11 +53,11 @@ CREATE TABLE "project_language" (
 	"proofreader_id" INTEGER NOT NULL,
 	"from_language_id" INTEGER NOT NULL,
 	"to_language_id" INTEGER NOT NULL,
-	"text_to_translate" TEXT NOT NULL,
+	"text_to_translate" TEXT,
 	"translator_notes" TEXT,
 	"service_id" INTEGER NOT NULL,
 	"service_notes" TEXT,
-	"file_link" VARCHAR,
+	"file_link" VARCHAR (2048),
 	CONSTRAINT "project_language_pk" PRIMARY KEY ("id")
 );
 
@@ -85,9 +84,9 @@ CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
 	"username" VARCHAR NOT NULL,
 	"password" VARCHAR NOT NULL,
-	"type" VARCHAR DEFAULT 'contractor',
-	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT "user_pk" PRIMARY KEY ("id")
+	"type" VARCHAR NOT NULL,
+	"created_at" DATE NOT NULL,
+	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 );
 
 
@@ -142,5 +141,4 @@ VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc'
 
 
 INSERT INTO "client" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
-VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
-
+VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-202
