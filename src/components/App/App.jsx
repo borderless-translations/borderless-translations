@@ -148,7 +148,7 @@ function App() {
           <ProtectedRoute
             // logged in shows Contractor Project Details Page else shows LoginPage
             exact
-            path="/project/details/:id"
+            path="/user/project/details/:id"
           >
             <ContractorProjectDetails />
           </ProtectedRoute>
