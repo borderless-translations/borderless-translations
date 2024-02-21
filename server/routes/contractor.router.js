@@ -135,9 +135,9 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
         req.body.contractor_name,
         req.body.timezone,
         req.body.location,
-        req.body.linkedin,
-        req.body.writtenRate,
-        req.body.avRate,
+        req.body.linkedIn,
+        req.body.base_written_rate,
+        req.body.base_audio_video_rate,
         req.params.id
     ])
         .then((result) => {

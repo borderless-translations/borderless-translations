@@ -80,7 +80,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="timezone">LinkedIn:</label>
+                        <label htmlFor="linkedin">LinkedIn:</label>
                         <input
                             name="linkedIn"
                             type="text"
@@ -89,19 +89,19 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="timezone">Base Written Rate:</label>
+                        <label htmlFor="writtenRate">Base Written Rate:</label>
                         <input
                             name="base_written_rate"
-                            type="text"
+                            type="number"
                             value={contractor.base_written_rate}
                             onChange={(event) => handleChangeFor("base_written_rate", parseFloat(event.target.value))}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="timezone">Base AV Rate:</label>
+                        <label htmlFor="avRate">Base AV Rate:</label>
                         <input
                             name="base_audio_video_rate"
-                            type="text"
+                            type="number"
                             value={contractor.base_audio_video_rate}
                             onChange={(event) => handleChangeFor("base_audio_video_rate", parseFloat(event.target.value))}
                         />
