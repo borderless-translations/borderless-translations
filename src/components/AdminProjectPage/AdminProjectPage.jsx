@@ -16,9 +16,9 @@ function AdminProjectPage(){
     const history = useHistory();
 
     const projects = [
-        {id: 1, name: "Prime Academy", description: "Programming", duration: "Video", created_at: "Closed Captions", due_at: "Signed"},
-        {id: 2, name: "Sky Sports", description: "Sports - Rugby", duration: "Documentary", created_at: "Subtitles", due_at: "Not Signed"},
-        {id: 3, name: "Mayo Clinic", description: "Science - Medical", duration: "Video", created_at: "Closed Captions", due_at: "Signed"},
+        {id: 1, name: "Prime Digital Academy", description: "Translating a vimeo video on how sagas and reducers work in...", due_at: "03/15/24", status: "In Progress", translator_status: "Complete", proofreader_status: "In Progress", flagged: ""},
+        {id: 2, name: "Sky Sports", description: "Translating a commercial for a premier league team that will air...", due_at: "04/30/24", status: "In Progress", translator_status: "In Progress", proofreader_status: "Not Started", flagged: ""},
+        {id: 3, name: "Mayo Clinic", description: "Translating a documentary about a new breakthrough vaccine for...", due_at: "09/30/24", status: "Not Started", translator_status: "Not Started", proofreader_status:"Not Started", flagged: ""},
     ]
 
     // const projects = useSelector(store => store.allProjects);
@@ -54,9 +54,11 @@ function AdminProjectPage(){
                     <tr>
                         <td>Name</td>
                         <td>Description</td>
-                        <td>Duration</td>
-                        <td>Created At</td>
-                        <td>Due At</td>
+                        <td>Due By</td>
+                        <td>Status</td>
+                        <td>Translator Status</td>
+                        <td>Proofreader Status</td>
+                        <td>Flagged</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,9 +69,11 @@ function AdminProjectPage(){
                                     <Link to={`/project/details/${project.id}`}>{project.name}</Link>
                                 </td>
                                 <td>{project.description}</td>
-                                <td>{project.duration}</td>
-                                <td>{project.created_at}</td>
                                 <td>{project.due_at}</td>
+                                <td>{project.status}</td>
+                                <td>{project.translator_status}</td>
+                                <td>{project.proofreader_status}</td>
+                                <td>{project.flagged}</td>
                                 <button onClick={() => handleEditProject(project)}>Edit Project</button>
                             </tr>
                         )
