@@ -79,6 +79,33 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("timezone", event.target.value)}
                         />
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="timezone">LinkedIn:</label>
+                        <input
+                            name="linkedIn"
+                            type="text"
+                            value={contractor.linkedIn}
+                            onChange={(event) => handleChangeFor("linkedIn", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="timezone">Base Written Rate:</label>
+                        <input
+                            name="base_written_rate"
+                            type="text"
+                            value={contractor.base_written_rate}
+                            onChange={(event) => handleChangeFor("base_written_rate", parseFloat(event.target.value))}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="timezone">Base AV Rate:</label>
+                        <input
+                            name="base_audio_video_rate"
+                            type="text"
+                            value={contractor.base_audio_video_rate}
+                            onChange={(event) => handleChangeFor("base_audio_video_rate", parseFloat(event.target.value))}
+                        />
+                    </div>
                     <button type="submit">Save</button>
                 </form>
             </div>

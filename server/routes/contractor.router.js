@@ -124,6 +124,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //PUT Route for updating a single contractor's info
 router.put('/:id', rejectUnauthenticated, (req, res) => {
+    console.log('req.body is', req.body)
 	let querytext = `
 	    UPDATE "contractor_profile" 
         SET "contractor_name" = $1, "timezone" = $2, "location" = $3,
