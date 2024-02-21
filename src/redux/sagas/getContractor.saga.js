@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// Requires admin
 function* getContractor(action) {
     try {
         // the config includes credentials which allow the server session to recognize the user
@@ -10,9 +11,15 @@ function* getContractor(action) {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get(`/api/contractor/${action.payload}`, config);
+        const response = yield axios.get(`/api/contractor/${action.payload.id}`, config);
+        const languages = yield axios.get(`/api/contractor/${action.payload.id}/languages`, config);
+        const services = yield axios.get(`/api/contractor/${action.payload.id}/services`, config);
+        const contractor = response.data[0]
 
-        yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] });
+        self['languages'] = languages;
+        self['services'] = services;
+
+        yield put({ type: 'SET_CONTRACTOR', payload: contractor });
 
     }
     catch (error) {

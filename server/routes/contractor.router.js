@@ -11,9 +11,6 @@ router.get('/', requireAdmin, (req, res) => {
 
     let querytext = `
         SELECT * FROM "contractor_profile"
-        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
-        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
-
     `;
     pool.query(querytext)
         .then((result) => {
@@ -29,10 +26,76 @@ router.get('/', requireAdmin, (req, res) => {
 router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_profile"
-        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
-        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
         WHERE "contractor_profile"."user_id" = $1;
 
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET self contractor language info. Requires admin status
+router.get('/self/languages', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_language"
+        WHERE "contractor_language"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET self contractor services info. Requires admin status
+router.get('/self/services', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_services"
+        WHERE "contractor_services"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET specific contractor language info. Requires admin status
+router.get('/:id/languages', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_language"
+        WHERE "contractor_language"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET specific contractor services info. Requires admin status
+router.get('/:id/services', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT * FROM "contractor_services"
+        WHERE "contractor_services"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {

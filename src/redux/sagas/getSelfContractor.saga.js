@@ -9,8 +9,15 @@ function* getContractorSelf(action) {
             withCredentials: true,
         };
 
-        const contractor = yield axios.get(`/api/contractor/self/user/${action.payload}`, config);
-        yield put({ type: 'SET_CONTRACTOR', payload: contractor.data[0] });
+        const response = yield axios.get(`/api/contractor/self`, config);
+        const languages = yield axios.get(`/api/contractor/self/languages`, config);
+        const services = yield axios.get(`/api/contractor/self/services`, config);
+        const self = response.data[0]
+
+        self['languages'] = languages;
+        self['services'] = services;
+
+        yield put({ type: 'SET_CONTRACTOR', payload: self });
     }
     catch (error) {
         console.error('GET for contractor self has failed.', error);
