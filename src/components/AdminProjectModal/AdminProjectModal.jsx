@@ -7,7 +7,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [project, setProject] = useState(defaultValues || { name: "", area_expertise: "", media: "", service: "", contract_status: "", from_language: "", to_language: "" });
+        let [project, setProject] = useState(defaultValues || { name: "", description: "", media: "", service: "", contract_status: "", from_language: "", to_language: "" });
 
     const handleChangeFor = (key, value) => {
         setProject({ ...project, [key]: value });
@@ -22,7 +22,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
             console.log("Updated client information on server", project);
         }
-        setProject({ name: "", area_expertise: "", media: "", service: "", contract_status: "", from_language: "", to_language: "" });
+        setProject({ name: "", description: "", due_at: "", status: "", translator_status: "", proofreader_status: "", flagged: "" });
         closeModal();
     };
 
@@ -42,57 +42,57 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="area_expertise">Area of Expertise:</label>
+                        <label htmlFor="description">Description:</label>
                         <input
-                            name="area_expertise"
+                            name="description"
                             type="text"
-                            value={project.area_expertise}
-                            onChange={(event) => handleChangeFor("area_expertise", event.target.value)}
+                            value={project.description}
+                            onChange={(event) => handleChangeFor("description", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="media">Media:</label>
+                        <label htmlFor="due_at">Due By:</label>
                         <input
                             name="media"
                             type="text"
-                            value={project.media}
-                            onChange={(event) => handleChangeFor("media", event.target.value)}
+                            value={project.due_at}
+                            onChange={(event) => handleChangeFor("due_at", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="service">Service:</label>
+                        <label htmlFor="status">Status:</label>
                         <input
-                            name="service"
+                            name="status"
                             type="text"
-                            value={project.service}
-                            onChange={(event) => handleChangeFor("service", event.target.value)}
+                            value={project.status}
+                            onChange={(event) => handleChangeFor("status", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="contract_status">Contract Status:</label>
+                        <label htmlFor="translator_status">Translator Status:</label>
                         <input
-                            name="contract_status"
+                            name="translator_status"
                             type="text"
-                            value={project.contract_status}
-                            onChange={(event) => handleChangeFor("contract_status", event.target.value)}
+                            value={project.translator_status}
+                            onChange={(event) => handleChangeFor("translator_status", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="from_language">From Language:</label>
+                        <label htmlFor="proofreader_status">Proofreader Status:</label>
                         <input
-                            name="from_language"
+                            name="proofreader_status"
                             type="text"
-                            value={project.from_language}
-                            onChange={(event) => handleChangeFor("from_language", event.target.value)}
+                            value={project.proofreader_status}
+                            onChange={(event) => handleChangeFor("proofreader_status", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="to_language">To Language:</label>
+                        <label htmlFor="flagged">Flagged:</label>
                         <input
-                            name="to_language"
+                            name="flagged"
                             type="text"
-                            value={project.to_language}
-                            onChange={(event) => handleChangeFor("to_language", event.target.value)}
+                            value={project.flagged}
+                            onChange={(event) => handleChangeFor("flagged", event.target.value)}
                         />
                     </div>
                     <button type="submit">Save</button>

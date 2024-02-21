@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './AdminClientModal.css';
+import './AdminclientModal.css';
 
 function AdminClientModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [client, setClient] = useState(defaultValues || { client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
+        let [client, setClient] = useState(defaultValues || {id: "", client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
 
 
     const handleChangeFor = (key, value) => {
@@ -22,7 +22,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_CLIENT", payload: client });
             console.log("Updated client information on server", client);
         }
-        setClient({client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: ""});
+        setClient({id: "", client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: ""});
         closeModal();
     };
 
@@ -51,9 +51,6 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-
-                        <label htmlFor="email">E-Mail:</label>
-
                         <label htmlFor="country">Country:</label>
 
                         <input
@@ -61,6 +58,15 @@ function AdminClientModal({ closeModal, defaultValues }) {
                             type="text"
                             value={client.country}
                             onChange={(event) => handleChangeFor("country", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="location">Location:</label>
+                        <input
+                            name="location"
+                            type="text"
+                            value={client.location}
+                            onChange={(event) => handleChangeFor("location", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -91,9 +97,6 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-
-                        <label htmlFor="timezone">Name:</label>
-
                         <label htmlFor="client_notes">Client Notes:</label>
 
                         <input

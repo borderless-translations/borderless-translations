@@ -1,5 +1,6 @@
 import React from 'react';
 import SettingsLanguage from '../SettingsLanguage/SettingsLanguage.jsx';
+import SettingsService from '../SettingsService/SettingsService.jsx';
 import './Settings.css';
 
 function Settings() {
@@ -14,10 +15,9 @@ return(
             <SettingsLanguage />
         
         <p>Services</p>
-
+            <SettingsService />
         
-        <p>Area of Expertise</p>
-
+        <p>Rates</p>
 
         <p>Admin Status</p>
 
