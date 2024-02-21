@@ -9,7 +9,7 @@ function* deleteService(action) {
             withCredentials: true,
         };
         // Removing service from DB. Requires Admin
-        yield axios.delete(`/api/settings/service`, action.payload, config);
+        yield axios.delete(`/api/settings/service`, {data: action.payload, config});
         // Call getAllServices.saga to get updated services
         yield put({type: "GET_ALL_SERVICES"});
 

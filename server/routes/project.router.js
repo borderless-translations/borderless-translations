@@ -24,6 +24,7 @@ router.get('/', requireAdmin, (req, res) => {
 });
 
 // GET specific project by id (for contractor)
+
 router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
     let querytext = `
 		SELECT 
