@@ -10,9 +10,9 @@ function* toggleAvailabilityAdmin(action) {
         };
 
         yield axios.put(`/api/contractor/availability-admin/${action.payload}`, config); // Toggles availability for self
-        console.log('Toggle avail admin', action.payload)
-        const response = yield axios.get(`/api/contractor/${action.payload}`, config); // getting updated contractor info
 
+        const response = yield axios.get(`/api/contractor/${action.payload}`, config); // getting updated contractor info
+        console.log('response data', response.data[0])
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] }); // storing update info in contractor reducer
 
     }

@@ -8,7 +8,7 @@ function* updateClient(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+        
         yield axios.put(`/api/client/${action.payload.id}`, action.payload, config); // PUT client object
         const response = yield axios.get(`/api/client/${action.payload.id}`, config) // Retrieve updated client object
 

@@ -50,16 +50,19 @@ function AdminClientDetails() {
     return (
         <div className="container">
             <h2>Admin Client Details</h2>
-            <p>{params.id}</p>
-            <p>{client.client}</p>
-            <p>{client.contact}</p>
-            <p>{client.email}</p>
-            <p>{client.phone}</p>
-            <p>{client.timezone}</p>
+            <p>ID: {params.id}</p>
+            <p>Business: {client.client}</p>
+            <p>Contact: {client.contact}</p>
+            <p>Country: {client.country}</p>
+            <p>Location: {client.location}</p>
+            <p>Time Zone: {client.timezone}</p>
+            <p>Email: {client.email}</p>
+            <p>Phone: {client.phone}</p>
+            <p>Client Notes: {client.client_notes}</p>
 
 
             <button onClick={() => handleEditClient(client)}>Edit Client</button>
-            <button onClick={() => history.push("/client")}>Return to Client List</button>
+            <button onClick={() => history.push("/admin/client")}>Return to Client List</button>
 
             {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null)}} defaultValues={client} />}
             

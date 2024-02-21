@@ -6,23 +6,22 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
     let [contractor, setContractor] = useState(defaultValues);
-    const [selectedLanguages, setSelectedLanguages] = useState([contractor.service_id]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
     const allLanguages = useSelector(store => store.allLanguages);
 
     const handleCheckboxChange = (event) => {
-        const languageId = event.target.value;
+        const {value, checked} = event.target;
         const isChecked = event.target.checked;
-        console.log(selectedLanguages)
+        console.log(`${value} is ${checked}`)
 
-        setSelectedLanguages((selectedLanguages) => {
             if (isChecked) {
-                console.log(serviceId, "is checked")
-                return [... selectedLanguages, languageId];
+                setSelectedLanguages([...selectedLanguages, value])
             } else {
-                console.log(serviceId, 'not checked')
-                return selectedLanguages.filter((languageId) => languageId !== languageId)
-            }
-        });
+                setSelectedLanguages(selectedLanguages.filter(
+                        (event) => event !== value
+                    )
+                )
+            }   
     };
 
     const handleSubmit = (event) => {
@@ -43,10 +42,9 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
                         {allLanguages.map((language, i) => (
                             <div key={i}>
                                 <input 
-                                    name="language"
+                                    name="languages"
                                     value={language.id}
                                     type="checkbox"
-                                    checked={selectedLanguages.includes(language.id)}
                                     onChange={handleCheckboxChange}
                                 />{language.name}
                             </div>
