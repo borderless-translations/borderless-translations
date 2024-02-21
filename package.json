@@ -6,7 +6,12 @@
     "node": "18.x"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
     "@mailchimp/mailchimp_transactional": "^1.0.57",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.0.0",

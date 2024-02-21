@@ -30,15 +30,15 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		projects.id,
 		projects.admin_id, "admin".username AS admin_name, 
 		projects.client_id, clients.client AS client_name,
-		project_language.contractor_id AS translator_id, translator.username AS translator_name, project_language.translator_status
-		project_language.proofreader_id, proofreader.username AS proofreader_name, project_language.proofreader_status,
-		projects.description, projects.duration,
-		projects.due_at AS deadline,
+		project_language.contractor_id AS translator_id, translator.username AS translator_name, projects.translator_status,
+		project_language.proofreader_id, proofreader.username AS proofreader_name, projects.proofreader_status,
+		projects.description, projects.duration, 
+		projects.due_at,
 		project_language.translator_notes AS notes,
 		project_language.from_language_id, from_language."name" AS from_language_name, 
 		project_language.to_language_id, to_language."name" AS to_language_name,
-		services."type" AS service_type, 
-		services.id AS service_id
+		services."type" AS service_type, services.id AS service_id,
+		project_language.translator_notes, project_language.flagged
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
@@ -47,8 +47,9 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN services ON services."id" = project_language.service_id
 		JOIN languages AS from_language ON from_language."id" = project_language.from_language_id
-		JOIN languages AS to_language ON to_language."id" = project_language.to_language_id;
-    `;
+		JOIN languages AS to_language ON to_language."id" = project_language.to_language_id
+		WHERE "projects"."id" = $1;
+	`;
     pool.query(querytext, [req.params.id])
         .then((result) => {
             res.send(result.rows);
@@ -61,7 +62,7 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // Get specific project by id. Requires admin
-router.get('/specific/:id', rejectUnauthenticated, (req, res) => {
+router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
 		SELECT 
 		projects.id,

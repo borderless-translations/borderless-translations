@@ -11,7 +11,7 @@ function* updateTranslatorStatus(action) {
 
         yield axios.put(`/api/project/status/translator`, action.payload, config); // Update status of translator
         const response = yield axios.get(`/api/project/specific/${action.payload[1]}`, config); // GET updated project
-        console.log('translator status:', response.data[0]);
+
         yield put({ type: 'SET_PROJECT', payload: response.data[0] }); // Store updated project in project.reducer
     }
     catch (error) {

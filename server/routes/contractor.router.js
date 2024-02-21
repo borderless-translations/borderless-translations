@@ -24,7 +24,7 @@ router.get('/', requireAdmin, (req, res) => {
 });
 
 // GET specific contractor info. Requires admin status
-router.get('/:id', requireAdmin, (req, res) => {
+router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
@@ -61,12 +61,18 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
 
 // GET contractor info for requesting user only.
 // Does not require admin status
-router.get('/self', rejectUnauthenticated, (req, res) => {
+router.get('/self/user/:id', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_profile"
-        JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
-        JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
-        WHERE "contractor_profile"."user_id" = $1;
+        SELECT
+        contractor_profile.id, contractor_profile.user_id, 
+        contractor_profile.base_audio_video_rate, contractor_profile.base_written_rate,
+        contractor_profile.contractor_name, contractor_profile.available,  
+        contractor_profile.notes, contractor_profile.phone, contractor_profile.linked_in,
+        contractor_profile."location", contractor_profile.timezone,
+        "user".username AS email
+        FROM contractor_profile
+        JOIN "user" ON "user"."id" = contractor_profile.user_id
+        WHERE contractor_profile.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -74,6 +80,52 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
         })
         .catch((error) => {
             console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET contractor language info for requesting user only.
+// Does not require admin status
+router.get('/self/languages', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT
+        contractor_language.id, contractor_language.user_id,
+        from_language."name" AS from_language, to_language."name" AS to_language
+        FROM contractor_language
+        JOIN languages AS from_language ON from_language.id = contractor_language.from_language_id
+        JOIN languages AS to_language ON to_language.id = contractor_language.to_language_id
+        WHERE contractor_language.user_id = $1; 
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor/languages by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET contractor service info for requesting user only.
+// Does not require admin status
+router.get('/self/services', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT
+        contractor_services.id,
+        contractor_services.contractor_id,
+        services."type" AS service_type
+        FROM contractor_services
+        JOIN services ON services.id = contractor_services.service_id
+        WHERE contractor_services.contractor_id = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor/services by id", error);
             res.sendStatus(500);
         })
     ;
