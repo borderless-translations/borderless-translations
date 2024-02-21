@@ -8,10 +8,12 @@ const router = express.Router();
 
 // GET all contractors. Requires admin status
 router.get('/', requireAdmin, (req, res) => {
+
     let querytext = `
         SELECT * FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
+
     `;
     pool.query(querytext)
         .then((result) => {
@@ -30,6 +32,7 @@ router.get('/:id', requireAdmin, (req, res) => {
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
         WHERE "contractor_profile"."user_id" = $1;
+
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {

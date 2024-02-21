@@ -44,7 +44,7 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor View</h1>
-        {JSON.stringify(allLanguages)}
+        {JSON.stringify(allContractors)}
         <p>Table of Contractors here</p>
         <table className="adminContractorTable">
             <thead>
@@ -66,9 +66,9 @@ useEffect(() => {
                         <td>{contractor.contractor_name}</td>
                         <td>{contractor.languages}</td>
                         <td>{contractor.language_profile}</td>
-                        {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.location}</td>
                         <td>{contractor.timezone}</td>
+                        
                         <td>${contractor.base_written_rate}/hr</td>
                         <td>${contractor.base_audio_video_rate}/hr</td>
                         <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>

@@ -110,6 +110,10 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
+    const toggleNDA = () => {
+        console.log('toggle NDA')
+    }
+
 useEffect(() => {
     console.log('After State Update', selectedServices);
 }, [selectedServices])
@@ -135,6 +139,37 @@ useEffect(() => {
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
+             <table className="adminContractorDetailsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Timezone</th>
+                    <th>Signed NDA:</th>
+                    <th>Written Rate</th>
+                    <th>A/V Rate</th>
+                    <th>Availability</th>
+                    <th>Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{contractorDetails.contractor_name}</td>
+                    <td>{contractorDetails.location}</td>
+                    <td>{contractorDetails.timezone}</td>
+                    <td><input
+                        type="checkbox"
+                        checked={contractorDetails.signed_nda}
+                        onChange={toggleNDA}/></td>
+                    <td>${contractorDetails.base_written_rate}/hr</td>
+                    <td>${contractorDetails.base_audio_video_rate}/hr</td>
+                    <td><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></td>
+                    <td><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
+            {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
+             <button onClick={handleAdmin}>Grant Admin status</button>}</button></td>
+                  </tr>
+            </tbody>
+            </table>
             <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
             <p><strong>Location:</strong> {contractorDetails.location}</p>
             <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
