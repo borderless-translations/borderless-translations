@@ -141,13 +141,13 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
 })
 
 // Toggle availability for admin
-router.put('/availability-admin', requireAdmin, (req, res) => {
+router.put('/availability-admin/:id', requireAdmin, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile"
         SET "available" = NOT "available"
         WHERE "contractor_profile"."user_id" = $1;
 	`;
-	pool.query(querytext,[req.body.id])
+	pool.query(querytext,[req.params.id])
         .then((result) => {
             res.sendStatus(200)
         })

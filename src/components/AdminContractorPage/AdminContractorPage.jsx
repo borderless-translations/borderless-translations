@@ -43,9 +43,7 @@ useEffect(() => {
 
     return (
         <div className="container">
-        <h1>Contractor View</h1>
-        {JSON.stringify(allContractors)}
-        <p>Table of Contractors here</p>
+        <h1>Contractor List</h1>
         <table className="adminContractorTable">
             <thead>
                 <tr>

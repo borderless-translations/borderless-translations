@@ -23,7 +23,6 @@ function AdminContractorDetailsPage() {
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
 
     const refreshPage = () => {
-        console.log('This is the ID', id)
         dispatch({type: 'GET_CONTRACTOR', payload: id });
         dispatch({type: 'GET_COMPLETED_PROJECTS', payload: id});
         dispatch({type: 'GET_ONGOING_PROJECTS', payload: id});
