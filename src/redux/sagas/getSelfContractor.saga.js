@@ -10,6 +10,12 @@ function* getContractorSelf() {
         };
 
         const response = yield axios.get(`/api/contractor/self`, config);
+        const languages = yield axios.get(`/api/contractor/self/languages`);
+        const services = yield axios.get(`/api/contractor/self/services`);
+        const self = response.data[0]
+
+        self['languages'] = languages;
+        self['services'] = services;
 
         yield put({ type: 'SET_CONTRACTOR', payload: response.data[0] });
     }
