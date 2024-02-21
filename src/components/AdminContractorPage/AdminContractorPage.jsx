@@ -7,13 +7,6 @@ import './AdminContractorPage.css';
 
 function AdminContractorPage() {
 
-    // Sample data for testing
-    // const contractorList = [
-    //     {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
-    //     {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
-    //     {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
-    // ]
-
     const dispatch = useDispatch();
     const history = useHistory();
     const allContractors = useSelector(store => store.allContractors);
@@ -32,7 +25,6 @@ function AdminContractorPage() {
 
     const handleDetails = (id) => {
         // Will grab details from store
-        console.log(allContractors)
         dispatch({type: 'GET_CONTRACTOR', payload: id})
         history.push(`/contractor/details/${id}`)
     }
