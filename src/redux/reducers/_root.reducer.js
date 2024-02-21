@@ -6,6 +6,8 @@ import allContractors from './allContractors.reducer';
 import allProjects from './allProjects.reducer';
 import client from './client.reducer';
 import contractor from './contractor.reducer';
+import contractorLanguages from './contractorLanguages.reducer';
+import contractorServices from './contractorServices.reducer';
 import project from './project.reducer';
 import clientProjects from './clientProjects.reducer';
 import completedProjects from './completedProjects.reducer';
@@ -28,6 +30,8 @@ const rootReducer = combineReducers({
   allProjects, // Array of all projects
   client, // Object containing data for a single client
   contractor, // Object containing data for a single contractor
+  contractorLanguages, // Object containing data for a single contractor's languages
+  contractorServices, // Object containing data for a single contractor's services
   project, // Object containing data for a single project
   clientProjects, // Array containing all the projects for a single client
   completedProjects, // Array containing all completed projects

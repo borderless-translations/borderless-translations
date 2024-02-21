@@ -23,7 +23,6 @@ function AdminContractorDetailsPage() {
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
 
     const refreshPage = () => {
-        console.log('This is the ID', id)
         dispatch({type: 'GET_CONTRACTOR', payload: id });
         dispatch({type: 'GET_COMPLETED_PROJECTS', payload: id});
         dispatch({type: 'GET_ONGOING_PROJECTS', payload: id});
@@ -110,6 +109,10 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
+    const toggleNDA = () => {
+        console.log('toggle NDA')
+    }
+
 useEffect(() => {
     console.log('After State Update', selectedServices);
 }, [selectedServices])
@@ -123,25 +126,51 @@ useEffect(() => {
 // Page should include: Contact name, country, timezone
 // contact info (email, phone), languages, specialty
 // Current projects and completed projects
-
-// TODO: Conditional for whether a project is in the current or completed sections
-
-
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            {JSON.stringify(contractorDetails)}
-            <p>{selectedServices}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
-            <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
-            <p><strong>Location:</strong> {contractorDetails.location}</p>
-            <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
+             <table className="adminContractorDetailsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Timezone</th>
+                    <th>Phone</th>
+                    <th>Signed NDA:</th>
+                    <th>LinkedIn</th>
+                    <th>Written Rate</th>
+                    <th>A/V Rate</th>
+                    <th>Status</th>
+                    <th>Availability</th>
+                    <th>Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{contractorDetails.contractor_name}</td>
+                    <td>{contractorDetails.location}</td>
+                    <td>{contractorDetails.timezone}</td>
+                    <td>{contractorDetails.phone}</td>
+                    <td>{contractorDetails.signed_nda ? "Yes" : "No"}</td>
+                    <td>{contractorDetails.linkedIn}</td>
+                    <td>${contractorDetails.base_written_rate}/hr</td>
+                    <td>${contractorDetails.base_audio_video_rate}/hr</td>
+                    <td>{contractorDetails.status}</td>
+                    <td><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></td>
+                    <td><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
+            {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
+             <button onClick={handleAdmin}>Grant Admin status</button>}</button></td>
+                  </tr>
+            </tbody>
+            </table>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
+            {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
-            <button onClick={editContractorLanguages}>Edit Contractor Languages</button>
+            <button onClick={editContractorLanguages}>Add/Remove a Language Pair</button>
             <p><div className="form-group">
                     <label htmlFor="service_type"><strong>Services:</strong>
                         {allServices.map((service, i) => (

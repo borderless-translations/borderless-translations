@@ -1,55 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import "./ContractorProfileSettings.css";
 
 function ContractorProfileSettings() {
 
     const dispatch = useDispatch();
-    // const user = useSelector(store => store.contractor);
-    // Dummy data
-    const user = {
-        name: 'Contractor Name', 
-        available: true, 
-        linkedIn: 'contractorname',
-        email: 'email@email.email', 
-        timezone: 'UTC -6:00', 
-        languagePairs: [],
-        skills: [],
-        services: [],
-        writtenRate: 0,
-        minuteRate: 0,
-        lastLogin: '2024-02-02'}
-
+    const user = useSelector(store => store.contractor);
+    console.log('user:', user);
+    const userLanguages = useSelector(store => store.contractorLanguages);
+    const userServices = useSelector(store => store.contractorServices);
     const [availability, setAvailability] = useState(user.available);
-    const [name, setName] = useState(user.name);
-    const [linkedIn, setLinkedIn] = useState(user.linkedIn);
+    const [name, setName] = useState(user.contractor_name);
+    const [linkedIn, setLinkedIn] = useState(user.linked_in);
+    const [phone, setPhone] = useState(user.phone);
     const [email, setEmail] = useState(user.email);
     const [timezone, setTimezone] = useState(user.timezone);
-    const [languagePairs, setlanguagePairs] = useState(user.languagePairs);
-    const [skills, setSkills] = useState(user.skills);
-    const [services, setServices] = useState(user.services);
-    const [writtenRate, setWrittenRate] = useState(user.writtenRate);
-    const [minuteRate, setMinuteRate] = useState(user.minuteRate);
-
+    const [languages, setlanguages] = useState(userLanguages);
+    const [skills, setSkills] = useState([]);
+    const [services, setServices] = useState(userServices);
+    const [writtenRate, setWrittenRate] = useState(user.base_written_rate);
+    const [minuteRate, setMinuteRate] = useState(user.base_audio_video_rate);
 
     // Saves updated contractor settings
 
     const saveUser = () => {
-        let userUpdate = {
-            username: name,
+        let contractorUpdate = {
+            contractor_name: name,
             available: availability,
-            linkedIn: linkedIn,
-            email: email,
+            linked_in: linkedIn,
+            phone: phone,
+            location: location,
             timezone: timezone,
-            languagePairs: languagePairs,
-            skills: skills,
-            services: services,
-            writtenRate: writtenRate,
-            minuteRate: minuteRate
-        }
-        dispatch({ type: 'UPDATE_USER', payload: userUpdate });
-        console.log(userUpdate);
+            base_written_rate: writtenRate,
+            base_video_audio_rate: minuteRate
+        };
+        let userUpdate = {username: email, password: password};
+
+        dispatch({ type: 'UPDATE_CONTRACTOR_SELF', payload: [ user.user_id, contractorUpdate, userUpdate] });
     }
+
+    const addService = (serviceId) => {
+        let newService = {
+            service_id: serviceId,
+            contractor_id: user.user_id
+        }
+
+        dispatch({ type: 'ADD_SERVICE_TO_CONTRACTOR', payload: [newService, user.user_id] });
+    }
+
+    const deleteService = (serviceId) => {
+        dispatch({ type: 'DELETE_SERVICE_FROM_CONTRACTOR', payload: [serviceId, user.user_id] })
+    }
+
+    const deleteLanguage = (languageId) => {
+        dispatch({ type: 'DELETE_LANGUAGE_FROM_CONTRACTOR', payload: [languageId, user.user_id] })
+    }
+
+    const addLanguagePair = (languageIds) => {
+        let newLanguagePair = {
+            from_language_id: languageIds[0],
+            to_language_id: languageIds[1],
+            user_id: user.user_id
+        }
+
+        dispatch({ type: 'ADD_LANGUAGE_TO_CONTRACTOR', payload: [newLanguagePair, user.user_id] });
+    }
+
+    useEffect(() => {
+        dispatch({ type: "GET_CONTRACTOR_SELF" });
+        dispatch({ type: "GET_CONTRACTOR_LANGUAGES", payload: user.user_id });
+        dispatch({ type: "GET_CONTRACTOR_SERVICES", payload: user.user_id });
+    }, [user.id]);
 
     return (
         <div className="container">
@@ -78,10 +99,13 @@ function ContractorProfileSettings() {
             <div className="contractor-skills">
                 <h3>Skills</h3>
                 <p>Language Pairs</p>
-                <select multiple onChange={(e) => setlanguagePairs(e.target.value)} >
-                    <option value="ENG --> JPN">ENG -- JPN</option>
-                    <option value="JPN --> ENG">JPN -- ENG</option>
+                <select multiple onChange={(e) => setlanguages(e.target.value)} >
+                    <option value="ENG --> JPN">Japanese → English</option>
+                    <option value="JPN --> ENG">English → Japanese</option>
                 </select>
+                {userLanguages.map((language) => {
+                    return <p>{language.from_language}→{language.to_language} <button onClick={() => deleteLanguage(language.id)}>Remove</button></p>
+                })}
                 <p>Skill Set</p>
                 <select multiple onChange={(e) => setSkills(e.target.value)} >
                     <option value="medical">Medical Translation</option>
@@ -92,6 +116,9 @@ function ContractorProfileSettings() {
                     <option value="Subtitles">Subtitles</option>
                     <option value="Interpreting">Interpreting</option>
                 </select>
+                {userServices.map((service) => {
+                    return <p>{service.service_type} <button onClick={() => deleteService(service.id)}>Remove</button></p>
+                })}
             </div>
 
             <div className="contractor-rates">

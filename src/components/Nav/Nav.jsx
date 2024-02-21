@@ -16,7 +16,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <img src='../../../images/bt-logo.png' height='80px' />
       </Link>
       <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
         <option value={'en'}>English</option>
@@ -51,7 +51,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" to="/client">
+            <Link className="navLink" to="/admin/client">
               Clients
             </Link>
 
