@@ -12,9 +12,6 @@ function UserPage() {
     dispatch({ type: "GET_ONGOING_PROJECTS" });
     dispatch({ type: "GET_COMPLETED_PROJECTS" });
     dispatch({ type: "GET_CONTRACTOR_SELF" });
-    dispatch({ type: "GET_CONTRACTOR_LANGUAGES" });
-    dispatch({ type: "GET_CONTRACTOR_SERVICES" });
-
   }, []);
 
   return (
