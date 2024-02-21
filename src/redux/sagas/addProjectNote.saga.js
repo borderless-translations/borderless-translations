@@ -8,12 +8,12 @@ function* addProjectNote(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+        console.log(action.payload);
         yield axios.put(`/api/project/notes`, action.payload, config); // Add note to project
-        const response = yield axios.get(`/api/project/${action.payload.id}`, config); // GET updated project
-
+        const response = yield axios.get(`/api/project/specific/${action.payload[1]}`, config); // GET updated project
+        console.log('notes:', response.data);
         // Storing updated project in project.reducer
-        yield put({ type: 'SET_PROJECT', payload: response.data });
+        yield put({ type: 'SET_PROJECT', payload: response.data[0] });
     }
     catch (error) {
         console.error('Error in PUT adding project note.', error);

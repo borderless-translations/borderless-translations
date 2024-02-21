@@ -15,45 +15,46 @@ function ContractorProjectDetails() {
     // Updates the project's flagged status on the DOM and in the database
     const updateFlagged = (bool) => {
         setFlagged(bool);
-        dispatch({ type: 'SET_FLAGGED_STATUS', payload: [bool, params.id]})
+        console.log(project);
+        dispatch({ type: 'TOGGLE_PROJECT_FLAG', payload: [project.id]})
     }
 
     // Updates the project's notes on the DOM and in the database
     const updateNotes = (text) => {
         setNotes(text);
-        dispatch({ type: 'SET_PROJECT_NOTES', payload: [text, params.id]})
+        dispatch({ type: 'ADD_PROJECT_NOTE', payload: [text, params.id]})
     }
 
     // Updates the project status and the button text
     const handleStatusChange = (status) => {
+        console.log(status);
         if (user.id === project.translator_id) {
             // Set translator status to 'in progress'
-            if (status.translator === 'not started') {
-                project.status = 'translator-in progress';
-                setButtonStatus();
+            if (status.translator === 'Not started') {
+                project.translator_status = 'In progress';
             }
             // Set translator status to 'complete'
-            else if (status.translator === 'translator-in progress') {
-                project.status = 'translator-complete';
-                setButtonStatus();
+            else if (status.translator === 'In progress') {
+                project.translator_status = 'Complete';
                 // TODO: This is where to integrate email notifications if we get to it
             }
-            dispatch({ type: 'UPDATE_TRANSLATOR_STATUS', payload: project.translator_status });
+            setButtonStatus();
+            dispatch({ type: 'UPDATE_TRANSLATOR_STATUS', payload: [project.translator_status, params.id] });
         }
         else if ((user.id === project.proofreader_id) && (status.translator === 'complete')) {
             // Set proofreader status to 'in progress'
-            if (status.proofreader === 'not started') {
-                project.status = 'proofreader-in progress';
-                setButtonStatus();
+            if (status.proofreader === 'Not started') {
+                project.proofreader_status = 'In progress';
             }
             // Set proofreader status to 'complete'
             else if (status.proofreader === 'in progress') {
-                project.status = 'proofreader-complete';
-                setButtonStatus();
+                project.proofreader_status = 'Complete';
                 // TODO: This is where to integrate email notifications if we get to it
             }
-            dispatch({ type: 'UPDATE_STATUS', payload: project.status });
+            setButtonStatus();
+            dispatch({ type: 'UPDATE_PROOFREADER_STATUS', payload: [project.proofreader_status, params.id] });
         }
+        console.log(buttonStatus);
     }
 
     // Sets submit button's status
@@ -61,26 +62,26 @@ function ContractorProjectDetails() {
     const setButtonStatus = () => {
         // Sets status for translator
         if (user.id === project.translator_id) {
-            if (project.translator_status === 'not started') {
-                setStatus('Send to proofreader'); 
+            if (project.translator_status === 'Not started') {
+                setStatus('Start project'); 
             }
-            else if (project.translator_status === 'in progress') {
-                setStatus('Complete');
+            else if (project.translator_status === 'In progress') {
+                setStatus('Send to proofreader');
             }
-            else if (project.translator_status === 'complete') {
+            else if (project.translator_status === 'Complete') {
                 setStatus('Complete');
             }
         }
         // Sets status for proofreader
         else if (user.id === project.proofreader_id) {
-            if (project.translator_status === 'complete') {
-                if (project.proofreader_status === 'not started') {
+            if (project.translator_status === 'Complete') {
+                if (project.proofreader_status === 'Not started') {
                     setStatus('Send to admin');
                 }
-                else if (project.proofreader_status === 'in progress') {
+                else if (project.proofreader_status === 'In progress') {
                     setStatus('Complete');
                 }
-                else if (project.proofreader_status === 'complete') {
+                else if (project.proofreader_status === 'Complete') {
                     setStatus('Complete');
                 }
             }
@@ -96,7 +97,7 @@ function ContractorProjectDetails() {
 
     useEffect(() => {
         setButtonStatus();
-        // dispatch({ type: "GET_PROJECT", payload: params.id });
+        dispatch({ type: "GET_PROJECT", payload: params.id });
     }, [params.id]);
 
     return (
@@ -105,21 +106,20 @@ function ContractorProjectDetails() {
             <div className="contractor-details">
                 <h3>Details</h3>
                 {/* column one */}
-                <p>{project.client_name}</p>
-                <p>{project.description}</p>
-                {/* column two */}
-                <p>{project.deadline}</p>
-                <p>{project.service_type}</p>
-                <p>{project.duration}</p>
-                <p>{project.from_language_name}--{project.to_language_name}</p>
-                <p>{project.translator_name}</p>
-                <p>{project.proofreader_name}</p>
+                <p>Client: {project.client_name}</p>
+                <p>Project description: {project.description}</p>
+                {/* column two */} <br />
+                <p>Deadline: {project.due_at}</p>
+                <p>Servie type: {project.service_type}</p>
+                <p>Project length: {project.duration}</p>
+                <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
+                <p>Translator: {project.translator_name}</p>
+                <p>Proofreader: {project.proofreader_name}</p>
             </div>
 
             <div className="contractor-settings">
                 <h3>Settings</h3>
-                <p>Flag notes?</p>
-                <input type="checkbox" checked={flagged} onChange={() => updateFlagged(!flagged)}/>
+                <p>Flag notes? <input type="checkbox" checked={flagged} onChange={() => updateFlagged(!flagged)}/></p>
                 <p>Notes</p>
                 {((buttonStatus === 'Complete') || 
                 (buttonStatus === 'Translation still in progress')) ?
@@ -129,6 +129,7 @@ function ContractorProjectDetails() {
                     // Makes notes editable
                     <input type="text" value={notes} onChange={(e) => updateNotes(e.target.value)} />
                 }
+                <br />
                 {/* need to add an alert before submitting */}
                 {((buttonStatus === 'Complete') || 
                 (buttonStatus === 'Translation still in progress')) ? 
@@ -136,7 +137,7 @@ function ContractorProjectDetails() {
                     <button disabled>{buttonStatus}</button> 
                 :
                     // Submits status change and updates button text/function
-                    <button onClick={() => handleStatusChange({translator_status: project.translator_status, proofreader_status: project.proofreader_status})}>{buttonStatus}</button>
+                    <button onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
                 }
             </div>
         </div>
