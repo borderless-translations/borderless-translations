@@ -25,30 +25,34 @@ const handleAddClient = () => {
     <div className="container">
       <h2>Admin Client Main</h2>
       <button onClick={() => handleAddClient()}>Add Client</button>
-      <table>
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td>Bidding Projects</td>
-            <td>Open Projects</td>
-            <td>Complete Projects</td>
-          </tr>
-        </thead>
-        <tbody>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Bidding Projects</TableCell>
+                <TableCell align="center">Open Projects</TableCell>
+                <tTableCell align="center"d>Complete Projects</TableCell>
+            </TableRow>
+         </TableHead>
+         <TableBody>
           {clients.map(client => {
             return (
-              <tr key={client.id}>
-                <td>
+              <TableRow key={client.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
                   <Link to={`/client/details/${client.id}`}>{client.client}</Link>  
-                </td>
-                <td>{client.bidding_projects}</td>
-                <td>{client.open_projects}</td>
-                <td>{client.complete_projects}</td>
-              </tr>
+                </TableCell>
+                <TableCell align="center">{client.bidding_projects}</TableCell>
+                <TableCell align="center">{client.open_projects}</TableCell>
+                <TableCell align="center">{client.complete_projects}</TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false)}} defaultValues={null} />}
 
