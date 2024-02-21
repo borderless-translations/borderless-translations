@@ -62,7 +62,7 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // Get specific project by id. Requires admin
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/specific/:id', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT * FROM "projects"
         JOIN "project_language" ON "project_language"."project_id" = "projects"."id"
@@ -99,11 +99,23 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 });
 
 // GET ongoing projects
-router.get('/ongoing', requireAdmin, (req, res) => {
-	let querytext = `SELECT * FROM projects 
-        WHERE translator_status != 'complete' 
-        OR proofreader_status != 'complete'
-        ORDER BY due_at ASC; 
+router.get('/ongoing', rejectUnauthenticated, (req, res) => {
+	let querytext = `SELECT
+	projects.id,
+	projects.client_id, clients.client AS client_name,
+	projects.description, 
+	project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+	project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+	projects.due_at
+
+	FROM projects
+	JOIN project_language ON project_language.project_id = projects."id"
+	JOIN clients ON clients."id" = projects.client_id
+	JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+	JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+    WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+    AND (translator_status != 'COMPLETE' OR proofreader_status != 'COMPLETE')
+    ORDER BY due_at ASC; 
 	`;
 	pool.query(querytext)
 	.then((result) => {
@@ -117,10 +129,22 @@ router.get('/ongoing', requireAdmin, (req, res) => {
 });
 
 // GET completed projects
-router.get('/completed', requireAdmin, (req, res) => {
-	let querytext = `SELECT * FROM projects 
-        WHERE translator_status = 'complete' 
-        AND proofreader_status = 'complete'
+router.get('/completed', rejectUnauthenticated, (req, res) => {
+	let querytext = `SELECT
+		projects.id,
+		projects.client_id, clients.client AS client_name,
+		projects.description, 
+		project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+		project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+		projects.due_at
+
+		FROM projects
+		JOIN project_language ON project_language.project_id = projects."id"
+		JOIN clients ON clients."id" = projects.client_id
+		JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+		JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+		WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+		AND translator_status = 'COMPLETE' AND proofreader_status = 'COMPLETE'
         ORDER BY due_at ASC; 
 	`;
 	pool.query(querytext)

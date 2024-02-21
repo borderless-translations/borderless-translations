@@ -96,7 +96,7 @@ function ContractorProjectDetails() {
 
     useEffect(() => {
         setButtonStatus();
-        dispatch({ type: "GET_PROJECT", payload: params.id });
+        // dispatch({ type: "GET_PROJECT", payload: params.id });
     }, [params.id]);
 
     return (
