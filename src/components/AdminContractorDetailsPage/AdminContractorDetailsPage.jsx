@@ -168,8 +168,9 @@ useEffect(() => {
             </table>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
+            {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
-            <button onClick={editContractorLanguages}>Edit Contractor Languages</button>
+            <button onClick={editContractorLanguages}>Add/Remove a Language Pair</button>
             <p><div className="form-group">
                     <label htmlFor="service_type"><strong>Services:</strong>
                         {allServices.map((service, i) => (
