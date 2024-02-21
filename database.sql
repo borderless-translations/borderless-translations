@@ -20,9 +20,11 @@ CREATE TABLE "projects" (
 	"client_id" INTEGER NOT NULL,
 	"description" TEXT,
 	"duration" TEXT,
-	"created_at" DATE NOT NULL,
+	"created_at" DATE DEFAULT CURRENT_TIMESTAMP, 
 	"due_at" DATE NOT NULL,
-	"status" VARCHAR NOT NULL,
+	"status" VARCHAR DEFAULT 'NOT STARTED',
+	"translator_status" TEXT DEFAULT 'NOT STARTED',
+	"proofreader_status" TEXT DEFAULT 'NOT STARTED',
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
 
@@ -30,18 +32,17 @@ CREATE TABLE "contractor_profile" (
 	"id" SERIAL NOT NULL,
 	"user_id" INTEGER NOT NULL,
 	"contractor_name" VARCHAR NOT NULL,
-	"phone" VARCHAR NOT NULL,
-	"available" BOOLEAN NOT NULL,
-	"timezone" VARCHAR NOT NULL,
+	"phone" VARCHAR (15),
+	"available" BOOLEAN DEFAULT TRUE,
+	"timezone" VARCHAR(15),
 	"location" TEXT,
-	"language_profile" INTEGER NOT NULL,
-	"linkedIn" TEXT NOT NULL,
-	"status" TEXT NOT NULL,
-	"via" TEXT NOT NULL,
-	"signed_nda" BOOLEAN NOT NULL,
+	"linkedIn" TEXT,
+	"status" TEXT,
+	"via" TEXT,
+	"signed_nda" BOOLEAN DEFAULT FALSE,
 	"notes" TEXT,
-	"base_written_rate" DECIMAL NOT NULL,
-	"base_audio_video_rate" DECIMAL NOT NULL,
+	"base_written_rate" DECIMAL,
+	"base_audio_video_rate" DECIMAL,
 	CONSTRAINT "contractor_profile_pk" PRIMARY KEY ("user_id")
 );
 
@@ -50,15 +51,16 @@ CREATE TABLE "contractor_profile" (
 CREATE TABLE "project_language" (
 	"id" SERIAL NOT NULL,
 	"project_id" INTEGER NOT NULL,
-	"contractor_id" INTEGER NOT NULL,
-	"proofreader_id" INTEGER NOT NULL,
+	"contractor_id" INTEGER,
+	"proofreader_id" INTEGER,
 	"from_language_id" INTEGER NOT NULL,
 	"to_language_id" INTEGER NOT NULL,
-	"text_to_translate" TEXT NOT NULL,
+	"text_to_translate" TEXT,
 	"translator_notes" TEXT,
 	"service_id" INTEGER NOT NULL,
 	"service_notes" TEXT,
-	"file_link" VARCHAR,
+	"file_link" VARCHAR (2048),
+	"flagged" BOOLEAN DEFAULT FALSE
 	CONSTRAINT "project_language_pk" PRIMARY KEY ("id")
 );
 
@@ -66,7 +68,7 @@ CREATE TABLE "project_language" (
 
 CREATE TABLE "services" (
 	"id" SERIAL NOT NULL,
-	"type" VARCHAR NOT NULL,
+	"type" VARCHAR,
 	CONSTRAINT "services_pk" PRIMARY KEY ("id")
 );
 
@@ -87,7 +89,7 @@ CREATE TABLE "user" (
 	"password" VARCHAR NOT NULL,
 	"type" VARCHAR DEFAULT 'contractor',
 	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT "user_pk" PRIMARY KEY ("id")
+	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 );
 
 
@@ -105,7 +107,7 @@ CREATE TABLE "contractor_language" (
 CREATE TABLE "languages" (
 	"id" SERIAL NOT NULL,
 	"name" VARCHAR NOT NULL,
-	"tier" INTEGER NOT NULL,
+	"tier" INTEGER,
 	CONSTRAINT "languages_pk" PRIMARY KEY ("id")
 );
 
@@ -113,9 +115,10 @@ CREATE TABLE "languages" (
 
 CREATE TABLE "rates" (
 	"id" SERIAL NOT NULL,
-	"rate" VARCHAR NOT NULL,
+	"rate_min" DECIMAL,
+	"rate_max" DECIMAL,
 	"service_id" INTEGER NOT NULL,
-	"tier" INTEGER NOT NULL,
+	"tier" INTEGER,
 	CONSTRAINT "rates_pk" PRIMARY KEY ("id")
 );
 
@@ -143,4 +146,3 @@ VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc'
 
 INSERT INTO "client" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
 VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
-
