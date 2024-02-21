@@ -8,10 +8,12 @@ const router = express.Router();
 
 // GET all contractors. Requires admin status
 router.get('/', requireAdmin, (req, res) => {
+
     let querytext = `
         SELECT * FROM "contractor_profile"
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id";
+
     `;
     pool.query(querytext)
         .then((result) => {
@@ -30,6 +32,7 @@ router.get('/:id', requireAdmin, (req, res) => {
         JOIN "contractor_services" ON "contractor_services"."contractor_id" = "contractor_profile"."user_id"
         JOIN "contractor_language" ON "contractor_language"."user_id" = "contractor_profile"."user_id"
         WHERE "contractor_profile"."user_id" = $1;
+
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {
@@ -119,6 +122,35 @@ router.put('/', rejectUnauthenticated, (req, res) => {
     ;
 })
 
+//PUT Route for updating a single contractor's info
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+    console.log('req.body is', req.body)
+	let querytext = `
+	    UPDATE "contractor_profile" 
+        SET "contractor_name" = $1, "timezone" = $2, "location" = $3,
+        "linkedIn" = $4, "base_written_rate" = $5, "base_audio_video_rate" = $6
+        WHERE "contractor_profile"."user_id" = $7
+	`;
+	pool.query(querytext,[
+        req.body.contractor_name,
+        req.body.timezone,
+        req.body.location,
+        req.body.linkedIn,
+        req.body.base_written_rate,
+        req.body.base_audio_video_rate,
+        req.params.id
+    ])
+        .then((result) => {
+            // Code to send goes here
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+    ;
+})
+
 // Toggle availability for self
 router.put('/availability', rejectUnauthenticated, (req, res) => {
 	let querytext = `
@@ -138,13 +170,13 @@ router.put('/availability', rejectUnauthenticated, (req, res) => {
 })
 
 // Toggle availability for admin
-router.put('/availability-admin', requireAdmin, (req, res) => {
+router.put('/availability-admin/:id', requireAdmin, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile"
         SET "available" = NOT "available"
         WHERE "contractor_profile"."user_id" = $1;
 	`;
-	pool.query(querytext,[req.body.id])
+	pool.query(querytext,[req.params.id])
         .then((result) => {
             res.sendStatus(200)
         })

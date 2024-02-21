@@ -7,13 +7,6 @@ import './AdminContractorPage.css';
 
 function AdminContractorPage() {
 
-    // Sample data for testing
-    // const contractorList = [
-    //     {id: 2, user_id: 6, name: "Sven Swanson", available: true, timezone: "Sweden" , languages: ['Swedish', 'Norwegian', 'English'] },
-    //     {id: 3, user_id: 7, name: "Amy PuertoRico", available: false , timezone: "Puerto Rico", languages: ['Spanish', 'Nahuatl', 'English'] },
-    //     {id: 4, user_id: 8, name: "Hans Gruber", available: true, timezone: "Germany" , languages: ['German', 'Latin', 'English'] }
-    // ]
-
     const dispatch = useDispatch();
     const history = useHistory();
     const allContractors = useSelector(store => store.allContractors);
@@ -32,7 +25,6 @@ function AdminContractorPage() {
 
     const handleDetails = (id) => {
         // Will grab details from store
-        console.log(allContractors)
         dispatch({type: 'GET_CONTRACTOR', payload: id})
         history.push(`/contractor/details/${id}`)
     }
@@ -43,9 +35,7 @@ useEffect(() => {
 
     return (
         <div className="container">
-        <h1>Contractor View</h1>
-        {JSON.stringify(allLanguages)}
-        <p>Table of Contractors here</p>
+        <h1>Contractor List</h1>
         <table className="adminContractorTable">
             <thead>
                 <tr>
@@ -66,9 +56,9 @@ useEffect(() => {
                         <td>{contractor.contractor_name}</td>
                         <td>{contractor.languages}</td>
                         <td>{contractor.language_profile}</td>
-                        {/* <td>{contractor.rate_per_word}</td> */}
                         <td>{contractor.location}</td>
                         <td>{contractor.timezone}</td>
+                        
                         <td>${contractor.base_written_rate}/hr</td>
                         <td>${contractor.base_audio_video_rate}/hr</td>
                         <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
