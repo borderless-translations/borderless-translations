@@ -16,9 +16,9 @@ function AdminProjectPage(){
     const history = useHistory();
 
     const projects = [
-        {id: 1, name: "Prime Academy", area_expertise: "Programming", media: "Video", service: "Closed Captions", contract_status: "Signed", from_language: "English", to_language: "Spanish"},
-        {id: 2, name: "Sky Sports", area_expertise: "Sports - Rugby", media: "Documentary", service: "Subtitles", contract_status: "Not Signed", from_language: "English", to_language: "Japanese"},
-        {id: 3, name: "Mayo Clinic", area_expertise: "Science - Medical", media: "Video", service: "Closed Captions", contract_status: "Signed", from_language: "English", to_language: "Korean"},
+        {id: 1, name: "Prime Academy", description: "Programming", duration: "Video", created_at: "Closed Captions", due_at: "Signed"},
+        {id: 2, name: "Sky Sports", description: "Sports - Rugby", duration: "Documentary", created_at: "Subtitles", due_at: "Not Signed"},
+        {id: 3, name: "Mayo Clinic", description: "Science - Medical", duration: "Video", created_at: "Closed Captions", due_at: "Signed"},
     ]
 
     // const projects = useSelector(store => store.allProjects);
@@ -53,12 +53,10 @@ function AdminProjectPage(){
                 <thead>
                     <tr>
                         <td>Name</td>
-                        <td>Area of Expertise</td>
-                        <td>Media</td>
-                        <td>Service</td>
-                        <td>Contract Status</td>
-                        <td>From Language</td>                      
-                        <td>To Language</td>
+                        <td>Description</td>
+                        <td>Duration</td>
+                        <td>Created At</td>
+                        <td>Due At</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,12 +66,10 @@ function AdminProjectPage(){
                                 <td>
                                     <Link to={`/project/details/${project.id}`}>{project.name}</Link>
                                 </td>
-                                <td>{project.area_expertise}</td>
-                                <td>{project.media}</td>
-                                <td>{project.service}</td>
-                                <td>{project.contract_status}</td>
-                                <td>{project.from_language}</td> 
-                                <td>{project.to_language}</td>
+                                <td>{project.description}</td>
+                                <td>{project.duration}</td>
+                                <td>{project.created_at}</td>
+                                <td>{project.due_at}</td>
                                 <button onClick={() => handleEditProject(project)}>Edit Project</button>
                             </tr>
                         )
