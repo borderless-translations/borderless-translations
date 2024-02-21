@@ -51,9 +51,6 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-
-                        <label htmlFor="email">E-Mail:</label>
-
                         <label htmlFor="country">Country:</label>
 
                         <input
@@ -61,6 +58,15 @@ function AdminClientModal({ closeModal, defaultValues }) {
                             type="text"
                             value={client.country}
                             onChange={(event) => handleChangeFor("country", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="location">Location:</label>
+                        <input
+                            name="location"
+                            type="text"
+                            value={client.location}
+                            onChange={(event) => handleChangeFor("location", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -91,9 +97,6 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-
-                        <label htmlFor="timezone">Name:</label>
-
                         <label htmlFor="client_notes">Client Notes:</label>
 
                         <input

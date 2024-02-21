@@ -83,13 +83,33 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * PUT route template
  */
-router.put('/', rejectUnauthenticated, (req, res) => {
-	let querytext = `
-	    // QUERY GOES HERE
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+	let queryText = `
+	    UPDATE "clients" 
+            SET 
+                "client" = $1, 
+                "contact" = $2, 
+                "country" = $3, 
+                "timezone" = $4, 
+                "location" = $5, 
+                "email" = $6, 
+                "phone" = $7, 
+                "client_notes" = $8
+            WHERE "id" = $9;
 	`;
-	pool.query(querytext,[])
+    let queryValues = [
+        req.body.client,
+        req.body.contact,
+        req.body.country,
+        req.body.timezone,
+        req.body.location,
+        req.body.email,
+        req.body.phone,
+        req.body.client_notes,
+        req.params.id
+    ];
+	pool.query(queryText, queryValues)
         .then((result) => {
-            // Code to send goes here
             res.sendStatus(200)
         })
         .catch((error) => {
