@@ -16,7 +16,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <h2 className="nav-title">Borderless Translations</h2>
       </Link>
       <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
         <option value={'en'}>English</option>
