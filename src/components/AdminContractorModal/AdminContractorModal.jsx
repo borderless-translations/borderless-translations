@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import '../AdminClientModal/AdminClientModal.css';
+// import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
 

@@ -60,7 +60,7 @@ CREATE TABLE "project_language" (
 	"service_id" INTEGER NOT NULL,
 	"service_notes" TEXT,
 	"file_link" VARCHAR (2048),
-	"flagged" BOOLEAN DEFAULT FALSE
+	"flagged" BOOLEAN DEFAULT FALSE,
 	CONSTRAINT "project_language_pk" PRIMARY KEY ("id")
 );
 
@@ -133,16 +133,14 @@ INSERT INTO "services" ("type")
 VALUES ('Audio/Visual Transcription'),('English Closed Caption'),('Global Translated Subtitles'),
 ('Non-Fiction Episodic Format Sheet (Chryon List)'),('As-Broadcast Script'),('Interpretation');
 
-INSERT INTO "rates" ("rate","service_id","tier")
-VALUES ('0.07-0.12','1','1'),('0.12-0.15','1','2'),('0.14-0.16','1','3'),('0.16-0.19','1','4'),
-('5.00-8.00','2','1'),('7.00-9.00','2','2'),('9.00-13.00','2','3'),('13.00-16.00','2','4'),
-('5.00-8.00','3','1'),('7.00-9.00','3','2'),('9.00-13.00','3','3'),('13.00-16.00','3','4'),
-('50% of listed price','4','1'),('50% of listed price','4','2'),('50% of listed price','4','3'),('50% of listed price','4','4'),
-('50% of listed price','5','1'),('50% of listed price','5','2'),('50% of listed price','5','3'),('50% of listed price','5','4');
+INSERT INTO "rates" ("rate_min","rate_max", "service_id","tier")
+VALUES ('0.07','0.12','1','1'),('0.12','0.15','1','2'),('0.14','0.16','1','3'),('0.16','0.19','1','4'),
+('5.00','8.00','2','1'),('7.00','9.00','2','2'),('9.00','13.00','2','3'),('13.00','16.00','2','4'),
+('5.00','8.00','3','1'),('7.00','9.00','3','2'),('9.00','13.00','3','3'),('13.00','16.00','3','4');
 
 INSERT INTO "user" ("username","password","type")
-VALUES ('Andy', 'abc123','Admin'),('Chris', 'xyz321','Client'),('Juan', '123abc','Contractor'),('Robin', '321xyz','Contractor'),('Brock','a1b2c3','Admin'),('J','c3b2a1','Proofreader');
+VALUES ('Andy', 'abc123','admin'),('Chris', 'xyz321','client'),('Juan', '123abc','contractor'),('Robin', '321xyz','contractor'),('Brock','a1b2c3','admin'),('J','c3b2a1','contractor');
 
 
-INSERT INTO "client" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
+INSERT INTO "clients" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
 VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
