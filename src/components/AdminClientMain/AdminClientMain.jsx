@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AdminClientDetails from '../AdminClientDetails/AdminClientDetails';
+
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
 

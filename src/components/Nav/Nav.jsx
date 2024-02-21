@@ -51,7 +51,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" to="/admin/client">
+            <Link className="navLink" to="/client">
               Clients
             </Link>
 
@@ -66,6 +66,11 @@ function Nav() {
             <Link className="navLink" to="/info">
               Info Page
             </Link>
+
+            <Link className="navLink" to="/settings">
+              Settings Page
+            </Link>
+
 
             <LogOutButton className="navLink" />
           </>

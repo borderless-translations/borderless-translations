@@ -17,8 +17,7 @@ router.get('/', requireAdmin, (req, res) => {
         .catch((error) => {
             console.error("Error in GET", error);
             res.sendStatus(500);
-        })
-	;
+        });
 });
 
 // GET specific client. Admin required
