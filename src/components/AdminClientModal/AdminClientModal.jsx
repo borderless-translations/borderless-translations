@@ -6,7 +6,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [client, setClient] = useState(defaultValues || { client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
+        let [client, setClient] = useState(defaultValues || {id: "", client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: "" });
 
 
     const handleChangeFor = (key, value) => {
