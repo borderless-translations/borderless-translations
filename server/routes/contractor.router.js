@@ -61,7 +61,7 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
 
 // GET contractor info for requesting user only.
 // Does not require admin status
-router.get('/self/user/:id', rejectUnauthenticated, (req, res) => {
+router.get('/self/user', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
         contractor_profile.id, contractor_profile.user_id, 

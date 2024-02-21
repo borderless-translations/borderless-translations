@@ -6,18 +6,15 @@ function ContractorProfileSettings() {
 
     const dispatch = useDispatch();
     const user = useSelector(store => store.contractor);
-    console.log('user:', user);
-    const userLanguages = useSelector(store => store.contractorLanguages);
-    const userServices = useSelector(store => store.contractorServices);
     const [availability, setAvailability] = useState(user.available);
     const [name, setName] = useState(user.contractor_name);
     const [linkedIn, setLinkedIn] = useState(user.linked_in);
     const [phone, setPhone] = useState(user.phone);
     const [email, setEmail] = useState(user.email);
     const [timezone, setTimezone] = useState(user.timezone);
-    const [languages, setlanguages] = useState(userLanguages);
+    const [languages, setlanguages] = useState(user.languages);
     const [skills, setSkills] = useState([]);
-    const [services, setServices] = useState(userServices);
+    const [services, setServices] = useState(user.services);
     const [writtenRate, setWrittenRate] = useState(user.base_written_rate);
     const [minuteRate, setMinuteRate] = useState(user.base_audio_video_rate);
 
@@ -67,7 +64,7 @@ function ContractorProfileSettings() {
     }
 
     useEffect(() => {
-        dispatch({ type: "GET_CONTRACTOR_SELF" });
+        dispatch({ type: "GET_CONTRACTOR_SELF", payload: user.user_id });
         dispatch({ type: "GET_CONTRACTOR_LANGUAGES", payload: user.user_id });
         dispatch({ type: "GET_CONTRACTOR_SERVICES", payload: user.user_id });
     }, [user.id]);
@@ -103,7 +100,7 @@ function ContractorProfileSettings() {
                     <option value="ENG --> JPN">Japanese → English</option>
                     <option value="JPN --> ENG">English → Japanese</option>
                 </select>
-                {userLanguages.map((language) => {
+                {languages.map((language) => {
                     return <p>{language.from_language}→{language.to_language} <button onClick={() => deleteLanguage(language.id)}>Remove</button></p>
                 })}
                 <p>Skill Set</p>
@@ -116,7 +113,7 @@ function ContractorProfileSettings() {
                     <option value="Subtitles">Subtitles</option>
                     <option value="Interpreting">Interpreting</option>
                 </select>
-                {userServices.map((service) => {
+                {services.map((service) => {
                     return <p>{service.service_type} <button onClick={() => deleteService(service.id)}>Remove</button></p>
                 })}
             </div>
