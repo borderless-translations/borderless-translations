@@ -126,15 +126,9 @@ useEffect(() => {
 // Page should include: Contact name, country, timezone
 // contact info (email, phone), languages, specialty
 // Current projects and completed projects
-
-// TODO: Conditional for whether a project is in the current or completed sections
-
-
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            {JSON.stringify(contractorDetails)}
-            <p>{selectedServices}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
@@ -144,9 +138,12 @@ useEffect(() => {
                     <th>Name</th>
                     <th>Location</th>
                     <th>Timezone</th>
+                    <th>Phone</th>
                     <th>Signed NDA:</th>
+                    <th>LinkedIn</th>
                     <th>Written Rate</th>
                     <th>A/V Rate</th>
+                    <th>Status</th>
                     <th>Availability</th>
                     <th>Admin</th>
                 </tr>
@@ -156,9 +153,12 @@ useEffect(() => {
                     <td>{contractorDetails.contractor_name}</td>
                     <td>{contractorDetails.location}</td>
                     <td>{contractorDetails.timezone}</td>
+                    <td>{contractorDetails.phone}</td>
                     <td>{contractorDetails.signed_nda ? "Yes" : "No"}</td>
+                    <td>{contractorDetails.linkedIn}</td>
                     <td>${contractorDetails.base_written_rate}/hr</td>
                     <td>${contractorDetails.base_audio_video_rate}/hr</td>
+                    <td>{contractorDetails.status}</td>
                     <td><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></td>
                     <td><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
@@ -166,9 +166,6 @@ useEffect(() => {
                   </tr>
             </tbody>
             </table>
-            <p><strong>Contractor Name:</strong> {contractorDetails.contractor_name}</p>
-            <p><strong>Location:</strong> {contractorDetails.location}</p>
-            <p><strong>Timezone:</strong> {contractorDetails.timezone}</p>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
