@@ -8,14 +8,12 @@ import './AdminClientMain.css';
 function AdminClientMain() {
 
 const dispatch = useDispatch();
-
+const [modalOpen, setModalOpen] = useState(false);
 const clients = useSelector(store => store.allClients);
 
 useEffect(() => {
   dispatch({ type: "GET_ALL_CLIENTS" });
-}, []);
-
-const [modalOpen, setModalOpen] = useState(false);
+}, [modalOpen]);
 
 const handleAddClient = () => {
   setModalOpen(true)
