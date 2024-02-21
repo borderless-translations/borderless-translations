@@ -51,7 +51,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" to="/client">
+            <Link className="navLink" to="/admin/client">
               Clients
             </Link>
 
