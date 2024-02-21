@@ -32,7 +32,7 @@ const handleAddClient = () => {
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Bidding Projects</TableCell>
                 <TableCell align="center">Open Projects</TableCell>
-                <tTableCell align="center"d>Complete Projects</TableCell>
+                <TableCell align="center"d>Complete Projects</TableCell>
             </TableRow>
          </TableHead>
          <TableBody>
