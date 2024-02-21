@@ -122,6 +122,34 @@ router.put('/', rejectUnauthenticated, (req, res) => {
     ;
 })
 
+//PUT Route for updating a single contractor's info
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+	    UPDATE "contractor_profile" 
+        SET "contractor_name" = $1, "timezone" = $2, "location" = $3,
+        "linkedIn" = $4, "base_written_rate" = $5, "base_audio_video_rate" = $6
+        WHERE "contractor_profile"."user_id" = $7
+	`;
+	pool.query(querytext,[
+        req.body.contractor_name,
+        req.body.timezone,
+        req.body.location,
+        req.body.linkedin,
+        req.body.writtenRate,
+        req.body.avRate,
+        req.params.id
+    ])
+        .then((result) => {
+            // Code to send goes here
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+    ;
+})
+
 // Toggle availability for self
 router.put('/availability', rejectUnauthenticated, (req, res) => {
 	let querytext = `

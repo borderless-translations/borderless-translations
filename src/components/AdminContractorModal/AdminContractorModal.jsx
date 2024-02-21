@@ -26,21 +26,12 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="contractor_name">Contractor:</label>
+                        <label htmlFor="contractor_name">Contractor Name:</label>
                         <input
                             name="contractor_name"
                             type="text"
                             value={contractor.contractor_name}
                             onChange={(event) => handleChangeFor("contractor_name", event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="contact">Contact:</label>
-                        <input
-                            name="contact"
-                            type="text"
-                            value={contractor.contact}
-                            onChange={(event) => handleChangeFor("contact", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
@@ -62,10 +53,28 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
+                        <label htmlFor="email">NDA Signed?</label>
+                        <input
+                            name="signed_nda"
+                            type="checkbox"
+                            checked={contractor.signed_nda}
+                            onChange={(event) => handleChangeFor("signed_nda", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="location">Location:</label>
+                        <input
+                            name="location"
+                            type="text"
+                            value={contractor.location}
+                            onChange={(event) => handleChangeFor("location", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="timezone">Timezone:</label>
                         <input
-                            name="name"
-                            type="timezone"
+                            name="timezone"
+                            type="text"
                             value={contractor.timezone}
                             onChange={(event) => handleChangeFor("timezone", event.target.value)}
                         />

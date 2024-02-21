@@ -156,10 +156,7 @@ useEffect(() => {
                     <td>{contractorDetails.contractor_name}</td>
                     <td>{contractorDetails.location}</td>
                     <td>{contractorDetails.timezone}</td>
-                    <td><input
-                        type="checkbox"
-                        checked={contractorDetails.signed_nda}
-                        onChange={toggleNDA}/></td>
+                    <td>{contractorDetails.signed_nda ? "Yes" : "No"}</td>
                     <td>${contractorDetails.base_written_rate}/hr</td>
                     <td>${contractorDetails.base_audio_video_rate}/hr</td>
                     <td><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></td>
