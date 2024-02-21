@@ -22,7 +22,7 @@ function AdminClientModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_CLIENT", payload: client });
             console.log("Updated client information on server", client);
         }
-        setClient({client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: ""});
+        setClient({id: "", client: "", contact: "", country:"", timezone:"", location:"", email: "", phone: "", client_notes: ""});
         closeModal();
     };
 
