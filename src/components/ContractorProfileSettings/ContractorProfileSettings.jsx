@@ -65,8 +65,6 @@ function ContractorProfileSettings() {
 
     useEffect(() => {
         dispatch({ type: "GET_CONTRACTOR_SELF", payload: user.user_id });
-        dispatch({ type: "GET_CONTRACTOR_LANGUAGES", payload: user.user_id });
-        dispatch({ type: "GET_CONTRACTOR_SERVICES", payload: user.user_id });
     }, [user.id]);
 
     return (
