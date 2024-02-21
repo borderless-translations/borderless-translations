@@ -57,7 +57,7 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', requireAdmin, (req, res) => {
 	const queryText = `
 	   INSERT INTO "clients" ("client", "contact", "country", "timezone", "location", "email", "phone", "client_notes") 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
@@ -83,7 +83,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 /**
  * PUT route template
  */
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/:id', requireAdmin, (req, res) => {
+    console.log(req.params.id)
 	let queryText = `
 	    UPDATE "clients" 
             SET 
