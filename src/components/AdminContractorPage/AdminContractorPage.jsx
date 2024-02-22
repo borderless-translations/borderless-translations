@@ -36,37 +36,43 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor List</h1>
-        <table className="adminContractorTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Languages</th>
-                    <th>Skill Set</th>
-                    <th>Location</th>
-                    <th>Timezone</th>
-                    <th>Written Rate</th>
-                    <th>A/V Rate</th>
-                    <th>Availability</th>
-                </tr>
-            </thead>
-            <tbody>
-            {/* names of keys may change depending on DB */}
-        {allContractors.map((contractor, i) => {
-            return <tr key={contractor.user_id}>
-                        <td>{contractor.contractor_name}</td>
-                        <td>{contractor.languages}</td>
-                        <td>{contractor.language_profile}</td>
-                        <td>{contractor.location}</td>
-                        <td>{contractor.timezone}</td>
+        <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="center">Name</TableCell>
+                    <TableCell align="center">Languages</TableCell>
+                    <TableCell align="center">Skill Set</TableCell>
+                    <TableCell align="center">Location</TableCell>
+                    <TableCell align="center">Timezone</TableCell>
+                    <TableCell align="center">Written Rate</TableCell>
+                    <TableCell align="center">A/V Rate</TableCell>
+                    <TableCell align="center">Availability</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                    {/* names of keys may change depending on DB */}
+                    {allContractors.map((contractor, i) => {
+                    return <TableRow key={contractor.user_id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                            {row.account}</TableCell>
+                        <TableCell align="center">{contractor.contractor_name}</TableCell>
+                        <TableCell align="center">{contractor.languages}</TableCell>
+                        <TableCell align="center">{contractor.language_profile}</TableCell>
+                        <TableCell align="center">{contractor.location}</TableCell>
+                        <TableCell align="center">{contractor.timezone}</TableCell>
                         
-                        <td>${contractor.base_written_rate}/hr</td>
-                        <td>${contractor.base_audio_video_rate}/hr</td>
-                        <td><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></td>
-                        <td><Link to={`/admin/contractors/details/${contractor.user_id}`}><button onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></td>
-                   </tr>
+                        <TableCell align="center">${contractor.base_written_rate}/hr</TableCell>
+                        <TableCell align="center">${contractor.base_audio_video_rate}/hr</TableCell>
+                        <TableCell align="center"><button onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><Link to={`/admin/contractors/details/${contractor.user_id}`}><button onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></TableCell>
+                   </TableRow>
         })}
-        </tbody>
-        </table>
+        </TableBody>
+        </Table>
+        </TableContainer>
         </div>
     );
 }
