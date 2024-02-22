@@ -12,7 +12,34 @@ function SettingsService() {
 
     
     return(
-        <h1>Services</h1>
+        <div>
+        <p>Hello you absolute legend!</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {services.map(service => (
+                    <tr key={service.id}>
+                        <td>
+                            {service.type}
+                        </td>
+                        <td>
+                            <button onClick={() => handleEdit(service)}>Edit</button>
+                            <button onClick={() => handleDelete(service.id)}>Delete</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+
+        </table>
+
+
+        </div>
     
    
     );
