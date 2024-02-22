@@ -40,11 +40,20 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
     ;
 });
 
-// GET self contractor language info. Requires admin status
-router.get('/self/languages', rejectUnauthenticated, (req, res) => {
+// GET contractor info for requesting user only.
+// Does not require admin status
+router.get('/self/user', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_language"
-        WHERE "contractor_language"."user_id" = $1;
+        SELECT
+        contractor_profile.id, contractor_profile.user_id, 
+        contractor_profile.base_audio_video_rate, contractor_profile.base_written_rate,
+        contractor_profile.contractor_name, contractor_profile.available,  
+        contractor_profile.notes, contractor_profile.phone, contractor_profile.linked_in,
+        contractor_profile."location", contractor_profile.timezone,
+        "user".username AS email
+        FROM contractor_profile
+        JOIN "user" ON "user"."id" = contractor_profile.user_id
+        WHERE contractor_profile.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -57,11 +66,17 @@ router.get('/self/languages', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// GET self contractor services info. Requires admin status
-router.get('/self/services', requireAdmin, (req, res) => {
+// GET contractor languages for requesting user only.
+// Does not require admin status
+router.get('/self/languages', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_services"
-        WHERE "contractor_services"."user_id" = $1;
+        SELECT
+        contractor_language.id, contractor_language.user_id,
+        from_language."name" AS from_language, to_language."name" AS to_language
+        FROM contractor_language
+        JOIN languages AS from_language ON from_language.id = contractor_language.from_language_id
+        JOIN languages AS to_language ON to_language.id = contractor_language.to_language_id
+        WHERE contractor_language.user_id = $1; 
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -69,6 +84,29 @@ router.get('/self/services', requireAdmin, (req, res) => {
         })
         .catch((error) => {
             console.error("Error in GET contractor by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET contractor service info for requesting user only.
+// Does not require admin status
+router.get('/self/services', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT
+        contractor_services.id,
+        contractor_services.contractor_id,
+        services."type" AS service_type
+        FROM contractor_services
+        JOIN services ON services.id = contractor_services.service_id
+        WHERE contractor_services.contractor_id = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor/services by id", error);
             res.sendStatus(500);
         })
     ;
@@ -85,7 +123,7 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
             res.send(result.rows);
         })
         .catch((error) => {
-            console.error("Error in GET contractor by id", error);
+            console.error("Error in GET contractor languages", error);
             res.sendStatus(500);
         })
     ;
@@ -102,7 +140,7 @@ router.get('/:id/services', requireAdmin, (req, res) => {
             res.send(result.rows);
         })
         .catch((error) => {
-            console.error("Error in GET contractor by id", error);
+            console.error("Error in GET contractor services", error);
             res.sendStatus(500);
         })
     ;
@@ -146,52 +184,6 @@ router.get('/self/user', rejectUnauthenticated, (req, res) => {
         })
         .catch((error) => {
             console.error("Error in GET contractor by id", error);
-            res.sendStatus(500);
-        })
-    ;
-});
-
-// GET contractor language info for requesting user only.
-// Does not require admin status
-router.get('/self/languages', rejectUnauthenticated, (req, res) => {
-    let querytext = `
-        SELECT
-        contractor_language.id, contractor_language.user_id,
-        from_language."name" AS from_language, to_language."name" AS to_language
-        FROM contractor_language
-        JOIN languages AS from_language ON from_language.id = contractor_language.from_language_id
-        JOIN languages AS to_language ON to_language.id = contractor_language.to_language_id
-        WHERE contractor_language.user_id = $1; 
-    `;
-    pool.query(querytext,[req.user.id])
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.error("Error in GET contractor/languages by id", error);
-            res.sendStatus(500);
-        })
-    ;
-});
-
-// GET contractor service info for requesting user only.
-// Does not require admin status
-router.get('/self/services', rejectUnauthenticated, (req, res) => {
-    let querytext = `
-        SELECT
-        contractor_services.id,
-        contractor_services.contractor_id,
-        services."type" AS service_type
-        FROM contractor_services
-        JOIN services ON services.id = contractor_services.service_id
-        WHERE contractor_services.contractor_id = $1;
-    `;
-    pool.query(querytext,[req.user.id])
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.error("Error in GET contractor/services by id", error);
             res.sendStatus(500);
         })
     ;
@@ -303,19 +295,16 @@ router.put('/availability-admin/:id', requireAdmin, (req, res) => {
 })
 
 // PUT contractor settings
-// Need to edit the multiple select fields (language_pairs, services, skills) to loop and update separately in the .then or async
-router.put('/settings', rejectUnauthenticated, (req, res) => {
+router.put('/self/settings', rejectUnauthenticated, (req, res) => {
 	let querytext = `UPDATE contractor_profile SET available = ${req.body.params.available}, 
         contractor_name = ${req.body.params.name}, 
-        linkedIn = ${req.body.params.linkedIn}, 
-        // email = ${req.body.params.email}, 
+        linked_in = ${req.body.params.linkedIn}, 
+        phone = ${req.body.params.phone}, 
         timezone = ${req.body.params.timezone}, 
-        language_profile = ${req.body.params.languagePairs},
-        // skills = ${req.body.params.skills},
-        // services = ${req.body.params.services},
-        written_rate = ${req.body.params.writtenRate},
-        minute_rate = ${req.body.params.minuteRate}
-        WHERE id = ${req.body.params.id}
+        location = ${req.body.params.location},
+        base_written_rate = ${req.body.params.writtenRate},
+        base_audio_video_rate = ${req.body.params.minuteRate}
+        WHERE user_id = ${req.body.params.id}
 	`;
 	pool.query(querytext)
         .then((result) => {
@@ -325,6 +314,72 @@ router.put('/settings', rejectUnauthenticated, (req, res) => {
             console.error("Error in PUT /contractor/settings", error);
             res.sendStatus(500);
         })
+	;
+});
+
+// POST contractor languages for contractor view
+// Does not require admin status
+router.post('/self/languages', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        INSERT INTO contractor_language (user_id, from_language_id, to_language_id)
+        VALUES ($1, $2, $3);
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error("Error in POST contractor language", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// POST contractor services for contractor view
+// Does not require admin status
+router.post('/self/services', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        INSERT INTO contractor_services (service_id, contractor_id)
+        VALUES ($1, $2);
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error("Error in POST contractor service", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+router.delete('/self/languages/:id', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+		DELETE FROM contractor_language WHERE id = $1
+	`;
+	pool.query(querytext, [req.params.id])
+		.then((result) => {
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in DELETE contractor language", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+router.delete('/self/services/:id', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+		DELETE FROM contractor_services WHERE id = $1
+	`;
+	pool.query(querytext, [req.params.id])
+		.then((result) => {
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in DELETE contractor service", error);
+			res.sendStatus(500);
+		})
 	;
 });
 
