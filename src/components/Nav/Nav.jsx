@@ -34,18 +34,26 @@ function Nav() {
         {/* If a user is logged in as contractor, show these links */}
         {(user.id && user.type === 'contractor') && (
           <>
+            <Link className="navLink" to="/user">
+              Home
+            </Link>
+
             <Link className="navLink" to="/dashboard">
               Dashboard
             </Link>
 
-            <Link className="navLink" to="/profile">
+            <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
               Profile
+            </Link>
+
+            <Link className="navLink" to="/info">
+              Info Page
             </Link>
           </>
         )}
 
         {/* If a user is logged in, show these links */}
-        {user.id && (
+        {(user.id && user.type === 'admin') && (
           <>
             <Link className="navLink" to="/user">
               Home
