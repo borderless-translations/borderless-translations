@@ -4,28 +4,33 @@ import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
+import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
 import Swal from 'sweetalert2';
 import axios from "axios";
 
 function AdminContractorDetailsPage() {
+    // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
+    // timezone: 'UTC +3:00', phone: '123-456-7891', linkedIn: 'bRockNelson', signed_nda: true,
+    // base_audio_video_rate: '10', base_written_rate: '10', languages: ['Swedish', 'Norwegian', 'English'],
+    // project: [{name: 'Amity Island Diving Co', language: 'English to Fish', status: 'Incomplete'}, 
+    // {name: 'Spin City', language: 'German to Dutch German', status: 'Completed'}], services: [1] }
 
     const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
-    //! This will fetch current contractor details from store
+    // This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor);
-    const completedProjects = useSelector(store => store.completedProjects);
-    const ongoingProjects = useSelector(store => store.ongoingProjects);
-    const [selectedServices, setSelectedServices] = useState([])
+    const contractorProjects = useSelector(store => store.contractorProjects);
     const allServices = useSelector(store => store.allServices);
+    const allLanguages = useSelector(store => store.allLanguages);
+    const [selectedServices, setSelectedServices] = useState([])
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
 
     const refreshPage = () => {
         dispatch({type: 'GET_CONTRACTOR', payload: id });
-        dispatch({type: 'GET_COMPLETED_PROJECTS', payload: id});
-        dispatch({type: 'GET_ONGOING_PROJECTS', payload: id});
+        dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
         dispatch({type: 'GET_ALL_SERVICES'});
         dispatch({type: 'GET_ALL_LANGUAGES'});
     }
@@ -129,10 +134,11 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
+            <p>Completed Projects: {JSON.stringify(contractorProjects)}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
-             <TableContainer component={Paper}>
+             <TableContainer>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
                     <TableRow>
@@ -157,9 +163,9 @@ useEffect(() => {
                         <TableCell align="center">{contractorDetails.phone}</TableCell>
                         <TableCell align="center">{contractorDetails.signed_nda ? "Yes" : "No"}</TableCell>
                         <TableCell align="center">{contractorDetails.linkedIn}</TableCell>
-                        <TableCell align="center">${contractorDetails.base_written_rate}/hr</TableCell>
-                        <TableCell align="center">${contractorDetails.base_audio_video_rate}/hr</TableCell>
-                        <TableCell align="center">{contractorDetails.status}</tTableCell>
+                        <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
+                        <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
+                        <TableCell align="center">{contractorDetails.status}</TableCell>
                         <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center"><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
                                     {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
@@ -192,21 +198,16 @@ useEffect(() => {
             
             <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>
-            {/* <p><strong>Project Name:</strong> {contractorDetails.project[0].name}, <strong>Languages:</strong> {contractorDetails.project[0].language}, <strong>Status:</strong> {contractorDetails.project[0].status}</p> */}
-            {/* {contractorDetails.project.map((project, i) => {
-                return (project.status === 'Completed' ?
-                <>
-                <h3>Completed Projects</h3>
-                <p>{project.name} - {project.language} - {project.status}</p>
-                </> :
-                <>
-                <h3>Current Projects</h3>
-                <p>{project.name} - {project.language} - {project.status}</p>
-                </>
-            )})} */}
             <h3>Completed Projects</h3>
             <p>This is where the contractor's old/completed projects should be displayed.</p>
-            {/* <p><strong>Project Name:</strong> {contractorDetails.project[1].name}, <strong>Languages:</strong> {contractorDetails.project[1].language}, <strong>Status:</strong> {currentDetails.project[1].status}</p> */}
+            <p>{contractorProjects.map((project) => (
+                <ul>
+                    <li>{project.description}</li>
+                    <li>{project.duration}</li>
+                    <li>{project.status}</li>
+                </ul>
+            ))}</p>
+        
 
             
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
