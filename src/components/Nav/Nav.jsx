@@ -15,7 +15,7 @@ function Nav() {
 
   return (
     <div className="nav">
-      <Link to="/home">
+      <Link to="/dashboard">
         <img src='../../../images/bt-logo.png' height='80px' />
       </Link>
       <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
@@ -34,9 +34,9 @@ function Nav() {
         {/* If a user is logged in as contractor, show these links */}
         {(user.id && user.type === 'contractor') && (
           <>
-            <Link className="navLink" to="/user">
+            {/* <Link className="navLink" to="/user">
               Home
-            </Link>
+            </Link> */}
 
             <Link className="navLink" to="/dashboard">
               Dashboard
@@ -45,10 +45,7 @@ function Nav() {
             <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
               Profile
             </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
+            
           </>
         )}
 
@@ -87,6 +84,8 @@ function Nav() {
         <Link className="navLink" to="/about">
           About
         </Link>
+
+        <LogOutButton className='logout-btn' />
       </div>
     </div>
   );

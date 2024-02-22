@@ -1,7 +1,7 @@
 {
-  "title": "Welcome to react using react-i18next",
+  "title": "Welcome to the Borderless Translations user portal",
   "description": {
-    "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-    "part2": "Switch language between english and spanish using buttons above."
+    "part1": "Log in or register to get started.",
+    "part2": ""
   }
 }
