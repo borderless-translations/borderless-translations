@@ -5,6 +5,7 @@ import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
 import axios from "axios";
 
@@ -23,7 +24,8 @@ function AdminContractorDetailsPage() {
     const contractorProjects = useSelector(store => store.contractorProjects);
     const allServices = useSelector(store => store.allServices);
     const allLanguages = useSelector(store => store.allLanguages);
-    const [selectedServices, setSelectedServices] = useState([])
+
+    const [selectedServices, setSelectedServices] = useState([contractorDetails.service])
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
@@ -135,10 +137,11 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             <p>{JSON.stringify(contractorDetails)}</p>
+            <p>Services {JSON.stringify(selectedServices)}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
-             <TableContainer>
+             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
                     <TableRow>
@@ -176,6 +179,7 @@ useEffect(() => {
             </TableContainer>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
+            <p><strong>Notes:</strong> {contractorDetails.notes}</p>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
             <button onClick={editContractorLanguages}>Add/Remove a Language Pair</button>

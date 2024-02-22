@@ -234,17 +234,27 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     console.log('req.body is', req.body)
 	let querytext = `
 	    UPDATE "contractor_profile" 
-        SET "contractor_name" = $1, "timezone" = $2, "location" = $3,
-        "linkedIn" = $4, "base_written_rate" = $5, "base_audio_video_rate" = $6
-        WHERE "contractor_profile"."user_id" = $7
+        SET "contractor_name" = $1, 
+        "timezone" = $2, 
+        "location" = $3, 
+        "phone" = $4,
+        "signed_nda" = $5,
+        "linkedIn" = $6, 
+        "base_written_rate" = $7, 
+        "base_audio_video_rate" = $8,
+        "notes" = $9
+        WHERE "contractor_profile"."user_id" = $10;
 	`;
 	pool.query(querytext,[
         req.body.contractor_name,
         req.body.timezone,
         req.body.location,
+        req.body.phone,
+        req.body.signed_nda,
         req.body.linkedIn,
         req.body.base_written_rate,
         req.body.base_audio_video_rate,
+        req.body.notes,
         req.params.id
     ])
         .then((result) => {
