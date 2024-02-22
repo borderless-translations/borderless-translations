@@ -66,9 +66,13 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/dashboard"
+            path="/user"
           >
-            <ContractorDashboard />
+            {user.type === 'Admin' ?
+              <AdminProjectPage />
+            :
+              <ContractorDashboard /> 
+            }
           </ProtectedRoute>
 
           <ProtectedRoute

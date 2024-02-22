@@ -159,7 +159,7 @@ useEffect(() => {
                         <TableCell align="center">{contractorDetails.linkedIn}</TableCell>
                         <TableCell align="center">${contractorDetails.base_written_rate}/hr</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/hr</TableCell>
-                        <TableCell align="center">{contractorDetails.status}</tTableCell>
+                        <TableCell align="center">{contractorDetails.status}</TableCell>
                         <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center"><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
                                     {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
