@@ -11,13 +11,13 @@ function* getContractor(action) {
         };
 
         // TODO: Set to correct URL and request type
-        const response = yield axios.get(`/api/contractor/${action.payload.id}`, config);
-        const languages = yield axios.get(`/api/contractor/${action.payload.id}/languages`, config);
-        const services = yield axios.get(`/api/contractor/${action.payload.id}/services`, config);
+        const response = yield axios.get(`/api/contractor/specific/${action.payload}`, config);
+        const languages = yield axios.get(`/api/contractor/${action.payload}/languages`, config);
+        const services = yield axios.get(`/api/contractor/${action.payload}/services`, config);
         const contractor = response.data[0]
 
-        self['languages'] = languages;
-        self['services'] = services;
+        self['languages'] = languages.data;
+        self['services'] = services.data;
 
         yield put({ type: 'SET_CONTRACTOR', payload: contractor });
 

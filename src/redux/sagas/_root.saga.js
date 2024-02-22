@@ -18,6 +18,7 @@ import toggleAvailabilityAdminSaga from './toggleAvailabilityAdmin.saga';
 import createNewProjectSaga from './createNewProject.saga';
 import updateProjectSaga from './updateProject.saga';
 import addProjectNoteSaga from './addProjectNote.saga';
+import getContractorProjectsSaga from './getContractorProjects.saga';
 import getCompletedProjectsSaga from './getCompletedProjects.saga';
 import getOngoingProjectsSaga from './getOngoingProjects.saga';
 import toggleProjectFlagSaga from './toggleProjectFlag.saga';
@@ -63,6 +64,7 @@ export default function* rootSaga() {
     createNewProjectSaga(), // Creates new project in DB. Does not GET. Use additional saga.
     updateProjectSaga(), // Updates project details in DB. Stores updated project in project.reducer
     addProjectNoteSaga(), // PUT route adding note to project in DB. Stores updated project in project.reducer
+    getContractorProjectsSaga(), // GET route for all projects of a specific contractor. Requires admin. Stored in contractorProjects.reducer.
     getCompletedProjectsSaga(), // GET route for completed projects. Requires admin. Stored in completedProjects.reducer
     getOngoingProjectsSaga(), // GET route for ongoing projects. Requires admin. Stored in ongoingProjects.reducer
     toggleProjectFlagSaga(), // PUT route toggling flag feature on project. Stores updated project in project.reducer.
