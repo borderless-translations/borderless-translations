@@ -25,7 +25,8 @@ router.get('/', requireAdmin, (req, res) => {
 // GET specific contractor info. Requires admin status
 router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT "contractor_profile".*, "user"."type" AS "user_type" FROM "contractor_profile"
+        JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
