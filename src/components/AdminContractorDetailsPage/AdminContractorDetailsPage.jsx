@@ -132,40 +132,42 @@ useEffect(() => {
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
-             <table className="adminContractorDetailsTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Timezone</th>
-                    <th>Phone</th>
-                    <th>Signed NDA:</th>
-                    <th>LinkedIn</th>
-                    <th>Written Rate</th>
-                    <th>A/V Rate</th>
-                    <th>Status</th>
-                    <th>Availability</th>
-                    <th>Admin</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{contractorDetails.contractor_name}</td>
-                    <td>{contractorDetails.location}</td>
-                    <td>{contractorDetails.timezone}</td>
-                    <td>{contractorDetails.phone}</td>
-                    <td>{contractorDetails.signed_nda ? "Yes" : "No"}</td>
-                    <td>{contractorDetails.linkedIn}</td>
-                    <td>${contractorDetails.base_written_rate}/hr</td>
-                    <td>${contractorDetails.base_audio_video_rate}/hr</td>
-                    <td>{contractorDetails.status}</td>
-                    <td><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></td>
-                    <td><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
-            {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
-             <button onClick={handleAdmin}>Grant Admin status</button>}</button></td>
-                  </tr>
-            </tbody>
-            </table>
+             <TableContainer component={Paper}>
+             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Name</TableCell>
+                        <TableCell align="center">Location</TableCell>
+                        <TableCell align="center">Timezone</TableCell>
+                        <TableCell align="center">Phone</TableCell>
+                        <TableCell align="center">Signed NDA:</TableCell>
+                        <TableCell align="center">LinkedIn</TableCell>
+                        <TableCell align="center">Written Rate</TableCell>
+                        <TableCell align="center">A/V Rate</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Availability</TableCell>
+                        <TableCell align="center">Admin</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell align="center">{contractorDetails.contractor_name}</TableCell>
+                        <TableCell align="center">{contractorDetails.location}</TableCell>
+                        <TableCell align="center">{contractorDetails.timezone}</TableCell>
+                        <TableCell align="center">{contractorDetails.phone}</TableCell>
+                        <TableCell align="center">{contractorDetails.signed_nda ? "Yes" : "No"}</TableCell>
+                        <TableCell align="center">{contractorDetails.linkedIn}</TableCell>
+                        <TableCell align="center">${contractorDetails.base_written_rate}/hr</TableCell>
+                        <TableCell align="center">${contractorDetails.base_audio_video_rate}/hr</TableCell>
+                        <TableCell align="center">{contractorDetails.status}</tTableCell>
+                        <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
+                                    {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
+                                     <button onClick={handleAdmin}>Grant Admin status</button>}</button></TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            </TableContainer>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
