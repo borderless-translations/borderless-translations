@@ -17,7 +17,7 @@ function ContractorProfileSettings() {
     const [phone, setPhone] = useState(user.phone);
     const [email, setEmail] = useState(user.email);
     const [timezone, setTimezone] = useState(user.timezone);
-    const [languages, setlanguages] = useState(user.languages);
+    const [languages, setlanguages] = useState([user.languages]);
     const [skills, setSkills] = useState([]);
     const [services, setServices] = useState(user.services);
     const [writtenRate, setWrittenRate] = useState(user.base_written_rate);
@@ -146,25 +146,51 @@ function ContractorProfileSettings() {
                         </IconButton>
                     </Stack>
 
-                    {languages.map((language) => {
+                    {languages[0] !== null ? 
+                        languages.map((language) => {
                         return (
                             <p style={{ margin: '0px 0px 0px 40px' }}>{language.from_language}→{language.to_language}
                             <IconButton onClick={() => deleteLanguage(language.id)}
                                 disableElevation
                                 disableRipple
                                 size="small">
-                                <Tooltip title="Add language">
+                                <Tooltip title="Remove language">
                                     <ClearIcon sx={{fontSize: '20px'}} />   
                                 </Tooltip>
                             </IconButton></p> 
                         )
-                    })}
-
+                        })
+                    :
+                        <br />
+                    }       
                     <p>Area of Expertise</p>
                     <Select sx={{width: '140px'}} value={skills} label='Skills' onChange={(e) => setSkills(e.target.value)} >
-                        <option value="medical">Medical Translation</option>
-                        <option value="literary">Literary Translation</option>
+                        <option value="medical">Medical</option>
+                        <option value="literary">Legal</option>
+                        <option value="academic">Academic</option>
+                        <option value="tech">Tech</option>
+                        <option value="fin">Finance</option>
+                        <option value="cert">Has certification</option>
                     </Select>
+
+                    <p style={{ margin: '0px' }}>Medical
+                            <IconButton onClick={() => deleteService(service.id)}
+                                disableElevation
+                                disableRipple
+                                size="small">
+                                <Tooltip title="Remove skill">
+                                    <ClearIcon sx={{fontSize: '20px'}} />   
+                                </Tooltip>
+                            </IconButton></p>
+                    <p style={{ margin: '0px' }}>Has certification
+                    <IconButton onClick={() => deleteService(service.id)}
+                        disableElevation
+                        disableRipple
+                        size="small">
+                        <Tooltip title="Remove skill">
+                            <ClearIcon sx={{fontSize: '20px'}} />   
+                        </Tooltip>
+                    </IconButton></p>
 
                     <p>Services</p>
                     <Select sx={{width: '140px'}} value={services} label='Services' onChange={(e) => setServices(e.target.value)} >
@@ -178,20 +204,23 @@ function ContractorProfileSettings() {
                             )
                         })}
                     </Select>
-
-                    {services.map((service) => {
-                        return (
-                            <p style={{ margin: '0px' }}>{service.service_type} 
-                            <IconButton onClick={() => deleteService(service.id)}
-                                disableElevation
-                                disableRipple
-                                size="small">
-                                <Tooltip title="Add language">
-                                    <ClearIcon sx={{fontSize: '20px'}} />   
-                                </Tooltip>
-                            </IconButton></p>
-                        )
-                    })}
+                    {services[0] !== null ? 
+                        services.map((service) => {
+                            return (
+                                <p style={{ margin: '0px' }}>{service.service_type} 
+                                <IconButton onClick={() => deleteService(service.id)}
+                                    disableElevation
+                                    disableRipple
+                                    size="small">
+                                    <Tooltip title="Remove service">
+                                        <ClearIcon sx={{fontSize: '20px'}} />   
+                                    </Tooltip>
+                                </IconButton></p>
+                            )
+                        })
+                    :
+                        <br />
+                    }
                 </Stack>
 
                 <Stack direction='column' className="contractor-rates">

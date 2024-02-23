@@ -110,7 +110,7 @@ function ContractorProjectDetails() {
                 <p>Project description: {project.description}</p>
                 {/* column two */} <br />
                 <p>Deadline: {project.due_at}</p>
-                <p>Servie type: {project.service_type}</p>
+                <p>Service type: {project.service_type}</p>
                 <p>Project length: {project.duration}</p>
                 <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
                 <p>Translator: {project.translator_name}</p>

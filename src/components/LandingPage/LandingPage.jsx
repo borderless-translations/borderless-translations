@@ -30,7 +30,7 @@ function LandingPage() {
           </p>
 
           <p>
-            {i18n.language}
+            {/* {i18n.language} */}
           </p>
         </div>
         <div className="grid-col grid-col_4">
