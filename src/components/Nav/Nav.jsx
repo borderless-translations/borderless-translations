@@ -32,7 +32,7 @@ function Nav() {
         )}
 
         {/* If a user is logged in as contractor, show these links */}
-        {(user.id && user.type === 'Contractor') && (
+        {(user.id && user.type === 'contractor') && (
           <>
             <Link className="navLink" to="/user">
               Home
@@ -50,7 +50,7 @@ function Nav() {
         )}
 
         {/* If a user is logged in, show these links */}
-        {(user.id && user.type === 'Admin') && (
+        {(user.id && user.type === 'admin') && (
           <>
             <Link className="navLink" to="/dashboard">
               Dashboard
