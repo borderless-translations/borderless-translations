@@ -118,6 +118,29 @@ router.post('/service', requireAdmin, (req, res) => {
 	;
 });
 
+router.put('/service/:id', requireAdmin, (req, res) => {
+
+	let queryText = `
+	    UPDATE "services" 
+            SET 
+                "type" = $1
+            WHERE "id" = $2;
+	`;
+    let queryValues = [
+        req.body.type,
+        req.body.id
+    ];
+	pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+	;
+});
+
 // DELETE service from table
 router.delete('/service', requireAdmin, (req, res) => {
 	let querytext = `

@@ -5,17 +5,13 @@ import '../Settings/Settings.css';
 function SettingsLanguage() {
     const dispatch = useDispatch();
     const languages = useSelector(store => store.allLanguages);
-    const [trigger, setTrigger] = useState(false);
+    const [editLanguageId, setEditLanguageId] = useState(null);
+    const [editLanguageName, setEditLanguageName] = useState('');
+    const [editLanguageTier, setEditLanguageTier] = useState('');
 
     useEffect(() => {
         dispatch({ type: 'GET_ALL_LANGUAGES' });
     }, []);
-
-    const [editLanguageId, setEditLanguageId] = useState(null);
-    const [editLanguageName, setEditLanguageName] = useState('');
-    const [editLanguageTier, setEditLanguageTier] = useState('');
-    
-   
 
     const handleEdit = (language) => {
         setEditLanguageId(language.id);
