@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
@@ -8,6 +8,7 @@ import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
 import axios from "axios";
+import { select } from 'redux-saga/effects';
 
 function AdminContractorDetailsPage() {
     // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
@@ -24,8 +25,9 @@ function AdminContractorDetailsPage() {
     const contractorProjects = useSelector(store => store.contractorProjects);
     const allServices = useSelector(store => store.allServices);
     const allLanguages = useSelector(store => store.allLanguages);
-
-    // const [selectedServices, setSelectedServices] = useState([contractorDetails.services])
+    
+    const [selectedServices, setSelectedServices] = useState([]);
+    const [selectedLanguageNames, setSelectedLanguageNames] = useState([]);
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
@@ -34,21 +36,29 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_CONTRACTOR', payload: id });
         dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
         dispatch({type: 'GET_ALL_SERVICES'});
+        dispatch({type: 'GET_ALL_LANGUAGES'});
     } 
+
     const handleCheckboxChange = (event) => {
         const {value, checked} = event.target;
         const isChecked = event.target.checked;
         console.log(`${value} is ${checked}`)
 
+        setSelectedServices((prevSelectedServices) => {
             if (isChecked) {
-                setSelectedServices([...selectedServices, value])
+                return [...prevSelectedServices, value];
             } else {
-                setSelectedServices(selectedServices.filter(
-                        (event) => event !== value
-                    )
-                )
-            }   
+                return prevSelectedServices.filter((selectedServiceId) => selectedServiceId !== value);
+            }
+        });  
     };
+
+    const getLanguageNameById = (languageId) => {
+        const language = allLanguages.find(lang => lang.id === languageId);
+        console.log(language)
+        return language ? language.name : null;
+
+      };
 
     const handleAvail = () => {
         console.log('Set available to the opposite', id)
@@ -118,25 +128,43 @@ function AdminContractorDetailsPage() {
 // useEffect(() => {
 //     console.log('After State Update', selectedServices);
 // }, [selectedServices])
+useEffect(() => {
+    if (!contractorDetails) {}
+    else
+    {
+    console.log('selected languages: ', contractorDetails.languages)
+    // Run your logic to get selected language names
+    const names = contractorDetails.languages.map(lang => ({
+      fromLanguage: getLanguageNameById(lang.from_language_id),
+      toLanguage: getLanguageNameById(lang.to_language_id),
+    }));
+    console.log('names are', names)
+    
+    // Update state with the result
+    setSelectedLanguageNames(names);
+}
+  }, []);
 
 useEffect(() => {
     refreshPage();
 }, []);
 
-
-// TODO: Add editability to contractor details page
-// Page should include: Contact name, country, timezone
-// contact info (email, phone), languages, specialty
-// Current projects and completed projects
+    // Check if contractorDetails is null or undefined
+    if (!contractorDetails) {
+      return <p>Loading...</p>;
+    }
+    // Once reducers are loaded:
     return (
         <>
             <h1>Admin Contractor Details View</h1>
             <p>{JSON.stringify(contractorDetails)}</p>
             <p>Services {JSON.stringify(contractorDetails.services)}</p>
+            <p>All Services {JSON.stringify(allServices)}</p>
             <p>Languages: {JSON.stringify(contractorDetails.languages)}</p>
+            <p>All Languages: {JSON.stringify(allLanguages)}</p>
+            <button onClick={getLanguageNameById}>Get Languages</button>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
-            {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
-             <button onClick={handleAdmin}>Grant Admin status</button>}
+
              <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
@@ -166,9 +194,12 @@ useEffect(() => {
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
                         <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
-                        <TableCell align="center"><button onClick={() => handleAdmin()}>{contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
-                                    {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
-                                     <button onClick={handleAdmin}>Grant Admin status</button>}</button></TableCell>
+                        <TableCell align="center">
+                            <button onClick={() => handleAdmin()}>
+                                {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
+                                <p>Grant Admin Status</p>}
+                            </button>
+                        </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
@@ -177,23 +208,22 @@ useEffect(() => {
             <br/>
             <p><strong>Notes:</strong> {contractorDetails.notes}</p>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
-            <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
+            <div><h3><strong>Languages:</strong></h3>
+                    <ul>
+                        {selectedLanguageNames.map((lang, index) => (
+                        <li key={index}>
+                            From: {lang.fromLanguage} To: {lang.toLanguage}
+                        </li>
+                        ))}
+                    </ul>
+            </div>
             
-            <p><div className="form-group">
-                    <label htmlFor="service_type"><strong>Services:</strong>
-                        {allServices.map((service, i) => (
-                            <div key={i}>
-                                <input 
-                                    name="services"
-                                    value={service.id}
-                                    type="checkbox"
-                                   onChange={handleCheckboxChange}
-                                />{service.type}
-                            </div>
-                        ))}</label>
-                        </div>
-            </p>
-            <button onClick={editContractorServices}>Edit Contractor Services</button>
+            <div className="form-group">
+                <p> <label htmlFor="service_type"><strong>Services:</strong>
+                        </label>
+                        </p>
+            </div>
+            
             <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             
             <h3>Current Projects</h3>
