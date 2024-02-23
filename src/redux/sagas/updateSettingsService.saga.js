@@ -17,7 +17,7 @@ function* updateSettingsService(action) {
         yield put({ type: 'GET_ALL_SERVICES'});
     }
     catch (error) {
-        console.error('Error in PUT update settings language', error);
+        console.error('Error in PUT update settings service', error);
     }
 }
 

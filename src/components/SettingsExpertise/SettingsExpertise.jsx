@@ -4,13 +4,13 @@ import '../Settings/Settings.css';
 
 function SettingsExpertise() {
     const dispatch = useDispatch();
-    const expertises = useSelector(store => store.allExpertises);
+    const expertises = useSelector(store => store.allExpertise);
     const [editExpertiseId, setEditExpertiseId] = useState(null);
     const [editExpertiseType, setEditExpertiseType] = useState('');
     const [expertiseType, setExpertiseType] = useState('');
 
     useEffect(() => {
-        dispatch({ type: 'GET_ALL_SERVICES' });
+        dispatch({ type: 'GET_ALL_EXPERTISE' });
     }, []);
 
     const handleEdit = (expertise) => {
@@ -20,14 +20,14 @@ function SettingsExpertise() {
 
     const handleDelete = (id) => {
         dispatch({
-            type: 'DELETE_SERVICE',
+            type: 'DELETE_EXPERTISE',
             payload: { id }
         });
     };
 
     const handleSave = (expertiseId) => {
         dispatch({
-            type: 'UPDATE_SERVICE',
+            type: 'UPDATE_EXPERTISE',
             payload: { type: editExpertiseType, id: expertiseId }
         });
         setEditExpertiseId(null);
@@ -42,7 +42,7 @@ function SettingsExpertise() {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({
-            type: 'CREATE_NEW_SERVICE',
+            type: 'CREATE_NEW_EXPERTISE',
             payload: { type: expertiseType }
         });
         setExpertiseType("");
