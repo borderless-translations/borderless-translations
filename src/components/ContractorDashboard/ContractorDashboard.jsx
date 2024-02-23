@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import "./ContractorDashboard.css";
 
-import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
 
 function ContractorDashboard() {
     const dispatch = useDispatch();
@@ -51,19 +51,20 @@ function ContractorDashboard() {
                 </TableHead>
                 <TableBody>
                     {ongoingProjects.map((project) => {
-                    return <TableRow key={project.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">
-                            {row.account}
-                        </TableCell>
-                            <TableCell alighn="center">{project.client_name}</TableCell>
-                            <TableCell alighn="center">{project.description}</TableCell>
-                            <TableCell alighn="center">{role(project)}</TableCell>
-                            <TableCell alighn="center">{project.translator_status}</TableCell>
-                            <TableCell alighn="center">{project.due_at}</TableCell>
-                            <TableCell alighn="center"><button onClick={() => toProject(project.id)}>View</button></TableCell>
-                        </TableRow>
+                        return (
+                            <TableRow key={project.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell alighn="center">{project.client_name}</TableCell>
+                                <TableCell alighn="center">{project.description}</TableCell>
+                                <TableCell alighn="center">{role(project)}</TableCell>
+                                <TableCell alighn="center">{project.translator_status}</TableCell>
+                                <TableCell alighn="center">{project.due_at}</TableCell>
+                                <TableCell alighn="center">
+                                    <Button onClick={() => toProject(project.id)}>View</Button>
+                                </TableCell>
+                            </TableRow>
+                        )
                     })}
                 </TableBody>
             </Table>
@@ -82,19 +83,20 @@ function ContractorDashboard() {
                 </TableHead>
                 <TableBody>
                     {completedProjects.map((project) => {
-                    return <TableRow key={project.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">
-                            {row.account}
-                        </TableCell>
-                            <TableCell align="center">{project.client_name}</TableCell>
-                            <TableCell align="center">{project.description}</TableCell>
-                            <TableCell align="center">{role(project)}</TableCell>
-                            <TableCell align="center">{project.translator_status}</TableCell>
-                            <TableCell align="center">{project.due_at}</TableCell>
-                            <TableCell align="center"><button onClick={() => toProject(project.id)}>View</button></TableCell>
-                        </TableRow>
+                        return (
+                            <TableRow key={project.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell align="center">{project.client_name}</TableCell>
+                                <TableCell align="center">{project.description}</TableCell>
+                                <TableCell align="center">{role(project)}</TableCell>
+                                <TableCell align="center">{project.translator_status}</TableCell>
+                                <TableCell align="center">{project.due_at}</TableCell>
+                                <TableCell align="center">
+                                    <Button onClick={() => toProject(project.id)}>View</Button>
+                                </TableCell>
+                            </TableRow>
+                        )
                     })}
                 </TableBody>
             </Table>

@@ -119,7 +119,7 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 });
 
 // Get all projects for a specific contractor (requires Admin).
-router.get('/:id', requireAdmin, (req, res) => {
+router.get('/specific/:id', requireAdmin, (req, res) => {
 	console.log('req params', req.params.id)
     let querytext = `
         SELECT * FROM "projects"

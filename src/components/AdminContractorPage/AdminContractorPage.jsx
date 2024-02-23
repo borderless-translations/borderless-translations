@@ -4,10 +4,6 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import './AdminContractorPage.css';
-import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
-import Paper from '@mui/material/Paper';
-
-
 
 function AdminContractorPage() {
 

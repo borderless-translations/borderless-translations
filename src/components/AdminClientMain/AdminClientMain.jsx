@@ -5,9 +5,6 @@ import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Tab
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
 
-import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-
-
 function AdminClientMain() {
 
 const dispatch = useDispatch();
