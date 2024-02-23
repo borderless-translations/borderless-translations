@@ -18,6 +18,7 @@ import toggleAvailabilityAdminSaga from './toggleAvailabilityAdmin.saga';
 import createNewProjectSaga from './createNewProject.saga';
 import updateProjectSaga from './updateProject.saga';
 import addProjectNoteSaga from './addProjectNote.saga';
+import getContractorProjectsSaga from './getContractorProjects.saga';
 import getCompletedProjectsSaga from './getCompletedProjects.saga';
 import getOngoingProjectsSaga from './getOngoingProjects.saga';
 import toggleProjectFlagSaga from './toggleProjectFlag.saga';
@@ -34,6 +35,12 @@ import deleteServiceSaga from './deleteService.saga';
 import getAllRatesSaga from './getAllRates.saga';
 import createNewRateSaga from './createNewRate.saga';
 import deleteRateSaga from './deleteRate.saga';
+import updateSettingsLanguageSaga from './updateSettingsLanguage.saga';
+import updateSettingsServiceSaga from './updateSettingsService.saga';
+import createNewExpertiseSaga from './createNewExpertise.saga';
+import deleteExpertiseSaga from './deleteExpertise.saga';
+import getAllExpertiseSaga from './getAllExpertise.saga';
+import updateSettingsExpertiseSaga from './updateSettingsExpertise.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -63,14 +70,13 @@ export default function* rootSaga() {
     createNewProjectSaga(), // Creates new project in DB. Does not GET. Use additional saga.
     updateProjectSaga(), // Updates project details in DB. Stores updated project in project.reducer
     addProjectNoteSaga(), // PUT route adding note to project in DB. Stores updated project in project.reducer
+    getContractorProjectsSaga(), // GET route for all projects of a specific contractor. Requires admin. Stored in contractorProjects.reducer.
     getCompletedProjectsSaga(), // GET route for completed projects. Requires admin. Stored in completedProjects.reducer
     getOngoingProjectsSaga(), // GET route for ongoing projects. Requires admin. Stored in ongoingProjects.reducer
     toggleProjectFlagSaga(), // PUT route toggling flag feature on project. Stores updated project in project.reducer.
     updateTranslatorStatusSaga(), // PUT route updating status of translator progress. Stores updated project in project.reducer.
     updateProofreaderStatusSaga(), // PUT route updating status of proofreader progress. Stores updated project in project.reducer.
     updateClientSaga(), // Update client info in DB. Needs full client object in payload. Stores updated object in reducer client
-    toggleAvailabilitySaga(), // Toggles current availabity for authenticated user. Stores updated object in reducer contractor.
-    toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
     getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
@@ -82,5 +88,11 @@ export default function* rootSaga() {
     getAllRatesSaga(), // GET all rates from DB. Stores info in allRates.reducer.
     createNewRateSaga(), // POST new rate to DB. Calls getAllRates.saga to get updated list.
     deleteRateSaga(), // DELETE rate from DB. Calls getAllRates.saga to get updated list.
+    updateSettingsLanguageSaga(), // PUT route updating language details in DB. Calls getAllLanguages.saga to get updated list.
+    updateSettingsServiceSaga(), // PUT route updating service details in DB. Calls getAllServices.saga to get updated list.
+    createNewExpertiseSaga(), // POST new expertise to DB. Calls getAllExpertise.saga to get updated list.
+    deleteExpertiseSaga(), // DELETE expertise from DB. Calls getAllExpertise.saga to get updated list.
+    getAllExpertiseSaga(), // GET all expertise from DB. Stores info in allExpertise.reducer.
+    updateSettingsExpertiseSaga(), // PUT route updating expertise details in DB. Calls getAllExpertise.saga to get updated list.
   ]);
 }

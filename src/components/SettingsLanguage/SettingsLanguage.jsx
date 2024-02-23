@@ -5,14 +5,14 @@ import '../Settings/Settings.css';
 function SettingsLanguage() {
     const dispatch = useDispatch();
     const languages = useSelector(store => store.allLanguages);
+    const [editLanguageId, setEditLanguageId] = useState(null);
+    const [editLanguageName, setEditLanguageName] = useState('');
+    const [editLanguageTier, setEditLanguageTier] = useState('1');
+    
 
     useEffect(() => {
         dispatch({ type: 'GET_ALL_LANGUAGES' });
     }, []);
-
-    const [editLanguageId, setEditLanguageId] = useState(null);
-    const [editLanguageName, setEditLanguageName] = useState('');
-    const [editLanguageTier, setEditLanguageTier] = useState('');
 
     const handleEdit = (language) => {
         setEditLanguageId(language.id);
@@ -29,10 +29,11 @@ function SettingsLanguage() {
     const handleSave = (languageId) => {
         dispatch({
             type: 'UPDATE_LANGUAGE',
-            payload: { id: languageId, name: editLanguageName, tier: editLanguageTier}
+            payload: {name: editLanguageName, tier: editLanguageTier, id: languageId }
         });
         setEditLanguageId(null);
         setEditLanguageName('');
+        setTrigger(true);
     };
 
     const handleCancel = () => {
@@ -40,8 +41,36 @@ function SettingsLanguage() {
         setEditLanguageName('');
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch({
+            type: 'CREATE_NEW_LANGUAGE',
+            payload: { name: editLanguageName, tier: editLanguageTier }
+        });
+        setEditLanguageName("");
+        setEditLanguageTier("1");
+        };
+    
+
     return (
         <div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={editLanguageName}
+                    onChange={(e) => setEditLanguageName(e.target.value)}
+                />
+                <select
+                    value={editLanguageTier}
+                    onChange={(e) => setEditLanguageTier(parseInt(e.target.value, 10))}
+                >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <button type="submit">Add Language</button>
+            </form>
             <table>
                 <thead>
                     <tr>
@@ -63,11 +92,15 @@ function SettingsLanguage() {
                                     />
                                 </td>
                                 <td>
-                                    <input
-                                        type="text"
+                                    <select
                                         value={editLanguageTier}
-                                        onChange={(e) => setEditLanguageTier(e.target.value)}
-                                    />
+                                        onChange={(e) => setEditLanguageTier(parseInt(e.target.value, 10))}
+                                    >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button onClick={() => handleSave(language.id)}>Save</button>

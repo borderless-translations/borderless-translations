@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
-
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
+
+import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+
 
 function AdminClientMain() {
 
@@ -31,7 +33,7 @@ const handleAddClient = () => {
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Bidding Projects</TableCell>
                 <TableCell align="center">Open Projects</TableCell>
-                <TableCell align="center"d>Complete Projects</TableCell>
+                <TableCell align="center">Complete Projects</TableCell>
             </TableRow>
          </TableHead>
          <TableBody>

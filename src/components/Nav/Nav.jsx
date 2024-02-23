@@ -52,8 +52,8 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {(user.id && user.type === 'Admin') && (
           <>
-            <Link className="navLink" to="/user">
-              Home
+            <Link className="navLink" to="/dashboard">
+              Dashboard
             </Link>
 
             <Link className="navLink" to="/admin/client">
@@ -75,7 +75,6 @@ function Nav() {
             <Link className="navLink" to="/settings">
               Settings Page
             </Link>
-
           </>
         )}
 
@@ -83,7 +82,7 @@ function Nav() {
           About
         </Link>
 
-        <LogOutButton className='logout-btn' />
+        <LogOutButton className='logout-btn navLink' />
       </div>
     </div>
   );

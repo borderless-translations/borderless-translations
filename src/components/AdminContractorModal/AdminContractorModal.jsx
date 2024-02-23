@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 // import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
@@ -9,13 +10,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
-        console.log(contractor);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
         console.log("Updated contractor information on server", contractor);
+        Swal.fire({
+            title: "Info saved!",
+            icon: "success"
+          });
         closeModal();
     };
 
@@ -57,8 +61,8 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         <input
                             name="signed_nda"
                             type="checkbox"
-                            checked={contractor.signed_nda}
-                            onChange={(event) => handleChangeFor("signed_nda", event.target.value)}
+
+                            onChange={(event) => handleChangeFor("signed_nda", event.target.checked)}
                         />
                     </div>
                     <div className="form-group">
@@ -89,7 +93,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="writtenRate">Base Written Rate:</label>
+                        <label htmlFor="writtenRate">Notes:</label>
+                        <textarea
+                            name="notes"
+                            type="text"
+                            value={contractor.notes}
+                            onChange={(event) => handleChangeFor("notes", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="writtenRate">Written Rate:</label>
                         <input
                             name="base_written_rate"
                             type="number"
