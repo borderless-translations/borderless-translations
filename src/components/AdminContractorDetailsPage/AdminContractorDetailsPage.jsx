@@ -20,12 +20,12 @@ function AdminContractorDetailsPage() {
     const dispatch = useDispatch();
     const { id } = useParams();
     // This will fetch current contractor details from store
-    const contractorDetails = useSelector(store => store.contractor);
+    const contractorDetails = useSelector(store => store.contractor[0]);
     const contractorProjects = useSelector(store => store.contractorProjects);
     const allServices = useSelector(store => store.allServices);
     const allLanguages = useSelector(store => store.allLanguages);
 
-    const [selectedServices, setSelectedServices] = useState([contractorDetails.service])
+    // const [selectedServices, setSelectedServices] = useState([contractorDetails.services])
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
@@ -34,8 +34,7 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_CONTRACTOR', payload: id });
         dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
         dispatch({type: 'GET_ALL_SERVICES'});
-        dispatch({type: 'GET_ALL_LANGUAGES'});
-    }
+    } 
     const handleCheckboxChange = (event) => {
         const {value, checked} = event.target;
         const isChecked = event.target.checked;
@@ -116,13 +115,9 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
-    const toggleNDA = () => {
-        console.log('toggle NDA')
-    }
-
-useEffect(() => {
-    console.log('After State Update', selectedServices);
-}, [selectedServices])
+// useEffect(() => {
+//     console.log('After State Update', selectedServices);
+// }, [selectedServices])
 
 useEffect(() => {
     refreshPage();
@@ -137,7 +132,8 @@ useEffect(() => {
         <>
             <h1>Admin Contractor Details View</h1>
             <p>{JSON.stringify(contractorDetails)}</p>
-            <p>Services {JSON.stringify(selectedServices)}</p>
+            <p>Services {JSON.stringify(contractorDetails.services)}</p>
+            <p>Languages: {JSON.stringify(contractorDetails.languages)}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
             {contractorDetails.user_type === "admin" ? <button onClick={handleAdmin}>Remove Admin status</button> :
              <button onClick={handleAdmin}>Grant Admin status</button>}
@@ -182,7 +178,7 @@ useEffect(() => {
             <p><strong>Notes:</strong> {contractorDetails.notes}</p>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <p><strong>Languages:</strong> {contractorDetails.language_name}</p>
-            <button onClick={editContractorLanguages}>Add/Remove a Language Pair</button>
+            
             <p><div className="form-group">
                     <label htmlFor="service_type"><strong>Services:</strong>
                         {allServices.map((service, i) => (
@@ -191,7 +187,7 @@ useEffect(() => {
                                     name="services"
                                     value={service.id}
                                     type="checkbox"
-                                    onChange={handleCheckboxChange}
+                                   onChange={handleCheckboxChange}
                                 />{service.type}
                             </div>
                         ))}</label>

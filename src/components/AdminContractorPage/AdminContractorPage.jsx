@@ -44,7 +44,7 @@ function AdminContractorPage() {
     const handleDetails = (id) => {
         // Will grab details from store
         dispatch({type: 'GET_CONTRACTOR', payload: id})
-        history.push(`/contractor/details/${id}`)
+        history.push(`/admin/contractors/details/${id}`)
     }
 
 useEffect(() => {

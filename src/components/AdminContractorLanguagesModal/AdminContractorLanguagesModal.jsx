@@ -27,7 +27,7 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
                 )
             }   
     };
-
+// TODO: Where does this function need to be?
     const deleteLanguage = (languageId) => {
         dispatch({ type: 'DELETE_LANGUAGE_FROM_CONTRACTOR', payload: languageId })
     }

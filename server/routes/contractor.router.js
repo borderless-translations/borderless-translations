@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', requireAdmin, (req, res) => {
 
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT * FROM "contractor_profile";
     `;
     pool.query(querytext)
         .then((result) => {
@@ -133,10 +133,11 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
 router.get('/:id/services', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_services"
-        WHERE "contractor_services"."contractor_id" = $1;
+        WHERE "contractor_services"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {
+            console.log(result.rows)
             res.send(result.rows);
         })
         .catch((error) => {
