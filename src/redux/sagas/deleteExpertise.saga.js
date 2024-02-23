@@ -9,7 +9,7 @@ function* deleteExpertise(action) {
             withCredentials: true,
         };
         // Removing expertise from DB. Requires Admin
-        yield axios.delete(`/api/settings/expertise/${action.payload}`, {data: action.payload, config}); // DELETE expertise from DB.
+        yield axios.delete(`/api/settings/expertise/`, {data: action.payload, config}); // DELETE expertise from DB.
 
         // Call getAllExpertise.saga to get updated expertise
         yield put({ type: 'GET_ALL_EXPERTISE'});
