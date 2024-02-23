@@ -26,7 +26,7 @@ function SettingsService() {
     const handleSave = (serviceId) => {
         dispatch({
             type: 'UPDATE_SERVICE',
-            payload: { id: serviceId, type: editServiceType}
+            payload: { type: editServiceType, id: serviceId}
         });
         setEditServiceId(null);
         setEditServiceType('');
