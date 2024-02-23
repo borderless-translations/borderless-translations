@@ -9,7 +9,6 @@ function AdminContractorModal({ closeModal, defaultValues }) {
     let [contractor, setContractor] = useState(defaultValues);
 
     const handleChangeFor = (key, value) => {
-        console.log(contractor.signed_nda)
         setContractor({ ...contractor, [key]: value });
     };
 

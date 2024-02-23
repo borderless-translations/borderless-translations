@@ -75,9 +75,6 @@ function Nav() {
             <Link className="navLink" to="/settings">
               Settings Page
             </Link>
-
-
-            <LogOutButton className="navLink" />
           </>
         )}
 
@@ -85,7 +82,7 @@ function Nav() {
           About
         </Link>
 
-        <LogOutButton className='logout-btn' />
+        <LogOutButton className='logout-btn navLink' />
       </div>
     </div>
   );

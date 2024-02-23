@@ -181,8 +181,8 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
+              // redirect them to the /dashboard page
+              <Redirect to="/dashboard" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -195,7 +195,7 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
+              // redirect them to the /dashboard page
               <Redirect to="/dashboard" />
               :
               // Otherwise, show the Landing page
