@@ -28,10 +28,11 @@ function SettingsLanguage() {
     const handleSave = (languageId) => {
         dispatch({
             type: 'UPDATE_LANGUAGE',
-            payload: { id: languageId, name: editLanguageName, tier: editLanguageTier}
+            payload: {name: editLanguageName, tier: editLanguageTier, id: languageId }
         });
         setEditLanguageId(null);
         setEditLanguageName('');
+        setTrigger(true);
     };
 
     const handleCancel = () => {
@@ -62,11 +63,15 @@ function SettingsLanguage() {
                                     />
                                 </td>
                                 <td>
-                                    <input
-                                        type="text"
+                                    <select
                                         value={editLanguageTier}
-                                        onChange={(e) => setEditLanguageTier(e.target.value)}
-                                    />
+                                        onChange={(e) => setEditLanguageTier(parseInt(e.target.value, 10))}
+                                    >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button onClick={() => handleSave(language.id)}>Save</button>
