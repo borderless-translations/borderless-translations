@@ -77,7 +77,7 @@ CREATE TABLE "expertise" (
 CREATE TABLE "contractor_services" (
 	"id" SERIAL NOT NULL,
 	"service_id" INTEGER NOT NULL,
-	"contractor_id" INTEGER NOT NULL,
+	"user_id" INTEGER NOT NULL,
 	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
 );
 
@@ -115,7 +115,7 @@ CREATE TABLE "rates" (
 );
 
 INSERT INTO "languages" ("name", "tier")
-VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),('Croation', '1'),('Serbian', '1'),
+VALUES ('Italian', '1'),('Spanish', '1'),('Portuguese', '1'),('Romanian', '1'),('Croatian', '1'),('Serbian', '1'),
 ('Czech', '1'),('Slovak', '1'),('Polish', '1'),('Bulgarian', '1'),('Hungarian', '1'),
 ('French', '2'),('English', '2'),('Ukranian', '2'),('Turkish', '2'),('Greek', '2'),('Vietnamese', '2'),('Khmer', '2'),
 ('Simplified Chinese', '3'),('German', '3'),('Duth', '3'),('Arabic', '3'),('Hebrew', '3'),
@@ -140,4 +140,6 @@ VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 
 ('Lionspath', 'Jennifer', 'France', 'CET', 'Paris','email2@email.email', '+33 11-22-33-44-55', 'Translate with subtitles a short documentary on french cows', '2-23-2024');
 
 INSERT INTO "expertise" ("type")
+
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
+

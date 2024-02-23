@@ -61,8 +61,8 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         <input
                             name="signed_nda"
                             type="checkbox"
-                            checked={contractor.signed_nda}
-                            onChange={(event) => handleChangeFor("signed_nda", event.target.value)}
+
+                            onChange={(event) => handleChangeFor("signed_nda", event.target.checked)}
                         />
                     </div>
                     <div className="form-group">
@@ -93,7 +93,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="writtenRate">Base Written Rate:</label>
+                        <label htmlFor="writtenRate">Notes:</label>
+                        <textarea
+                            name="notes"
+                            type="text"
+                            value={contractor.notes}
+                            onChange={(event) => handleChangeFor("notes", event.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="writtenRate">Written Rate:</label>
                         <input
                             name="base_written_rate"
                             type="number"

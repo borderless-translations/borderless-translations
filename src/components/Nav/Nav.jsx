@@ -32,7 +32,7 @@ function Nav() {
         )}
 
         {/* If a user is logged in as contractor, show these links */}
-        {(user.id && user.type === 'contractor') && (
+        {(user.id && user.type === 'Contractor') && (
           <>
             {/* <Link className="navLink" to="/user">
               Home
@@ -50,10 +50,10 @@ function Nav() {
         )}
 
         {/* If a user is logged in, show these links */}
-        {(user.id && user.type === 'admin') && (
+        {(user.id && user.type === 'Admin') && (
           <>
-            <Link className="navLink" to="/user">
-              Home
+            <Link className="navLink" to="/dashboard">
+              Dashboard
             </Link>
 
             <Link className="navLink" to="/admin/client">
@@ -75,9 +75,6 @@ function Nav() {
             <Link className="navLink" to="/settings">
               Settings Page
             </Link>
-
-
-            <LogOutButton className="navLink" />
           </>
         )}
 
@@ -85,7 +82,7 @@ function Nav() {
           About
         </Link>
 
-        <LogOutButton className='logout-btn' />
+        <LogOutButton className='logout-btn navLink' />
       </div>
     </div>
   );

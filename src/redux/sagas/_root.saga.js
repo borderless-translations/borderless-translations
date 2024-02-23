@@ -37,6 +37,10 @@ import createNewRateSaga from './createNewRate.saga';
 import deleteRateSaga from './deleteRate.saga';
 import updateSettingsLanguageSaga from './updateSettingsLanguage.saga';
 import updateSettingsServiceSaga from './updateSettingsService.saga';
+import createNewExpertiseSaga from './createNewExpertise.saga';
+import deleteExpertiseSaga from './deleteExpertise.saga';
+import getAllExpertiseSaga from './getAllExpertise.saga';
+import updateSettingsExpertiseSaga from './updateSettingsExpertise.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -73,8 +77,6 @@ export default function* rootSaga() {
     updateTranslatorStatusSaga(), // PUT route updating status of translator progress. Stores updated project in project.reducer.
     updateProofreaderStatusSaga(), // PUT route updating status of proofreader progress. Stores updated project in project.reducer.
     updateClientSaga(), // Update client info in DB. Needs full client object in payload. Stores updated object in reducer client
-    toggleAvailabilitySaga(), // Toggles current availabity for authenticated user. Stores updated object in reducer contractor.
-    toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
     getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
@@ -88,5 +90,9 @@ export default function* rootSaga() {
     deleteRateSaga(), // DELETE rate from DB. Calls getAllRates.saga to get updated list.
     updateSettingsLanguageSaga(), // PUT route updating language details in DB. Calls getAllLanguages.saga to get updated list.
     updateSettingsServiceSaga(), // PUT route updating service details in DB. Calls getAllServices.saga to get updated list.
+    createNewExpertiseSaga(), // POST new expertise to DB. Calls getAllExpertise.saga to get updated list.
+    deleteExpertiseSaga(), // DELETE expertise from DB. Calls getAllExpertise.saga to get updated list.
+    getAllExpertiseSaga(), // GET all expertise from DB. Stores info in allExpertise.reducer.
+    updateSettingsExpertiseSaga(), // PUT route updating expertise details in DB. Calls getAllExpertise.saga to get updated list.
   ]);
 }

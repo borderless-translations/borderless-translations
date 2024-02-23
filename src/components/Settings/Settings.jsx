@@ -1,6 +1,7 @@
 import React from 'react';
 import SettingsLanguage from '../SettingsLanguage/SettingsLanguage.jsx';
 import SettingsService from '../SettingsService/SettingsService.jsx';
+import SettingsExpertise from '../SettingsExpertise/SettingsExpertise.jsx';
 import './Settings.css';
 
 function Settings() {
@@ -16,6 +17,9 @@ return(
         
         <h3>Services</h3>
             <SettingsService />
+
+        <h3>Expertise</h3>
+            <SettingsExpertise />
 
     </div>
 )
