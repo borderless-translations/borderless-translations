@@ -7,6 +7,7 @@ function SettingsService() {
     const services = useSelector(store => store.allServices);
     const [editServiceId, setEditServiceId] = useState(null);
     const [editServiceType, setEditServiceType] = useState('');
+    const [serviceType, setServiceType] = useState('');
 
     useEffect(() => {
         dispatch({ type: 'GET_ALL_SERVICES' });
@@ -18,15 +19,16 @@ function SettingsService() {
     };
 
     const handleDelete = (id) => {
-        dispatch({ 
-            type: 'DELETE_SERVICE', 
-            payload:{ id }});
+        dispatch({
+            type: 'DELETE_SERVICE',
+            payload: { id }
+        });
     };
 
     const handleSave = (serviceId) => {
         dispatch({
             type: 'UPDATE_SERVICE',
-            payload: { type: editServiceType, id: serviceId}
+            payload: { type: editServiceType, id: serviceId }
         });
         setEditServiceId(null);
         setEditServiceType('');
@@ -36,58 +38,74 @@ function SettingsService() {
         setEditServiceId(null);
         setEditServiceType('');
     };
-    
-    return(
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch({
+            type: 'CREATE_NEW_SERVICE',
+            payload: { type: serviceType }
+        });
+        setServiceType("");
+        };
+
+    return (
         <div>
-        <p>Hello you absolute legend!</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Service</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {services.map(service => (
-                    <tr key={service.id}>
-                        {editServiceId === service.id ? (
-                        <>
-                        <td>
-                            <input
-                                type="text"
-                                value={editServiceType}
-                                onChange={(e) => setEditServiceType(e.target.value)}
-                            />
-                        </td>
-                        <td>
-                            <button onClick={() => handleSave(service.id)}>Save</button>
-                            <button onClick={() => handleCancel()}>Cancel</button>
-                        </td>
-                        
-                        </>
-                        ) : (
-                        <>
-                        <td>
-                            {service.type}
-                        </td>
-                        <td>
-                            <button onClick={() => handleEdit(service)}>Edit</button>
-                            <button onClick={() => handleDelete(service.id)}>Delete</button>
-                        </td>
-                        
-                        </>
-                        )}
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={serviceType}
+                    onChange={(e) => setServiceType(e.target.value)}
+                />
+            <button type="submit">Add Service</button>
+            </form>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Actions</th>
                     </tr>
-                ))}
-            </tbody>
+                </thead>
+                <tbody>
+                    {services.map(service => (
+                        <tr key={service.id}>
+                            {editServiceId === service.id ? (
+                                <>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            value={editServiceType}
+                                            onChange={(e) => setEditServiceType(e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <button onClick={() => handleSave(service.id)}>Save</button>
+                                        <button onClick={() => handleCancel()}>Cancel</button>
+                                    </td>
 
-        </table>
+                                </>
+                            ) : (
+                                <>
+                                    <td>
+                                        {service.type}
+                                    </td>
+                                    <td>
+                                        <button onClick={() => handleEdit(service)}>Edit</button>
+                                        <button onClick={() => handleDelete(service.id)}>Delete</button>
+                                    </td>
+
+                                </>
+                            )}
+                        </tr>
+                    ))}
+                </tbody>
+
+            </table>
 
 
         </div>
-    
-   
+
+
     );
 }
 
