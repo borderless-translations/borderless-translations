@@ -72,7 +72,11 @@ CREATE TABLE "services" (
 	CONSTRAINT "services_pk" PRIMARY KEY ("id")
 );
 
-
+CREATE TABLE "expertise" (
+	"id" SERIAL NOT NULL,
+	"type" VARCHAR,
+	CONSTRAINT "services_pk" PRIMARY KEY ("id")
+);
 
 CREATE TABLE "contractor_services" (
 	"id" SERIAL NOT NULL,
@@ -144,3 +148,6 @@ VALUES ('Andy', 'abc123','admin'),('Chris', 'xyz321','client'),('Juan', '123abc'
 
 INSERT INTO "clients" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
 VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
+
+INSERT INTO "expertise" ("type")
+VALUES ('Medical', 'Legal', 'Academic', 'Certified', 'Tech', 'Finance');
