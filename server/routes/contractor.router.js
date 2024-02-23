@@ -115,7 +115,9 @@ router.get('/self/services', rejectUnauthenticated, (req, res) => {
 // GET specific contractor language info. Requires admin status
 router.get('/:id/languages', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_language"
+        SELECT "contractor_language".*, "l1"."name" AS "first_language", "l2"."name" AS "second_language" FROM "contractor_language"
+        JOIN "languages" AS "l1" ON "l1"."id" = "contractor_language"."from_language_id"
+        JOIN "languages" AS "l2" ON "l2"."id" = "contractor_language"."to_language_id"
         WHERE "contractor_language"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
@@ -132,7 +134,8 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
 // GET specific contractor services info. Requires admin status
 router.get('/:id/services', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_services"
+        SELECT "contractor_services".*, "services"."type" FROM "contractor_services"
+        JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_services"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])

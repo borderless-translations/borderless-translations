@@ -23,11 +23,7 @@ function AdminContractorDetailsPage() {
     // This will fetch current contractor details from store
     const contractorDetails = useSelector(store => store.contractor[0]);
     const contractorProjects = useSelector(store => store.contractorProjects);
-    const allServices = useSelector(store => store.allServices);
-    const allLanguages = useSelector(store => store.allLanguages);
-    
-    const [selectedServices, setSelectedServices] = useState([]);
-    const [selectedLanguageNames, setSelectedLanguageNames] = useState([]);
+
     const [toggleEditContractor, setToggleEditContractor] = useState(false)
     const [toggleEditServices, setToggleEditServices] = useState(false);
     const [toggleEditLanguages, setToggleEditLanguages] = useState(false);
@@ -35,8 +31,6 @@ function AdminContractorDetailsPage() {
     const refreshPage = () => {
         dispatch({type: 'GET_CONTRACTOR', payload: id });
         dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
-        dispatch({type: 'GET_ALL_SERVICES'});
-        dispatch({type: 'GET_ALL_LANGUAGES'});
     } 
 
     const handleCheckboxChange = (event) => {
@@ -63,6 +57,7 @@ function AdminContractorDetailsPage() {
     const handleAvail = () => {
         console.log('Set available to the opposite', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
+        refreshPage();
     }
 
     const handleAdmin = () => {
@@ -129,23 +124,6 @@ function AdminContractorDetailsPage() {
 //     console.log('After State Update', selectedServices);
 // }, [selectedServices])
 useEffect(() => {
-    if (!contractorDetails) {}
-    else
-    {
-    console.log('selected languages: ', contractorDetails.languages)
-    // Run your logic to get selected language names
-    const names = contractorDetails.languages.map(lang => ({
-      fromLanguage: getLanguageNameById(lang.from_language_id),
-      toLanguage: getLanguageNameById(lang.to_language_id),
-    }));
-    console.log('names are', names)
-    
-    // Update state with the result
-    setSelectedLanguageNames(names);
-}
-  }, []);
-
-useEffect(() => {
     refreshPage();
 }, []);
 
@@ -159,10 +137,7 @@ useEffect(() => {
             <h1>Admin Contractor Details View</h1>
             <p>{JSON.stringify(contractorDetails)}</p>
             <p>Services {JSON.stringify(contractorDetails.services)}</p>
-            <p>All Services {JSON.stringify(allServices)}</p>
             <p>Languages: {JSON.stringify(contractorDetails.languages)}</p>
-            <p>All Languages: {JSON.stringify(allLanguages)}</p>
-            <button onClick={getLanguageNameById}>Get Languages</button>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
@@ -210,21 +185,24 @@ useEffect(() => {
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <div><h3><strong>Languages:</strong></h3>
                     <ul>
-                        {selectedLanguageNames.map((lang, index) => (
+                        {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
-                            From: {lang.fromLanguage} To: {lang.toLanguage}
+                            From: {lang.first_language} To: {lang.second_language}
                         </li>
                         ))}
                     </ul>
             </div>
             
             <div className="form-group">
-                <p> <label htmlFor="service_type"><strong>Services:</strong>
-                        </label>
-                        </p>
+                <h3><strong>Services:</strong></h3>
+                    <ul>
+                        {contractorDetails.services.map((service, index) => (
+                        <li key={index}>
+                            From: {service.type} To: {service.type}
+                        </li>
+                        ))}
+                    </ul>
             </div>
-            
-            <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
             
             <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>

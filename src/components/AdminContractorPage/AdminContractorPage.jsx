@@ -39,6 +39,7 @@ function AdminContractorPage() {
     const handleAvail = (id) => {
         console.log('Set available to the opposite, user_id', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
+        getContractors();
     }
 
     const handleDetails = (id) => {
@@ -54,7 +55,6 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor List</h1>
-        <p>Contractor: {JSON.stringify(allContractors)}</p>
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
             <TableHead>
@@ -78,7 +78,12 @@ useEffect(() => {
                         >
                             
                         <TableCell align="center">{contractor.contractor_name}</TableCell>
-                        <TableCell align="center">{contractor.languages.data}</TableCell>
+                        <TableCell align="center">{<ul>
+                        {contractor.languages.map((lang, index) => (
+                        <p key={index}>
+                            {lang.first_language} to {lang.second_language}</p>
+                        ))}
+                    </ul>}</TableCell>
                         <TableCell align="center">{contractor.location}</TableCell>
                         <TableCell align="center">{contractor.timezone}</TableCell>
                         
