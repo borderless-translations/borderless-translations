@@ -112,7 +112,7 @@ router.post('/service', requireAdmin, (req, res) => {
 			res.sendStatus(201)
 		})
 		.catch((error) => {
-			console.error("Error in POST new language", error);
+			console.error("Error in POST new service", error);
 			res.sendStatus(500);
 		})
 	;
@@ -145,6 +145,81 @@ router.put('/service/:id', requireAdmin, (req, res) => {
 router.delete('/service', requireAdmin, (req, res) => {
 	let querytext = `
 		DELETE FROM "services"
+        WHERE "id" = $1;
+	`;
+	pool.query(querytext,[req.body.id])
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(200)
+		})
+		.catch((error) => {
+			console.error("Error in DELETE", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+// GET all EXPERTISE
+router.get('/expertise', rejectUnauthenticated, (req, res) => {
+	let querytext = `
+		SELECT * FROM "expertise";
+	`;
+	pool.query(querytext,[])
+		.then((result) => {
+			res.send(result.rows);
+		})
+		.catch((error) => {
+			console.error("Error in GET", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+// POST new service
+router.post('/expertise', requireAdmin, (req, res) => {
+	let querytext = `
+		INSERT INTO "expertise" ("type")
+        VALUES ($1);
+	`;
+	pool.query(querytext,[req.body.type])
+		.then((result) => {
+			// Code to send goes here
+			res.sendStatus(201)
+		})
+		.catch((error) => {
+			console.error("Error in POST new expertise", error);
+			res.sendStatus(500);
+		})
+	;
+});
+
+router.put('/expertise/:id', requireAdmin, (req, res) => {
+
+	let queryText = `
+	    UPDATE "expertise" 
+            SET 
+                "type" = $1
+            WHERE "id" = $2;
+	`;
+    let queryValues = [
+        req.body.type,
+        req.body.id
+    ];
+	pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+	;
+});
+
+// DELETE service from table
+router.delete('/expertise', requireAdmin, (req, res) => {
+	let querytext = `
+		DELETE FROM "expertise"
         WHERE "id" = $1;
 	`;
 	pool.query(querytext,[req.body.id])
