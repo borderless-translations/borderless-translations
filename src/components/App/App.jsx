@@ -68,11 +68,7 @@ function App() {
             exact
             path="/user"
           >
-            {user.type === 'Admin' ?
-              <AdminProjectPage />
-            :
-              <ContractorDashboard /> 
-            }
+              <UserPage /> 
           </ProtectedRoute>
 
           <ProtectedRoute
