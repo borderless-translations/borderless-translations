@@ -150,4 +150,6 @@ INSERT INTO "clients" ("client","contact","country","timezone","location","email
 VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
 
 INSERT INTO "expertise" ("type")
+
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
+
