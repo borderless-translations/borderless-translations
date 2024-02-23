@@ -75,7 +75,7 @@ CREATE TABLE "services" (
 CREATE TABLE "expertise" (
 	"id" SERIAL NOT NULL,
 	"type" VARCHAR,
-	CONSTRAINT "services_pk" PRIMARY KEY ("id")
+	CONSTRAINT "expertise_pk" PRIMARY KEY ("id")
 );
 
 CREATE TABLE "contractor_services" (
@@ -150,4 +150,4 @@ INSERT INTO "clients" ("client","contact","country","timezone","location","email
 VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
 
 INSERT INTO "expertise" ("type")
-VALUES ('Medical', 'Legal', 'Academic', 'Certified', 'Tech', 'Finance');
+VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
