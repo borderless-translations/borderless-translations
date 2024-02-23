@@ -21,7 +21,7 @@ function* createNewService(action) {
 
 // Worker function  - Saga: will be fired on "CREATE_NEW_SERVICE" actions
 function* createNewServiceSaga() {
-    yield takeLatest('CREATE_NEW_LANGUAGE', createNewService);
+    yield takeLatest('CREATE_NEW_SERVICE', createNewService);
 }
 
 export default createNewServiceSaga;

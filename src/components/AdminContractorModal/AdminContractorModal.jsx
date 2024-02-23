@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 // import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
@@ -9,13 +10,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
 
     const handleChangeFor = (key, value) => {
         setContractor({ ...contractor, [key]: value });
-        console.log(contractor);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
         console.log("Updated contractor information on server", contractor);
+        Swal.fire({
+            title: "Info saved!",
+            icon: "success"
+          });
         closeModal();
     };
 

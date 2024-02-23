@@ -40,6 +40,31 @@ router.post('/language', requireAdmin, (req, res) => {
 	;
 });
 
+router.put('/language/:id', requireAdmin, (req, res) => {
+
+	let queryText = `
+	    UPDATE "languages" 
+            SET 
+                "name" = $1, 
+                "tier" = $2 
+            WHERE "id" = $3;
+	`;
+    let queryValues = [
+        req.body.name,
+        req.body.tier,
+        req.body.id
+    ];
+	pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
+	;
+});
+
 // DELETE language from table
 router.delete('/language', requireAdmin, (req, res) => {
 	let querytext = `
@@ -90,6 +115,29 @@ router.post('/service', requireAdmin, (req, res) => {
 			console.error("Error in POST new language", error);
 			res.sendStatus(500);
 		})
+	;
+});
+
+router.put('/service/:id', requireAdmin, (req, res) => {
+
+	let queryText = `
+	    UPDATE "services" 
+            SET 
+                "type" = $1
+            WHERE "id" = $2;
+	`;
+    let queryValues = [
+        req.body.type,
+        req.body.id
+    ];
+	pool.query(queryText, queryValues)
+        .then((result) => {
+            res.sendStatus(200)
+        })
+        .catch((error) => {
+            console.error("Error in PUT", error);
+            res.sendStatus(500);
+        })
 	;
 });
 

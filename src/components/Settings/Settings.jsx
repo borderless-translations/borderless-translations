@@ -14,13 +14,8 @@ return(
         <h3>Languages</h3>
             <SettingsLanguage />
         
-        <p>Services</p>
+        <h3>Services</h3>
             <SettingsService />
-        
-        <p>Rates</p>
-
-        <p>Admin Status</p>
-
 
     </div>
 )

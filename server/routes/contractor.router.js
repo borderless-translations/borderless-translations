@@ -27,7 +27,6 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_profile"
         WHERE "contractor_profile"."user_id" = $1;
-
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {
@@ -133,7 +132,7 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
 router.get('/:id/services', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_services"
-        WHERE "contractor_services"."user_id" = $1;
+        WHERE "contractor_services"."contractor_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {
