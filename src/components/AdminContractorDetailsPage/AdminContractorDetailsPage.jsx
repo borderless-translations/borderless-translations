@@ -63,6 +63,7 @@ function AdminContractorDetailsPage() {
     const handleAvail = () => {
         console.log('Set available to the opposite', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
+        refreshPage();
     }
 
     const handleAdmin = () => {

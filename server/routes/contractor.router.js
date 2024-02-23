@@ -134,7 +134,8 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
 // GET specific contractor services info. Requires admin status
 router.get('/:id/services', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_services"
+        SELECT "contractor_services".*, "services"."type" FROM "contractor_services"
+        JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_services"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
