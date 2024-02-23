@@ -46,8 +46,6 @@ CREATE TABLE "contractor_profile" (
 	CONSTRAINT "contractor_profile_pk" PRIMARY KEY ("user_id")
 );
 
-
-
 CREATE TABLE "project_language" (
 	"id" SERIAL NOT NULL,
 	"project_id" INTEGER NOT NULL,
@@ -63,8 +61,6 @@ CREATE TABLE "project_language" (
 	"flagged" BOOLEAN DEFAULT FALSE,
 	CONSTRAINT "project_language_pk" PRIMARY KEY ("id")
 );
-
-
 
 CREATE TABLE "services" (
 	"id" SERIAL NOT NULL,
@@ -85,8 +81,6 @@ CREATE TABLE "contractor_services" (
 	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
 );
 
-
-
 CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
 	"username" VARCHAR NOT NULL,
@@ -96,8 +90,6 @@ CREATE TABLE "user" (
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 );
 
-
-
 CREATE TABLE "contractor_language" (
 	"id" SERIAL NOT NULL,
 	"user_id" INTEGER NOT NULL,
@@ -106,16 +98,12 @@ CREATE TABLE "contractor_language" (
 	CONSTRAINT "contractor_language_pk" PRIMARY KEY ("id")
 );
 
-
-
 CREATE TABLE "languages" (
 	"id" SERIAL NOT NULL,
 	"name" VARCHAR NOT NULL,
 	"tier" INTEGER,
 	CONSTRAINT "languages_pk" PRIMARY KEY ("id")
 );
-
-
 
 CREATE TABLE "rates" (
 	"id" SERIAL NOT NULL,
@@ -147,7 +135,9 @@ VALUES ('Andy', 'abc123','admin'),('Chris', 'xyz321','client'),('Juan', '123abc'
 
 
 INSERT INTO "clients" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
-VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024');
+VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 'email@email.email', '612-867-5309','note', '2-19-2024'),
+('Jewels Films', 'Cloe', 'Poland', '', 'Warsaw','email1@email.email','+48 123-345-567', 'Translate from English to Polish', '2-23-2024'),
+('Lionspath', 'Jennifer', 'France', 'CET', 'Paris','email2@email.email', '+33 11-22-33-44-55', 'Translate with subtitles a short documentary on french cows', '2-23-2024');
 
 INSERT INTO "expertise" ("type")
 
