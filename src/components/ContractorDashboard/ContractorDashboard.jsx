@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import "./ContractorDashboard.css";
 
+import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+
 function ContractorDashboard() {
     const dispatch = useDispatch();
     const history = useHistory();
