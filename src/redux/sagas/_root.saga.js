@@ -71,8 +71,6 @@ export default function* rootSaga() {
     updateTranslatorStatusSaga(), // PUT route updating status of translator progress. Stores updated project in project.reducer.
     updateProofreaderStatusSaga(), // PUT route updating status of proofreader progress. Stores updated project in project.reducer.
     updateClientSaga(), // Update client info in DB. Needs full client object in payload. Stores updated object in reducer client
-    toggleAvailabilitySaga(), // Toggles current availabity for authenticated user. Stores updated object in reducer contractor.
-    toggleAvailabilityAdminSaga(), // Toggles current availabity for specific contractor. Stores updated object in reducer contractor.
     updateContractorSaga(), // PUT updates contractor info with new information. GET updated and stores in reducer contractor
     setUserAuthSaga(), // PUT for auth level of user. Requires admin status
     getAllLanguagesSaga(), // GET for allLanguages. Stores result in allLanguages.reducer.
