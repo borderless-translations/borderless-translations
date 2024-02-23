@@ -204,8 +204,6 @@ useEffect(() => {
                     </ul>
             </div>
             
-            <p><strong>Available:</strong><button onClick={()  => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></p>
-            
             <h3>Current Projects</h3>
             <p>This is where the contractor's current projects should be displayed.</p>
             <h3>Completed Projects</h3>
