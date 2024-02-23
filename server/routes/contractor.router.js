@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', requireAdmin, (req, res) => {
 
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT * FROM "contractor_profile";
     `;
     pool.query(querytext)
         .then((result) => {
@@ -25,7 +25,8 @@ router.get('/', requireAdmin, (req, res) => {
 // GET specific contractor info. Requires admin status
 router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
-        SELECT * FROM "contractor_profile"
+        SELECT "contractor_profile".*, "user"."type" AS "user_type" FROM "contractor_profile"
+        JOIN "user" ON "user"."id" = "contractor_profile"."user_id"
         WHERE "contractor_profile"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
@@ -132,10 +133,11 @@ router.get('/:id/languages', requireAdmin, (req, res) => {
 router.get('/:id/services', requireAdmin, (req, res) => {
     let querytext = `
         SELECT * FROM "contractor_services"
-        WHERE "contractor_services"."contractor_id" = $1;
+        WHERE "contractor_services"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {
+            console.log(result.rows)
             res.send(result.rows);
         })
         .catch((error) => {
@@ -233,17 +235,27 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     console.log('req.body is', req.body)
 	let querytext = `
 	    UPDATE "contractor_profile" 
-        SET "contractor_name" = $1, "timezone" = $2, "location" = $3,
-        "linkedIn" = $4, "base_written_rate" = $5, "base_audio_video_rate" = $6
-        WHERE "contractor_profile"."user_id" = $7
+        SET "contractor_name" = $1, 
+        "timezone" = $2, 
+        "location" = $3, 
+        "phone" = $4,
+        "signed_nda" = $5,
+        "linkedIn" = $6, 
+        "base_written_rate" = $7, 
+        "base_audio_video_rate" = $8,
+        "notes" = $9
+        WHERE "contractor_profile"."user_id" = $10;
 	`;
 	pool.query(querytext,[
         req.body.contractor_name,
         req.body.timezone,
         req.body.location,
+        req.body.phone,
+        req.body.signed_nda,
         req.body.linkedIn,
         req.body.base_written_rate,
         req.body.base_audio_video_rate,
+        req.body.notes,
         req.params.id
     ])
         .then((result) => {

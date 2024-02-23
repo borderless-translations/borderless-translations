@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import './AdminContractorPage.css';
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -43,7 +44,7 @@ function AdminContractorPage() {
     const handleDetails = (id) => {
         // Will grab details from store
         dispatch({type: 'GET_CONTRACTOR', payload: id})
-        history.push(`/contractor/details/${id}`)
+        history.push(`/admin/contractors/details/${id}`)
     }
 
 useEffect(() => {
@@ -53,7 +54,8 @@ useEffect(() => {
     return (
         <div className="container">
         <h1>Contractor List</h1>
-        <TableContainer>
+        <p>Contractor: {JSON.stringify(allContractors)}</p>
+        <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
             <TableHead>
                 <TableRow>
@@ -65,6 +67,7 @@ useEffect(() => {
                     <TableCell align="center">Written Rate</TableCell>
                     <TableCell align="center">A/V Rate</TableCell>
                     <TableCell align="center">Availability</TableCell>
+                    <TableCell align="center">Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
