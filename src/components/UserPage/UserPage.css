@@ -1,0 +1,18 @@
+body {
+    color: e3fbfb;
+    /* background-image: url(""); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    padding: 1em;
+}
+.container {
+    h2 {
+        text-align: center;
+    }
+    p {
+        text-align: center;
+    }
+    
+}
