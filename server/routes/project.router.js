@@ -66,7 +66,8 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 router.get('/client/:id', requireAdmin, (req, res) => {
 	let querytext = 
 		`SELECT * FROM "projects"
-		WHERE "client_id" = $1;`;
+		WHERE "client_id" = $1
+		ORDER BY "status" DESC;`;
 	pool.query(querytext, [req.params.id])
 	.then((result) => {
 		res.send(result.rows);
