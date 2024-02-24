@@ -139,29 +139,6 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// Get all projects for a specific contractor (requires Admin).
-// PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
-// it will make it interpret every string in the othera routes as an ID!
-// Also there's a duplicate of this route above??
-router.get('/specific/:id', requireAdmin, (req, res) => {
-	console.log('req params', req.params.id)
-    let querytext = `
-        SELECT * FROM "projects"
-        JOIN "project_language" ON "project_language"."project_id" = "projects"."id"
-        WHERE "project_language"."contractor_id" = $1
-            OR "project_language"."proofreader_id" = $1
-    `;
-    pool.query(querytext, [req.params.id])
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.error("Error in GET projects for self", error);
-            res.sendStatus(500);
-        })
-    ;
-});
-
 // GET ongoing projects
 router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 	let querytext = `SELECT

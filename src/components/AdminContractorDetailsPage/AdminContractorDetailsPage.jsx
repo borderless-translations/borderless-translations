@@ -30,6 +30,7 @@ function AdminContractorDetailsPage() {
 
     const refreshPage = () => {
         dispatch({type: 'GET_CONTRACTOR', payload: id });
+        console.log('fetch contractor projects', id);
         dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
     } 
 
