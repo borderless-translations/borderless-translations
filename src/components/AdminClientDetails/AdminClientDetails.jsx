@@ -13,13 +13,13 @@ function AdminClientDetails() {
     const history = useHistory();
     const params = useParams();
 
-    
+
     useEffect(() => {
-        dispatch({ type: "GET_CLIENT", payload:{id: params.id }});
+        dispatch({ type: "GET_CLIENT", payload: { id: params.id } });
     }, [params.id]);
 
     useEffect(() => {
-        dispatch({ type:"GET_CLIENT_PROJECTS", payload:{id: params.id }});
+        dispatch({ type: "GET_CLIENT_PROJECTS", payload: { id: params.id } });
     }, [params.id]);
 
 
@@ -30,17 +30,17 @@ function AdminClientDetails() {
     const [sortedProjects, setSortedProjects] = useState([]);
 
     useEffect(() => {
-        const filteredProjects = [... new Set(clientProjects.map(project => project.project_status))];
+        const filteredProjects = [... new Set(clientProjects.map(project => project.status))];
         const sorted = filteredProjects.map(status => ({
             status,
-            projectsByStatus: projects.filter(project => project.project_status === status)
+            project: clientProjects.filter(project => project.status === status)
         }));
         setSortedProjects(sorted);
     }, [clientProjects])
 
     // Controls for operating the modal
     const [modalOpen, setModalOpen] = useState(false);
-    const [clientToEdit, setClientToEdit] = useState(null); 
+    const [clientToEdit, setClientToEdit] = useState(null);
 
     const handleEditClient = (client) => {
         setClientToEdit(client);
@@ -48,24 +48,58 @@ function AdminClientDetails() {
     };
 
     return (
-        <div className="container">
-            <h2>Admin Client Details</h2>
-            <p>ID: {params.id}</p>
-            <p>Business: {client.client}</p>
-            <p>Contact: {client.contact}</p>
-            <p>Country: {client.country}</p>
-            <p>Location: {client.location}</p>
-            <p>Time Zone: {client.timezone}</p>
-            <p>Email: {client.email}</p>
-            <p>Phone: {client.phone}</p>
-            <p>Client Notes: {client.client_notes}</p>
+        <div>
+            <div className="container">
+                <h2>Admin Client Details</h2>
+                <button onClick={() => handleEditClient(client)}>Edit Client</button>
 
+                <p>Business: {client.client}</p>
+                <p>Contact: {client.contact}</p>
+                <p>Country: {client.country}</p>
+                <p>Location: {client.location}</p>
+                <p>Time Zone: {client.timezone}</p>
+                <p>Email: {client.email}</p>
+                <p>Phone: {client.phone}</p>
+                <p>Client Notes: {client.client_notes}</p>
 
-            <button onClick={() => handleEditClient(client)}>Edit Client</button>
-            <button onClick={() => history.push("/admin/client")}>Return to Client List</button>
+                <h3>Projects</h3>
 
-            {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null)}} defaultValues={client} />}
-            
+                <div>
+                    {sortedProjects.map(project => (
+                        <div key={project.status }>
+                            <h4>{project.status}</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Project Description</th>
+                                        <th>Start Date</th>
+                                        <th>Due Date</th>
+                                        <th>Translator Status</th>
+                                        <th>Proofreader Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {project.project.map((project, index) => (
+                                        <tr key={index}>
+                                            <td>{project.description}</td>
+                                            <td>{project.created_at}</td>
+                                            <td>{project.due_at}</td>
+                                            <td>{project.translator_status}</td>
+                                            <td>{project.proofreader_status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                               
+                            </table>
+                        </div>
+                    ))}
+                </div>
+
+                <button onClick={() => history.push("/admin/client")}>Return to Client List</button>
+
+                {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null) }} defaultValues={client} />}
+
+            </div>
         </div>
     );
 };
