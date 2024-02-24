@@ -146,7 +146,7 @@ NSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "availab
 VALUES (7, 'translator 1', '1-222-333-4444', FALSE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8),
 (2, 'translator 2', '1-222-333-4444', TRUE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8);
 
-INSERT INTO "contractor_services" ("service_id", "contractor_id")
+INSERT INTO "contractor_services" ("service_id", "user_id")
 VALUES (4,	7), (3,	7), (2,	7), (1,	7), (4,	2), (3,	2), (2,	2), (1,	2);
 
 INSERT INTO "contractor_language" ("user_id", "from_language_id", "to_language_id")
