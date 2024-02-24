@@ -42,6 +42,7 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 
 // GET contractor info for requesting user only.
 // Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -68,6 +69,7 @@ router.get('/self/user', rejectUnauthenticated, (req, res) => {
 
 // GET contractor languages for requesting user only.
 // Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.get('/self/languages', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -91,6 +93,7 @@ router.get('/self/languages', rejectUnauthenticated, (req, res) => {
 
 // GET contractor service info for requesting user only.
 // Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.get('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -100,6 +103,31 @@ router.get('/self/services', rejectUnauthenticated, (req, res) => {
         FROM contractor_services
         JOIN services ON services.id = contractor_services.service_id
         WHERE contractor_services.contractor_id = $1;
+    `;
+    pool.query(querytext,[req.user.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor/services by id", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET contractor service info for requesting user only.
+// Does not require admin status
+// DO NOT EDIT THIS!!!!
+router.get('/self/expertise', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        SELECT
+        contractor_expertise.id,
+        contractor_expertise.contractor_id,
+        contractor_expertise.expertise_id,
+        expertise."type" AS expertise_type
+        FROM contractor_expertise
+        JOIN expertise ON expertise.id = contractor_expertise.expertise_id
+        WHERE contractor_expertise.contractor_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -157,32 +185,6 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
         SELECT "contractor_profile"."id", "contractor_profile"."name" FROM "contractor_profile";
     `;
     pool.query(querytext,[req.params.id])
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.error("Error in GET contractor by id", error);
-            res.sendStatus(500);
-        })
-    ;
-});
-
-// GET contractor info for requesting user only.
-// Does not require admin status
-router.get('/self/user', rejectUnauthenticated, (req, res) => {
-    let querytext = `
-        SELECT
-        contractor_profile.id, contractor_profile.user_id, 
-        contractor_profile.base_audio_video_rate, contractor_profile.base_written_rate,
-        contractor_profile.contractor_name, contractor_profile.available,  
-        contractor_profile.notes, contractor_profile.phone, contractor_profile.linked_in,
-        contractor_profile."location", contractor_profile.timezone,
-        "user".username AS email
-        FROM contractor_profile
-        JOIN "user" ON "user"."id" = contractor_profile.user_id
-        WHERE contractor_profile.user_id = $1;
-    `;
-    pool.query(querytext,[req.user.id])
         .then((result) => {
             res.send(result.rows);
         })
@@ -308,24 +310,40 @@ router.put('/availability-admin/:id', requireAdmin, (req, res) => {
     ;
 })
 
-// PUT contractor settings
+// PUT contractor settings for requesting user only.
+// Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.put('/self/settings', rejectUnauthenticated, (req, res) => {
-	let querytext = `UPDATE contractor_profile SET available = ${req.body.params.available}, 
-        contractor_name = ${req.body.params.name}, 
-        linked_in = ${req.body.params.linkedIn}, 
-        phone = ${req.body.params.phone}, 
-        timezone = ${req.body.params.timezone}, 
-        location = ${req.body.params.location},
-        base_written_rate = ${req.body.params.writtenRate},
-        base_audio_video_rate = ${req.body.params.minuteRate}
-        WHERE user_id = ${req.body.params.id}
+    let queryValues = [req.body.contractor.available, req.body.contractor.name, req.body.contractor.linked_in,
+        req.body.contractor.phone, req.body.contractor.timezone, req.body.contractor.location,
+        req.body.contractor.base_written_rate, req.body.contractor.base_video_audio_rate];
+	let querytext = `UPDATE contractor_profile SET "available" = $1, 
+        "contractor_name" = $2, 
+        "linked_in" = $3, 
+        "phone" = $4, 
+        "timezone" = $5, 
+        "location" = $6,
+        "base_written_rate" = $7,
+        "base_audio_video_rate" = $8
+        WHERE "user_id" = ${req.user.id};
 	`;
-	pool.query(querytext)
+	pool.query(querytext, queryValues)
         .then((result) => {
-            res.sendStatus(200)
-        })
+            let secondQueryValues = [req.body.user.username, req.user.id];
+            let secondQuery = `UPDATE "user" SET "username" = $1
+                WHERE "id" = $2;
+            `;
+            pool.query(secondQuery, secondQueryValues)
+                .then((result) => {
+                    res.sendStatus(200)
+                })
+                .catch((error) => {
+                    console.error("Error in PUT /contractor/self/settings/username", error);
+                    res.sendStatus(500);
+                })
+            })
         .catch((error) => {
-            console.error("Error in PUT /contractor/settings", error);
+            console.error("Error in PUT /contractor/self/settings", error);
             res.sendStatus(500);
         })
 	;
@@ -333,12 +351,14 @@ router.put('/self/settings', rejectUnauthenticated, (req, res) => {
 
 // POST contractor languages for contractor view
 // Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.post('/self/languages', rejectUnauthenticated, (req, res) => {
+    console.log('lang req:', req);
     let querytext = `
         INSERT INTO contractor_language (user_id, from_language_id, to_language_id)
         VALUES ($1, $2, $3);
     `;
-    pool.query(querytext,[req.user.id])
+    pool.query(querytext,[req.body.user_id, req.body.from_language_id, req.body.to_language_id])
         .then((result) => {
             res.sendStatus(201)
         })
@@ -351,12 +371,32 @@ router.post('/self/languages', rejectUnauthenticated, (req, res) => {
 
 // POST contractor services for contractor view
 // Does not require admin status
+// DO NOT EDIT THIS!!!!
 router.post('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         INSERT INTO contractor_services (service_id, contractor_id)
         VALUES ($1, $2);
     `;
-    pool.query(querytext,[req.user.id])
+    pool.query(querytext,[req.body.service_id, req.body.contractor_id])
+        .then((result) => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error("Error in POST contractor service", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// POST contractor expertise for contractor view
+// Does not require admin status
+// DO NOT EDIT THIS!!!!
+router.post('/self/expertise', rejectUnauthenticated, (req, res) => {
+    let querytext = `
+        INSERT INTO contractor_expertise (expertise_id, contractor_id)
+        VALUES ($1, $2);
+    `;
+    pool.query(querytext,[req.body.expertise_id, req.body.contractor_id])
         .then((result) => {
             res.sendStatus(201)
         })

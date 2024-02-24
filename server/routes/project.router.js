@@ -62,6 +62,9 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // Get specific project by id. Requires admin
+// PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
+// it will make it interpret every string in the othera routes as an ID!
+// Also there's a duplicate of this route below??
 router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
 		SELECT 
@@ -119,6 +122,9 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 });
 
 // Get all projects for a specific contractor (requires Admin).
+// PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
+// it will make it interpret every string in the othera routes as an ID!
+// Also there's a duplicate of this route above??
 router.get('/specific/:id', requireAdmin, (req, res) => {
 	console.log('req params', req.params.id)
     let querytext = `

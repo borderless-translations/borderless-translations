@@ -12,9 +12,11 @@ function* getContractorSelf() {
         const self = contractor.data[0];
         const languages = yield axios.get(`/api/contractor/self/languages`, config);
         const services = yield axios.get(`/api/contractor/self/services`, config);
+        const expertise = yield axios.get(`/api/contractor/self/expertise`, config);
 
         self['languages'] = languages.data;
         self['services'] = services.data;
+        self['expertise'] = expertise.data;
 
         yield put({ type: 'SET_CONTRACTOR', payload: self });
     }

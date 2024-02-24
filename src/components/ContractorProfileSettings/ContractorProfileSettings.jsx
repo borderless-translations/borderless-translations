@@ -10,33 +10,31 @@ function ContractorProfileSettings() {
 
     const params = useParams();
     const dispatch = useDispatch();
-    const [user, setUser] = useState(useSelector(store => store.contractor));
+    const languageList = useSelector(store => store.allLanguages);
+    const serviceList = useSelector(store => store.allServices);
+    const skillList = useSelector(store => store.allExpertise);
+    const user = useSelector(store => store.contractor);
     const [availability, setAvailability] = useState(user.available);
     const [name, setName] = useState(user.contractor_name);
     const [linkedIn, setLinkedIn] = useState(user.linked_in);
     const [phone, setPhone] = useState(user.phone);
     const [email, setEmail] = useState(user.email);
+    const [location, setLocation] = useState(user.location);
     const [timezone, setTimezone] = useState(user.timezone);
-    const [languages, setlanguages] = useState([user.languages]);
-    const [skills, setSkills] = useState([]);
-    const [services, setServices] = useState(user.services);
+    const languages = useState(user.languages)[0];
+    const skills  = useState(user.expertise)[0];
+    const services = useState(user.services)[0];
     const [writtenRate, setWrittenRate] = useState(user.base_written_rate);
     const [minuteRate, setMinuteRate] = useState(user.base_audio_video_rate);
-    const [fromLanguage, setFromLanguage] = useState('');
-    const [toLanguage, setToLanguage] = useState('');
-    const languageList = [{name: 'English', id: 1}, {name: 'Japanese', id: 2}, {name: 'Spanish', id: 3}];
-    const serviceList = [{type: 'Audio/Visual Transcription', id: 1}, 
-        {type: 'English Closed Caption', id: 2}, 
-        {type: 'Global Translated Subtitles', id: 3}, 
-        {type: 'Non-Fiction Episodic Format Sheet (Chryon List)', id: 4}, 
-        {type: 'As-Broadcast Script', id: 5}, 
-        {type: 'Interpretation', id: 6}];
+    const [fromLanguage, setFromLanguage] = useState({});
+    const [toLanguage, setToLanguage] = useState({});
+    const [skill, setSkill] = useState({});
+    const [service, setService] = useState({});
 
     // Saves updated contractor settings
-
     const saveUser = () => {
         let contractorUpdate = {
-            contractor_name: name,
+            name: name,
             available: availability,
             linked_in: linkedIn,
             phone: phone,
@@ -47,15 +45,16 @@ function ContractorProfileSettings() {
         };
         let userUpdate = {username: email};
 
-        dispatch({ type: 'UPDATE_CONTRACTOR_SELF', payload: [ user.user_id, contractorUpdate, userUpdate] });
+        dispatch({ type: 'UPDATE_CONTRACTOR_SELF', payload: {contractor: contractorUpdate, user: userUpdate}});
     }
 
+    // Service editing
     const addService = (serviceId) => {
         let newService = {
             service_id: serviceId,
             contractor_id: user.user_id
         }
-
+        console.log(newService);
         dispatch({ type: 'ADD_SERVICE_TO_CONTRACTOR', payload: newService });
     }
 
@@ -63,6 +62,7 @@ function ContractorProfileSettings() {
         dispatch({ type: 'DELETE_SERVICE_FROM_CONTRACTOR', payload: serviceId })
     }
 
+    // Language editing
     const deleteLanguage = (languageId) => {
         dispatch({ type: 'DELETE_LANGUAGE_FROM_CONTRACTOR', payload: languageId })
     }
@@ -73,12 +73,29 @@ function ContractorProfileSettings() {
             to_language_id: toLang,
             user_id: user.user_id
         }
-
+        console.log(newLanguagePair);
         dispatch({ type: 'ADD_LANGUAGE_TO_CONTRACTOR', payload: newLanguagePair });
+    }
+
+    // Expertise editing
+    const addSkill = (skillId) => {
+        let newSkill = {
+            expertise_id: skillId,
+            contractor_id: user.user_id
+        }
+        console.log(newSkill);
+        dispatch({ type: 'ADD_EXPERTISE_TO_CONTRACTOR', payload: newSkill });
+    }
+
+    const deleteSkill = (skillId) => {
+        dispatch({ type: 'DELETE_EXPERTISE_FROM_CONTRACTOR', payload: skillId })
     }
 
     useEffect(() => {
         dispatch({ type: "GET_CONTRACTOR_SELF" });
+        dispatch({ type: "GET_ALL_LANGUAGES" });
+        dispatch({ type: "GET_ALL_SERVICES" });
+        dispatch({ type: "GET_ALL_EXPERTISE" });
     }, [])
 
     return (
@@ -95,6 +112,10 @@ function ContractorProfileSettings() {
                     <input type="text" value={linkedIn} onChange={(e) => setLinkedIn(e.target.value)} />
                     <p>Email</p>
                     <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <p>Phone</p>
+                    <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                    <p>Location</p>
+                    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
                     <p>Timezone</p>
                     <select value={timezone} onChange={(e) => setTimezone(e.target.value)} >
                         <option value="UTC -1:00">UTC -1:00</option>
@@ -146,7 +167,7 @@ function ContractorProfileSettings() {
                         </IconButton>
                     </Stack>
 
-                    {languages.length >0 ? 
+                    {languages.length > 0 ? 
                         languages.map((language) => {
                         return (
                             <p style={{ margin: '0px 0px 0px 40px' }}>{language.from_language}→{language.to_language}
@@ -163,48 +184,75 @@ function ContractorProfileSettings() {
                     :
                         <br />
                     }       
-                    <p>Area of Expertise</p>
-                    <Select sx={{width: '140px'}} value={skills} label='Skills' onChange={(e) => setSkills(e.target.value)} >
-                        <option value="medical">Medical</option>
-                        <option value="literary">Legal</option>
-                        <option value="academic">Academic</option>
-                        <option value="tech">Tech</option>
-                        <option value="fin">Finance</option>
-                        <option value="cert">Has certification</option>
-                    </Select>
 
-                    <p style={{ margin: '0px' }}>Medical
-                            <IconButton onClick={() => deleteService(service.id)}
+                    <p>Area of Expertise</p>
+                    <Stack direction='row'>
+                        <Select sx={{width: '140px'}} value={skill} label='Skill' onChange={(e) => setSkill(e.target.value)} >
+                            {skillList.map(skill => {
+                                return (
+                                    <MenuItem 
+                                        key={skill.id} 
+                                        value={skill.id}>
+                                            {skill.type}
+                                    </MenuItem>
+                                );
+                            })} 
+                        </Select>
+
+                        <IconButton onClick={() => addSkill(skill)}
                                 disableElevation
                                 disableRipple
                                 size="small">
-                                <Tooltip title="Remove skill">
-                                    <ClearIcon sx={{fontSize: '20px'}} />   
+                                <Tooltip title="Add skill">
+                                    <AddIcon sx={{fontSize: '40px'}} />   
                                 </Tooltip>
-                            </IconButton></p>
-                    <p style={{ margin: '0px' }}>Has certification
-                    <IconButton onClick={() => deleteService(service.id)}
-                        disableElevation
-                        disableRipple
-                        size="small">
-                        <Tooltip title="Remove skill">
-                            <ClearIcon sx={{fontSize: '20px'}} />   
-                        </Tooltip>
-                    </IconButton></p>
+                        </IconButton>
+                    </Stack>
+
+                    {skills.length > 0 ? 
+                        skills.map((skill) => {
+                            return (
+                                <p style={{ margin: '0px 0px 0px 40px' }}>{skill.expertise_type}
+                                <IconButton onClick={() => deleteSkill(skill.id)}
+                                    disableElevation
+                                    disableRipple
+                                    size="small">
+                                    <Tooltip title="Remove skill">
+                                        <ClearIcon sx={{fontSize: '20px'}} />   
+                                    </Tooltip>
+                                </IconButton></p> 
+                            )
+                        })
+                    :
+                        <br />
+                    }   
+
 
                     <p>Services</p>
-                    <Select sx={{width: '140px'}} value={services} label='Services' onChange={(e) => setServices(e.target.value)} >
-                        {serviceList.map(service => {
-                            return (
-                                <MenuItem 
-                                    key={service.id} 
-                                    value={service.id}>
-                                        {service.type}
-                                </MenuItem>
-                            )
-                        })}
-                    </Select>
-                    {services.length >0 ? 
+                    <Stack direction='row'>
+                        <Select sx={{width: '140px'}} value={service} label='Services' onChange={(e) => setService(e.target.value)} >
+                            {serviceList.map(service => {
+                                return (
+                                    <MenuItem 
+                                        key={service.id} 
+                                        value={service.id}>
+                                            {service.type}
+                                    </MenuItem>
+                                )
+                            })}
+                        </Select>
+
+                        <IconButton onClick={() => addService(service)}
+                            disableElevation
+                            disableRipple
+                            size="small">
+                            <Tooltip title="Add service">
+                                <AddIcon sx={{fontSize: '40px'}} />   
+                            </Tooltip>
+                        </IconButton>
+                    </Stack>
+
+                    {services.length > 0 ? 
                         services.map((service) => {
                             return (
                                 <p style={{ margin: '0px' }}>{service.service_type} 
@@ -226,7 +274,7 @@ function ContractorProfileSettings() {
                 <Stack direction='column' className="contractor-rates">
                     <h3 style={{textAlign: 'center' }}>Rates</h3>
                     <p>Written</p>
-                    $<input type="text" value={writtenRate} onChange={(e) => setWrittenRate(e.target.value)} />  per word
+                    $<input type="text" value={writtenRate} onChange={(e) => setWrittenRate(e.target.value)} /> per word
                     <p>Audio / Video</p>
                     $<input type="text" value={minuteRate} onChange={(e) => setMinuteRate(e.target.value)} /> per min.
                     <br />
