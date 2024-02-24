@@ -1,6 +1,7 @@
 html,
 body,
 #react-root {
+  background-color:#e3fbfb;  
   height: 100%;
 }
 
@@ -45,8 +46,8 @@ Button
   border: none;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #48a6cd;
-  color: #332c7b;
+  background-color: #332c7b;
+  color: #e3fbfb;
   font-size: 15px;
   outline: 0;
   cursor: pointer;
