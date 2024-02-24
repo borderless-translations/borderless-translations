@@ -140,6 +140,26 @@ VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 
 ('Lionspath', 'Jennifer', 'France', 'CET', 'Paris','email2@email.email', '+33 11-22-33-44-55', 'Translate with subtitles a short documentary on french cows', '2-23-2024');
 
 INSERT INTO "expertise" ("type")
-
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
 
+NSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
+VALUES (7, 'translator 1', '1-222-333-4444', FALSE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8),
+(2, 'translator 2', '1-222-333-4444', TRUE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8);
+
+INSERT INTO "contractor_services" ("service_id", "contractor_id")
+VALUES (4,	7), (3,	7), (2,	7), (1,	7), (4,	2), (3,	2), (2,	2), (1,	2);
+
+INSERT INTO "contractor_language" ("user_id", "from_language_id", "to_language_id")
+VALUES (7,	1,	2), (7,	3,	4), (7,	2,	1), (7,	4,	3), (2,	1,	2), (2,	3,	4), (2,	2,	1), (2,	4,	3);
+
+INSERT INTO "projects" ("admin_id", "client_id", "description", "duration", "created_at", "due_at", "translator_status", "proofreader_status")
+VALUES (1, 1, 'short description', '9 min', '2024-02-20', '2024-02-21', 'Not started',	'Not started'),
+(1, 1, 'long description long description long description long description', '30000 words', '2024-02-20', '2024-02-21', 'Complete', 'Complete'),
+(1, 1, 'short description', '5 min', '2024-02-12', '2024-02-16', 'Complete', 'Not started'),
+(1, 1, 'long description long description long description long description', '50000 words', '2024-02-10', '2024-02-15', 'Complete', 'Complete');
+
+INSERT INTO "project_language" ("project_id", "contractor_id", "proofreader_id", "from_language_id", "to_language_id", "text_to_translate", "translator_notes", "service_id", "flagged")
+VALUES (1, 7, 2, 3, 4, 'this is the text to translate', 'current notes', 5, TRUE),
+(2, 2, 7, 5, 6, 'this is the text to translate', '', 3, FALSE),
+(1, 7, 2, 3, 4, 'this is the text  to translate', 'current notes', 5, FALSE),
+(2, 2, 7, 5, 6, 'this is the text to translate', '', 3, TRUE);

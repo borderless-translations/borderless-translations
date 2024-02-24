@@ -146,7 +146,7 @@ function ContractorProfileSettings() {
                         </IconButton>
                     </Stack>
 
-                    {languages[0] !== null ? 
+                    {languages.length >0 ? 
                         languages.map((language) => {
                         return (
                             <p style={{ margin: '0px 0px 0px 40px' }}>{language.from_language}→{language.to_language}
@@ -204,7 +204,7 @@ function ContractorProfileSettings() {
                             )
                         })}
                     </Select>
-                    {services[0] !== null ? 
+                    {services.length >0 ? 
                         services.map((service) => {
                             return (
                                 <p style={{ margin: '0px' }}>{service.service_type} 
