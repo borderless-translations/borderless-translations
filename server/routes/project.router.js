@@ -61,6 +61,23 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
     ;
 });
 
+
+// GET All projects for a specific client
+router.get('/client/:id', requireAdmin, (req, res) => {
+	let querytext = 
+		`SELECT * FROM "projects"
+		WHERE "client_id" = $1;`;
+	pool.query(querytext, [req.params.id])
+	.then((result) => {
+		res.send(result.rows);
+	})
+	.catch((error) => {
+		console.error(`Error in GET /api/client/${req.params.id}`, error);
+		res.sendStatus(500);
+	})
+	;
+});
+
 // Get specific project by id. Requires admin
 // PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
 // it will make it interpret every string in the othera routes as an ID!
