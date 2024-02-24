@@ -9,6 +9,7 @@
   overflow: hidden;
 }
 
+
 .nav a {
   text-decoration: none;
 }
@@ -23,13 +24,15 @@
 
 .navLink {
   display: inline-block;
-  color: #e3fbfb;
+  padding: 10px 20px;
+  border: none;
+  border-width: 1px 1px 3px;
+  border-radius: 4px;
   background-color: #332c7b;
-  text-align: center;
-  padding: 24px 10px;
-  text-decoration: none;
+  color: #e3fbfb;
   font-size: 15px;
-
+  outline: 0;
+  cursor: pointer;
   /* these last two make the logout button in
   the nav bar look like another link */
   border: none;
@@ -38,5 +41,5 @@
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #48a6cd;
 }
