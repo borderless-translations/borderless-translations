@@ -29,11 +29,11 @@ Button
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  border-color: #014041;
+  border-color: #e3fbfb;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
+  background-color: #332c7b;
+  color: #e3fbfb;
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
@@ -45,8 +45,8 @@ Button
   border: none;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
+  background-color: #48a6cd;
+  color: #332c7b;
   font-size: 15px;
   outline: 0;
   cursor: pointer;
@@ -68,7 +68,7 @@ Button
 }
 
 .btn:hover {
-  background-color: #008183;
+  background-color: #332c7b;
   text-decoration: none;
 }
 
@@ -76,17 +76,17 @@ Button
 .btn_asLink {
   padding: 0;
   border-width: 0;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #e3fbfb;
   border-radius: 0;
   background: none;
   font: inherit;
-  color: #444;
+  color: #332c7b;
 }
 
 .btn_asLink:hover {
   background-color: transparent;
-  border-color: #008183;
-  color: #008183;
+  border-color: #e3fbfb;
+  color: #332c7b;
 }
 
 /* --------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ Form Treatment
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
-  background-color: #efefef;
+  background-color: #48a6cd;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }
