@@ -24,7 +24,6 @@ function AdminClientTableProjects(prop) {
                 <Link to={`/client/details/${prop.rowData.id}`}>{prop.rowData.client}</Link>
                 
             </TableCell>
-            {console.log(tableData, prop.rowData.id)}
             <TableCell align="center">{tableData.not_started}</TableCell>
             <TableCell align="center">{tableData.in_process}</TableCell>
             <TableCell align="center">{tableData.complete}</TableCell>

@@ -9,10 +9,9 @@ function* getProjectStatusSummaryByClient(action) {
             withCredentials: true,
         };
      
-        const response = yield axios.get(`/api/client/projects/${action.payload.id}`, config);
+        const response = yield axios.get(`/api/client/projects/`, config);
 
-        yield put({ type: 'SET_PROJECT_SUMMARY_BY_CLIENT', payload: response.data[0] });
-        yield console.log('getProjectStatusSummary:',action.payload.id, response.data[0])
+        yield put({ type: 'SET_PROJECT_SUMMARY_BY_CLIENT', payload: response.data });
     }
     catch (error) {
         console.error('GET for project has failed.', error);

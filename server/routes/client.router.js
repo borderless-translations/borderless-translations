@@ -20,21 +20,23 @@ router.get('/', requireAdmin, (req, res) => {
         });
 });
 
-router.get('/projects/:id', requireAdmin, (req, res) => {
+router.get('/projects/', requireAdmin, (req, res) => {
     let querytext = `
     SELECT 
+	"clients"."client",
 	COUNT(1) FILTER(WHERE "status" = 'NOT STARTED') AS not_started,
 	COUNT(1) FILTER(WHERE "status" = 'IN PROCESS') AS in_process,
 	COUNT(1) FILTER(WHERE "status" = 'COMPLETE') AS complete
-    FROM "projects"
-    WHERE "client_id" = $1;
+    FROM "clients"
+    LEFT JOIN "projects" ON "clients"."id" = "client_id"
+    GROUP BY "clients"."client";
     `;
     pool.query(querytext, [req.params.id])
         .then((result) => {
             res.send(result.rows);
         })
         .catch((error) => {
-            console.error("Error in GET /projects/id", error);
+            console.error("Error in GET /clients/projects", error);
             res.sendStatus(500);
         });
 });
