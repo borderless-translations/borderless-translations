@@ -34,6 +34,7 @@ function InfoPage() {
         <Paper className="infoPaper"><h5>Node.js</h5> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="50" height="50"/></Paper>
         <Paper className="infoPaper"><h5>Express.js</h5> <img src="https://inapp.com/wp-content/uploads/elementor/thumbs/express-js-01-1-q05uw85vt1jqloiy5k82sfy7tgvysgt1uqld8slsbc.png" alt="express" width="100" height="60"/></Paper>
         <Paper className="infoPaper"><h5>PostgreSQL</h5> <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="postgresql" width="60" height="60"/></Paper>
+        <Paper className="infoPaper"><h5>Luxon</h5> <img src="https://moment.github.io/luxon/docs/_media/Luxon_icon_64x64.png" alt="luxon" width="60" height="60"/></Paper>
         <Paper className="infoPaper"><h5>HTML</h5> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="60" height="60"/></Paper>
         <Paper className="infoPaper"><h5>CSS</h5> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="60" height="60"/></Paper>
 
