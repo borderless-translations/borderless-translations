@@ -68,12 +68,16 @@ CREATE TABLE "services" (
 	CONSTRAINT "services_pk" PRIMARY KEY ("id")
 );
 
+<<<<<<< HEAD
+
+=======
 CREATE TABLE "contractor_services" (
 	"id" SERIAL NOT NULL,
 	"service_id" INTEGER NOT NULL,
 	"user_id" INTEGER NOT NULL,
 	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
 );
+>>>>>>> main
 
 CREATE TABLE "expertise" (
 	"id" SERIAL NOT NULL,
@@ -149,7 +153,7 @@ VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 
 INSERT INTO "expertise" ("type")
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
 
-NSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
+INSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
 VALUES (7, 'translator 1', '1-222-333-4444', FALSE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8),
 (2, 'translator 2', '1-222-333-4444', TRUE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8);
 

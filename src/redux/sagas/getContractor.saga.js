@@ -15,10 +15,12 @@ function* getContractor(action) {
         for (let user of response.data) {
             const languages = yield axios.get(`/api/contractor/${action.payload}/languages`, config);
             const services = yield axios.get(`/api/contractor/${action.payload}/services`, config);
+            const expertise = yield axios.get(`/api/contractor/${action.payload}/expertise`, config);
             const contractor = response.data[0]
 
             user['languages'] = languages.data;
             user['services'] = services.data;
+            user['expertise'] = expertise.data;
         }
         yield put({ type: 'SET_CONTRACTOR', payload: response.data });
 

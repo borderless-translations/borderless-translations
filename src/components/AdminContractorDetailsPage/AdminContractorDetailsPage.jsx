@@ -121,9 +121,6 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
-// useEffect(() => {
-//     console.log('After State Update', selectedServices);
-// }, [selectedServices])
 useEffect(() => {
     refreshPage();
 }, []);
@@ -136,9 +133,6 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            <p>{JSON.stringify(contractorDetails)}</p>
-            <p>Services {JSON.stringify(contractorDetails.services)}</p>
-            <p>Languages: {JSON.stringify(contractorDetails.languages)}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
