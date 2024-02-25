@@ -7,6 +7,7 @@ import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/Admi
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
+import { DateTime } from 'luxon';
 
 import axios from "axios";
 import { select } from 'redux-saga/effects';
@@ -17,7 +18,7 @@ function AdminContractorDetailsPage() {
     // base_audio_video_rate: '10', base_written_rate: '10', languages: ['Swedish', 'Norwegian', 'English'],
     // project: [{name: 'Amity Island Diving Co', language: 'English to Fish', status: 'Incomplete'}, 
     // {name: 'Spin City', language: 'German to Dutch German', status: 'Completed'}], services: [1] }
-
+    const now = DateTime.now();
     const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -134,6 +135,7 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
+            <h3>{JSON.stringify(now)}</h3>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
@@ -229,7 +231,7 @@ useEffect(() => {
                         <TableCell align="center">{project.from_language}</TableCell>
                         <TableCell align="center">{project.to_language}</TableCell>
                         <TableCell align="center">{project.duration}</TableCell>
-                        <TableCell align="center">{moment(project.due_at).format('LLL')}</TableCell>
+                        <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('ff')}</TableCell>
                         <TableCell align="center">{project.status}</TableCell>
                         <TableCell align="center">{project.translator_status}</TableCell>
                         <TableCell align="center">{project.proofreader_status}</TableCell>
@@ -251,7 +253,7 @@ useEffect(() => {
                         <TableCell align="center">Description</TableCell>
                         <TableCell align="center">From Language</TableCell>
                         <TableCell align="center">To Language</TableCell>
-                        <TableCell align="center">Duration</TableCell>
+                        <TableCell align="center">Duration</TableCell>         
                         <TableCell align="center">Due At</TableCell>
                         <TableCell align="center">Status</TableCell>
                         <TableCell align="center">Translator Status</TableCell>
@@ -270,7 +272,7 @@ useEffect(() => {
                         <TableCell align="center">{project.from_language}</TableCell>
                         <TableCell align="center">{project.to_language}</TableCell>
                         <TableCell align="center">{project.duration}</TableCell>
-                        <TableCell align="center">{moment(project.due_at).format('LLL')}</TableCell>
+                        <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('ff')}</TableCell>
                         <TableCell align="center">{project.status}</TableCell>
                         <TableCell align="center">{project.translator_status}</TableCell>
                         <TableCell align="center">{project.proofreader_status}</TableCell>
