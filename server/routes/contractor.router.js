@@ -65,7 +65,7 @@ router.get('/project/:id', requireAdmin, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
-    console.log('SELF/USER ROUTE')
+    console.log('USER.ID', req.user.id)
     let querytext = `
         SELECT
         contractor_profile.id, contractor_profile.user_id, 
@@ -120,11 +120,11 @@ router.get('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
         contractor_services.id,
-        contractor_services.contractor_id,
+        contractor_services.user_id,
         services."type" AS service_type
         FROM contractor_services
         JOIN services ON services.id = contractor_services.service_id
-        WHERE contractor_services.contractor_id = $1;
+        WHERE contractor_services.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -144,12 +144,12 @@ router.get('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
         contractor_expertise.id,
-        contractor_expertise.contractor_id,
+        contractor_expertise.user_id,
         contractor_expertise.expertise_id,
         expertise."type" AS expertise_type
         FROM contractor_expertise
         JOIN expertise ON expertise.id = contractor_expertise.expertise_id
-        WHERE contractor_expertise.contractor_id = $1;
+        WHERE contractor_expertise.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -276,7 +276,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //PUT Route for updating a single contractor's info
 router.put('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('req.body is', req.body)
 	let querytext = `
 	    UPDATE "contractor_profile" 
         SET "contractor_name" = $1, 
@@ -392,7 +391,6 @@ router.put('/self/settings', rejectUnauthenticated, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.post('/self/languages', rejectUnauthenticated, (req, res) => {
-    console.log('lang req:', req);
     let querytext = `
         INSERT INTO contractor_language (user_id, from_language_id, to_language_id)
         VALUES ($1, $2, $3);
@@ -413,7 +411,7 @@ router.post('/self/languages', rejectUnauthenticated, (req, res) => {
 // DO NOT EDIT THIS!!!!
 router.post('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        INSERT INTO contractor_services (service_id, contractor_id)
+        INSERT INTO contractor_services (service_id, user_id)
         VALUES ($1, $2);
     `;
     pool.query(querytext,[req.body.service_id, req.body.contractor_id])

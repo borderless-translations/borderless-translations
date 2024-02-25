@@ -68,7 +68,16 @@ CREATE TABLE "services" (
 	CONSTRAINT "services_pk" PRIMARY KEY ("id")
 );
 
+<<<<<<< HEAD
 
+=======
+CREATE TABLE "contractor_services" (
+	"id" SERIAL NOT NULL,
+	"service_id" INTEGER NOT NULL,
+	"user_id" INTEGER NOT NULL,
+	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
+);
+>>>>>>> main
 
 CREATE TABLE "expertise" (
 	"id" SERIAL NOT NULL,
@@ -76,11 +85,11 @@ CREATE TABLE "expertise" (
 	CONSTRAINT "expertise_pk" PRIMARY KEY ("id")
 );
 
-CREATE TABLE "contractor_services" (
+CREATE TABLE "contractor_expertise" (
 	"id" SERIAL NOT NULL,
-	"service_id" INTEGER NOT NULL,
-	"user_id" INTEGER NOT NULL,
-	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
+	"expertise_id" INTEGER NOT NULL,
+	"contractor_id" INTEGER NOT NULL,
+	CONSTRAINT "contractor_expertise_pk" PRIMARY KEY ("id")
 );
 
 CREATE TABLE "user" (
@@ -165,3 +174,6 @@ VALUES (1, 7, 2, 3, 4, 'this is the text to translate', 'current notes', 5, TRUE
 (2, 2, 7, 5, 6, 'this is the text to translate', '', 3, FALSE),
 (1, 7, 2, 3, 4, 'this is the text  to translate', 'current notes', 5, FALSE),
 (2, 2, 7, 5, 6, 'this is the text to translate', '', 3, TRUE);
+
+INSERT INTO "contractor_expertise" ("expertise_id", "contractor_id")
+VALUES (2, 2), (7, 3);
