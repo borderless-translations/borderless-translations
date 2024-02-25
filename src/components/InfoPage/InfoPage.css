@@ -21,8 +21,7 @@
     flex-wrap: wrap;
     /* filter: drop-shadow(0 0 0.4rem #332c7b); */
     background-color:#48a6cd !important;
-    color: white !important;
-    
+    color: white !important;   
 }
 
 .aboutPage {
@@ -30,4 +29,8 @@
     text-align: center;
     margin: 10px;
     padding: 10px;
+ }
+
+#currentProjects {
+    text-align: center;
 }

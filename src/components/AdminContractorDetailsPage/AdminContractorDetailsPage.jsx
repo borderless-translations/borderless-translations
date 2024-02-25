@@ -199,12 +199,13 @@ useEffect(() => {
                         ))}
                     </ul>
             </div>
-            
-            <h3>Current Projects</h3>
+            <div>
+            <h3 id="currentProjects">Current Projects</h3>
             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
                     <TableRow>
+                        <TableCell align="center">#</TableCell>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
                         <TableCell align="center">From Language</TableCell>
@@ -219,9 +220,10 @@ useEffect(() => {
                 <TableBody>
                     
             {contractorProjects.map((project, i) => {
-                if (project.status.toLowerCase() !== 'complete' || 'completed') {
+                if (project.status.toLowerCase() !== 'complete' && project.status.toLowerCase() !== 'completed') {
                 return (
-                    <TableRow>
+                    <TableRow key={i}>
+                        <TableCell align="center">{i + 1}</TableCell>
                         <TableCell align="center">{project.client_name}</TableCell>
                         <TableCell align="center">{project.description}</TableCell>
                         <TableCell align="center">{project.from_language}</TableCell>
@@ -232,22 +234,53 @@ useEffect(() => {
                         <TableCell align="center">{project.translator_status}</TableCell>
                         <TableCell align="center">{project.proofreader_status}</TableCell>
                     </TableRow>
-                )}
+                )} else {}
             } )}
                 </TableBody>
               </Table>
             </TableContainer>
-            <h3>Completed Projects</h3>
-            <p>This is where the contractor's old/completed projects should be displayed.</p>
-            <p>{contractorProjects.map((project) => (
-
-                <ul>
-                    <li>{project.description}</li>
-                    <li>{project.duration}</li>
-                    <li>{project.status}</li>
-                </ul>
-            ))}</p>
-        
+            </div>
+            <div>
+            <h3 id='completedProjects'>Completed Projects</h3>
+            <TableContainer component={Paper}>
+             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">#</TableCell>
+                        <TableCell align="center">Client Name</TableCell>
+                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">From Language</TableCell>
+                        <TableCell align="center">To Language</TableCell>
+                        <TableCell align="center">Duration</TableCell>
+                        <TableCell align="center">Due At</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Translator Status</TableCell>
+                        <TableCell align="center">Proofreader Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    
+            {contractorProjects.map((project, i) => {
+                if (project.status.toLowerCase() == 'complete' || project.status.toLowerCase() == 'completed') {
+                return (
+                    <TableRow key={i}>
+                        <TableCell align="center">{i + 1}</TableCell>
+                        <TableCell align="center">{project.client_name}</TableCell>
+                        <TableCell align="center">{project.description}</TableCell>
+                        <TableCell align="center">{project.from_language}</TableCell>
+                        <TableCell align="center">{project.to_language}</TableCell>
+                        <TableCell align="center">{project.duration}</TableCell>
+                        <TableCell align="center">{moment(project.due_at).format('LLL')}</TableCell>
+                        <TableCell align="center">{project.status}</TableCell>
+                        <TableCell align="center">{project.translator_status}</TableCell>
+                        <TableCell align="center">{project.proofreader_status}</TableCell>
+                    </TableRow>
+                )} else {}
+            } )}
+                </TableBody>
+              </Table>
+            </TableContainer>     
+            </div>
 
             
             <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
