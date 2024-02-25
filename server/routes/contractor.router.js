@@ -45,10 +45,14 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 router.get('/project/:id', requireAdmin, (req, res) => {
 	console.log('req params', req.params.id)
     let querytext = `
-        SELECT * FROM "projects"
+    SELECT "projects".*, "clients"."client" AS "client_name", 
+            "l1"."name" AS "from_language", "l2"."name" AS "to_language" FROM "projects"
         JOIN "project_language" ON "project_language"."project_id" = "projects"."id"
-        WHERE "project_language"."contractor_id" = $1
-            OR "project_language"."proofreader_id" = $1
+        JOIN "languages" AS "l1" ON "l1"."id" = "project_language"."from_language_id"
+        JOIN "languages" AS "l2" ON "l2"."id" = "project_language"."to_language_id"
+        JOIN "clients" ON "clients"."id" = "projects"."client_id"
+    WHERE "project_language"."contractor_id" = $1
+        OR "project_language"."proofreader_id" = $1;
     `;
     pool.query(querytext, [req.params.id])
         .then((result) => {
