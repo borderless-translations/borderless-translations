@@ -119,11 +119,11 @@ router.get('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
         contractor_services.id,
-        contractor_services.contractor_id,
+        contractor_services.user_id,
         services."type" AS service_type
         FROM contractor_services
         JOIN services ON services.id = contractor_services.service_id
-        WHERE contractor_services.contractor_id = $1;
+        WHERE contractor_services.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -143,12 +143,12 @@ router.get('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
         contractor_expertise.id,
-        contractor_expertise.contractor_id,
+        contractor_expertise.user_id,
         contractor_expertise.expertise_id,
         expertise."type" AS expertise_type
         FROM contractor_expertise
         JOIN expertise ON expertise.id = contractor_expertise.expertise_id
-        WHERE contractor_expertise.contractor_id = $1;
+        WHERE contractor_expertise.user_id = $1;
     `;
     pool.query(querytext,[req.user.id])
         .then((result) => {
@@ -392,7 +392,7 @@ router.post('/self/languages', rejectUnauthenticated, (req, res) => {
 // DO NOT EDIT THIS!!!!
 router.post('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        INSERT INTO contractor_services (service_id, contractor_id)
+        INSERT INTO contractor_services (service_id, user_id)
         VALUES ($1, $2);
     `;
     pool.query(querytext,[req.body.service_id, req.body.contractor_id])
@@ -411,7 +411,7 @@ router.post('/self/services', rejectUnauthenticated, (req, res) => {
 // DO NOT EDIT THIS!!!!
 router.post('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        INSERT INTO contractor_expertise (expertise_id, contractor_id)
+        INSERT INTO contractor_expertise (expertise_id, user_id)
         VALUES ($1, $2);
     `;
     pool.query(querytext,[req.body.expertise_id, req.body.contractor_id])

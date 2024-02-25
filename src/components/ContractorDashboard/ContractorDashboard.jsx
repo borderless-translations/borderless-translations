@@ -27,7 +27,7 @@ function ContractorDashboard() {
     }
     
     const role = (project) => {
-        if (user.id === project.contractor_id) {
+        if (user.id === project.user_id) {
             return 'Translator'
         }
         else if (user.id === project.proofreader_id) {
