@@ -179,11 +179,11 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 	JOIN clients ON clients."id" = projects.client_id
 	JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 	JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-    WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+    WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
     AND (translator_status != 'Complete' OR proofreader_status != 'Complete')
     ORDER BY due_at ASC; 
 	`;
-	pool.query(querytext)
+	pool.query(querytext,[req.user.id])
 	.then((result) => {
 		res.send(result.rows);
 	})
@@ -209,11 +209,11 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 		JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-		WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+		WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
 		AND translator_status = 'Complete' AND proofreader_status = 'Complete'
         ORDER BY due_at ASC; 
 	`;
-	pool.query(querytext)
+	pool.query(querytext,[req.user.id])
 	.then((result) => {
 		res.send(result.rows);
 	})
@@ -284,17 +284,25 @@ router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
 	;
 });
 
-// TODO: Needs finalized columns for table
-/**
- * POST route template
- */
-router.post('/', rejectUnauthenticated, (req, res) => {
+// POST for creating a new project
+router.post('/', requireAdmin, (req, res) => {
+	let newProject = req.body;
+	if(Object.hasOwn(newProject, "description") == false){
+		newProject.description = null;
+	}
+
+	if(Object.hasOwn(newProject, "duration") == false){
+		newProject.duration = null;
+	}
+
 	let querytext = `
-	// QUERY GOES HERE
+		INSERT INTO
+			"projects" ("admin_id","client_id","description","duration","due_at")
+		VALUES
+			($1,$2,$3,$4,$5);
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext,[req.user.id, newProject.client_id, newProject.description, newProject.duration, newProject.due_at])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(201)
 		})
 		.catch((error) => {

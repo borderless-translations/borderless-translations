@@ -68,16 +68,12 @@ CREATE TABLE "services" (
 	CONSTRAINT "services_pk" PRIMARY KEY ("id")
 );
 
-<<<<<<< HEAD
-
-=======
 CREATE TABLE "contractor_services" (
 	"id" SERIAL NOT NULL,
 	"service_id" INTEGER NOT NULL,
 	"user_id" INTEGER NOT NULL,
 	CONSTRAINT "contractor_services_pk" PRIMARY KEY ("id")
 );
->>>>>>> main
 
 CREATE TABLE "expertise" (
 	"id" SERIAL NOT NULL,
