@@ -257,7 +257,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //PUT Route for updating a single contractor's info
 router.put('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('req.body is', req.body)
 	let querytext = `
 	    UPDATE "contractor_profile" 
         SET "contractor_name" = $1, 
@@ -373,7 +372,6 @@ router.put('/self/settings', rejectUnauthenticated, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.post('/self/languages', rejectUnauthenticated, (req, res) => {
-    console.log('lang req:', req);
     let querytext = `
         INSERT INTO contractor_language (user_id, from_language_id, to_language_id)
         VALUES ($1, $2, $3);
