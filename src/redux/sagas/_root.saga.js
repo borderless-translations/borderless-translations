@@ -41,6 +41,8 @@ import createNewExpertiseSaga from './createNewExpertise.saga';
 import deleteExpertiseSaga from './deleteExpertise.saga';
 import getAllExpertiseSaga from './getAllExpertise.saga';
 import updateSettingsExpertiseSaga from './updateSettingsExpertise.saga';
+import getProjectStatusSummaryByClientSaga from './getProjectStatusSummaryByClient.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -94,5 +96,6 @@ export default function* rootSaga() {
     deleteExpertiseSaga(), // DELETE expertise from DB. Calls getAllExpertise.saga to get updated list.
     getAllExpertiseSaga(), // GET all expertise from DB. Stores info in allExpertise.reducer.
     updateSettingsExpertiseSaga(), // PUT route updating expertise details in DB. Calls getAllExpertise.saga to get updated list.
+    getProjectStatusSummaryByClientSaga(), // GET route for project status summary by client. Stores in projectSummaryByClient.reducer.
   ]);
 }
