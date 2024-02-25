@@ -9,7 +9,12 @@ function AboutPage() {
   return (
     <div className="container">
       <div>
-        <p>This about page is for anyone to read!</p>
+        <h3>Borderless Translations About Page</h3>
+        <p>Welcome to the Borderless Translations contractor management site. This site
+          will allow you to keep track of your projects and log their progress in order to coordinate
+          with Borderless Translations as well as your fellow translators and proofreaders.
+        </p>
+        <p>If you haven't yet, <a href="/#/home">login</a> now to fill out your profile and join the BT team!</p>
       </div>
     </div>
   );
