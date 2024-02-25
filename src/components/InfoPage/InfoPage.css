@@ -13,7 +13,7 @@
     margin: auto;
     text-align: center;
     flex-wrap: wrap;
-    background-color:#332c7b;
-    color: white;
+    border: 5px solid #332c7b;
+    background-color:#e3fbfb;
     
 }
