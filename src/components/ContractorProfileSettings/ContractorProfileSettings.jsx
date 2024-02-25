@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import "./ContractorProfileSettings.css";
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
-import { Select, MenuItem, Stack, Tooltip, IconButton, Button } from '@mui/material';
+import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 
 function ContractorProfileSettings() {
 
@@ -30,6 +30,8 @@ function ContractorProfileSettings() {
     const [toLanguage, setToLanguage] = useState({});
     const [skill, setSkill] = useState({});
     const [service, setService] = useState({});
+    const timezoneList = [{id: 1, tz: "UTC -1:00"}, {id: 2, tz: "UTC -2:00"},
+        {id: 3, tz: "UTC -3:00"}, {id: 4, tz: "UTC -4:00"}, {id: 5, tz: "UTC -5:00"}, {id: 6, tz: "UTC -6:00"}];
 
     // Saves updated contractor settings
     const saveUser = () => {
@@ -98,64 +100,149 @@ function ContractorProfileSettings() {
         dispatch({ type: "GET_ALL_EXPERTISE" });
     }, [])
 
+    const containerStyle = {
+        border: '2px solid black', 
+        borderRadius: '20px', 
+        padding: '20px',
+        margin: '0px 30px'
+    }
+
+    const boxStyle = {
+        border: '2px solid blue',
+        borderRadius: '10px',
+        padding: '50px'
+    }
+
     return (
         <div className="container">
             <h2 style={{ margin: '20px 50px'}}>Profile Settings</h2>
-            <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'space-between' }}>
-                <Stack direction='column' className="contractor-contact">
+            <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}>
+                {/* Contact Info */}
+                <Stack direction='column' className="contractor-contact" sx={containerStyle}>
                     <h3 style={{textAlign: 'center' }}>Contact Information</h3>
                     <p>Availability</p>
                     <input type="checkbox" checked={availability} onClick={() => setAvailability(!availability)} />
-                    <p>Name</p>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    <p>LinkedIn</p>
-                    <input type="text" value={linkedIn} onChange={(e) => setLinkedIn(e.target.value)} />
-                    <p>Email</p>
-                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <p>Phone</p>
-                    <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                    <p>Location</p>
-                    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-                    <p>Timezone</p>
-                    <select value={timezone} onChange={(e) => setTimezone(e.target.value)} >
-                        <option value="UTC -1:00">UTC -1:00</option>
-                        <option value="UTC -2:00">UTC -2:00</option>
-                        <option value="UTC -3:00">UTC -3:00</option>
-                        <option value="UTC -4:00">UTC -4:00</option>
-                        <option value="UTC -5:00">UTC -5:00</option>
-                        <option value="UTC -6:00">UTC -6:00</option>
-                    </select>
+                    <TextField label="Name" sx={{width: '300px'}} value={name} size="small" 
+                        onChange={(e) => setName(e.target.value)} />
+                    <br />
+                    <TextField label="LinkedIn" value={linkedIn} size="small"
+                        onChange={(e) => setLinkedIn(e.target.value)} />
+                    <br />
+                    <TextField label="Email" value={email} size="small"
+                        onChange={(e) => setEmail(e.target.value)} />
+                    <br />
+                    <TextField label="Phone" value={phone} size="small"
+                        onChange={(e) => setPhone(e.target.value)} />
+                    <br />
+                    <TextField label="Location" value={location} size="small"
+                        onChange={(e) => setLocation(e.target.value)} />
+                    <br />
+                    <TextField value={timezone} size="small" select
+                        onChange={(e) => setTimezone(e.target.value)} 
+                        MenuProps={{
+                            PaperProps: {
+                                sx: {
+                                    maxHeight: {
+                                        xs: '200px'
+                                    },
+                                    width: 200
+                                }
+                            },
+                            anchorOrigin: {
+                                vertical: "bottom",
+                                horizontal: "left"
+                            },
+                              transformOrigin: {
+                                vertical: "top",
+                                horizontal: "left"
+                            }
+                        }}>
+                        {timezoneList.map(timezone => {
+                            return (
+                                <MenuItem 
+                                    key={timezone.id} 
+                                    value={timezone.id}>
+                                        {timezone.tz}
+                                </MenuItem>
+                            )
+                        })}
+                    </TextField>
                 </Stack>
 
-                <Stack direction='column' className="contractor-skills">
+                {/* Skills */}
+                <Stack direction='column' className="contractor-skills" sx={containerStyle}>
                     <h3 style={{textAlign: 'center' }}>Skills</h3>
-                    <p>Languages</p>
                     <Stack direction='row'>
-                        From: 
-                        <Select sx={{width: '140px'}} value={fromLanguage} label='Select Language' onChange={(e) => setFromLanguage(e.target.value)} >
-                            {languageList.map(language => {
-                                return (
-                                    <MenuItem 
-                                        key={language.id} 
-                                        value={language.id}>
-                                            {language.name}
-                                    </MenuItem>
-                                );
-                            })} 
-                        </Select>
+                        <Stack direction='row' sx={{ justifyContent: 'space-between'}}>
+                            <TextField sx={{width: '250px', textAlign: 'right' }} label="Language" select size="small"
+                                value={fromLanguage} onChange={(e) => setFromLanguage(e.target.value)} 
+                                InputProps={{ 
+                                    startAdornment: <InputAdornment sx={{margin: '10px'}} position="start">From:</InputAdornment>
+                                }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            maxHeight: {
+                                                xs: '200px'
+                                            },
+                                            width: 200
+                                        }
+                                    },
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                    },
+                                    transformOrigin: {
+                                        vertical: "top",
+                                        horizontal: "left"
+                                    }
+                                }}>
+                                {languageList.map(language => {
+                                    return (
+                                        <MenuItem 
+                                            key={language.id} 
+                                            value={language.id}>
+                                                {language.name}
+                                        </MenuItem>
+                                    );
+                                })} 
+                            </TextField>
 
-                        To: 
-                        <Select sx={{width: '140px'}} value={toLanguage} label='Select Language' onChange={(e) => setToLanguage(e.target.value)} >
-                            {languageList.map(language => {
-                                return (
-                                    <MenuItem 
-                                        key={language.id} 
-                                        value={language.id}>
-                                            {language.name}
-                                    </MenuItem>
-                                );
-                            })} 
-                        </Select>
+                            <TextField sx={{width: '250px', textAlign: 'right' }} 
+                                label="Language" select value={toLanguage} size="small"
+                                onChange={(e) => setToLanguage(e.target.value)} 
+                                InputProps={{ 
+                                    startAdornment: <InputAdornment sx={{margin: '10px'}} position="start">To:</InputAdornment>
+                                }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            maxHeight: {
+                                                xs: '200px'
+                                            },
+                                            width: 200
+                                        }
+                                    },
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                    },
+                                    transformOrigin: {
+                                        vertical: "top",
+                                        horizontal: "left"
+                                    }
+                                }}>
+                                {languageList.map(language => {
+                                    return (
+                                        <MenuItem 
+                                            key={language.id} 
+                                            value={language.id}>
+                                                {language.name}
+                                        </MenuItem>
+                                    );
+                                })} 
+                            </TextField>
+                        </Stack>
 
                         <IconButton onClick={() => addLanguagePair(fromLanguage, toLanguage)}
                             disableElevation
@@ -166,28 +253,49 @@ function ContractorProfileSettings() {
                             </Tooltip>
                         </IconButton>
                     </Stack>
+                    
+                    <Box sx={{boxStyle}}>
+                        {languages.length > 0 ? 
+                            languages.map((language) => {
+                            return (
+                                <p style={{ margin: '0px 0px 0px 40px' }}>{language.from_language}→{language.to_language}
+                                <IconButton onClick={() => deleteLanguage(language.id)}
+                                    disableElevation
+                                    disableRipple
+                                    size="small">
+                                    <Tooltip title="Remove language">
+                                        <ClearIcon sx={{fontSize: '20px'}} />   
+                                    </Tooltip>
+                                </IconButton></p> 
+                            )
+                            })
+                        :
+                            <br />
+                        }  
+                    </Box>     
 
-                    {languages.length > 0 ? 
-                        languages.map((language) => {
-                        return (
-                            <p style={{ margin: '0px 0px 0px 40px' }}>{language.from_language}→{language.to_language}
-                            <IconButton onClick={() => deleteLanguage(language.id)}
-                                disableElevation
-                                disableRipple
-                                size="small">
-                                <Tooltip title="Remove language">
-                                    <ClearIcon sx={{fontSize: '20px'}} />   
-                                </Tooltip>
-                            </IconButton></p> 
-                        )
-                        })
-                    :
-                        <br />
-                    }       
 
-                    <p>Area of Expertise</p>
                     <Stack direction='row'>
-                        <Select sx={{width: '140px'}} value={skill} label='Skill' onChange={(e) => setSkill(e.target.value)} >
+                        <TextField sx={{width: '200px'}} value={skill} select label="Skills" size="small"
+                            onChange={(e) => setSkill(e.target.value)} 
+                            MenuProps={{
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: {
+                                            xs: '200px'
+                                        },
+                                        maxWidth: 500
+                                    }
+                                },
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left"
+                                },
+                                  transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left"
+                                }
+                            }}>
                             {skillList.map(skill => {
                                 return (
                                     <MenuItem 
@@ -197,7 +305,7 @@ function ContractorProfileSettings() {
                                     </MenuItem>
                                 );
                             })} 
-                        </Select>
+                        </TextField>
 
                         <IconButton onClick={() => addSkill(skill)}
                                 disableElevation
@@ -227,10 +335,28 @@ function ContractorProfileSettings() {
                         <br />
                     }   
 
-
                     <p>Services</p>
                     <Stack direction='row'>
-                        <Select sx={{width: '140px'}} value={service} label='Services' onChange={(e) => setService(e.target.value)} >
+                        <TextField sx={{width: '200px'}} value={service} select label="Services" size="small"
+                            onChange={(e) => setService(e.target.value)} 
+                            MenuProps={{
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: {
+                                            xs: '200px'
+                                        },
+                                        maxWidth: 500
+                                    }
+                                },
+                                anchorOrigin: {
+                                    vertical: "bottom",
+                                    horizontal: "left"
+                                },
+                                  transformOrigin: {
+                                    vertical: "top",
+                                    horizontal: "left"
+                                }
+                            }}>
                             {serviceList.map(service => {
                                 return (
                                     <MenuItem 
@@ -240,7 +366,7 @@ function ContractorProfileSettings() {
                                     </MenuItem>
                                 )
                             })}
-                        </Select>
+                        </TextField>
 
                         <IconButton onClick={() => addService(service)}
                             disableElevation
@@ -271,12 +397,22 @@ function ContractorProfileSettings() {
                     }
                 </Stack>
 
-                <Stack direction='column' className="contractor-rates">
+                <Stack direction='column' className="contractor-rates" sx={containerStyle}>
                     <h3 style={{textAlign: 'center' }}>Rates</h3>
                     <p>Written</p>
-                    $<input type="text" value={writtenRate} onChange={(e) => setWrittenRate(e.target.value)} /> per word
+                    <TextField label="Written rate" value={writtenRate} size="small"
+                        onChange={(e) => setWrittenRate(e.target.value)} 
+                        InputProps={{
+                            startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                            endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per word</InputAdornment>
+                          }}/>
                     <p>Audio / Video</p>
-                    $<input type="text" value={minuteRate} onChange={(e) => setMinuteRate(e.target.value)} /> per min.
+                    <TextField label="Audio/Video rate" value={minuteRate} size="small"
+                        onChange={(e) => setMinuteRate(e.target.value)}
+                        InputProps={{
+                            startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                            endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per minute</InputAdornment>
+                          }} /> 
                     <br />
                     <br />
                     <br />
