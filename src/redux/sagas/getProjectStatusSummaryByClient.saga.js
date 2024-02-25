@@ -8,9 +8,8 @@ function* getProjectStatusSummaryByClient(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
-        // TODO: Set to correct URL and request type
-        const response = yield axios.get(`/api/client/projects/${action.payload}`, config);
+     
+        const response = yield axios.get(`/api/client/projects/${action.payload.id}`, config);
 
         yield put({ type: 'SET_PROJECT_SUMMARY_BY_CLIENT', payload: response.data });
 

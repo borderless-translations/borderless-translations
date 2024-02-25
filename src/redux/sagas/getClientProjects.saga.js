@@ -10,7 +10,7 @@ function* getClientProjects(action) {
         };
 
         // TODO: Set to correct URL and request type
-
+        
         const response = yield axios.get(`/api/project/client/${action.payload.id}`, config);
 
         // Set response in clientProjects reducer
