@@ -1,6 +1,10 @@
 hr {
     width: 100%;
     height: 5px;
-    background-color: skyblue;
+    background-color: #48a6cd;
     border: none;
+}
+
+h3 {
+    color: #332c7b;
 }

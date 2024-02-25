@@ -204,7 +204,7 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 		project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
 		projects.due_at
 
-		FROM projects
+		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id

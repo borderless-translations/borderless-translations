@@ -414,7 +414,7 @@ router.post('/self/services', rejectUnauthenticated, (req, res) => {
 // DO NOT EDIT THIS!!!!
 router.post('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        INSERT INTO contractor_expertise (expertise_id, contractor_id)
+        INSERT INTO contractor_expertise (expertise_id, user_id)
         VALUES ($1, $2);
     `;
     pool.query(querytext,[req.body.expertise_id, req.body.contractor_id])
