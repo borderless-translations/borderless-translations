@@ -17,7 +17,7 @@ function AboutPage() {
           allows contractors to keep track of their projects and log their progress in order to coordinate assignments
           with Borderless Translations as well as their fellow translators and proofreaders.
         </p>
-        <p>If you haven't yet, <a href="/#/home">login</a> now to fill out your profile and join the BT team!</p>
+        <p>If you haven't yet, <a href="/#/register">register</a> now to fill out your profile and join the BT team!</p>
         </Card>
       </div>
     </div>
