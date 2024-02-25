@@ -22,7 +22,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
             console.log("Updated client information on server", project);
         }
-        setProject({ name: "", description: "", due_at: "", status: "", translator_status: "", proofreader_status: "", flagged: "" });
+        setProject({ client_id: "", description: "", due_at: "", status: "", translator_status: "", proofreader_status: "", flagged: "" });
         closeModal();
     };
 
@@ -33,12 +33,12 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="client">Client:</label>
+                        <label htmlFor="client_id">Client:</label>
                         <input
-                            name="client"
+                            name="client_id"
                             type="text"
-                            value={project.name}
-                            onChange={(event) => handleChangeFor("name", event.target.value)}
+                            value={project.client_id}
+                            onChange={(event) => handleChangeFor("client_id", event.target.value)}
                         />
                     </div>
                     <div className="form-group">

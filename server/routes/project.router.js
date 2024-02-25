@@ -24,7 +24,7 @@ router.get('/', requireAdmin, (req, res) => {
 });
 
 // GET specific project by id (for contractor)
-router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
+router.get('/contractor/:id', requireAdmin, (req, res) => {
     let querytext = `
 		SELECT 
 		projects.id,
@@ -179,11 +179,11 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 	JOIN clients ON clients."id" = projects.client_id
 	JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 	JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-    WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+    WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
     AND (translator_status != 'Complete' OR proofreader_status != 'Complete')
     ORDER BY due_at ASC; 
 	`;
-	pool.query(querytext)
+	pool.query(querytext,[req.user.id])
 	.then((result) => {
 		res.send(result.rows);
 	})
@@ -204,16 +204,16 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 		project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
 		projects.due_at
 
-		FROM projects
+		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 		JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-		WHERE (translator.user_id = ${req.user.id} OR proofreader.user_id = ${req.user.id})
+		WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
 		AND translator_status = 'Complete' AND proofreader_status = 'Complete'
         ORDER BY due_at ASC; 
 	`;
-	pool.query(querytext)
+	pool.query(querytext,[req.user.id])
 	.then((result) => {
 		res.send(result.rows);
 	})
@@ -284,30 +284,51 @@ router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
 	;
 });
 
-// TODO: Needs finalized columns for table
-/**
- * POST route template
- */
-router.post('/', rejectUnauthenticated, (req, res) => {
+// POST for creating a new project
+router.post('/', requireAdmin, (req, res) => {
+	let newProject = req.body;
+	if(Object.hasOwn(newProject, "description") == false){
+		newProject.description = null;
+	}
+
+	if(Object.hasOwn(newProject, "duration") == false){
+		newProject.duration = null;
+	}
+
 	let querytext = `
-	// QUERY GOES HERE
+		INSERT INTO
+			"projects" ("admin_id","client_id","description","duration","due_at")
+		VALUES
+			($1,$2,$3,$4,$5)
+		RETURNING
+			"id";
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext,[req.user.id, newProject.client_id, newProject.description, newProject.duration, newProject.due_at])
 		.then((result) => {
-			// Code to send goes here
-			res.sendStatus(201)
+			let project_id = result.rows[0].id
+			let querytext2 = `
+				INSERT INTO
+					"project_language" ("project_id", "from_language_id", "to_language_id, "service_id")
+				VALUES
+					($1,$2,$3,$4);
+			`;
+			pool.query(querytext2,[project_id, newProject.from_language_id, newProject.to_language_id, newProject.service_id])
+				.then(() => res.sendStatus(201))
+				.catch((error)=> {
+					console.error("Error in secondary query POST new project", error);
+					res.sendStatus(500);
+				})
+			;
 		})
 		.catch((error) => {
-			console.error("Error in POST", error);
+			console.error("Error in first query POST new project", error);
 			res.sendStatus(500);
 		})
 	;
 });
 
-// TODO: Needs finalized columns for table
-/**
- * PUT route template
- */
+// TODO: need incoming columns
+// PUT route for updating project details
 router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 	// QUERY GOES HERE

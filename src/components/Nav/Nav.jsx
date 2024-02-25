@@ -15,14 +15,16 @@ function Nav() {
 
   return (
     <div className="nav">
-      <Link to="/dashboard">
-        <img src='../../../images/bt-logo.png' height='80px' />
-      </Link>
-      <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
-        <option value={'en'}>English</option>
-        <option value={'de'}>German</option>
-      </select>
-      <div>
+      <div className="left-nav">
+        <Link to="/dashboard">
+          <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
+        </Link>
+        <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
+          <option value={'en'}>English</option>
+          <option value={'de'}>German</option>
+        </select>
+      </div>
+      <div className="right-nav">
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
