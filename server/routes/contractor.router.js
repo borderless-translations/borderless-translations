@@ -65,6 +65,7 @@ router.get('/project/:id', requireAdmin, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
+    console.log('SELF/USER ROUTE')
     let querytext = `
         SELECT
         contractor_profile.id, contractor_profile.user_id, 
@@ -186,6 +187,24 @@ router.get('/:id/services', requireAdmin, (req, res) => {
         SELECT "contractor_services".*, "services"."type" FROM "contractor_services"
         JOIN "services" ON "services"."id" = "contractor_services"."service_id"
         WHERE "contractor_services"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor services", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
+// GET specific contractor expertise info. Requires admin status
+router.get('/:id/expertise', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT "contractor_expertise".*, "expertise"."type" FROM "contractor_expertise"
+        JOIN "expertise" ON "expertise"."id" = "contractor_expertise"."expertise_id"
+        WHERE "contractor_expertise"."user_id" = $1;
     `;
     pool.query(querytext,[req.params.id])
         .then((result) => {

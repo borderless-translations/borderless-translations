@@ -16,10 +16,10 @@ function InfoPage() {
 
       <h4>Technologies used to build this website include:</h4>
       <div className="infoCard">
-      <Box sx={{maxWidth: 400, display: 'flex', flexGrow: 1, flexWrap: 'wrap', flexDirection: 'row', 
-      textAlign: 'center', justifyContent: 'space-between', alignContent: 'space-between'}}>
-        <Paper className="infoPaper" sx={{width: 200}}><h5>Javascript</h5><br/><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/></Paper>
-        <Paper className="infoPaper"><h5>React</h5><br/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/></Paper>
+      <Box sx={{maxWidth: 700, display: 'flex', flexGrow: 1, flexWrap: 'wrap', flexDirection: 'row', 
+      textAlign: 'center', justifyContent: 'space-around', alignContent: 'space-between'}}>
+        <Paper className="infoPaper" sx={{flexDirection: "column"}}><h5>Javascript</h5><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/></Paper>
+        <Paper className="infoPaper"><h5>React</h5> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/></Paper>
         <Paper className="infoPaper"><h5>Redux</h5> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/></Paper>
         <Paper className="infoPaper"><h5>Passport</h5><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Passportjs.svg/240px-Passportjs.svg.png" alt="PassportJS" width="40" height="40"/></Paper>
         <Paper className="infoPaper"><h5>Material UI</h5> <img src="https://v4.mui.com/static/logo.png" alt="Material UI" width="40" height="40" /></Paper>
