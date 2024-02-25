@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TableCell, TableRow } from '@mui/material';
-import { PropaneSharp } from '@mui/icons-material';
+
 
 
 function AdminClientTableProjects(prop) {
@@ -11,7 +11,7 @@ function AdminClientTableProjects(prop) {
 
     useEffect(() => {
         dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT', payload: { id: prop.rowData.id } });
-    }, []);
+    }, [prop.rowData.id]);
 
     const tableData = useSelector(store => store.projectSummaryByClient);
 
@@ -24,7 +24,7 @@ function AdminClientTableProjects(prop) {
                 <Link to={`/client/details/${prop.rowData.id}`}>{prop.rowData.client}</Link>
                 
             </TableCell>
-            {console.log(tableData)}
+            {console.log(tableData, prop.rowData.id)}
             <TableCell align="center">{tableData.not_started}</TableCell>
             <TableCell align="center">{tableData.in_process}</TableCell>
             <TableCell align="center">{tableData.complete}</TableCell>
