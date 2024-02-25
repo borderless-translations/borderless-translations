@@ -20,7 +20,7 @@ router.get('/', requireAdmin, (req, res) => {
         });
 });
 
-router.get('/projects/', requireAdmin, (req, res) => {
+router.get('/projects', requireAdmin, (req, res) => {
     let querytext = `
     SELECT 
 	"clients"."client",
@@ -31,7 +31,7 @@ router.get('/projects/', requireAdmin, (req, res) => {
     LEFT JOIN "projects" ON "clients"."id" = "client_id"
     GROUP BY "clients"."client";
     `;
-    pool.query(querytext, [req.params.id])
+    pool.query(querytext,[])
         .then((result) => {
             res.send(result.rows);
         })
