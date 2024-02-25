@@ -178,7 +178,8 @@ useEffect(() => {
             </TableContainer>
             <button onClick={editContractor}>Edit Contractor Info</button>
             <br/>
-            <p><strong>Notes:</strong> {contractorDetails.notes}</p>
+            <div className='contractorDetails'>
+            <p><strong>Notes:</strong><br/> {contractorDetails.notes}</p>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
             <div><h3><strong>Languages:</strong></h3>
                     <ul>
@@ -189,16 +190,26 @@ useEffect(() => {
                         ))}
                     </ul>
             </div>
-            
+            <div className="form-group">
+                <h3><strong>Expertise:</strong></h3>
+                    <ul>
+                        {contractorDetails.expertise.map((expertise, index) => (
+                        <li key={index}>
+                            {expertise.type}
+                        </li>
+                        ))}
+                    </ul>
+            </div>
             <div className="form-group">
                 <h3><strong>Services:</strong></h3>
                     <ul>
                         {contractorDetails.services.map((service, index) => (
                         <li key={index}>
-                            From: {service.type} To: {service.type}
+                            {service.type}
                         </li>
                         ))}
                     </ul>
+            </div>
             </div>
             <div>
             <h3 id="currentProjects">Current Projects</h3>
