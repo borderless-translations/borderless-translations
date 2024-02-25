@@ -24,7 +24,7 @@ router.get('/', requireAdmin, (req, res) => {
 });
 
 // GET specific project by id (for contractor)
-router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
+router.get('/contractor/:id', requireAdmin, (req, res) => {
     let querytext = `
 		SELECT 
 		projects.id,
@@ -299,23 +299,35 @@ router.post('/', requireAdmin, (req, res) => {
 		INSERT INTO
 			"projects" ("admin_id","client_id","description","duration","due_at")
 		VALUES
-			($1,$2,$3,$4,$5);
+			($1,$2,$3,$4,$5)
+		RETURNING
+			"id";
 	`;
 	pool.query(querytext,[req.user.id, newProject.client_id, newProject.description, newProject.duration, newProject.due_at])
 		.then((result) => {
-			res.sendStatus(201)
+			let project_id = result.rows[0].id
+			let querytext2 = `
+				INSERT INTO
+					"project_language" ("project_id", "from_language_id", "to_language_id, "service_id")
+				VALUES
+					($1,$2,$3,$4);
+			`;
+			pool.query(querytext2,[project_id, newProject.from_language_id, newProject.to_language_id, newProject.service_id])
+				.then(() => res.sendStatus(201))
+				.catch((error)=> {
+					console.error("Error in secondary query POST new project", error);
+					res.sendStatus(500);
+				})
+			;
 		})
 		.catch((error) => {
-			console.error("Error in POST", error);
+			console.error("Error in first query POST new project", error);
 			res.sendStatus(500);
 		})
 	;
 });
 
-// TODO: Needs finalized columns for table
-/**
- * PUT route template
- */
+// PUT route for updating project details
 router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 	// QUERY GOES HERE
