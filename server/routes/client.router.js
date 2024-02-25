@@ -143,16 +143,14 @@ router.put('/:id', requireAdmin, (req, res) => {
 	;
 });
 
-/**
- * DELETE route template
- */
-router.delete('/', rejectUnauthenticated, (req, res) => {
+// DELETE client - not recommended. Requires admin.
+router.delete('/:id', requireAdmin, (req, res) => {
 	let querytext = `
-	    // QUERY GOES HERE
+	    DELETE FROM "clients"
+        WHERE "clients"."id" = $1
 	`;
-	pool.query(querytext,[])
+	pool.query(querytext,[req.params.id])
         .then((result) => {
-            // Code to send goes here
             res.sendStatus(200)
         })
         .catch((error) => {
