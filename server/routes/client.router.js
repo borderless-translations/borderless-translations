@@ -20,6 +20,25 @@ router.get('/', requireAdmin, (req, res) => {
         });
 });
 
+router.get('/projects/:id', requireAdmin, (req, res) => {
+    let querytext = `
+    SELECT 
+	COUNT(1) FILTER(WHERE "status" = 'NOT STARTED') AS not_started,
+	COUNT(1) FILTER(WHERE "status" = 'IN PROCESS') AS in_process,
+	COUNT(1) FILTER(WHERE "status" = 'COMPLETE') AS complete
+    FROM "projects"
+    WHERE "client_id" = $1;
+    `;
+    pool.query(querytext, [req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET /projects/id", error);
+            res.sendStatus(500);
+        });
+});
+
 // GET specific client. Admin required
 router.get('/:id', requireAdmin, (req, res) => {
 	let querytext = `
