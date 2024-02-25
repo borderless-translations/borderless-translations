@@ -12,7 +12,15 @@ function InfoPage() {
   return (
     <div className="container">
       <h3>Info Page</h3>
-      <p>This website was built by the Prime Digital Academy Taaffeite Cohort Borderless Translations team.</p>
+      <p>This website was built by the Prime Digital Academy Taaffeite Cohort Borderless Translations team:</p>
+        <ul>
+          <li>Juan Balbuena</li>
+          <li>Chris Cantoni</li>
+          <li>Brock Nelson</li>
+          <li>Andy Prehn</li>
+          <li>Robin Raabe</li>
+          <li>J Read</li>
+        </ul>
 
       <h4>Technologies used to build this website include:</h4>
       <div className="infoCard">
