@@ -303,19 +303,65 @@ router.post('/', requireAdmin, (req, res) => {
 	;
 });
 
-// TODO: need incoming columns
 // PUT route for updating project details
-router.put('/', rejectUnauthenticated, (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		UPDATE "projects"
+		SET
+			"description" = $1,
+			"duration" = $2, 
+			"due_at" = $3,
+			"status" = $4,
+			"translator_status" = $5,
+			"proofreader_status" = $6
+		WHERE "projects"."id" = $7;
 	`;
-	pool.query(querytext,[])
-		.then((result) => {
-			// Code to send goes here
-			res.sendStatus(200)
+	pool.query(querytext,[
+		req.body.description,
+		req.body.duration,
+		req.body.due_at,
+		req.body.staus,
+		req.body.translator_status,
+		req.body.proofreader_status,
+		req.params.id
+	])
+		.then(() => {
+			let querytext2 = `
+				UPDATE "project_language"
+				SET
+					"contractor_id" = $1,
+					"proofreader_id" = $2,
+					"from_language_id" = $3,
+					"to_language_id" = $4,
+					"text_to_translate" = $5,
+					"translator_notes" = $6,
+					"service_id" = $7,
+					"service_notes" = $8,
+					"file_link" = $9,
+					"flagged" = $10
+				WHERE "project_language"."project_id" = $11;
+			`;
+			pool.query(querytext2, [
+				req.body.contractor_id,
+				req.body.proofreader_id,
+				req.body.from_language_id,
+				req.body.to_language_id,
+				req.body.text_to_translate,
+				req.body.translator_notes,
+				req.body.service_id,
+				req.body.service_notes,
+				req.body.file_link,
+				req.body.flagged,
+				req.params.id
+			])
+				.then(() => res.sendStatus(201))
+				.catch((error) => {
+					console.error("Error in secondary query PUT project", error);
+					res.sendStatus(500);
+				})
 		})
 		.catch((error) => {
-			console.error("Error in PUT", error);
+			console.error("Error in PUT project", error);
 			res.sendStatus(500);
 		})
 	;
