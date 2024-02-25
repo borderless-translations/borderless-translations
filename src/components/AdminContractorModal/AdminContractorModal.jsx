@@ -20,6 +20,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
             title: "Info saved!",
             icon: "success"
           });
+          dispatch({type: "GET_CONTRACTOR", payload: contractor.user_id})
         closeModal();
     };
 
