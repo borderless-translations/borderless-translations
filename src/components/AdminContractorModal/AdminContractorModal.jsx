@@ -120,7 +120,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("base_audio_video_rate", parseFloat(event.target.value))}
                         />
                     </div>
-                    <button button className='btn btn_sizeSm' type="submit">Save</button>
+                    <button  className='btn btn_sizeSm' type="submit">Save</button>
                 </form>
             </div>
         </div>

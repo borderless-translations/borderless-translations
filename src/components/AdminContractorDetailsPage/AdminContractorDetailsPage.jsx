@@ -167,7 +167,7 @@ useEffect(() => {
                         <TableCell align="center">{contractorDetails.status}</TableCell>
                         <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
-                            <button button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
+                            <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
                                 {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
                             </button>
@@ -176,7 +176,7 @@ useEffect(() => {
                 </TableBody>
             </Table>
             </TableContainer>
-            <button button className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
+            <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <p><strong>Notes:</strong> {contractorDetails.notes}</p>
             {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
@@ -284,7 +284,7 @@ useEffect(() => {
             </div>
 
             
-            <button button className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+            <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
             {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}

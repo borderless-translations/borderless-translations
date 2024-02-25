@@ -97,7 +97,7 @@ function AdminClientDetails() {
                     ))}
                 </div>
 
-                <button button className='btn btn_sizeSm' onClick={() => history.push("/admin/client")}>Return to Client List</button>
+                <button className='btn btn_sizeSm' onClick={() => history.push("/admin/client")}>Return to Client List</button>
 
                 {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null) }} defaultValues={client} />}
 

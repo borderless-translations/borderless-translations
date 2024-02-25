@@ -56,7 +56,7 @@ function SettingsExpertise() {
                     value={expertiseType}
                     onChange={(e) => setExpertiseType(e.target.value)}
                 />
-            <button button className='btn btn_sizeSm' type="submit">Add Expertise</button>
+            <button className='btn btn_sizeSm' type="submit">Add Expertise</button>
             </form>
             
             <table>
@@ -79,8 +79,8 @@ function SettingsExpertise() {
                                         />
                                     </td>
                                     <td>
-                                        <button button className='btn btn_sizeSm' onClick={() => handleSave(expertise.id)}>Save</button>
-                                        <button button className='btn btn_sizeSm' onClick={() => handleCancel()}>Cancel</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleSave(expertise.id)}>Save</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleCancel()}>Cancel</button>
                                     </td>
 
                                 </>
@@ -90,8 +90,8 @@ function SettingsExpertise() {
                                         {expertise.type}
                                     </td>
                                     <td>
-                                        <button button className='btn btn_sizeSm' onClick={() => handleEdit(expertise)}>Edit</button>
-                                        <button button className='btn btn_sizeSm' onClick={() => handleDelete(expertise.id)}>Delete</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleEdit(expertise)}>Edit</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleDelete(expertise.id)}>Delete</button>
                                     </td>
 
                                 </>

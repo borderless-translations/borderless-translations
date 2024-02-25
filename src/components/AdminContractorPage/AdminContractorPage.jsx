@@ -86,8 +86,8 @@ useEffect(() => {
                         
                         <TableCell align="center">${contractor.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractor.base_audio_video_rate}/minute</TableCell>
-                        <TableCell align="center"><button button className='btn btn_sizeSm' onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></TableCell>
-                        <TableCell align="center"><Link to={`/admin/contractors/details/${contractor.user_id}`}><button button className='btn btn_sizeSm' onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></TableCell>
+                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><Link to={`/admin/contractors/details/${contractor.user_id}`}><button  className='btn btn_sizeSm' onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></TableCell>
                    </TableRow>
         })}
         </TableBody>
