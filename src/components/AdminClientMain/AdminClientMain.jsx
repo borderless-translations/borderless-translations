@@ -27,7 +27,7 @@ const handleAddClient = () => {
   return (
     <div className="container">
       <h2>Admin Client Main</h2>
-      <button button className='btn btn_sizeSm' onClick={() => handleAddClient()}>Add Client</button>
+      <button className='btn btn_sizeSm' onClick={() => handleAddClient()}>Add Client</button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

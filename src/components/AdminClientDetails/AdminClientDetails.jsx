@@ -53,7 +53,7 @@ function AdminClientDetails() {
             <div className="container">
                 <h2 style={{ margin: '20px 50px'}}>Admin Client Details</h2>
                 <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
-                <button button className='btn btn_sizeSm' onClick={() => handleEditClient(client)}>Edit Client</button>
+                <button  className='btn btn_sizeSm' onClick={() => handleEditClient(client)}>Edit Client</button>
 
                 <p>Business: {client.client}</p>
                 <p>Contact: {client.contact}</p>
