@@ -7,6 +7,7 @@ import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/Admi
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 import axios from "axios";
 import { select } from 'redux-saga/effects';
 
@@ -200,10 +201,46 @@ useEffect(() => {
             </div>
             
             <h3>Current Projects</h3>
-            <p>This is where the contractor's current projects should be displayed.</p>
+            <TableContainer component={Paper}>
+             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Client Name</TableCell>
+                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">From Language</TableCell>
+                        <TableCell align="center">To Language</TableCell>
+                        <TableCell align="center">Duration</TableCell>
+                        <TableCell align="center">Due At</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Translator Status</TableCell>
+                        <TableCell align="center">Proofreader Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    
+            {contractorProjects.map((project, i) => {
+                if (project.status.toLowerCase() !== 'complete' || 'completed') {
+                return (
+                    <TableRow>
+                        <TableCell align="center">{project.client_name}</TableCell>
+                        <TableCell align="center">{project.description}</TableCell>
+                        <TableCell align="center">{project.from_language}</TableCell>
+                        <TableCell align="center">{project.to_language}</TableCell>
+                        <TableCell align="center">{project.duration}</TableCell>
+                        <TableCell align="center">{moment(project.due_at).format('LLL')}</TableCell>
+                        <TableCell align="center">{project.status}</TableCell>
+                        <TableCell align="center">{project.translator_status}</TableCell>
+                        <TableCell align="center">{project.proofreader_status}</TableCell>
+                    </TableRow>
+                )}
+            } )}
+                </TableBody>
+              </Table>
+            </TableContainer>
             <h3>Completed Projects</h3>
             <p>This is where the contractor's old/completed projects should be displayed.</p>
             <p>{contractorProjects.map((project) => (
+
                 <ul>
                     <li>{project.description}</li>
                     <li>{project.duration}</li>
