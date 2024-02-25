@@ -1,0 +1,19 @@
+.infoCard {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color:#e3fbfb;
+}
+
+.infoPaper {
+    display: flex;
+    flex-direction: row ;
+    margin: auto;
+    text-align: center;
+    flex-wrap: wrap;
+    background-color:#332c7b;
+    color: white;
+    
+}
