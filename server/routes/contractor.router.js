@@ -238,26 +238,6 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// TODO: Need finalized columns to create POST
-/**
- * POST route template
- */
-router.post('/', rejectUnauthenticated, (req, res) => {
-	let querytext = `
-	    // QUERY GOES HERE
-	`;
-	pool.query(querytext,[])
-        .then((result) => {
-            // Code to send goes here
-            res.sendStatus(201)
-        })
-        .catch((error) => {
-            console.error("Error in POST", error);
-            res.sendStatus(500);
-        })
-	;
-});
-
 // TODO: Need finalized columns to create PUT
 /**
  * PUT route template
@@ -434,7 +414,7 @@ router.post('/self/services', rejectUnauthenticated, (req, res) => {
 // DO NOT EDIT THIS!!!!
 router.post('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
-        INSERT INTO contractor_expertise (expertise_id, contractor_id)
+        INSERT INTO contractor_expertise (expertise_id, user_id)
         VALUES ($1, $2);
     `;
     pool.query(querytext,[req.body.expertise_id, req.body.contractor_id])

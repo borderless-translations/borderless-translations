@@ -9,11 +9,16 @@ function AdminClientMain() {
 
 const dispatch = useDispatch();
 const [modalOpen, setModalOpen] = useState(false);
-const clients = useSelector(store => store.allClients);
+const clients = useSelector(store => store.projectSummaryByClient);
 
 useEffect(() => {
   dispatch({ type: "GET_ALL_CLIENTS" });
 }, [modalOpen]);
+
+useEffect(() => {
+  dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
+}, []);
+
 
 const handleAddClient = () => {
   setModalOpen(true)
@@ -28,8 +33,8 @@ const handleAddClient = () => {
           <TableHead>
               <TableRow>
                 <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Bidding Projects</TableCell>
-                <TableCell align="center">Open Projects</TableCell>
+                <TableCell align="center">Not Started</TableCell>
+                <TableCell align="center">In Progress</TableCell>
                 <TableCell align="center">Complete Projects</TableCell>
             </TableRow>
          </TableHead>
@@ -38,14 +43,15 @@ const handleAddClient = () => {
             return (
               <TableRow key={client.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Link to={`/client/details/${client.id}`}>{client.client}</Link>  
-                </TableCell>
-                <TableCell align="center">{client.bidding_projects}</TableCell>
-                <TableCell align="center">{client.open_projects}</TableCell>
-                <TableCell align="center">{client.complete_projects}</TableCell>
-              </TableRow>
+          >
+              <TableCell component="th" scope="row">
+                  <Link to={`/client/details/${client.id}`}>{client.client}</Link>
+                  
+              </TableCell>
+              <TableCell align="center">{client.not_started}</TableCell>
+              <TableCell align="center">{client.in_process}</TableCell>
+              <TableCell align="center">{client.complete}</TableCell>
+          </TableRow>
             );
           })}
           </TableBody>
