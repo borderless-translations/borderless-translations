@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import AdminClientTableProjects from '../AdminClientTableProjects/AdminClientTableProjects';
@@ -35,7 +34,6 @@ const handleAddClient = () => {
             </TableRow>
          </TableHead>
          <TableBody>
-          {console.log(clients)}
           {clients.map(client => {
             return (
                 <AdminClientTableProjects rowData={client}  />

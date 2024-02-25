@@ -3,9 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TableCell, TableRow } from '@mui/material';
 
+
 function AdminClientTableProjects(prop) {
 
-    console.log(prop);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const stringID = prop.rowData.id.toString();
+        dispatch({ type: "GET_CLIENT_PROJECTS", payload: { id: stringID } });
+    }, []);
+
+    const clientProjects = useSelector(store => store.clientProjects);
+
     return (
         
         <TableRow key={prop.rowData.id}
@@ -16,7 +25,7 @@ function AdminClientTableProjects(prop) {
                 
             </TableCell>
 
-            <TableCell align="center">Remain Calm!</TableCell>
+            <TableCell align="center">{clientProjects.status}</TableCell>
             <TableCell align="center">All is well!</TableCell>
             <TableCell align="center">PANIC!!!</TableCell>
         </TableRow>
