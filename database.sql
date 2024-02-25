@@ -90,7 +90,7 @@ CREATE TABLE "contractor_expertise" (
 
 CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
-	"username" VARCHAR NOT NULL,
+	"username" VARCHAR UNIQUE NOT NULL,
 	"password" VARCHAR NOT NULL,
 	"type" VARCHAR DEFAULT 'contractor',
 	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
