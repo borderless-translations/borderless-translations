@@ -234,26 +234,6 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// TODO: Need finalized columns to create POST
-/**
- * POST route template
- */
-router.post('/', rejectUnauthenticated, (req, res) => {
-	let querytext = `
-	    // QUERY GOES HERE
-	`;
-	pool.query(querytext,[])
-        .then((result) => {
-            // Code to send goes here
-            res.sendStatus(201)
-        })
-        .catch((error) => {
-            console.error("Error in POST", error);
-            res.sendStatus(500);
-        })
-	;
-});
-
 // TODO: Need finalized columns to create PUT
 /**
  * PUT route template

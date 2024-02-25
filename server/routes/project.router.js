@@ -327,6 +327,7 @@ router.post('/', requireAdmin, (req, res) => {
 	;
 });
 
+// TODO: need incoming columns
 // PUT route for updating project details
 router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
