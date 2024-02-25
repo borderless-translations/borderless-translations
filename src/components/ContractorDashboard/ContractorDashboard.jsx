@@ -67,7 +67,7 @@ function ContractorDashboard() {
                                 <TableCell alighn="center">{project.translator_status}</TableCell>
                                 <TableCell alighn="center">{project.due_at}</TableCell>
                                 <TableCell alighn="center">
-                                    <Button onClick={() => toProject(project.id)}>View</Button>
+                                    <button button className='btn btn_sizeSm' onClick={() => toProject(project.id)}>View</button>
                                 </TableCell>
                             </TableRow>
                         )
@@ -99,7 +99,7 @@ function ContractorDashboard() {
                                 <TableCell align="center">{project.translator_status}</TableCell>
                                 <TableCell align="center">{project.due_at}</TableCell>
                                 <TableCell align="center">
-                                    <Button onClick={() => toProject(project.id)}>View</Button>
+                                    <button button className='btn btn_sizeSm' onClick={() => toProject(project.id)}>View</button>
                                 </TableCell>
                             </TableRow>
                         )

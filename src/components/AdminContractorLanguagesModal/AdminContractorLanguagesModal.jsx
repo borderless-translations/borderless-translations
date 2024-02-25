@@ -97,7 +97,7 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
                     </Stack>
                     </Stack>
                         </div>
-                    <button type="submit">Save</button>
+                    <button button className='btn btn_sizeSm' type="submit">Save</button>
                 </form>
             </div>
         </div>

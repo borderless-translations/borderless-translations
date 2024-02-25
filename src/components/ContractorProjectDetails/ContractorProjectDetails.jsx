@@ -137,7 +137,7 @@ function ContractorProjectDetails() {
                     <button disabled>{buttonStatus}</button> 
                 :
                     // Submits status change and updates button text/function
-                    <button onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
+                    <button button className='btn btn_sizeSm' onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
                 }
             </div>
         </div>

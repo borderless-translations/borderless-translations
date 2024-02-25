@@ -95,7 +95,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("flagged", event.target.value)}
                         />
                     </div>
-                    <button type="submit">Save</button>
+                    <button button className='btn btn_sizeSm' type="submit">Save</button>
                 </form>
             </div>
         </div>

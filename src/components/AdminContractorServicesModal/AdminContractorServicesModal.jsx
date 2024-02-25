@@ -50,7 +50,7 @@ function AdminContractorServicesModal({ closeModal, defaultValues }) {
                             </div>
                         ))}</label>
                         </div>
-                    <button type="submit">Save</button>
+                    <button button className='btn btn_sizeSm' type="submit">Save</button>
                 </form>
             </div>
         </div>

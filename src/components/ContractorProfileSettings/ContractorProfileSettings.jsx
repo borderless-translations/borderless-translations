@@ -420,7 +420,7 @@ function ContractorProfileSettings() {
                         <br />
                         <br />
                         <br />
-                        <Button variant='contained' onClick={() => saveUser()}>Save</Button>
+                        <button bbutton className='btn btn_sizeSm' onClick={() => saveUser()}>Save</button>
                     </Stack>    
                 </Stack>
             </div>
