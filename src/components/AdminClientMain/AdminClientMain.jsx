@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
+import AdminClientTableProjects from '../AdminClientTableProjects/AdminClientTableProjects';
 import './AdminClientMain.css';
 
 function AdminClientMain() {
@@ -28,24 +29,16 @@ const handleAddClient = () => {
           <TableHead>
               <TableRow>
                 <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Bidding Projects</TableCell>
-                <TableCell align="center">Open Projects</TableCell>
+                <TableCell align="center">Not Started</TableCell>
+                <TableCell align="center">In Progress</TableCell>
                 <TableCell align="center">Complete Projects</TableCell>
             </TableRow>
          </TableHead>
          <TableBody>
+          {console.log(clients)}
           {clients.map(client => {
             return (
-              <TableRow key={client.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Link to={`/client/details/${client.id}`}>{client.client}</Link>  
-                </TableCell>
-                <TableCell align="center">{client.bidding_projects}</TableCell>
-                <TableCell align="center">{client.open_projects}</TableCell>
-                <TableCell align="center">{client.complete_projects}</TableCell>
-              </TableRow>
+                <AdminClientTableProjects rowData={client}  />
             );
           })}
           </TableBody>
