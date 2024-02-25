@@ -13,7 +13,7 @@ function AdminClientTableProjects(prop) {
         dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT', payload: { id: prop.rowData.id } });
     }, []);
 
-    const clientProjects = useSelector(store => store.clientProjects);
+    const tableData = useSelector(store => store.projectSummaryByClient);
 
     return (
         
@@ -24,10 +24,10 @@ function AdminClientTableProjects(prop) {
                 <Link to={`/client/details/${prop.rowData.id}`}>{prop.rowData.client}</Link>
                 
             </TableCell>
-
-            <TableCell align="center">{clientProjects.status}</TableCell>
-            <TableCell align="center">All is well!</TableCell>
-            <TableCell align="center">PANIC!!!</TableCell>
+            {console.log(tableData)}
+            <TableCell align="center">{tableData.not_started}</TableCell>
+            <TableCell align="center">{tableData.in_process}</TableCell>
+            <TableCell align="center">{tableData.complete}</TableCell>
         </TableRow>
     )
 }
