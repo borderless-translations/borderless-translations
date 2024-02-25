@@ -7,7 +7,7 @@ import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/Admi
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
-import moment from 'moment';
+
 import axios from "axios";
 import { select } from 'redux-saga/effects';
 
