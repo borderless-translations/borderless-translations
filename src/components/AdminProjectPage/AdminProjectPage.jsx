@@ -41,6 +41,10 @@ function AdminProjectPage() {
         setModalOpen(true)
         setProjectToEdit(project)
     }
+    const tableRowStyle = {
+        '&:nth-of-type(odd)': { backgroundColor: "white" },
+        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
+    }
 
     return (
         <>
@@ -63,7 +67,7 @@ function AdminProjectPage() {
                         </TableHead>
                         <TableBody>
                             {projects.map(project => (
-                                <TableRow key={project.project_id}>
+                                <TableRow key={project.project_id}  sx={tableRowStyle}>
                                     <TableCell component="th" scope="row">
                                         <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
                                     </TableCell>

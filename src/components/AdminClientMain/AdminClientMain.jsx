@@ -21,6 +21,10 @@ function AdminClientMain() {
     dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
   }, []);
 
+  const tableRowStyle = {
+    '&:nth-of-type(odd)': { backgroundColor: "white" },
+    '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
+}
 
   const handleAddClient = () => {
     setModalOpen(true)
@@ -45,7 +49,7 @@ function AdminClientMain() {
           <TableBody>
             {clients.map(client => {
               return (
-                <TableRow key={client.id}>
+                <TableRow key={client.id} sx={tableRowStyle}>
                   <TableCell component="th" scope="row">
                     <Link to={`/client/details/${client.id}`}>{client.client}</Link>
                   </TableCell>

@@ -374,7 +374,7 @@ router.post('/', requireAdmin, (req, res) => {
 			let project_id = result.rows[0].id
 			let querytext2 = `
 				INSERT INTO
-					"project_language" ("project_id", "from_language_id", "to_language_id, "service_id")
+					"project_language" ("project_id", "from_language_id", "to_language_id", "service_id")
 				VALUES
 					($1,$2,$3,$4);
 			`;
