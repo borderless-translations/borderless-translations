@@ -18,7 +18,7 @@ function AdminProjectDetails(){
 
 
     const[modalOpen, setModalOpen] = useState(false);
-    const [projectToEdit, setProjectToEdit] = useState(null);
+    const[projectToEdit, setProjectToEdit] = useState(null);
 
     const handleEditClient = (project) => {
         setProjectToEdit(project);

@@ -58,7 +58,7 @@ function AdminProjectPage() {
                             {projects.map(project => (
                                 <TableRow key={project.project_id}>
                                     <TableCell component="th" scope="row">
-                                        <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
+                                        <Link to={`/project/details/${project.project_id}`}>{project.client_name}</Link>
                                     </TableCell>
                                     <TableCell align="center">{project.project_description}</TableCell>
                                     <TableCell align="center">{project.due_at}</TableCell>
