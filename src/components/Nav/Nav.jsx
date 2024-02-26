@@ -77,6 +77,10 @@ function Nav() {
             <Link className="navLink" to="/settings">
               Settings Page
             </Link>
+
+            <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
+              Profile
+            </Link>
           </>
         )}
 
