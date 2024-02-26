@@ -11,7 +11,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-    let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
+    let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: null, project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
 
     const handleChangeFor = (key, value) => {
         setProject({ ...project, [key]: value });
@@ -46,7 +46,9 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         }}>
             <div className="modal">
                 <form onSubmit={handleSubmit}>
+                    
                     <Stack direction="column" justifyContent="flex-end">
+                    {JSON.stringify(project)}
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
                             <InputLabel id="client-select-label">Client</InputLabel>
                             <Select
@@ -80,7 +82,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                         <DatePicker
                             label="Due Date"
                             value={project.due_at}
-                            onChange={(event) => handleChangeFor("due_at", event.target.value)}
+                            onChange={(newValue) => handleChangeFor("due_at", newValue)}
                         />
                         </LocalizationProvider>
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
