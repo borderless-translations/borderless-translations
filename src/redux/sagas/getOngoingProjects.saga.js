@@ -2,7 +2,6 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getOngoingProjects() {
-    console.log('in ongoing projects');
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
@@ -10,6 +9,7 @@ function* getOngoingProjects() {
             withCredentials: true,
         };
         const response = yield axios.get(`/api/project/ongoing`, config); // GET ongoing projects
+        console.log(response.data);
         yield put({ type: 'SET_ONGOING_PROJECTS', payload: response.data }); // Stores in ongoingProjects.reducer
 
     }
