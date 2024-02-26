@@ -84,7 +84,7 @@ CREATE TABLE "expertise" (
 CREATE TABLE "contractor_expertise" (
 	"id" SERIAL NOT NULL,
 	"expertise_id" INTEGER NOT NULL,
-	"contractor_id" INTEGER NOT NULL,
+	"user_id" INTEGER NOT NULL,
 	CONSTRAINT "contractor_expertise_pk" PRIMARY KEY ("id")
 );
 
