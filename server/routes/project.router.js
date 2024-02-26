@@ -19,7 +19,6 @@ router.get('/', requireAdmin, (req, res) => {
     projects.translator_status,
     projects.proofreader_status,
     clients.client AS client_name,
-	project_language.file_link,
     STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
     STRING_AGG(DISTINCT to_languages.name, ', ') AS to_language_names,
     STRING_AGG(project_language.text_to_translate, ', ') AS texts_to_translate,
