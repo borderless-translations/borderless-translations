@@ -12,7 +12,6 @@ function* getAllContractors() {
 
         // TODO: Set to correct URL and request type
         const response = yield axios.get('/api/contractor', config);
-        console.log('This is your response data', response.data);
 
         // Added languages and services to each contractor
         for (let user of response.data){
