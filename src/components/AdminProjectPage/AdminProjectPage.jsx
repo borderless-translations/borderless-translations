@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-
+import { DateTime } from 'luxon';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -68,7 +68,7 @@ function AdminProjectPage() {
                                         <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
                                     </TableCell>
                                     <TableCell align="center">{project.project_description}</TableCell>
-                                    <TableCell align="center">{project.due_at}</TableCell>
+                                    <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                     <TableCell align="center">{project.project_status}</TableCell>
                                     <TableCell align="center">{project.translator_status}</TableCell>
                                     <TableCell align="center">{project.proofreader_status}</TableCell>
