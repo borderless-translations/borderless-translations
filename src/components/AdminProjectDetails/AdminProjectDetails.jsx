@@ -48,6 +48,9 @@ function AdminProjectDetails(){
         <button onClick={() => history.push("/admin/project")}>Return to Project List</button><br/><button onClick={() => handleEditClient(project)}>Edit Project</button>
         {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null) }} defaultValues={project} />}
 
+
+        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button  className='btn btn_sizeSm' >Edit</button>
+
         </div>
     )
 }

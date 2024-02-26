@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import "./ContractorProjectDetails.css";
+import { Box, Stack, IconButton, Tooltip }  from '@mui/material';
+import LinkIcon from '@mui/icons-material/Link';
 
 function ContractorProjectDetails() {
     const dispatch = useDispatch();
@@ -94,6 +96,18 @@ function ContractorProjectDetails() {
         'proofreader:', project.proofreader_id, project.proofreader_status);
     }
 
+    const containerStyle = {
+        border: '1px solid #332c7b', 
+        borderRadius: '10px', 
+        backgroundColor: 'white',
+        padding: '20px',
+        margin: '0px 30px',
+        maxWidth: '40%'
+    }
+
+    const viewFile = (projectId) => {
+        
+    }
 
     useEffect(() => {
         setButtonStatus();
@@ -103,43 +117,60 @@ function ContractorProjectDetails() {
     return (
         <div className="container">
             <h2>Project Details</h2>
-            <div className="contractor-details">
-                <h3>Details</h3>
-                {/* column one */}
-                <p>Client: {project.client_name}</p>
-                <p>Project description: {project.description}</p>
-                {/* column two */} <br />
-                <p>Deadline: {project.due_at}</p>
-                <p>Service type: {project.service_type}</p>
-                <p>Project length: {project.duration}</p>
-                <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
-                <p>Translator: {project.translator_name}</p>
-                <p>Proofreader: {project.proofreader_name}</p>
-            </div>
+            <Stack direction='row'>
+                <Box sx={containerStyle} className="contractor-details">
+                    <h3>Details</h3>
+                    <Stack direction='row' sx={{justifyContent: 'space-between', margin: '0px 50px'}}>
+                        <Stack direction='column'>
+                        <p>Client: {project.client_name}</p>
+                        <p>Project description: {project.description}</p>
+                        <p>View file: 
+                            <IconButton onClick={() => viewFile(project.id)}
+                                disableElevation
+                                disableRipple
+                                size="small">
+                                <Tooltip title="Link">
+                                    <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                                </Tooltip>
+                            </IconButton></p>
+                        </Stack>
+                        <Stack direction='column'>
+                        <p>Deadline: {project.due_at}</p>
+                        <p>Service type: {project.service_type}</p>
+                        <p>Project length: {project.duration}</p>
+                        <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
+                        <p>Translator: {project.translator_name}</p>
+                        <p>Proofreader: {project.proofreader_name}</p>
+                        </Stack>
+                    </Stack>
+                </Box>
 
-            <div className="contractor-settings">
-                <h3>Settings</h3>
-                <p>Flag notes? <input type="checkbox" checked={flagged} onChange={() => updateFlagged(!flagged)}/></p>
-                <p>Notes</p>
-                {((buttonStatus === 'Complete') || 
-                (buttonStatus === 'Translation still in progress')) ?
-                    // Makes notes uneditable if the user's work is complete or not ready
-                    <input type="text" value={notes} disabled />
-                :
-                    // Makes notes editable
-                    <input type="text" value={notes} onChange={(e) => updateNotes(e.target.value)} />
-                }
-                <br />
-                {/* need to add an alert before submitting */}
-                {((buttonStatus === 'Complete') || 
-                (buttonStatus === 'Translation still in progress')) ? 
-                    // Makes button unclickable if user's work is complete or not ready
-                    <button disabled>{buttonStatus}</button> 
-                :
-                    // Submits status change and updates button text/function
-                    <button onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
-                }
-            </div>
+                <Box sx={containerStyle} className="contractor-settings">
+                    <h3>Settings</h3>
+                    <Stack direction='column'>
+                        <p>Flag notes? <input type="checkbox" checked={flagged} onChange={() => updateFlagged(!flagged)}/></p>
+                        <p>Notes</p>
+                        {((buttonStatus === 'Complete') || 
+                        (buttonStatus === 'Translation still in progress')) ?
+                            // Makes notes uneditable if the user's work is complete or not ready
+                            <input type="text" value={notes} disabled />
+                        :
+                            // Makes notes editable
+                            <input type="text" value={notes} onChange={(e) => updateNotes(e.target.value)} />
+                        }
+                        <br />
+                        {/* need to add an alert before submitting */}
+                        {((buttonStatus === 'Complete') || 
+                        (buttonStatus === 'Translation still in progress')) ? 
+                            // Makes button unclickable if user's work is complete or not ready
+                            <button disabled>{buttonStatus}</button> 
+                        :
+                            // Submits status change and updates button text/function
+                            <button onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
+                        }
+                    </Stack>
+                </Box>
+            </Stack>
         </div>
     );
 };

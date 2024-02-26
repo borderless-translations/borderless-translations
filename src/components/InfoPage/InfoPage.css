@@ -24,6 +24,14 @@
     color: white !important;   
 }
 
+.infoPage {
+    text-align: center;
+}
+
+.cohortList {
+    list-style-type: none;      
+}
+
 .aboutPage {
     margin: auto;
     text-align: center;
@@ -33,4 +41,11 @@
 
 #currentProjects, #completedProjects {
     text-align: center;
+}
+
+.contractorDetails {
+    margin-left: 40px
+}
+.adminContractorDetailsHead {
+    font-weight: 700 !important;
 }

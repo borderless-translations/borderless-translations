@@ -368,116 +368,153 @@ function ContractorProfileSettings() {
                                 })
                             :
                                 <br />
-                            } 
-                            <br /><br />
-                            <Stack direction='row'>
-                                <TextField sx={selectStyle} select size="small" variant="standard"
-                                    value={skill} onChange={(e) => setSkill(e.target.value)} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                            style: {
-                                                maxHeight: 280,
+                            }  
+                        </Box>     
+    
+    
+                        <Stack direction='row'>
+                            <TextField sx={{width: '200px'}} value={skill} select label="Skills" size="small"
+                                onChange={(e) => setSkill(e.target.value)} 
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            maxHeight: {
+                                                xs: '200px'
                                             },
-                                            anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
-                                            },
-                                            transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
-                                            }
+                                            maxWidth: 500
                                         }
-                                    }}>
-                                    {skillList.map(skill => {
-                                        return (
-                                            <MenuItem 
-                                                key={skill.id} 
-                                                value={skill.id}>
-                                                    {skill.type}
-                                            </MenuItem>
-                                        );
-                                    })} 
-                                </TextField>
-        
-                                <IconButton onClick={() => addSkill(skill)}
-                                        disableElevation
-                                        disableRipple
-                                        size="small">
-                                        <Tooltip title="Add skill">
-                                            <AddIcon sx={{ 
-                                                fontSize: '20px',
-                                                stroke: '#48a6cd',
-                                                strokeWidth: 1.5
-                                            }} />   
-                                        </Tooltip>
-                                </IconButton>
-                            </Stack>
-                        </Box>  
-                                            
-                        <p style={{margin: '0px 0px 0px 20px'}}>Services</p>
-                        <Box sx={boxStyle}>
-                            {services != undefined ? 
-                                services.map((service) => {
+                                    },
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                    },
+                                      transformOrigin: {
+                                        vertical: "top",
+                                        horizontal: "left"
+                                    }
+                                }}>
+                                {skillList.map(skill => {
                                     return (
-                                        <span style={listStyle}>{service.service_type} 
-                                        <IconButton onClick={() => deleteService(service.id)}
-                                            disableElevation
-                                            disableRipple
-                                            size="small">
-                                            <Tooltip title="Remove service">
-                                                <ClearIcon sx={{fontSize: '12px'}} />   
-                                            </Tooltip>
-                                        </IconButton></span>
-                                    )
-                                })
-                            :
-                                <br />
-                            }
-                            <br /><br />
-                            <Stack direction='row'>
-                                <TextField sx={selectStyle} select size="small" variant="standard"
-                                    value={service} onChange={(e) => setService(e.target.value)} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                            style: {
-                                                maxHeight: 280,
-                                            },
-                                            anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
-                                            },
-                                            transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
-                                            }
-                                        }
-                                    }}>
-                                    {serviceList.map(service => {
-                                        return (
-                                            <MenuItem 
-                                                key={service.id} 
-                                                value={service.id}>
-                                                    {service.type}
-                                            </MenuItem>
-                                        )
-                                    })}
-                                </TextField>
-        
-                                <IconButton onClick={() => addService(service)}
+                                        <MenuItem 
+                                            key={skill.id} 
+                                            value={skill.id}>
+                                                {skill.type}
+                                        </MenuItem>
+                                    );
+                                })} 
+                            </TextField>
+    
+                            <IconButton onClick={() => addSkill(skill)}
                                     disableElevation
                                     disableRipple
                                     size="small">
-                                    <Tooltip title="Add service">
-                                        <AddIcon sx={{ 
-                                            fontSize: '20px',
-                                            stroke: '#48a6cd',
-                                            strokeWidth: 1.5
-                                        }} />    
+                                    <Tooltip title="Add skill">
+                                        <AddIcon sx={{fontSize: '40px'}} />   
                                     </Tooltip>
-                                </IconButton>
-                            </Stack>
-                        </Box>
-                    </Stack> 
+                            </IconButton>
+                        </Stack>
+    
+                        {skills.length > 0 ? 
+                            skills.map((skill) => {
+                                return (
+                                    <p style={{ margin: '0px 0px 0px 40px' }}>{skill.expertise_type}
+                                    <IconButton onClick={() => deleteSkill(skill.id)}
+                                        disableElevation
+                                        disableRipple
+                                        size="small">
+                                        <Tooltip title="Remove skill">
+                                            <ClearIcon sx={{fontSize: '20px'}} />   
+                                        </Tooltip>
+                                    </IconButton></p> 
+                                )
+                            })
+                        :
+                            <br />
+                        }   
+    
+                        <p>Services</p>
+                        <Stack direction='row'>
+                            <TextField sx={{width: '200px'}} value={service} select label="Services" size="small"
+                                onChange={(e) => setService(e.target.value)} 
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            maxHeight: {
+                                                xs: '200px'
+                                            },
+                                            maxWidth: 500
+                                        }
+                                    },
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                    },
+                                      transformOrigin: {
+                                        vertical: "top",
+                                        horizontal: "left"
+                                    }
+                                }}>
+                                {serviceList.map(service => {
+                                    return (
+                                        <MenuItem 
+                                            key={service.id} 
+                                            value={service.id}>
+                                                {service.type}
+                                        </MenuItem>
+                                    )
+                                })}
+                            </TextField>
+    
+                            <IconButton onClick={() => addService(service)}
+                                disableElevation
+                                disableRipple
+                                size="small">
+                                <Tooltip title="Add service">
+                                    <AddIcon sx={{fontSize: '40px'}} />   
+                                </Tooltip>
+                            </IconButton>
+                        </Stack>
+    
+                        {services.length > 0 ? 
+                            services.map((service) => {
+                                return (
+                                    <p style={{ margin: '0px' }}>{service.service_type} 
+                                    <IconButton onClick={() => deleteService(service.id)}
+                                        disableElevation
+                                        disableRipple
+                                        size="small">
+                                        <Tooltip title="Remove service">
+                                            <ClearIcon sx={{fontSize: '20px'}} />   
+                                        </Tooltip>
+                                    </IconButton></p>
+                                )
+                            })
+                        :
+                            <br />
+                        }
+                    </Stack>
+    
+                    <Stack direction='column' className="contractor-rates" sx={containerStyle}>
+                        <h3 style={{textAlign: 'center' }}>Rates</h3>
+                        <p>Written</p>
+                        <TextField label="Written rate" value={writtenRate} size="small"
+                            onChange={(e) => setWrittenRate(e.target.value)} 
+                            InputProps={{
+                                startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                                endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per word</InputAdornment>
+                              }}/>
+                        <p>Audio / Video</p>
+                        <TextField label="Audio/Video rate" value={minuteRate} size="small"
+                            onChange={(e) => setMinuteRate(e.target.value)}
+                            InputProps={{
+                                startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                                endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per minute</InputAdornment>
+                              }} /> 
+                        <br />
+                        <br />
+                        <br />
+                        <Button variant='contained' onClick={() => saveUser()}>Save</Button>
+                    </Stack>    
                 </Stack>
             </div>
         );
