@@ -44,6 +44,10 @@ function AdminContractorPage() {
         dispatch({type: 'GET_CONTRACTOR', payload: id})
         history.push(`/admin/contractors/details/${id}`)
     }
+    const tableRowStyle = {
+        '&:nth-of-type(odd)': { backgroundColor: "white" },
+        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
+    }
 
 useEffect(() => {
     getContractors();
@@ -71,7 +75,7 @@ useEffect(() => {
                     {/* names of keys may change depending on DB */}
                 {allContractors.map((contractor, i) => {
                     return <TableRow key={contractor.user_id}
-                        
+                        sx={tableRowStyle}
                         >
                             
                         <TableCell align="center">{contractor.contractor_name}</TableCell>
