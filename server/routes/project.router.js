@@ -170,7 +170,7 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 // GET ongoing projects
 router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 	let querytext;
-	if (req.user.type == 'admin'){
+	if (req.user.type === 'admin'){
 		querytext = `
 			SELECT
 				projects.id,
@@ -185,6 +185,8 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 				JOIN clients ON clients."id" = projects.client_id
 				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+				GROUP BY projects.id, clients.client, project_language.contractor_id, 
+					translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
 			ORDER BY due_at ASC;
 		`;
 		pool.query(querytext)
@@ -197,7 +199,7 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 			})
 		;
 	}
-	else {
+	else if (req.user.type === 'contractor') {
 		querytext = `
 			SELECT
 				projects.id,
@@ -213,6 +215,8 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 			WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
+			GROUP BY projects.id, clients.client, project_language.contractor_id, 
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
 			ORDER BY due_at ASC;
 		`;
 		pool.query(querytext,[req.user.id])
@@ -247,6 +251,8 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 			WHERE 
 				(translator_status = 'Complete' AND proofreader_status = 'Complete')
+			GROUP BY projects.id, clients.client, project_language.contractor_id, 
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
 			ORDER BY 
 				due_at ASC; 
 		`;
@@ -278,6 +284,8 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 			WHERE 
 				(translator.user_id = $1 OR proofreader.user_id = $1)
 				AND translator_status = 'Complete' AND proofreader_status = 'Complete'
+			GROUP BY projects.id, clients.client, project_language.contractor_id, 
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
 			ORDER BY 
 				due_at ASC; 
 		`;

@@ -216,7 +216,6 @@ function ContractorProfileSettings() {
                         {/* Contact Info */}
                         <Stack direction='column' className="contractor-contact" sx={containerStyle}>
                             <h3 style={{textAlign: 'center' }}>Contact Information</h3>
-                            {/* <input type="checkbox" checked={availability} onClick={() => setAvailability(!availability)} />*/}
                             <Tooltip title="Click icon to change status" placement='top'>
                                 <p><Checkbox sx={checkStyle} disableRipple 
                                     icon={<NoAccountsIcon />} 
