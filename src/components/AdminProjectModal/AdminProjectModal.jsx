@@ -19,10 +19,10 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         event.preventDefault();
         if (defaultValues === null) {
             dispatch({ type: 'CREATE_NEW_PROJECT', payload: project });
-            console.log("Sent client information to server");
+            console.log("Sent project information to server");
         } else {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
-            console.log("Updated client information on server", project);
+            console.log("Updated project information on server", project);
         }
         setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: null, project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
         closeModal();
