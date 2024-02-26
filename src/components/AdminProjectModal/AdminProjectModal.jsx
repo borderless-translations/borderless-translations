@@ -4,6 +4,8 @@ import { Stack, Select, MenuItem, TextField, FormControl, InputLabel} from '@mui
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import { DateTime } from 'luxon';
 
 function AdminProjectModal({ closeModal, defaultValues }) {
 
@@ -11,9 +13,15 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
     let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: null, project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
 
+    let currentDate = new Date();
+
     const handleChangeFor = (key, value) => {
         setProject({ ...project, [key]: value });
     };
+
+    const handleDateChange = (e) => {
+        setProject({...project, due_at: e.$d})
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -78,8 +86,9 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>   
                         <DatePicker
                             label="Due Date"
-                            value={project.due_at}
-                            onChange={(newValue) => handleChangeFor("due_at", newValue)}
+                            name="date"
+                            defaultValue={dayjs(currentDate)}
+                            onChange={handleDateChange}
                         />
                         </LocalizationProvider>
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
