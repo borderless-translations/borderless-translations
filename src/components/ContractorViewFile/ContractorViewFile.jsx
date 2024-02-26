@@ -5,7 +5,7 @@ import { Box, Stack, IconButton, Tooltip }  from '@mui/material';
 import WestIcon from '@mui/icons-material/West';
 import "./ContractorViewFile.css";
 
-function ContractorProjectDetails() {
+function ContractorViewFile() {
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams();
@@ -50,4 +50,4 @@ function ContractorProjectDetails() {
     );
 };
 
-export default ContractorProjectDetails;
+export default ContractorViewFile;
