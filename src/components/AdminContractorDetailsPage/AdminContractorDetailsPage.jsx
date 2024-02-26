@@ -169,10 +169,10 @@ useEffect(() => {
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
-                        <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
                             <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
-                                {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
+                                {contractorDetails.user_type === "admin" ? <><p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
                             </button>
                         </TableCell>
