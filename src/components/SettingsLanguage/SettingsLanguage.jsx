@@ -69,7 +69,7 @@ function SettingsLanguage() {
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <button type="submit">Add Language</button>
+                <button className='btn btn_sizeSm' type="submit">Add Language</button>
             </form>
             <table>
                 <thead>
@@ -103,8 +103,8 @@ function SettingsLanguage() {
                                     </select>
                                 </td>
                                 <td>
-                                    <button onClick={() => handleSave(language.id)}>Save</button>
-                                    <button onClick={handleCancel}>Cancel</button>
+                                    <button className='btn btn_sizeSm' onClick={() => handleSave(language.id)}>Save</button>
+                                    <button className='btn btn_sizeSm' onClick={handleCancel}>Cancel</button>
                                 </td>
                                 </>
                             ) : (
@@ -112,8 +112,8 @@ function SettingsLanguage() {
                                     <td>{language.name}</td>
                                     <td>{language.tier}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(language)}>Edit</button>
-                                        <button onClick={() => handleDelete(language.id)}>Delete</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleEdit(language)}>Edit</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleDelete(language.id)}>Delete</button>
                                     </td>
                                 </>
                             )}

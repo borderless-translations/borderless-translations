@@ -113,7 +113,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("service_id", event.target.value)}
                         />
                     </div>
-                    <button type="submit">Save</button>
+                    <button className='btn btn_sizeSm' type="submit">Save</button>
                 </form>
             </div>
         </div>
