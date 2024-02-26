@@ -29,37 +29,38 @@ function AdminClientMain() {
   return (
     <div className="container">
       <h2 style={{ margin: '20px 50px' }}>Admin Client Main</h2>
-     
-        <Button variant='contained' onClick={() => handleAddClient()}>Add Client</Button>
-        
-          <Table component={Paper} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Not Started</TableCell>
-                <TableCell align="center">In Progress</TableCell>
-                <TableCell align="center">Complete Projects</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {clients.map(client => {
-                return (
-                  <TableRow key={client.id}>
-                    <TableCell component="th" scope="row">
-                      <Link to={`/client/details/${client.id}`}>{client.client}</Link>
-                    </TableCell>
-                    <TableCell align="center">{client.not_started}</TableCell>
-                    <TableCell align="center">{client.in_process}</TableCell>
-                    <TableCell align="center">{client.complete}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-       
 
-        {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false) }} defaultValues={null} />}
-      
+      <Button variant='contained' onClick={() => handleAddClient()}>Add Client</Button>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Not Started</TableCell>
+              <TableCell align="center">In Progress</TableCell>
+              <TableCell align="center">Complete Projects</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {clients.map(client => {
+              return (
+                <TableRow key={client.id}>
+                  <TableCell component="th" scope="row">
+                    <Link to={`/client/details/${client.id}`}>{client.client}</Link>
+                  </TableCell>
+                  <TableCell align="center">{client.not_started}</TableCell>
+                  <TableCell align="center">{client.in_process}</TableCell>
+                  <TableCell align="center">{client.complete}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+
+      {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false) }} defaultValues={null} />}
+
     </div>
   );
 };

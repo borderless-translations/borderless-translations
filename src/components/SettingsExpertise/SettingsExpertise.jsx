@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../Settings/Settings.css';
+import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function SettingsExpertise() {
     const dispatch = useDispatch();
@@ -50,59 +54,66 @@ function SettingsExpertise() {
 
     return (
         <div>
+            <Stack direction="column" justifyContent="flex-end">
+            <h3>Expertise</h3>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
+                <TextField
+                    label='Expertiese'
+                    variant='standard'
                     value={expertiseType}
                     onChange={(e) => setExpertiseType(e.target.value)}
+                    fullWidth
+                    margin='normal'
                 />
-            <button type="submit">Add Expertise</button>
+            <Button variant='contained' type="submit">Add Expertise</Button>
             </form>
             
-            <table>
-                <thead>
-                    <tr>
-                        <th>Expertise</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            
+            <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Expertise</TableCell>
+                        <TableCell align="center">Actions</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
                     {expertises.map(expertise => (
-                        <tr key={expertise.id}>
+                        <TableRow key={expertise.id}>
                             {editExpertiseId === expertise.id ? (
                                 <>
-                                    <td>
+                                    <TableCell>
                                         <input
                                             type="text"
                                             value={editExpertiseType}
                                             onChange={(e) => setEditExpertiseType(e.target.value)}
                                         />
-                                    </td>
-                                    <td>
+                                    </TableCell>
+                                    <TableCell>
                                         <button onClick={() => handleSave(expertise.id)}>Save</button>
                                         <button onClick={() => handleCancel()}>Cancel</button>
-                                    </td>
+                                    </TableCell>
 
                                 </>
                             ) : (
                                 <>
-                                    <td>
+                                    <TableCell>
                                         {expertise.type}
-                                    </td>
-                                    <td>
-                                        <button onClick={() => handleEdit(expertise)}>Edit</button>
-                                        <button onClick={() => handleDelete(expertise.id)}>Delete</button>
-                                    </td>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Button startIcon={<EditIcon />} onClick={() => handleEdit(expertise)}></Button>
+                                        <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(expertise.id)}></Button>
+                                    </TableCell>
 
                                 </>
                             )}
-                        </tr>
+                        </TableRow>
                     ))}
-                </tbody>
+                </TableBody>
 
-            </table>
-
-
+            </Table>
+            </TableContainer>
+            </Stack>                   
         </div>
 
 
