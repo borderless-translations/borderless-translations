@@ -2,9 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-// import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
-
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -78,7 +77,9 @@ function AdminProjectPage(){
                                 <TableCell align="center">{project.translator_status}</TableCell>
                                 <TableCell align="center">{project.proofreader_status}</TableCell>
                                 <TableCell align="center">{project.flagged}</TableCell>
-                                <TableCell align="center"><button  className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button></TableCell>
+                                <TableCell align="center">
+                                        <Button startIcon={<EditIcon />} onClick={() => handleEdit(expertise)}></Button>
+                                    </TableCell>
                             </TableRow>
                         )
                     })}
