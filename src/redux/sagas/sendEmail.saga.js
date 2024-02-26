@@ -1,8 +1,6 @@
 import { takeLatest } from 'redux-saga/effects';
 
-
 function* sendEmail(action) {
-    // TODO: Add API key from client
     const mailchimpApiKey = import.meta.env.VITE_MAILCHIMP_API_KEY;
     const mailchimpClient = require("@mailchimp/mailchimp_transactional")(mailchimpApiKey);
 
@@ -10,8 +8,8 @@ function* sendEmail(action) {
         message: {
             text: action.payload.text,
             subject: action.payload.subject,
-            from_email: action.payload.fromEmail,
-            from_name: action.payload.fromName,
+            from_email: 'no-reply@borderlesstranslations.jp',
+            from_name: 'Borderless Translations',
             to: {
                 email: action.payload.toEmail,
                 name: action.payload.toName
@@ -21,7 +19,8 @@ function* sendEmail(action) {
     };
 
     const sendMessage = async () => {
-        const response = await mailchimpClient.messages.send(message)
+        const response = await mailchimpClient.messages.send(message);
+        console.log("Message sent. Response: ", response);
     }
 
     try {

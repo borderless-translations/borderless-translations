@@ -102,10 +102,7 @@ router.post('/', requireAdmin, (req, res) => {
         });
 });
 
-// TODO: Need finalized columns for PUT
-/**
- * PUT route template
- */
+// PUT route for specific project ID. Requires admin
 router.put('/:id', requireAdmin, (req, res) => {
     console.log(req.params.id)
 	let queryText = `
