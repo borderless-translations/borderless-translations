@@ -1,13 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
 
-function AdminProjectPage(){
+function AdminProjectPage() {
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -17,71 +20,64 @@ function AdminProjectPage(){
    
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() => {
-        dispatch({ type: 'GET_ALL_PROJECTS' })
-        dispatch({ type: 'GET_ALL_CLIENTS'})       
-      }, [modalOpen]);
+        dispatch({ type: 'GET_ALL_PROJECTS' });
+        dispatch({ type: 'GET_ALL_CLIENTS' });
+    }, [modalOpen]);
 
-    
-
-      
-
-      const handleAddProject = () => {
+    const handleAddProject = () => {
         setModalOpen(true)
-      }
+    }
 
-    const [projectToEdit, setProjectToEdit] = useState(null); 
+    const [projectToEdit, setProjectToEdit] = useState(null);
 
-      const handleEditProject = (project) => {
+    const handleEditProject = (project) => {
         setModalOpen(true)
         setProjectToEdit(project)
-      }
+    }
 
-    return(
+    return (
         <>
-        <div>
-            <h2>Admin Project Main</h2>
-            <button  className='btn btn_sizeSm' onClick={() => handleAddProject()}>Add Project</button>
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Description</TableCell>
-                        <TableCell align="center">Due By</TableCell>
-                        <TableCell align="center">Status</TableCell>
-                        <TableCell align="center">Translator Status</TableCell>
-                        <TableCell align="center">Proofreader Status</TableCell>
-                        <TableCell align="center">Flagged</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {projects.map(project => {
-                        return (
-                            <TableRow key={project.id}>
-                                <TableCell component="th" scope="row">
-                                    <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
-                                    </TableCell>
-                                <TableCell align="center">{project.description}</TableCell>
-                                <TableCell align="center">{project.due_at}</TableCell>
-                                <TableCell align="center">{project.status}</TableCell>
-                                <TableCell align="center">{project.translator_status}</TableCell>
-                                <TableCell align="center">{project.proofreader_status}</TableCell>
-                                <TableCell align="center">{project.flagged}</TableCell>
-                                <TableCell align="center"><button  className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button></TableCell>
+            <div>
+                <h2>Admin Project Main</h2>
+                <button className='btn btn_sizeSm' onClick={() => handleAddProject()}>Add Project</button>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
+                            <TableRow>
+                                <TableCell align="center">Name</TableCell>
+                                <TableCell align="center">Description</TableCell>
+                                <TableCell align="center">Due By</TableCell>
+                                <TableCell align="center">Status</TableCell>
+                                <TableCell align="center">Translator Status</TableCell>
+                                <TableCell align="center">Proofreader Status</TableCell>
+                                <TableCell align="center">Project Scope</TableCell>
+                                <TableCell align="center">Edit</TableCell>
                             </TableRow>
-                        )
-                    })}
-                </TableBody>
-            </Table>
-            </TableContainer>
-            {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null)}} defaultValues={projectToEdit} />}
-        </div>
+                        </TableHead>
+                        <TableBody>
+                            {projects.map(project => (
+                                <TableRow key={project.project_id}>
+                                    <TableCell component="th" scope="row">
+                                        <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
+                                    </TableCell>
+                                    <TableCell align="center">{project.project_description}</TableCell>
+                                    <TableCell align="center">{project.due_at}</TableCell>
+                                    <TableCell align="center">{project.project_status}</TableCell>
+                                    <TableCell align="center">{project.translator_status}</TableCell>
+                                    <TableCell align="center">{project.proofreader_status}</TableCell>
+                                    <TableCell align="center">{project.duration}</TableCell>
+                                    <TableCell align="center">
+                                        <button className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false); setProjectToEdit(null); }} defaultValues={projectToEdit} />}
+            </div>
         </>
-    )  
+    );
 }
-
-
-
-
 
 export default AdminProjectPage;

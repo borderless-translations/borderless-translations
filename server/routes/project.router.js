@@ -9,9 +9,32 @@ const router = express.Router();
 // Get all projects. Requires admin
 router.get('/', requireAdmin, (req, res) => {
     let querytext = `
-	SELECT "projects".*, "clients"."client" AS "client_name" FROM "projects"
-	JOIN "clients" ON "clients"."id" = "projects"."client_id"
-	JOIN "project_language" ON "project_language"."project_id" = "projects"."id";
+	SELECT 
+    projects.id AS project_id,
+    projects.description AS project_description,
+    projects.duration,
+    projects.created_at,
+    projects.due_at,
+    projects.status AS project_status,
+    projects.translator_status,
+    projects.proofreader_status,
+    clients.client AS client_name,
+    STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
+    STRING_AGG(DISTINCT to_languages.name, ', ') AS to_language_names,
+    STRING_AGG(project_language.text_to_translate, ', ') AS texts_to_translate,
+    STRING_AGG(project_language.translator_notes, ', ') AS translator_notes
+FROM 
+    projects
+JOIN 
+    clients ON projects.client_id = clients.id
+LEFT JOIN 
+    project_language ON projects.id = project_language.project_id
+LEFT JOIN 
+    languages AS from_languages ON project_language.from_language_id = from_languages.id
+LEFT JOIN 
+    languages AS to_languages ON project_language.to_language_id = to_languages.id
+GROUP BY 
+    projects.id, clients.client;
     `;
     pool.query(querytext)
         .then((result) => {
@@ -25,7 +48,7 @@ router.get('/', requireAdmin, (req, res) => {
 });
 
 // GET specific project by id (for contractor)
-router.get('/contractor/:id', requireAdmin, (req, res) => {
+router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
     let querytext = `
 		SELECT 
 		projects.id,
@@ -140,89 +163,131 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// Get all projects for a specific contractor (requires Admin).
-// PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
-// it will make it interpret every string in the othera routes as an ID!
-// Also there's a duplicate of this route above??
-// ! Chris moved this route to contractor.router so it does not conflict
-// ! with the one above. If that is causing an issue, please contact Chris
-// router.get('/specific/:id', requireAdmin, (req, res) => {
-// 	console.log('req params', req.params.id)
-//     let querytext = `
-//         SELECT * FROM "projects"
-//         JOIN "project_language" ON "project_language"."project_id" = "projects"."id"
-//         WHERE "project_language"."contractor_id" = $1
-//             OR "project_language"."proofreader_id" = $1
-//     `;
-//     pool.query(querytext, [req.params.id])
-//         .then((result) => {
-//             res.send(result.rows);
-//         })
-//         .catch((error) => {
-//             console.error("Error in GET projects for self", error);
-//             res.sendStatus(500);
-//         })
-//     ;
-// });
-
 // GET ongoing projects
 router.get('/ongoing', rejectUnauthenticated, (req, res) => {
-	let querytext = `SELECT
-	projects.id,
-	projects.client_id, clients.client AS client_name,
-	projects.description, 
-	project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
-	project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-	projects.due_at
+	console.log(req.user);
+	let querytext;
+	if (req.user.type == 'admin'){
+		querytext = `
+			SELECT
+				projects.id,
+				projects.client_id, clients.client AS client_name,
+				projects.description, 
+				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+				projects.due_at
 
-	FROM projects
-	JOIN project_language ON project_language.project_id = projects."id"
-	JOIN clients ON clients."id" = projects.client_id
-	JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
-	JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-    WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
-    AND (translator_status != 'Complete' OR proofreader_status != 'Complete')
-    ORDER BY due_at ASC; 
-	`;
-	pool.query(querytext,[req.user.id])
-	.then((result) => {
-		res.send(result.rows);
-	})
-	.catch((error) => {
-		console.error("Error in GET /api/project/ongoing", error);
-		res.sendStatus(500);
-	})
-	;
+			FROM "projects"
+				JOIN project_language ON project_language.project_id = projects."id"
+				JOIN clients ON clients."id" = projects.client_id
+				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+			ORDER BY due_at ASC;
+		`;
+		pool.query(querytext)
+			.then((result) => {
+				res.send(result.rows);
+			})
+			.catch((error) => {
+				console.error("Error in GET /api/project/ongoing", error);
+				res.sendStatus(500);
+			})
+		;
+	}
+	else {
+		querytext = `
+			SELECT
+				projects.id,
+				projects.client_id, clients.client AS client_name,
+				projects.description, 
+				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+				projects.due_at
+
+			FROM "projects"
+				JOIN project_language ON project_language.project_id = projects."id"
+				JOIN clients ON clients."id" = projects.client_id
+				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+			WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
+			ORDER BY due_at ASC;
+		`;
+		pool.query(querytext,[req.user.id])
+			.then((result) => {
+				res.send(result.rows);
+			})
+			.catch((error) => {
+				console.error("Error in GET /api/project/ongoing", error);
+				res.sendStatus(500);
+			})
+		;
+	}
 });
 
 // GET completed projects
 router.get('/completed', rejectUnauthenticated, (req, res) => {
-	let querytext = `SELECT
-		projects.id,
-		projects.client_id, clients.client AS client_name,
-		projects.description, 
-		project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
-		project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-		projects.due_at
+	let querytext;
+	if (req.user.type == 'admin'){
+		querytext = `
+			SELECT
+				projects.id,
+				projects.client_id, clients.client AS client_name,
+				projects.description, 
+				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+				projects.due_at
 
-		FROM projects 
-		JOIN project_language ON project_language.project_id = projects."id"
-		JOIN clients ON clients."id" = projects.client_id
-		JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
-		JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
-		WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
-		AND translator_status = 'Complete' AND proofreader_status = 'Complete'
-        ORDER BY due_at ASC; 
-	`;
-	pool.query(querytext,[req.user.id])
-	.then((result) => {
-		res.send(result.rows);
-	})
-	.catch((error) => {
-		console.error("Error in GET /api/project/completed", error);
-		res.sendStatus(500);
-	})
-	;
+			FROM projects 
+				JOIN project_language ON project_language.project_id = projects."id"
+				JOIN clients ON clients."id" = projects.client_id
+				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+			WHERE 
+				(translator_status = 'Complete' AND proofreader_status = 'Complete')
+			ORDER BY 
+				due_at ASC; 
+		`;
+		pool.query(querytext)
+			.then((result) => {
+				res.send(result.rows);
+			})
+			.catch((error) => {
+				console.error("Error in GET /api/project/completed", error);
+				res.sendStatus(500);
+			})
+		;
+	}
+	else {
+		querytext = `
+			SELECT
+				projects.id,
+				projects.client_id, clients.client AS client_name,
+				projects.description, 
+				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
+				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
+				projects.due_at
+
+			FROM projects 
+				JOIN project_language ON project_language.project_id = projects."id"
+				JOIN clients ON clients."id" = projects.client_id
+				JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+				JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
+			WHERE 
+				(translator.user_id = $1 OR proofreader.user_id = $1)
+				AND translator_status = 'Complete' AND proofreader_status = 'Complete'
+			ORDER BY 
+				due_at ASC; 
+		`;
+		pool.query(querytext,[req.user.id])
+			.then((result) => {
+				res.send(result.rows);
+			})
+			.catch((error) => {
+				console.error("Error in GET /api/project/completed", error);
+				res.sendStatus(500);
+			})
+		;
+	}
 });
 
 // PUT project flagged status
@@ -328,19 +393,65 @@ router.post('/', requireAdmin, (req, res) => {
 	;
 });
 
-// TODO: need incoming columns
 // PUT route for updating project details
-router.put('/', rejectUnauthenticated, (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
 	let querytext = `
-	// QUERY GOES HERE
+		UPDATE "projects"
+		SET
+			"description" = $1,
+			"duration" = $2, 
+			"due_at" = $3,
+			"status" = $4,
+			"translator_status" = $5,
+			"proofreader_status" = $6
+		WHERE "projects"."id" = $7;
 	`;
-	pool.query(querytext,[])
-		.then((result) => {
-			// Code to send goes here
-			res.sendStatus(200)
+	pool.query(querytext,[
+		req.body.description,
+		req.body.duration,
+		req.body.due_at,
+		req.body.staus,
+		req.body.translator_status,
+		req.body.proofreader_status,
+		req.params.id
+	])
+		.then(() => {
+			let querytext2 = `
+				UPDATE "project_language"
+				SET
+					"contractor_id" = $1,
+					"proofreader_id" = $2,
+					"from_language_id" = $3,
+					"to_language_id" = $4,
+					"text_to_translate" = $5,
+					"translator_notes" = $6,
+					"service_id" = $7,
+					"service_notes" = $8,
+					"file_link" = $9,
+					"flagged" = $10
+				WHERE "project_language"."project_id" = $11;
+			`;
+			pool.query(querytext2, [
+				req.body.contractor_id,
+				req.body.proofreader_id,
+				req.body.from_language_id,
+				req.body.to_language_id,
+				req.body.text_to_translate,
+				req.body.translator_notes,
+				req.body.service_id,
+				req.body.service_notes,
+				req.body.file_link,
+				req.body.flagged,
+				req.params.id
+			])
+				.then(() => res.sendStatus(201))
+				.catch((error) => {
+					console.error("Error in secondary query PUT project", error);
+					res.sendStatus(500);
+				})
 		})
 		.catch((error) => {
-			console.error("Error in PUT", error);
+			console.error("Error in PUT project", error);
 			res.sendStatus(500);
 		})
 	;

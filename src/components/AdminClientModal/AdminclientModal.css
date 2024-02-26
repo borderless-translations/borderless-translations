@@ -25,25 +25,3 @@
 
 
 
-/* Fun with git capitilization! */
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
-
-.form-group input,
-.form-group select {
-    border: 1px solid black;
-    border-radius: 0.3rem;
-    padding: 0.3rem;
-    font-size: 1rem;
-    text-align: center;
-}
-
-.form-group label {
-    margin-bottom: 0.2rem;
-    margin-right: 1rem;
-}
-

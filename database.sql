@@ -84,7 +84,7 @@ CREATE TABLE "expertise" (
 CREATE TABLE "contractor_expertise" (
 	"id" SERIAL NOT NULL,
 	"expertise_id" INTEGER NOT NULL,
-	"contractor_id" INTEGER NOT NULL,
+	"user_id" INTEGER NOT NULL,
 	CONSTRAINT "contractor_expertise_pk" PRIMARY KEY ("id")
 );
 
@@ -138,7 +138,7 @@ VALUES ('0.07','0.12','1','1'),('0.12','0.15','1','2'),('0.14','0.16','1','3'),(
 ('5.00','8.00','3','1'),('7.00','9.00','3','2'),('9.00','13.00','3','3'),('13.00','16.00','3','4');
 
 INSERT INTO "user" ("username","password","type")
-VALUES ('', '',''),('', '',''),('', '',''),('', '',''),('','',''),('','','');
+VALUES ('Robin', '','contractor'),('', '',''),('', '',''),('', '',''),('','',''),('','','');
 
 
 INSERT INTO "clients" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
