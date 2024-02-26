@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Select, MenuItem, TextField, FormControl, InputLabel, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
+import { Stack, Select, MenuItem, TextField, FormControl, InputLabel} from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function AdminProjectModal({ closeModal, defaultValues }) {
 
@@ -71,12 +76,13 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             value={project.duration}
                             onChange={(event) => handleChangeFor("duration", event.target.value)}
                         />
-                        <TextField
-                            label="due_at"
-                            sx={{ width: '400px', margin: '20px 0' }}
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>   
+                        <DatePicker
+                            label="Due Date"
                             value={project.due_at}
                             onChange={(event) => handleChangeFor("due_at", event.target.value)}
                         />
+                        </LocalizationProvider>
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
                             <InputLabel id="select-from-language">From Language</InputLabel>
                             <Select
