@@ -78,12 +78,12 @@ function AdminContractorDetailsPage() {
                 const userAuth = {id: id, type: 'admin'}
                 console.log('userAuth right now is', userAuth);
                 dispatch({type: 'SET_USER_AUTH', payload: userAuth})
-                refreshPage();
               Swal.fire({
                 title: "Admin Status!",
                 text: "This contractor is now an admin.",
                 icon: "success"
               });
+              refreshPage();
             }
           })} else {
             Swal.fire({
@@ -99,12 +99,12 @@ function AdminContractorDetailsPage() {
                     const userAuth = {id: id, type: 'contractor'}
                     console.log('userAuth right now is', userAuth);
                     dispatch({type: 'SET_USER_AUTH', payload: userAuth})
-                    refreshPage();
                   Swal.fire({
                     title: "Contractor Status!",
                     text: "This contractor is no longer an admin.",
                     icon: "success"
                   });
+                  refreshPage();
                 }
               })
           };
