@@ -26,7 +26,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
             console.log("Updated client information on server", project);
         }
-        setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
+        setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: null, project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
         closeModal();
     };
 
