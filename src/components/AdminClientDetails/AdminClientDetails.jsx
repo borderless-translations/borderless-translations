@@ -5,6 +5,7 @@ import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import "./AdminClientDetails.css";
 import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 import {TableContainer, TableCell, Table, TableHead, TableBody, TableRow, Paper} from '@mui/material';
+import { DateTime } from 'luxon';
 
 
 
@@ -74,7 +75,7 @@ function AdminClientDetails() {
                          <TableContainer component={Paper}>
                             <Table aria-label="simple table">
                                 <TableHead>
-                                     <TableRow>   
+                                     <TableRow sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>   
                                         <TableCell align="center">Project Description</TableCell>
                                         <TableCell align="center">Start Date</TableCell>
                                         <TableCell align="center">Due Date</TableCell>
@@ -86,8 +87,8 @@ function AdminClientDetails() {
                                     {project.project.map((project, index) => (
                                         <TableRow key={index}>
                                             <TableCell align="center">{project.description}</TableCell>
-                                            <TableCell align="center">{project.created_at}</TableCell>
-                                            <TableCell align="center">{project.due_at}</TableCell>
+                                            <TableCell align="center">{DateTime.fromISO(project.created_at).toFormat('DDD')}</TableCell>
+                                            <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                             <TableCell align="center">{project.translator_status}</TableCell>
                                             <TableCell align="center">{project.proofreader_status}</TableCell>
                                         </TableRow>

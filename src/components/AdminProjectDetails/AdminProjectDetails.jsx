@@ -42,7 +42,7 @@ function AdminProjectDetails(){
                     <TableRow sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
-                        <TableCell align="center">Due By</TableCell>
+                        <TableCell align="center">Due Date</TableCell>
                         <TableCell align="center">Status</TableCell>
                         <TableCell align="center">Translator Status</TableCell>
                         <TableCell align="center">Proofreader Status</TableCell>
