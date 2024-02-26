@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import "./ContractorProfileSettings.css";
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
-import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
-import AvailabilityToggle from '../AvailabilityToggle/AvailabilityToggle';
+import { MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box, Checkbox } from '@mui/material';
+import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function ContractorProfileSettings() {
-    const params = useParams();
     const dispatch = useDispatch();
     const languageList = useSelector(store => store.allLanguages);
     const serviceList = useSelector(store => store.allServices);
@@ -31,32 +30,31 @@ function ContractorProfileSettings() {
     const [skill, setSkill] = useState({});
     const [service, setService] = useState({});
     const timezoneList = [
-
-        {id: 1, tz: "UTC -11:00", city: 'American Samoa'}, 
-        {id: 2, tz: "UTC -10:00", city: 'Honolulu'},
-        {id: 3, tz: "UTC -9:00", city: 'Anchorage'}, 
-        {id: 4, tz: "UTC -8:00", city: 'Los Angeles'}, 
-        {id: 5, tz: "UTC -7:00", city: 'Denver'}, 
-        {id: 6, tz: "UTC -6:00", city: 'Chicago'},
-        {id: 7, tz: "UTC -5:00", city: 'New York'}, 
-        {id: 8, tz: "UTC -4:00", city: 'Halifax'},
-        {id: 9, tz: "UTC -3:00", city: 'Rio de Janeiro'}, 
-        {id: 10, tz: "UTC -2:00", city: 'Ponta Delgada'}, 
-        {id: 11, tz: "UTC -1:00", city: "Reykjavik"}, 
-        {id: 13, tz: "UTC 0:00", city: 'London'}, 
-        {id: 14, tz: "UTC +1:00", city: 'Paris'},
-        {id: 15, tz: "UTC +2:00", city: 'Helsinki'}, 
-        {id: 16, tz: "UTC +3:00", city: 'Moscow'}, 
-        {id: 17, tz: "UTC +4:00", city: 'Dubai'}, 
-        {id: 18, tz: "UTC +5:00", city: 'Karachi'},
-        {id: 19, tz: "UTC +6:00", city: 'Dhaka'}, 
-        {id: 20, tz: "UTC +7:00", city: 'Bangkok'},
-        {id: 21, tz: "UTC +8:00", city: 'Beijing'}, 
-        {id: 22, tz: "UTC +9:00", city: 'Tokyo'}, 
-        {id: 23, tz: "UTC +10:00", city: 'Brisbane'}, 
-        {id: 24, tz: "UTC +11:00", city: 'Sydney'},
-        {id: 25, tz: "UTC +12:00", city: 'Tarawa'},
-        {id: 26, tz: "UTC +13:00", city: 'Auckland'}];
+        {id: 1, tz: "UTC -11:00 - American Samoa"}, 
+        {id: 2, tz: "UTC -10:00 - Honolulu"},
+        {id: 3, tz: "UTC -9:00 - Anchorage"}, 
+        {id: 4, tz: "UTC -8:00 - Los Angeles"}, 
+        {id: 5, tz: "UTC -7:00 - Denver"}, 
+        {id: 6, tz: "UTC -6:00 - Chicago"},
+        {id: 7, tz: "UTC -5:00 - New York"}, 
+        {id: 8, tz: "UTC -4:00 - Halifax"},
+        {id: 9, tz: "UTC -3:00 - Rio de Janeiro"}, 
+        {id: 10, tz: "UTC -2:00 - Ponta Delgada"}, 
+        {id: 11, tz: "UTC -1:00 - Reykjavik"}, 
+        {id: 13, tz: "UTC 0:00 - London"}, 
+        {id: 14, tz: "UTC +1:00 - Paris"},
+        {id: 15, tz: "UTC +2:00 - Helsinki"}, 
+        {id: 16, tz: "UTC +3:00 - Moscow"}, 
+        {id: 17, tz: "UTC +4:00 - Dubai"}, 
+        {id: 18, tz: "UTC +5:00 - Karachi"},
+        {id: 19, tz: "UTC +6:00 - Dhaka"}, 
+        {id: 20, tz: "UTC +7:00 - Bangkok"},
+        {id: 21, tz: "UTC +8:00 - Beijing"}, 
+        {id: 22, tz: "UTC +9:00 - Tokyo"}, 
+        {id: 23, tz: "UTC +10:00 - Brisbane"}, 
+        {id: 24, tz: "UTC +11:00 - Sydney"},
+        {id: 25, tz: "UTC +12:00 - Tarawa"},
+        {id: 26, tz: "UTC +13:00 - Auckland"}];
     console.log(languages);
 
 
@@ -148,7 +146,8 @@ function ContractorProfileSettings() {
         borderRadius: '10px', 
         backgroundColor: 'white',
         padding: '20px',
-        margin: '0px 30px'
+        marginRight: '30px',
+        fontSize: '1em'
     }
   
     const boxStyle = {
@@ -156,8 +155,7 @@ function ContractorProfileSettings() {
         borderRadius: '0px',
         padding: '10px',
         margin: '10px 20px 30px 20px',
-        fontSize: '1em'
-
+        fontSize: '12px'
     }
 
     const listStyle = {
@@ -167,7 +165,8 @@ function ContractorProfileSettings() {
         backgroundColor: '#e3fbfb',
         borderRadius: '20px',
         border: 'none',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        fontSize: '12px'
     }
 
     const selectStyle = {
@@ -176,7 +175,8 @@ function ContractorProfileSettings() {
         textAlign: 'right',
         '& .MuiInput-underline:before': { borderBottomColor: '#48a6cd' },
         '& .MuiInput-underline:after': { borderBottomColor: '#48a6cd' },
-        '& .MuiInput-arrow': {color: '#48a6cd'}
+        '& .MuiInput-arrow': {color: '#48a6cd'},
+        fontSize: '12px'
     }
 
     const buttonStyle = {
@@ -184,7 +184,23 @@ function ContractorProfileSettings() {
         color: 'white',
         "&:hover": {
             backgroundColor: '#332c7b'
-          }
+        },
+        fontSize: '16px'   
+    }
+
+    const textStyle = {
+        '& .MuiOutlinedInput-root': {
+        '& fieldset': { borderColor: '#48a6cd', borderWidth: '1px'  }},
+        fontSize: '12px',
+        marginBottom: '10px',
+        minWidth: '200px'
+    }
+
+    const checkStyle = {
+        color: '#332c7b',
+        '&.Mui-checked': {
+            color: '#48a6cd',
+        }
     }
 
     if (!user) {
@@ -194,315 +210,325 @@ function ContractorProfileSettings() {
     else {
         return (
             <div className="container">
-                <h2 style={{ margin: '20px 130px'}}>Profile Settings</h2>
-                <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}>
-                    {/* Contact Info */}
-                    <Stack direction='column' className="contractor-contact" sx={containerStyle}>
-                        <h3 style={{textAlign: 'center' }}>Contact Information</h3>
-                        <p><AvailabilityToggle /> Availability </p>
-                        {/* <input type="checkbox" checked={availability} onClick={() => setAvailability(!availability)} />*/}
-                        <TextField label="Name" sx={{width: '300px'}} value={name} size="small" 
-                            onChange={(e) => setName(e.target.value)} />
-                        <br />
-                        <TextField label="LinkedIn" value={linkedIn} size="small"
-                            onChange={(e) => setLinkedIn(e.target.value)} />
-                        <br />
-                        <TextField label="Email" value={email} size="small"
-                            onChange={(e) => setEmail(e.target.value)} />
-                        <br />
-                        <TextField label="Phone" value={phone} size="small"
-                            onChange={(e) => setPhone(e.target.value)} />
-                        <br />
-                        <TextField label="Location" value={location} size="small"
-                            onChange={(e) => setLocation(e.target.value)} />
-                        <br />
-                        <TextField value={timezone} size="small" select defaultValue={user.timezone}
-                            onChange={(e) => setTimezone(e.target.value)} 
-                            MenuProps={{
-                                PaperProps: {
-                                    sx: {
-                                        maxHeight: {
-                                            xs: '200px'
-                                        },
-                                        width: 200
+                <Stack direction='column' sx={{ margin: '0px 5%', justifyContent: 'center' }}>
+                    <h2 style={{ margin: '20px 0px'}}>Profile Settings</h2>
+                    <Stack direction='row' >
+                        {/* Contact Info */}
+                        <Stack direction='column' className="contractor-contact" sx={containerStyle}>
+                            <h3 style={{textAlign: 'center' }}>Contact Information</h3>
+                            {/* <input type="checkbox" checked={availability} onClick={() => setAvailability(!availability)} />*/}
+                            <Tooltip title="Click icon to change status" placement='top'>
+                                <p><Checkbox sx={checkStyle} disableRipple 
+                                    icon={<NoAccountsIcon />} 
+                                    checkedIcon={<AccountCircleIcon />} 
+                                    checked={availability} 
+                                    onClick={() => setAvailability(!availability)}/> 
+                                    {availability ? <span>Availabile for work</span> : <span>Not available</span>}
+                                </p>
+                            </Tooltip>
+                            <TextField sx={textStyle} label="Name" value={name} size="small" 
+                                onChange={(e) => setName(e.target.value)} />
+                            <br />
+                            <TextField sx={textStyle} label="LinkedIn" value={linkedIn} size="small"
+                                onChange={(e) => setLinkedIn(e.target.value)} />
+                            <br />
+                            <TextField sx={textStyle} label="Email" value={email} size="small"
+                                onChange={(e) => setEmail(e.target.value)} />
+                            <br />
+                            <TextField sx={textStyle} label="Phone" value={phone} size="small"
+                                onChange={(e) => setPhone(e.target.value)} />
+                            <br />
+                            <TextField sx={textStyle} label="Location" value={location} size="small"
+                                onChange={(e) => setLocation(e.target.value)} />
+                            <br />
+                            <TextField sx={textStyle} value={timezone} size="small" select defaultValue={user.timezone}
+                                onChange={(e) => setTimezone(e.target.value)} 
+                                MenuProps={{
+                                    PaperProps: {
+                                        sx: {
+                                            maxHeight: {
+                                                xs: '200px'
+                                            },
+                                            width: 200
+                                        }
+                                    },
+                                    anchorOrigin: {
+                                        vertical: "bottom",
+                                        horizontal: "left"
+                                    },
+                                    transformOrigin: {
+                                        vertical: "top",
+                                        horizontal: "left"
                                     }
-                                },
-                                anchorOrigin: {
-                                    vertical: "bottom",
-                                    horizontal: "left"
-                                },
-                                transformOrigin: {
-                                    vertical: "top",
-                                    horizontal: "left"
-                                }
-                            }}>
-                            {timezoneList.map(timezone => {
-                                return (
-                                    <MenuItem 
-                                        key={timezone.id} 
-                                        value={timezone.tz}>
-                                            {timezone.tz} - {timezone.city}
-                                    </MenuItem>
-                                )
-                            })}
-                        </TextField>
-                            
-                        <Stack direction='column' className="contractor-rates">
-                            <h3 style={{textAlign: 'center' }}>Rates</h3>
-                            <p>Written</p>
-                            <TextField label="Written rate" value={writtenRate} size="small"
-                                onChange={(e) => setWrittenRate(e.target.value)} 
-                                InputProps={{
-                                    startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
-                                    endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per word</InputAdornment>
-                                }}/>
-                            <p>Audio / Video</p>
-                            <TextField label="Audio/Video rate" value={minuteRate} size="small"
-                                onChange={(e) => setMinuteRate(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
-                                    endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per minute</InputAdornment>
-                                }} /> 
-                            <br />
-                            <br />
+                                }}>
+                                {timezoneList.map(timezone => {
+                                    return (
+                                        <MenuItem 
+                                            key={timezone.id} 
+                                            value={timezone.tz}>
+                                                {timezone.tz}
+                                        </MenuItem>
+                                    )
+                                })}
+                            </TextField>
                             <br />
                             <Button variant='contained' sx={buttonStyle} onClick={() => saveUser()}>Save</Button>
-                        </Stack>   
-                    </Stack>
-    
-                    {/* Skills */}
-                    <Stack direction='column' className="contractor-skills" sx={containerStyle}>
-                        <h3 style={{textAlign: 'center' }}>Skills</h3>
-                        <p style={{margin: '0px 0px 0px 20px'}}>Languages</p>
-                        <Box sx={boxStyle}>
-                            {languages != undefined ? 
-                                languages.map((language) => {
-                                    return (
-                                        <span style={listStyle}>{language.from_language} → {language.to_language}
-                                        <IconButton onClick={() => deleteLanguage(language.id)}
-                                            disableElevation
-                                            disableRipple
-                                            size="small">
-                                            <Tooltip title="Remove language">
-                                                <ClearIcon sx={{fontSize: '12px'}} />   
-                                            </Tooltip>
-                                        </IconButton></span> 
-                                    )
-                                })
-                            :
-                            <br />
-                            }
-                            <br /><br />
-                            <Stack direction='row'>
-                                <Stack direction='row' sx={{ justifyContent: 'space-between'}}>
-                                    <TextField sx={selectStyle} select size="small" variant="standard"
-                                        value={fromLanguage} defaultValue={languageList[0]} 
-                                        onChange={(e) => setFromLanguage(e.target.value)} 
-                                        InputProps={{ 
-                                            startAdornment: <InputAdornment position="start">From:</InputAdornment>
-                                        }}
-                                        SelectProps={{
-                                            MenuProps: {
-                                                style: {
-                                                    maxHeight: 280,
-                                                },
-                                                anchorOrigin: {
-                                                    vertical: "bottom",
-                                                    horizontal: "left"
-                                                },
-                                                transformOrigin: {
-                                                    vertical: "top",
-                                                    horizontal: "left"
-                                                }
-                                            }
-                                        }}>
-                                        {languageList.map(language => {
-                                            return (
-                                                <MenuItem 
-                                                    key={language.id} 
-                                                    value={language.id}>
-                                                        {language.name}
-                                                </MenuItem>
-                                            );
-                                        })} 
-                                    </TextField>
+                        </Stack>
         
-                                    <TextField sx={selectStyle} 
-                                        select size="small" variant="standard" 
-                                        value={toLanguage} onChange={(e) => setToLanguage(e.target.value)} 
-                                        InputProps={{ 
-                                            startAdornment: <InputAdornment position="start">To:</InputAdornment>
-                                        }}
-                                        SelectProps={{
-                                            MenuProps: {
-                                                style: {
-                                                    maxHeight: 280,
-                                                },
-                                                anchorOrigin: {
-                                                    vertical: "bottom",
-                                                    horizontal: "left"
-                                                },
-                                                transformOrigin: {
-                                                    vertical: "top",
-                                                    horizontal: "left"
-                                                }
-                                            }
-                                        }}>
-                                        {languageList.map(language => {
-                                            return (
-                                                <MenuItem 
-                                                    key={language.id} 
-                                                    value={language.id}>
-                                                        {language.name}
-                                                </MenuItem>
-                                            );
-                                        })} 
-                                    </TextField>
-                                </Stack>
-        
-                                <IconButton onClick={() => addLanguagePair(fromLanguage, toLanguage)}
-                                    disableElevation
-                                    disableRipple
-                                    size="small">
-                                    <Tooltip title="Add language">
-                                        <AddIcon sx={{ 
-                                            fontSize: '20px',
-                                            stroke: '#48a6cd',
-                                            strokeWidth: 1.5
-                                        }} />   
-                                    </Tooltip>
-                                </IconButton>
-                            </Stack>
-                        </Box>   
-                        
-                        <p style={{margin: '0px 0px 0px 20px'}}>Expertise</p>
-                        <Box sx={boxStyle}>
-                            {skills != undefined ? 
-                                skills.map((skill) => {
-                                    return (
-                                        <span style={listStyle}>{skill.expertise_type}
-                                        <IconButton onClick={() => deleteSkill(skill.id)}
-                                            disableElevation
-                                            disableRipple
-                                            size="small">
-                                            <Tooltip title="Remove skill">
-                                                <ClearIcon sx={{fontSize: '12px'}} />   
-                                            </Tooltip>
-                                        </IconButton></span> 
-                                    )
-                                })
-                            :
-                                <br />
-                            } 
-                            <br /><br />
-                            <Stack direction='row'>
-                                <TextField sx={selectStyle} select size="small" variant="standard"
-                                    value={skill} onChange={(e) => setSkill(e.target.value)} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                            style: {
-                                                maxHeight: 280,
-                                            },
-                                            anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
-                                            },
-                                            transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
-                                            }
-                                        }
-                                    }}>
-                                    {skillList.map(skill => {
+                        {/* Skills */}
+                        <Stack direction='column' className="contractor-skills" sx={containerStyle}>
+                            <h3 style={{textAlign: 'center' }}>Skills</h3>
+                            <p style={{margin: '0px 0px 0px 20px'}}>Languages</p>
+                            <Box sx={boxStyle}>
+                                {languages != undefined ? 
+                                    languages.map((language) => {
                                         return (
-                                            <MenuItem 
-                                                key={skill.id} 
-                                                value={skill.id}>
-                                                    {skill.type}
-                                            </MenuItem>
-                                        );
-                                    })} 
-                                </TextField>
-        
-                                <IconButton onClick={() => addSkill(skill)}
+                                            <span style={listStyle}>{language.from_language} → {language.to_language}
+                                            <IconButton onClick={() => deleteLanguage(language.id)}
+                                                disableElevation
+                                                disableRipple
+                                                size="small">
+                                                <Tooltip title="Remove language">
+                                                    <ClearIcon sx={{fontSize: '12px'}} />   
+                                                </Tooltip>
+                                            </IconButton></span> 
+                                        )
+                                    })
+                                :
+                                <br />
+                                }
+                                <br /><br />
+                                <Stack direction='row'>
+                                    <Stack direction='row' sx={{ justifyContent: 'space-between'}}>
+                                        <TextField sx={selectStyle} select size="small" variant="standard"
+                                            value={fromLanguage} defaultValue={languageList[0]} 
+                                            onChange={(e) => setFromLanguage(e.target.value)} 
+                                            InputProps={{ 
+                                                startAdornment: <InputAdornment position="start">From:</InputAdornment>
+                                            }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    style: {
+                                                        maxHeight: 280,
+                                                    },
+                                                    anchorOrigin: {
+                                                        vertical: "bottom",
+                                                        horizontal: "left"
+                                                    },
+                                                    transformOrigin: {
+                                                        vertical: "top",
+                                                        horizontal: "left"
+                                                    }
+                                                }
+                                            }}>
+                                            {languageList.map(language => {
+                                                return (
+                                                    <MenuItem 
+                                                        key={language.id} 
+                                                        value={language.id}>
+                                                            {language.name}
+                                                    </MenuItem>
+                                                );
+                                            })} 
+                                        </TextField>
+            
+                                        <TextField sx={selectStyle} 
+                                            select size="small" variant="standard" 
+                                            value={toLanguage} onChange={(e) => setToLanguage(e.target.value)} 
+                                            InputProps={{ 
+                                                startAdornment: <InputAdornment position="start">To:</InputAdornment>
+                                            }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    style: {
+                                                        maxHeight: 280,
+                                                    },
+                                                    anchorOrigin: {
+                                                        vertical: "bottom",
+                                                        horizontal: "left"
+                                                    },
+                                                    transformOrigin: {
+                                                        vertical: "top",
+                                                        horizontal: "left"
+                                                    }
+                                                }
+                                            }}>
+                                            {languageList.map(language => {
+                                                return (
+                                                    <MenuItem 
+                                                        key={language.id} 
+                                                        value={language.id}>
+                                                            {language.name}
+                                                    </MenuItem>
+                                                );
+                                            })} 
+                                        </TextField>
+                                    </Stack>
+            
+                                    <IconButton onClick={() => addLanguagePair(fromLanguage, toLanguage)}
                                         disableElevation
                                         disableRipple
                                         size="small">
-                                        <Tooltip title="Add skill">
+                                        <Tooltip title="Add language">
                                             <AddIcon sx={{ 
                                                 fontSize: '20px',
                                                 stroke: '#48a6cd',
                                                 strokeWidth: 1.5
                                             }} />   
                                         </Tooltip>
-                                </IconButton>
-                            </Stack>
-                        </Box>  
-                                            
-                        <p style={{margin: '0px 0px 0px 20px'}}>Services</p>
-                        <Box sx={boxStyle}>
-                            {services != undefined ? 
-                                services.map((service) => {
-                                    return (
-                                        <span style={listStyle}>{service.service_type} 
-                                        <IconButton onClick={() => deleteService(service.id)}
+                                    </IconButton>
+                                </Stack>
+                            </Box>   
+                            
+                            <p style={{margin: '0px 0px 0px 20px'}}>Expertise</p>
+                            <Box sx={boxStyle}>
+                                {skills != undefined ? 
+                                    skills.map((skill) => {
+                                        return (
+                                            <span style={listStyle}>{skill.expertise_type}
+                                            <IconButton onClick={() => deleteSkill(skill.id)}
+                                                disableElevation
+                                                disableRipple
+                                                size="small">
+                                                <Tooltip title="Remove skill">
+                                                    <ClearIcon sx={{fontSize: '12px'}} />   
+                                                </Tooltip>
+                                            </IconButton></span> 
+                                        )
+                                    })
+                                :
+                                    <br />
+                                } 
+                                <br /><br />
+                                <Stack direction='row' sx={{justifyContent: 'end'}}>
+                                    <TextField sx={selectStyle} select size="small" variant="standard"
+                                        value={skill} onChange={(e) => setSkill(e.target.value)} 
+                                        SelectProps={{
+                                            MenuProps: {
+                                                style: {
+                                                    maxHeight: 280,
+                                                },
+                                                anchorOrigin: {
+                                                    vertical: "bottom",
+                                                    horizontal: "left"
+                                                },
+                                                transformOrigin: {
+                                                    vertical: "top",
+                                                    horizontal: "left"
+                                                }
+                                            }
+                                        }}>
+                                        {skillList.map(skill => {
+                                            return (
+                                                <MenuItem 
+                                                    key={skill.id} 
+                                                    value={skill.id}>
+                                                        {skill.type}
+                                                </MenuItem>
+                                            );
+                                        })} 
+                                    </TextField>
+            
+                                    <IconButton onClick={() => addSkill(skill)}
                                             disableElevation
                                             disableRipple
-                                            size="small">
-                                            <Tooltip title="Remove service">
-                                                <ClearIcon sx={{fontSize: '12px'}} />   
+                                            size="small"
+                                            sx={{justifySelf: 'end'}}>
+                                            <Tooltip title="Add skill">
+                                                <AddIcon sx={{ 
+                                                    fontSize: '20px',
+                                                    stroke: '#48a6cd',
+                                                    strokeWidth: 1.5
+                                                }} />   
                                             </Tooltip>
-                                        </IconButton></span>
-                                    )
-                                })
-                            :
-                                <br />
-                            }
-                            <br /><br />
-                            <Stack direction='row'>
-                                <TextField sx={selectStyle} select size="small" variant="standard"
-                                    value={service} onChange={(e) => setService(e.target.value)} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                            style: {
-                                                maxHeight: 280,
-                                            },
-                                            anchorOrigin: {
-                                                vertical: "bottom",
-                                                horizontal: "left"
-                                            },
-                                            transformOrigin: {
-                                                vertical: "top",
-                                                horizontal: "left"
-                                            }
-                                        }
-                                    }}>
-                                    {serviceList.map(service => {
+                                    </IconButton>
+                                </Stack>
+                            </Box>  
+                                                
+                            <p style={{margin: '0px 0px 0px 20px'}}>Services</p>
+                            <Box sx={boxStyle}>
+                                {services != undefined ? 
+                                    services.map((service) => {
                                         return (
-                                            <MenuItem 
-                                                key={service.id} 
-                                                value={service.id}>
-                                                    {service.type}
-                                            </MenuItem>
+                                            <span style={listStyle}>{service.service_type} 
+                                            <IconButton onClick={() => deleteService(service.id)}
+                                                disableElevation
+                                                disableRipple
+                                                size="small">
+                                                <Tooltip title="Remove service">
+                                                    <ClearIcon sx={{fontSize: '12px'}} />   
+                                                </Tooltip>
+                                            </IconButton></span>
                                         )
-                                    })}
-                                </TextField>
-        
-                                <IconButton onClick={() => addService(service)}
-                                    disableElevation
-                                    disableRipple
-                                    size="small">
-                                    <Tooltip title="Add service">
-                                        <AddIcon sx={{ 
-                                            fontSize: '20px',
-                                            stroke: '#48a6cd',
-                                            strokeWidth: 1.5
-                                        }} />    
-                                    </Tooltip>
-                                </IconButton>
-                            </Stack>
-                        </Box>
-                    </Stack> 
+                                    })
+                                :
+                                    <br />
+                                }
+                                <br /><br />
+                                <Stack direction='row' sx={{justifyContent: 'end'}}>
+                                    <TextField sx={selectStyle} select size="small" variant="standard"
+                                        value={service} onChange={(e) => setService(e.target.value)} 
+                                        SelectProps={{
+                                            MenuProps: {
+                                                style: {
+                                                    maxHeight: 280,
+                                                },
+                                                anchorOrigin: {
+                                                    vertical: "bottom",
+                                                    horizontal: "left"
+                                                },
+                                                transformOrigin: {
+                                                    vertical: "top",
+                                                    horizontal: "left"
+                                                }
+                                            }
+                                        }}>
+                                        {serviceList.map(service => {
+                                            return (
+                                                <MenuItem 
+                                                    key={service.id} 
+                                                    value={service.id}>
+                                                        {service.type}
+                                                </MenuItem>
+                                            )
+                                        })}
+                                    </TextField>
+            
+                                    <IconButton onClick={() => addService(service)}
+                                        disableElevation
+                                        disableRipple
+                                        size="small">
+                                        <Tooltip title="Add service">
+                                            <AddIcon sx={{ 
+                                                fontSize: '20px',
+                                                stroke: '#48a6cd',
+                                                strokeWidth: 1.5
+                                            }} />    
+                                        </Tooltip>
+                                    </IconButton>
+                                </Stack>
+                            </Box>
+                        </Stack> 
+                        <Box sx={containerStyle}>
+                            <Stack direction='column' className="contractor-rates">
+                                <h3 style={{textAlign: 'center' }}>Rates</h3>
+                                <p>Written</p>
+                                <TextField sx={textStyle} label="Written rate" value={writtenRate} size="small"
+                                    onChange={(e) => setWrittenRate(e.target.value)} 
+                                    InputProps={{
+                                        startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                                        endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per word</InputAdornment>
+                                    }}/>
+                                <p>Audio / Video</p>
+                                <TextField sx={textStyle} label="Audio/Video rate" value={minuteRate} size="small"
+                                    onChange={(e) => setMinuteRate(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment sx={{margin: '2px'}} position="start">$</InputAdornment>,
+                                        endAdornment: <InputAdornment sx={{margin: '2px'}} position="end">per minute</InputAdornment>
+                                    }} /> 
+                            </Stack>  
+                        </Box> 
+                    </Stack>
                 </Stack>
             </div>
         );

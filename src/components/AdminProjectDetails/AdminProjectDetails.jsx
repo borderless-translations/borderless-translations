@@ -18,9 +18,9 @@ function AdminProjectDetails(){
 
 
     const[modalOpen, setModalOpen] = useState(false);
-    const [projectToEdit, setProjectToEdit] = useState(null);
+    const[projectToEdit, setProjectToEdit] = useState(null);
 
-    const handleEditClient = (project) => {
+    const handleEditProject = (project) => {
         setProjectToEdit(project);
         setModalOpen(true);
     }
@@ -38,18 +38,17 @@ function AdminProjectDetails(){
             <p>Status: {project.status}</p>
             <p>Translator Status: {project.translator_status}</p>
             <p>Proofreader Status: {project.proofreader_status}</p>
-            <p>From Language: {project.from_language_id}</p>
-            <p>To Language: {project.to_language_id}</p>
+            <p>From Language: {project.from_language_name}</p>
+            <p>To Language: {project.to_language_name}</p>
             <p>Service Notes: {project.service}</p>
             <p>File Link:{project.file_link}</p>
             
         
 
-        <button onClick={() => history.push("/admin/project")}>Return to Project List</button><br/><button onClick={() => handleEditClient(project)}>Edit Project</button>
         {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null) }} defaultValues={project} />}
 
 
-        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button  className='btn btn_sizeSm' >Edit</button>
+        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button onClick={() => handleEditProject(project)} className='btn btn_sizeSm' >Edit</button>
 
         </div>
     )

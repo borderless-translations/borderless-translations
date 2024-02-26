@@ -62,7 +62,8 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		project_language.from_language_id, from_language."name" AS from_language_name, 
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
-		project_language.translator_notes, project_language.flagged
+		project_language.translator_notes, project_language.flagged,
+		project_language.text_to_translate, project_language.file_link
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
@@ -165,7 +166,6 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 
 // GET ongoing projects
 router.get('/ongoing', rejectUnauthenticated, (req, res) => {
-	console.log(req.user);
 	let querytext;
 	if (req.user.type == 'admin'){
 		querytext = `
@@ -374,7 +374,7 @@ router.post('/', requireAdmin, (req, res) => {
 			let project_id = result.rows[0].id
 			let querytext2 = `
 				INSERT INTO
-					"project_language" ("project_id", "from_language_id", "to_language_id, "service_id")
+					"project_language" ("project_id", "from_language_id", "to_language_id", "service_id")
 				VALUES
 					($1,$2,$3,$4);
 			`;
