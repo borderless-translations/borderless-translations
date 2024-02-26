@@ -9,7 +9,7 @@ function* createNewClient(action) {
             withCredentials: true,
         };
         
-        yield axios.post('/api/client', action.payload); // POST new client
+        yield axios.post('/api/client', action.payload, config); // POST new client
 
     }
     catch (error) {

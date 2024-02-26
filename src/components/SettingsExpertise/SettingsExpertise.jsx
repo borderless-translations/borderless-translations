@@ -52,70 +52,77 @@ function SettingsExpertise() {
             payload: { type: expertiseType }
         });
         setExpertiseType("");
-        };
+    };
 
     return (
         <div>
             <Stack direction="column" justifyContent="flex-end">
-            <h3>Expertise</h3>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    label='Expertiese'
-                    variant='standard'
-                    value={expertiseType}
-                    onChange={(e) => setExpertiseType(e.target.value)}
-                    fullWidth
-                    margin='normal'
-                />
-            <Button variant='contained' type="submit">Add Expertise</Button>
-            </form>
-            
-            
-            <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Expertise</TableCell>
-                        <TableCell align="center">Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {expertises.map(expertise => (
-                        <TableRow key={expertise.id}>
-                            {editExpertiseId === expertise.id ? (
-                                <>
-                                    <TableCell>
-                                        <input
-                                            type="text"
-                                            value={editExpertiseType}
-                                            onChange={(e) => setEditExpertiseType(e.target.value)}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button startIcon={<EditIcon />} onClick={() => handleSave(expertise.id)}></Button>
-                                        <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
-                                    </TableCell>
+                <h3>Expertise</h3>
 
-                                </>
-                            ) : (
-                                <>
-                                    <TableCell>
-                                        {expertise.type}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Button startIcon={<EditIcon />} onClick={() => handleEdit(expertise)}></Button>
-                                        <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(expertise.id)}></Button>
-                                    </TableCell>
+                <form onSubmit={handleSubmit}>
+                    
+                        <TextField
+                            label='Expertiese'
+                            variant='standard'
+                            value={expertiseType}
+                            onChange={(e) => setExpertiseType(e.target.value)}
+                            fullWidth
+                            margin='normal'
+                        />
+                        <Button variant='contained' type="submit">Add Expertise</Button>
+                    
+                </form>
 
-                                </>
-                            )}
-                        </TableRow>
-                    ))}
-                </TableBody>
 
-            </Table>
-            </TableContainer>
-            </Stack>                   
+
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">Expertise</TableCell>
+                                <TableCell align="center">Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {expertises.map(expertise => (
+                                <TableRow key={expertise.id}>
+                                    {editExpertiseId === expertise.id ? (
+                                        <>
+                                            <TableCell>
+                                                <TextField
+                                                    label="Expertise"
+                                                    variant='standard'
+                                                    value={editExpertiseType}
+                                                    onChange={(e) => setEditExpertiseType(e.target.value)}
+                                                    fullWidth
+                                                    margin='normal'
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button startIcon={<SaveIcon />} onClick={() => handleSave(expertise.id)}></Button>
+                                                <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    ) : (
+                                        <>
+                                            <TableCell>
+                                                {expertise.type}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Button startIcon={<EditIcon />} onClick={() => handleEdit(expertise)}></Button>
+                                                <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(expertise.id)}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    )}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+            </Stack>
         </div>
 
 

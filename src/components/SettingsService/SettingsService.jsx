@@ -57,17 +57,21 @@ function SettingsService() {
         <div>
             <Stack direction="column" justifyContent="flex-end">
                 <h3>Services</h3>
+
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        label="Service"
-                        variant="standard"
-                        value={serviceType}
-                        onChange={(e) => setServiceType(e.target.value)}
-                        fullWidth
-                        margin='normal'
-                    />
-                    <Button variant='contained' type="submit">Add Service</Button>
+                    
+                        <TextField
+                            label="Service"
+                            variant="standard"
+                            value={serviceType}
+                            onChange={(e) => setServiceType(e.target.value)}
+                            fullWidth
+                            margin='normal'
+                        />
+                        <Button variant='contained' type="submit">Add Service</Button>
+                    
                 </form>
+
 
                 <TableContainer component={Paper}>
                     <Table>
@@ -83,10 +87,13 @@ function SettingsService() {
                                     {editServiceId === service.id ? (
                                         <>
                                             <TableCell>
-                                                <input
-                                                    type="text"
+                                                <TextField
+                                                    label="Service"
+                                                    variant="standard"
                                                     value={editServiceType}
                                                     onChange={(e) => setEditServiceType(e.target.value)}
+                                                    fullWidth
+                                                    margin='normal'
                                                 />
                                             </TableCell>
                                             <TableCell>
