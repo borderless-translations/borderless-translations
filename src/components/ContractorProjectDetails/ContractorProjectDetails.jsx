@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import "./ContractorProjectDetails.css";
-import { Box, Stack, IconButton, Tooltip }  from '@mui/material';
+import { Box, Stack, IconButton, Tooltip, TextField, Button, Checkbox }  from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
+import { DateTime } from 'luxon';
+import WestIcon from '@mui/icons-material/West';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+
 
 function ContractorProjectDetails() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const params = useParams();
     const user = useSelector(store => store.user);
     const project = useSelector(store => store.project);
@@ -97,16 +103,56 @@ function ContractorProjectDetails() {
     }
 
     const containerStyle = {
-        border: '1px solid #332c7b', 
+        border: '2px solid #332c7b', 
         borderRadius: '10px', 
         backgroundColor: 'white',
         padding: '20px',
-        margin: '0px 30px',
-        maxWidth: '40%'
+        maxWidth: '60%',
+        minWidth: '45%',
+        margin: '0px 30px 0px 0px'
+    }
+
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        }
+    }
+
+    const completeStyle = {
+        backgroundColor: '#332c7b',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        }
+    }
+
+    const textStyle = {
+        width: '100%', 
+        '& .MuiOutlinedInput-root': {
+        '& fieldset': { borderColor: '#48a6cd', borderWidth: '2px'  }}
+    }
+
+    const checkStyle = {
+        color: '#332c7b',
+        '&.Mui-checked': {
+            color: '#48a6cd',
+        }
+    }
+
+    const toLink = (link) => {
+        window.open(`${link}`);
     }
 
     const viewFile = (projectId) => {
-        
+        setTimeout(() => {
+            history.push(`/user/project/file/${projectId}`);
+        }, 500);
+    }
+
+    const toDashboard = () => {
+        history.push('/dashboard');
     }
 
     useEffect(() => {
@@ -116,61 +162,132 @@ function ContractorProjectDetails() {
 
     return (
         <div className="container">
-            <h2>Project Details</h2>
-            <Stack direction='row'>
-                <Box sx={containerStyle} className="contractor-details">
-                    <h3>Details</h3>
-                    <Stack direction='row' sx={{justifyContent: 'space-between', margin: '0px 50px'}}>
-                        <Stack direction='column'>
-                        <p>Client: {project.client_name}</p>
-                        <p>Project description: {project.description}</p>
-                        <p>View file: 
-                            <IconButton onClick={() => viewFile(project.id)}
-                                disableElevation
-                                disableRipple
-                                size="small">
-                                <Tooltip title="Link">
-                                    <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
-                                </Tooltip>
-                            </IconButton></p>
+            <Stack direction='column' sx={{margin: '0px 30px'}}>
+                <h2>
+                    <IconButton onClick={() => toDashboard()}
+                        disableElevation
+                        disableRipple
+                        size="small">
+                        <Tooltip title="Back">
+                            <WestIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                        </Tooltip>
+                    </IconButton>
+                    Back to dashboard
+                </h2>
+                <Stack direction='row'>
+                    <Box sx={containerStyle} className="contractor-details">
+                        <h3>Details</h3>
+                        <Stack direction='row' sx={{justifyContent: 'space-between', margin: '0px 50px'}}>
+                            <Stack direction='column'>
+                            <p>Client: {project.client_name}</p>
+                            <p>Project description: {project.description}</p>
+                            {project.text_to_translate !== null && project.file_link !== null &&
+                                <div>
+                                    <p>View text file: 
+                                        <IconButton onClick={() => viewFile(project.id)}
+                                            disableElevation
+                                            disableRipple
+                                            size="small">
+                                            <Tooltip title="Link">
+                                                <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                                            </Tooltip>
+                                        </IconButton></p>
+                                    <p>External link:
+                                        <IconButton onClick={() => toLink(project.file_link)}
+                                            disableElevation
+                                            disableRipple
+                                            size="small">
+                                            <Tooltip title="Link">
+                                                <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                                            </Tooltip>
+                                        </IconButton>
+                                    </p>
+                                </div>
+                            }
+                            {project.text_to_translate !== null && project.file_link === null &&
+                                <p>View text file: 
+                                <IconButton onClick={() => viewFile(project.id)}
+                                    disableElevation
+                                    disableRipple
+                                    size="small">
+                                    <Tooltip title="Link">
+                                        <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                                    </Tooltip>
+                                </IconButton></p>
+                            }
+                            {project.text_to_translate === null && project.file_link !== null &&
+                                <p>External link:
+                                    <IconButton onClick={() => toLink(project.file_link)}
+                                        disableElevation
+                                        disableRipple
+                                        size="small">
+                                        <Tooltip title="Link">
+                                            <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                                        </Tooltip>
+                                    </IconButton>
+                                </p>
+                            }
 
+                            </Stack>
+                            <Stack direction='column'>
+                            <p>Deadline: {project.due_at}</p>
+                            <p>Service type: {project.service_type}</p>
+                            <p>Project length: {project.duration}</p>
+                            <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
+                            <p>Translator: {project.translator_name}</p>
+                            <p>Proofreader: {project.proofreader_name}</p>
+                            </Stack>
                         </Stack>
+                    </Box>
+
+                    <Box sx={containerStyle} className="contractor-settings">
+                        <h3>Settings</h3>
                         <Stack direction='column'>
-                        <p>Deadline: {project.due_at}</p>
+
+                        <Tooltip title="Click icon to change status" placement='top-start'>
+                            <p><Checkbox sx={checkStyle} disableRipple 
+                                icon={<RadioButtonUncheckedIcon />} 
+                                checkedIcon={<ErrorOutlineIcon />} 
+                                checked={flagged} 
+                                onClick={() => updateFlagged(!flagged)}/> 
+                                {flagged ? <span>Flagged</span> : <span>Not flagged</span>}
+                            </p>
+                        </Tooltip>
+
+                        <p>Deadline: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
                         <p>Service type: {project.service_type}</p>
                         <p>Project length: {project.duration}</p>
                         <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
                         <p>Translator: {project.translator_name}</p>
                         <p>Proofreader: {project.proofreader_name}</p>
-                        </Stack>
-                    </Stack>
-                </Box>
+                        <p><FlagToggle onClick={updateFlagged()}/> {project.flagged ? <span>Flagged</span> : <span>Not flagged</span>} </p>
 
-                <Box sx={containerStyle} className="contractor-settings">
-                    <h3>Settings</h3>
-                    <Stack direction='column'>
-                        <p>Flag notes? <input type="checkbox" checked={flagged} onChange={() => updateFlagged(!flagged)}/></p>
-                        <p>Notes</p>
-                        {((buttonStatus === 'Complete') || 
-                        (buttonStatus === 'Translation still in progress')) ?
-                            // Makes notes uneditable if the user's work is complete or not ready
-                            <input type="text" value={notes} disabled />
-                        :
-                            // Makes notes editable
-                            <input type="text" value={notes} onChange={(e) => updateNotes(e.target.value)} />
-                        }
-                        <br />
-                        {/* need to add an alert before submitting */}
-                        {((buttonStatus === 'Complete') || 
-                        (buttonStatus === 'Translation still in progress')) ? 
-                            // Makes button unclickable if user's work is complete or not ready
-                            <button disabled>{buttonStatus}</button> 
-                        :
-                            // Submits status change and updates button text/function
-                            <button onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>{buttonStatus}</button>
-                        }
-                    </Stack>
-                </Box>
+                            <p>Notes</p>
+                            {((buttonStatus === 'Complete') || 
+                            (buttonStatus === 'Translation still in progress')) ?
+                                // Makes notes uneditable if the user's work is complete or not ready
+                                <TextField sx={textStyle} multiline value={notes} disabled />
+                            :
+                                // Makes notes editable
+                                <TextField sx={textStyle} multiline value={notes} 
+                                    onChange={(e) => updateNotes(e.target.value)} />
+                            }
+                            <br />
+                            {/* need to add an alert before submitting */}
+                            {((buttonStatus === 'Complete') || 
+                            (buttonStatus === 'Translation still in progress')) ? 
+                                // Makes button unclickable if user's work is complete or not ready
+                                <Button sx={completeStyle} disabled variant='contained'>{buttonStatus}</Button> 
+                            :
+                                // Submits status change and updates button text/function
+                                <Button sx={buttonStyle} variant='contained'
+                                    onClick={() => handleStatusChange({translator: project.translator_status, proofreader: project.proofreader_status})}>
+                                    {buttonStatus}
+                                </Button>
+                            }
+                        </Stack>
+                    </Box>
+                </Stack>    
             </Stack>
         </div>
     );
