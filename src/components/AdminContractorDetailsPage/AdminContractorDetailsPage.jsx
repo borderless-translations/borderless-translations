@@ -35,27 +35,6 @@ function AdminContractorDetailsPage() {
         dispatch({type: 'GET_CONTRACTOR_PROJECTS', payload: id});
     } 
 
-    const handleCheckboxChange = (event) => {
-        const {value, checked} = event.target;
-        const isChecked = event.target.checked;
-        console.log(`${value} is ${checked}`)
-
-        setSelectedServices((prevSelectedServices) => {
-            if (isChecked) {
-                return [...prevSelectedServices, value];
-            } else {
-                return prevSelectedServices.filter((selectedServiceId) => selectedServiceId !== value);
-            }
-        });  
-    };
-
-    const getLanguageNameById = (languageId) => {
-        const language = allLanguages.find(lang => lang.id === languageId);
-        console.log(language)
-        return language ? language.name : null;
-
-      };
-
     const handleAvail = () => {
         console.log('Set available to the opposite', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})

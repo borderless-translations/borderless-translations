@@ -40,15 +40,6 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="email">E-Mail:</label>
-                        <input
-                            name="email"
-                            type="text"
-                            value={contractor.email}
-                            onChange={(event) => handleChangeFor("email", event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="phone">Phone:</label>
                         <input
                             name="phone"
@@ -96,6 +87,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                     <div className="form-group">
                         <label htmlFor="writtenRate">Notes:</label>
                         <textarea
+                            rows="8"
                             name="notes"
                             type="text"
                             value={contractor.notes}
