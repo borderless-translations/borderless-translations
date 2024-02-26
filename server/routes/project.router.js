@@ -19,6 +19,7 @@ router.get('/', requireAdmin, (req, res) => {
     projects.translator_status,
     projects.proofreader_status,
     clients.client AS client_name,
+	project_language.file_link,
     STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
     STRING_AGG(DISTINCT to_languages.name, ', ') AS to_language_names,
     STRING_AGG(project_language.text_to_translate, ', ') AS texts_to_translate,
@@ -63,7 +64,9 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
 		project_language.translator_notes, project_language.flagged,
+
 		project_language.text_to_translate, project_language.file_link
+
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
@@ -122,7 +125,8 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 		project_language.from_language_id, from_language."name" AS from_language_name, 
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
-		project_language.translator_notes, project_language.flagged
+		project_language.translator_notes, project_language.flagged,
+		project_language.file_link
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
@@ -432,7 +436,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 				WHERE "project_language"."project_id" = $11;
 			`;
 			pool.query(querytext2, [
-				req.body.contractor_id,
+				req.body.translator_id,
 				req.body.proofreader_id,
 				req.body.from_language_id,
 				req.body.to_language_id,
