@@ -32,7 +32,6 @@ function AdminProjectDetails(){
     return(
         <div className="container"> 
             <h2 style={{ margin: '20px 50px'}}>Admin Project Details</h2>
-            {JSON.stringify(project)}
             <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
             <p>Client Name: {project.client_name}</p>
             <p>Description: {project.description}</p>
