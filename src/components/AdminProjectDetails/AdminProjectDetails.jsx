@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-
+import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
+import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
 
 
 function AdminProjectDetails(){
@@ -16,26 +17,40 @@ function AdminProjectDetails(){
     }, [params.id]);
 
 
+    const[modalOpen, setModalOpen] = useState(false);
+    const [projectToEdit, setProjectToEdit] = useState(null);
+
+    const handleEditClient = (project) => {
+        setProjectToEdit(project);
+        setModalOpen(true);
+    }
+
+
+
 
     return(
         <div className="container"> 
-            <h2>Admin Project Details</h2>
-            <p>{params.id}</p>
-            <p>Project: Prime Digital Academy</p>
-            <p>Translator: Chris Cantoni</p>
-            <p>Proofreader: </p>
-            <p>From Language: Italian</p>
-            <p>To Language: Japanese</p>
-            <p>Text To Translate:</p>
-            <p>Translator Notes: Having a tough time translating "pasta" into Japanese.</p>
-            <p>Service: Voice Over</p>
-            <p>Service Notes: How does my voice sound?</p>
-            <p>File Linked:</p>
-            <p>{project.file_link}</p>
-            {/* <p>Sample Data</p> */}
+            <h2 style={{ margin: '20px 50px'}}>Admin Project Details</h2>
+            <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
+            <p>Client Name: {project.client_name}</p>
+            <p>Description: {project.description}</p>
+            <p>Due By: {project.due_at}</p>
+            <p>Status: {project.status}</p>
+            <p>Translator Status: {project.translator_status}</p>
+            <p>Proofreader Status: {project.proofreader_status}</p>
+            <p>From Language: {project.from_language_id}</p>
+            <p>To Language: {project.to_language_id}</p>
+            <p>Service Notes: {project.service}</p>
+            <p>File Link:{project.file_link}</p>
+            
         
 
-        <button onClick={() => history.push("/admin/project")}>Return to Project List</button><button>Edit</button>
+        <button onClick={() => history.push("/admin/project")}>Return to Project List</button><br/><button onClick={() => handleEditClient(project)}>Edit Project</button>
+        {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null) }} defaultValues={project} />}
+
+
+        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button  className='btn btn_sizeSm' >Edit</button>
+
         </div>
     )
 }

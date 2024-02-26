@@ -90,21 +90,14 @@ function ContractorDashboard() {
                             <TableRow key={project.id}
                                 sx={tableRowStyle}
                             >
-                                <TableCell sx={tableCellStyle} align="left">{project.client_name}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.description}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{role(project)}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.translator_status}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.due_at}</TableCell>
-                                <TableCell sx={tableCellStyle} align="center">
-                                    <IconButton onClick={() => toProject(project.id)}
-                                        disableElevation
-                                        disableRipple
-                                        size="small"
-                                        sx={buttonStyle}>
-                                        <Tooltip title="View project details">
-                                            <VisibilityIcon />  
-                                        </Tooltip>
-                                    </IconButton>
+
+                                <TableCell alighn="center">{project.client_name}</TableCell>
+                                <TableCell alighn="center">{project.description}</TableCell>
+                                <TableCell alighn="center">{role(project)}</TableCell>
+                                <TableCell alighn="center">{project.translator_status}</TableCell>
+                                <TableCell alighn="center">{project.due_at}</TableCell>
+                                <TableCell alighn="center">
+                                    <button  className='btn btn_sizeSm' onClick={() => toProject(project.id)}>View</button>
                                 </TableCell>
                             </TableRow>
                         )
@@ -132,21 +125,14 @@ function ContractorDashboard() {
                             <TableRow key={project.id}
                                 sx={tableRowStyle}
                             >
-                                <TableCell sx={tableCellStyle} align="left">{project.client_name}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.description}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{role(project)}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.translator_status}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.due_at}</TableCell>
-                                <TableCell sx={tableCellStyle} align="center">
-                                    <IconButton onClick={() => toProject(project.id)}
-                                        disableElevation
-                                        disableRipple
-                                        size="small"
-                                        sx={buttonStyle}>
-                                        <Tooltip title="View project details">
-                                            <VisibilityIcon />  
-                                        </Tooltip>
-                                    </IconButton>
+
+                                <TableCell align="center">{project.client_name}</TableCell>
+                                <TableCell align="center">{project.description}</TableCell>
+                                <TableCell align="center">{role(project)}</TableCell>
+                                <TableCell align="center">{project.translator_status}</TableCell>
+                                <TableCell align="center">{project.due_at}</TableCell>
+                                <TableCell align="center">
+                                    <button button className='btn btn_sizeSm' onClick={() => toProject(project.id)}>View</button>
                                 </TableCell>
                             </TableRow>
                         )

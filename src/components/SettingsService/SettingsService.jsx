@@ -56,7 +56,7 @@ function SettingsService() {
                     value={serviceType}
                     onChange={(e) => setServiceType(e.target.value)}
                 />
-            <button type="submit">Add Service</button>
+            <button  className='btn btn_sizeSm' type="submit">Add Service</button>
             </form>
             
             <table>
@@ -79,8 +79,8 @@ function SettingsService() {
                                         />
                                     </td>
                                     <td>
-                                        <button onClick={() => handleSave(service.id)}>Save</button>
-                                        <button onClick={() => handleCancel()}>Cancel</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleSave(service.id)}>Save</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleCancel()}>Cancel</button>
                                     </td>
 
                                 </>
@@ -90,8 +90,8 @@ function SettingsService() {
                                         {service.type}
                                     </td>
                                     <td>
-                                        <button onClick={() => handleEdit(service)}>Edit</button>
-                                        <button onClick={() => handleDelete(service.id)}>Delete</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleEdit(service)}>Edit</button>
+                                        <button  className='btn btn_sizeSm' onClick={() => handleDelete(service.id)}>Delete</button>
                                     </td>
 
                                 </>

@@ -36,7 +36,7 @@ CREATE TABLE "contractor_profile" (
 	"available" BOOLEAN DEFAULT TRUE,
 	"timezone" VARCHAR(15),
 	"location" TEXT,
-	"linkedIn" TEXT,
+	"linked_in" TEXT,
 	"status" TEXT,
 	"via" TEXT,
 	"signed_nda" BOOLEAN DEFAULT FALSE,
@@ -90,7 +90,7 @@ CREATE TABLE "contractor_expertise" (
 
 CREATE TABLE "user" (
 	"id" SERIAL NOT NULL,
-	"username" VARCHAR NOT NULL,
+	"username" VARCHAR UNIQUE NOT NULL,
 	"password" VARCHAR NOT NULL,
 	"type" VARCHAR DEFAULT 'contractor',
 	"created_at" DATE DEFAULT CURRENT_TIMESTAMP,
@@ -138,7 +138,7 @@ VALUES ('0.07','0.12','1','1'),('0.12','0.15','1','2'),('0.14','0.16','1','3'),(
 ('5.00','8.00','3','1'),('7.00','9.00','3','2'),('9.00','13.00','3','3'),('13.00','16.00','3','4');
 
 INSERT INTO "user" ("username","password","type")
-VALUES ('Andy', 'abc123','admin'),('Chris', 'xyz321','client'),('Juan', '123abc','contractor'),('Robin', '321xyz','contractor'),('Brock','a1b2c3','admin'),('J','c3b2a1','contractor');
+VALUES ('', '',''),('', '',''),('', '',''),('', '',''),('','',''),('','','');
 
 
 INSERT INTO "clients" ("client","contact","country","timezone","location","email","phone","client_notes","created_at")
@@ -149,7 +149,7 @@ VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 
 INSERT INTO "expertise" ("type")
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
 
-NSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
+INSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
 VALUES (7, 'translator 1', '1-222-333-4444', FALSE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8),
 (2, 'translator 2', '1-222-333-4444', TRUE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8);
 

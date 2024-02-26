@@ -5,15 +5,47 @@
     flex-wrap: wrap;
     flex-direction: row;
     background-color:#e3fbfb;
+    
 }
 
 .infoPaper {
     display: flex;
-    flex-direction: row ;
+    flex-direction: column;
+    min-width: 100px !important;
+    margin: 10px !important;
+    justify-content: column !important;
+    align-items: center;
+    padding: 10px;
     margin: auto;
     text-align: center;
     flex-wrap: wrap;
-    border: 5px solid #332c7b;
-    background-color:#e3fbfb;
-    
+    /* filter: drop-shadow(0 0 0.4rem #332c7b); */
+    background-color:#48a6cd !important;
+    color: white !important;   
+}
+
+.infoPage {
+    text-align: center;
+}
+
+.cohortList {
+    list-style-type: none;      
+}
+
+.aboutPage {
+    margin: auto;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+ }
+
+#currentProjects, #completedProjects {
+    text-align: center;
+}
+
+.contractorDetails {
+    margin-left: 40px
+}
+.adminContractorDetailsHead {
+    font-weight: 700 !important;
 }

@@ -45,10 +45,14 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 router.get('/project/:id', requireAdmin, (req, res) => {
 	console.log('req params', req.params.id)
     let querytext = `
-        SELECT * FROM "projects"
+    SELECT "projects".*, "clients"."client" AS "client_name", 
+            "l1"."name" AS "from_language", "l2"."name" AS "to_language" FROM "projects"
         JOIN "project_language" ON "project_language"."project_id" = "projects"."id"
-        WHERE "project_language"."contractor_id" = $1
-            OR "project_language"."proofreader_id" = $1
+        JOIN "languages" AS "l1" ON "l1"."id" = "project_language"."from_language_id"
+        JOIN "languages" AS "l2" ON "l2"."id" = "project_language"."to_language_id"
+        JOIN "clients" ON "clients"."id" = "projects"."client_id"
+    WHERE "project_language"."contractor_id" = $1
+        OR "project_language"."proofreader_id" = $1;
     `;
     pool.query(querytext, [req.params.id])
         .then((result) => {
@@ -65,6 +69,7 @@ router.get('/project/:id', requireAdmin, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
+    console.log('USER.ID', req.user.id)
     let querytext = `
         SELECT
         contractor_profile.id, contractor_profile.user_id, 
@@ -198,6 +203,24 @@ router.get('/:id/services', requireAdmin, (req, res) => {
     ;
 });
 
+// GET specific contractor expertise info. Requires admin status
+router.get('/:id/expertise', requireAdmin, (req, res) => {
+    let querytext = `
+        SELECT "contractor_expertise".*, "expertise"."type" FROM "contractor_expertise"
+        JOIN "expertise" ON "expertise"."id" = "contractor_expertise"."expertise_id"
+        WHERE "contractor_expertise"."user_id" = $1;
+    `;
+    pool.query(querytext,[req.params.id])
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error("Error in GET contractor services", error);
+            res.sendStatus(500);
+        })
+    ;
+});
+
 // TODO: Needs updated column names
 // GET contractor id/names without additional info
 router.get('/list', rejectUnauthenticated, (req, res) => {
@@ -213,26 +236,6 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     ;
-});
-
-// TODO: Need finalized columns to create POST
-/**
- * POST route template
- */
-router.post('/', rejectUnauthenticated, (req, res) => {
-	let querytext = `
-	    // QUERY GOES HERE
-	`;
-	pool.query(querytext,[])
-        .then((result) => {
-            // Code to send goes here
-            res.sendStatus(201)
-        })
-        .catch((error) => {
-            console.error("Error in POST", error);
-            res.sendStatus(500);
-        })
-	;
 });
 
 // TODO: Need finalized columns to create PUT
@@ -264,7 +267,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
         "location" = $3, 
         "phone" = $4,
         "signed_nda" = $5,
-        "linkedIn" = $6, 
+        "linked_in" = $6, 
         "base_written_rate" = $7, 
         "base_audio_video_rate" = $8,
         "notes" = $9

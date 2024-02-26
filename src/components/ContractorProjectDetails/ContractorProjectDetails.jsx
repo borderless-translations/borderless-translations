@@ -133,7 +133,6 @@ function ContractorProjectDetails() {
                                     <LinkIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
                                 </Tooltip>
                             </IconButton></p>
-
                         </Stack>
                         <Stack direction='column'>
                         <p>Deadline: {project.due_at}</p>

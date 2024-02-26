@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
@@ -7,8 +7,9 @@ import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/Admi
 import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
-import axios from "axios";
-import { select } from 'redux-saga/effects';
+import { DateTime } from 'luxon';
+import EastIcon from '@mui/icons-material/East';
+
 
 function AdminContractorDetailsPage() {
     // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
@@ -16,7 +17,7 @@ function AdminContractorDetailsPage() {
     // base_audio_video_rate: '10', base_written_rate: '10', languages: ['Swedish', 'Norwegian', 'English'],
     // project: [{name: 'Amity Island Diving Co', language: 'English to Fish', status: 'Incomplete'}, 
     // {name: 'Spin City', language: 'German to Dutch German', status: 'Completed'}], services: [1] }
-
+    const now = DateTime.now();
     const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -121,9 +122,6 @@ function AdminContractorDetailsPage() {
         setToggleEditLanguages(!toggleEditLanguages);
     }
 
-// useEffect(() => {
-//     console.log('After State Update', selectedServices);
-// }, [selectedServices])
 useEffect(() => {
     refreshPage();
 }, []);
@@ -136,18 +134,15 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            <p>{JSON.stringify(contractorDetails)}</p>
-            <p>Services {JSON.stringify(contractorDetails.services)}</p>
-            <p>Languages: {JSON.stringify(contractorDetails.languages)}</p>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
-                <TableHead>
+                <TableHead className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                     <TableRow>
-                        <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Location</TableCell>
-                        <TableCell align="center">Timezone</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Name</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Location</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Timezone</TableCell>
                         <TableCell align="center">Phone</TableCell>
                         <TableCell align="center">Signed NDA:</TableCell>
                         <TableCell align="center">LinkedIn</TableCell>
@@ -169,10 +164,10 @@ useEffect(() => {
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
-                        <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
-                            <button onClick={() => handleAdmin()}>
-                                {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
+                            <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
+                                {contractorDetails.user_type === "admin" ? <><p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
                             </button>
                         </TableCell>
@@ -180,46 +175,131 @@ useEffect(() => {
                 </TableBody>
             </Table>
             </TableContainer>
-            <button onClick={editContractor}>Edit Contractor Info</button>
+            <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
-            <p><strong>Notes:</strong> {contractorDetails.notes}</p>
-            {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
-            <div><h3><strong>Languages:</strong></h3>
+            <div className='contractorDetails'>
+                <div className="form-group">
+                    <h3><strong>Notes:</strong></h3>
+                        <p>{contractorDetails.notes}</p>
+                </div>
+
+            <div className="form-group">
+                <h3><strong>Languages:</strong></h3>
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
-                            From: {lang.first_language} To: {lang.second_language}
+                            {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
                         </li>
                         ))}
                     </ul>
             </div>
-            
+
+            <div className="form-group">
+                <h3><strong>Expertise:</strong></h3>
+                    <ul>
+                        {contractorDetails.expertise.map((expertise, index) => (
+                        <li key={index}>
+                            {expertise.type}
+                        </li>
+                        ))}
+                    </ul>
+            </div>
             <div className="form-group">
                 <h3><strong>Services:</strong></h3>
                     <ul>
                         {contractorDetails.services.map((service, index) => (
                         <li key={index}>
-                            From: {service.type} To: {service.type}
+                            {service.type}
                         </li>
                         ))}
                     </ul>
             </div>
-            
-            <h3>Current Projects</h3>
-            <p>This is where the contractor's current projects should be displayed.</p>
-            <h3>Completed Projects</h3>
-            <p>This is where the contractor's old/completed projects should be displayed.</p>
-            <p>{contractorProjects.map((project) => (
-                <ul>
-                    <li>{project.description}</li>
-                    <li>{project.duration}</li>
-                    <li>{project.status}</li>
-                </ul>
-            ))}</p>
-        
+            </div>
+            <div>
+            <h3 id="currentProjects">Current Projects</h3>
+            <TableContainer component={Paper}>
+             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead>
+                    <TableRow sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
+                        <TableCell align="center">#</TableCell>
+                        <TableCell align="center">Client Name</TableCell>
+                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">From Language</TableCell>
+                        <TableCell align="center">To Language</TableCell>
+                        <TableCell align="center">Duration</TableCell>
+                        <TableCell align="center">Due At</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Translator Status</TableCell>
+                        <TableCell align="center">Proofreader Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    
+            {contractorProjects.map((project, i) => {
+                if (project.status.toLowerCase() !== 'complete' && project.status.toLowerCase() !== 'completed') {
+                return (
+                    <TableRow key={i}>
+                        <TableCell align="center">{i + 1}</TableCell>
+                        <TableCell align="center">{project.client_name}</TableCell>
+                        <TableCell align="center">{project.description}</TableCell>
+                        <TableCell align="center">{project.from_language}</TableCell>
+                        <TableCell align="center">{project.to_language}</TableCell>
+                        <TableCell align="center">{project.duration}</TableCell>
+                        <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('ff')}</TableCell>
+                        <TableCell align="center">{project.status}</TableCell>
+                        <TableCell align="center">{project.translator_status}</TableCell>
+                        <TableCell align="center">{project.proofreader_status}</TableCell>
+                    </TableRow>
+                )} else {}
+            } )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            </div>
+            <div>
+            <h3 id='completedProjects'>Completed Projects</h3>
+            <TableContainer component={Paper}>
+             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead>
+                    <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
+                        <TableCell align="center">#</TableCell>
+                        <TableCell align="center">Client Name</TableCell>
+                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">From Language</TableCell>
+                        <TableCell align="center">To Language</TableCell>
+                        <TableCell align="center">Duration</TableCell>         
+                        <TableCell align="center">Due At</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                        <TableCell align="center">Translator Status</TableCell>
+                        <TableCell align="center">Proofreader Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    
+            {contractorProjects.map((project, i) => {
+                if (project.status.toLowerCase() == 'complete' || project.status.toLowerCase() == 'completed') {
+                return (
+                    <TableRow key={i}>
+                        <TableCell align="center">{i + 1}</TableCell>
+                        <TableCell align="center">{project.client_name}</TableCell>
+                        <TableCell align="center">{project.description}</TableCell>
+                        <TableCell align="center">{project.from_language}</TableCell>
+                        <TableCell align="center">{project.to_language}</TableCell>
+                        <TableCell align="center">{project.duration}</TableCell>
+                        <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('ff')}</TableCell>
+                        <TableCell align="center">{project.status}</TableCell>
+                        <TableCell align="center">{project.translator_status}</TableCell>
+                        <TableCell align="center">{project.proofreader_status}</TableCell>
+                    </TableRow>
+                )} else {}
+            } )}
+                </TableBody>
+              </Table>
+            </TableContainer>     
+            </div>
 
             
-            <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+            <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
             {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}

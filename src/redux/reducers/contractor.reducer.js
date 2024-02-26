@@ -1,4 +1,4 @@
-const contractor = (state = {}, action) => {
+const contractor = (state = {languages:[], expertise:[], services:[]}, action) => {
   switch (action.type) {
     case 'SET_CONTRACTOR':
       return action.payload;

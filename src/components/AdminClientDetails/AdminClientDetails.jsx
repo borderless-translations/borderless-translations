@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import "./AdminClientDetails.css";
+import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 
 
 
@@ -50,8 +51,9 @@ function AdminClientDetails() {
     return (
         <div>
             <div className="container">
-                <h2>Admin Client Details</h2>
-                <button onClick={() => handleEditClient(client)}>Edit Client</button>
+                <h2 style={{ margin: '20px 50px'}}>Admin Client Details</h2>
+                <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
+                <button  className='btn btn_sizeSm' onClick={() => handleEditClient(client)}>Edit Client</button>
 
                 <p>Business: {client.client}</p>
                 <p>Contact: {client.contact}</p>
@@ -95,7 +97,7 @@ function AdminClientDetails() {
                     ))}
                 </div>
 
-                <button onClick={() => history.push("/admin/client")}>Return to Client List</button>
+                <button className='btn btn_sizeSm' onClick={() => history.push("/admin/client")}>Return to Client List</button>
 
                 {modalOpen && <AdminClientModal closeModal={() => { setModalOpen(false), setClientToEdit(null) }} defaultValues={client} />}
 
