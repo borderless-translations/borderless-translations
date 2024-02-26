@@ -165,7 +165,6 @@ router.get('/self', rejectUnauthenticated, (req, res) => {
 
 // GET ongoing projects
 router.get('/ongoing', rejectUnauthenticated, (req, res) => {
-	console.log(req.user);
 	let querytext;
 	if (req.user.type == 'admin'){
 		querytext = `
