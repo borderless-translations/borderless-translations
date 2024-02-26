@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import "./ContractorDashboard.css";
 import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow, Button, IconButton, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { DateTime } from 'luxon';
 // import * as React from 'react';
 // import Box from '@mui/material/Box';
 // import Card from '@mui/material/Card';
@@ -94,7 +95,7 @@ function ContractorDashboard() {
                                 <TableCell sx={tableCellStyle} align="left">{project.description}</TableCell>
                                 <TableCell sx={tableCellStyle} align="left">{role(project)}</TableCell>
                                 <TableCell sx={tableCellStyle} align="left">{project.translator_status}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.due_at}</TableCell>
+                                <TableCell sx={tableCellStyle} align="left">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                 <TableCell sx={tableCellStyle} align="center">
                                     <IconButton onClick={() => toProject(project.id)}
                                         disableElevation
@@ -136,7 +137,7 @@ function ContractorDashboard() {
                                 <TableCell sx={tableCellStyle} align="left">{project.description}</TableCell>
                                 <TableCell sx={tableCellStyle} align="left">{role(project)}</TableCell>
                                 <TableCell sx={tableCellStyle} align="left">{project.translator_status}</TableCell>
-                                <TableCell sx={tableCellStyle} align="left">{project.due_at}</TableCell>
+                                <TableCell sx={tableCellStyle} align="left">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                 <TableCell sx={tableCellStyle} align="center">
                                     <IconButton onClick={() => toProject(project.id)}
                                         disableElevation

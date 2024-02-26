@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import './AdminContractorPage.css';
+import { DateTime } from 'luxon';
 
 function AdminContractorPage() {
 
@@ -44,6 +45,10 @@ function AdminContractorPage() {
         dispatch({type: 'GET_CONTRACTOR', payload: id})
         history.push(`/admin/contractors/details/${id}`)
     }
+    const tableRowStyle = {
+        '&:nth-of-type(odd)': { backgroundColor: "white" },
+        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
+    }
 
 useEffect(() => {
     getContractors();
@@ -56,34 +61,36 @@ useEffect(() => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
             <TableHead>
                 <TableRow className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
-                    <TableCell align="center">Name</TableCell>
-                    <TableCell align="center">Languages</TableCell>
+                    <TableCell align="center" >Name</TableCell>
+                    <TableCell align="center" >Languages</TableCell>
 
-                    <TableCell align="center">Location</TableCell>
-                    <TableCell align="center">Timezone</TableCell>
-                    <TableCell align="center">Written Rate</TableCell>
-                    <TableCell align="center">A/V Rate</TableCell>
-                    <TableCell align="center">Availability</TableCell>
-                    <TableCell align="center">Details</TableCell>
+                    <TableCell align="center" >Location</TableCell>
+                    <TableCell align="center" >Timezone</TableCell>
+                    <TableCell align="center" >Written Rate</TableCell>
+                    <TableCell align="center" >A/V Rate</TableCell>
+                    <TableCell align="center" >Availability</TableCell>
+                    <TableCell align="center" >Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                     {/* names of keys may change depending on DB */}
                 {allContractors.map((contractor, i) => {
                     return <TableRow key={contractor.user_id}
-                        
+
+                        sx={tableRowStyle}
+                        style={{backgroundColor: contractor.available ? '' : 'lightgrey'}}
+
                         >
                             
                         <TableCell align="center">{contractor.contractor_name}</TableCell>
-                        <TableCell align="center">{<ul>
+                        <TableCell align="center">{<>
                         {contractor.languages.map((lang, index) => (
                         <p key={index}>
                             {lang.first_language} to {lang.second_language}</p>
                         ))}
-                    </ul>}</TableCell>
+                    </>}</TableCell>
                         <TableCell align="center">{contractor.location}</TableCell>
                         <TableCell align="center">{contractor.timezone}</TableCell>
-                        
                         <TableCell align="center">${contractor.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractor.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></TableCell>

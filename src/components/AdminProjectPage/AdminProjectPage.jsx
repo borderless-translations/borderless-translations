@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-
+import { DateTime } from 'luxon';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,16 +15,9 @@ function AdminProjectPage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    // const projects = [
-    //     {id: 1, name: "Prime Digital Academy", description: "Translating a vimeo video on how sagas and reducers work in...", due_at: "03/15/24", status: "In Progress", translator_status: "Complete", proofreader_status: "In Progress", flagged: ""},
-    //     {id: 2, name: "Sky Sports", description: "Translating a commercial for a premier league team that will air...", due_at: "04/30/24", status: "In Progress", translator_status: "In Progress", proofreader_status: "Not Started", flagged: ""},
-    //     {id: 3, name: "Mayo Clinic", description: "Translating a documentary about a new breakthrough vaccine for...", due_at: "09/30/24", status: "Not Started", translator_status: "Not Started", proofreader_status:"Not Started", flagged: ""},
-    // ]
     const projects = useSelector(store => store.allProjects);
     const clients = useSelector(store => store.allClients)
-    // const segments = [
-    //     {id: 1, segmentName: "Conditionals", translator: "Brock Nelson", status: "Available", proofreader: }
-    // ]
+   
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() => {
         dispatch({ type: 'GET_ALL_PROJECTS' });
@@ -40,6 +33,10 @@ function AdminProjectPage() {
     const handleEditProject = (project) => {
         setModalOpen(true)
         setProjectToEdit(project)
+    }
+    const tableRowStyle = {
+        '&:nth-of-type(odd)': { backgroundColor: "white" },
+        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
     }
 
     return (
@@ -63,12 +60,12 @@ function AdminProjectPage() {
                         </TableHead>
                         <TableBody>
                             {projects.map(project => (
-                                <TableRow key={project.project_id}>
+                                <TableRow key={project.project_id}  sx={tableRowStyle}>
                                     <TableCell component="th" scope="row">
-                                        <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
+                                        <Link to={`/project/details/${project.project_id}`}>{project.client_name}</Link>
                                     </TableCell>
                                     <TableCell align="center">{project.project_description}</TableCell>
-                                    <TableCell align="center">{project.due_at}</TableCell>
+                                    <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                     <TableCell align="center">{project.project_status}</TableCell>
                                     <TableCell align="center">{project.translator_status}</TableCell>
                                     <TableCell align="center">{project.proofreader_status}</TableCell>
