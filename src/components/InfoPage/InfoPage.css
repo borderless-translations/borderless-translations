@@ -43,6 +43,11 @@
     text-align: center;
 }
 
+.adminDetails {
+    text-align: left !important;
+    
+}
+
 .contractorDetails {
     margin-left: 40px
 }

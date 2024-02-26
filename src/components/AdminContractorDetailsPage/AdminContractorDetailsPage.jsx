@@ -160,7 +160,7 @@ useEffect(() => {
                         <TableCell align="center">{contractorDetails.timezone}</TableCell>
                         <TableCell align="center">{contractorDetails.phone}</TableCell>
                         <TableCell align="center">{contractorDetails.signed_nda ? "Yes" : "No"}</TableCell>
-                        <TableCell align="center">{contractorDetails.linkedIn}</TableCell>
+                        <TableCell align="center">{contractorDetails.linked_in}</TableCell>
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
@@ -179,12 +179,12 @@ useEffect(() => {
             <br/>
             <div className='contractorDetails'>
                 <div className="form-group">
-                    <h3><strong>Notes:</strong></h3>
+                    <h3 className="adminDetails"><strong>Notes:</strong></h3>
                         <p>{contractorDetails.notes}</p>
                 </div>
 
             <div className="form-group">
-                <h3><strong>Languages:</strong></h3>
+                <h3 className="adminDetails"><strong>Languages:</strong></h3>
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
@@ -195,7 +195,7 @@ useEffect(() => {
             </div>
 
             <div className="form-group">
-                <h3><strong>Expertise:</strong></h3>
+                <h3 className="adminDetails"><strong>Expertise:</strong></h3>
                     <ul>
                         {contractorDetails.expertise.map((expertise, index) => (
                         <li key={index}>
@@ -205,7 +205,7 @@ useEffect(() => {
                     </ul>
             </div>
             <div className="form-group">
-                <h3><strong>Services:</strong></h3>
+                <h3 className="adminDetails"><strong>Services:</strong></h3>
                     <ul>
                         {contractorDetails.services.map((service, index) => (
                         <li key={index}>
