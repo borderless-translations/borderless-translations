@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import "./AdminClientDetails.css";
 import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
+import {TableContainer, TableCell, Table, TableHead, TableBody, TableRow, Paper} from '@mui/material';
 
 
 

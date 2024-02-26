@@ -83,7 +83,7 @@ function AdminProjectPage() {
                 <button className='btn btn_sizeSm' onClick={() => handleAddProject()}>Add Project</button>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
+                        <TableHead sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                             <TableRow>
                                 <TableCell align="center">Name</TableCell>
                                 <TableCell align="center">Description</TableCell>
@@ -92,6 +92,7 @@ function AdminProjectPage() {
                                 <TableCell align="center">Translator Status</TableCell>
                                 <TableCell align="center">Proofreader Status</TableCell>
                                 <TableCell align="center">Project Scope</TableCell>
+                                <TableCell align="center">Edit</TableCell>
 
                             </TableRow>
                         </TableHead>

@@ -35,7 +35,7 @@ function AdminClientMain() {
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Not Started</TableCell>
               <TableCell align="center">In Progress</TableCell>
