@@ -38,8 +38,8 @@ function AdminProjectDetails(){
             <p>Status: {project.status}</p>
             <p>Translator Status: {project.translator_status}</p>
             <p>Proofreader Status: {project.proofreader_status}</p>
-            <p>From Language: {project.from_language_id}</p>
-            <p>To Language: {project.to_language_id}</p>
+            <p>From Language: {project.from_language_name}</p>
+            <p>To Language: {project.to_language_name}</p>
             <p>Service Notes: {project.service}</p>
             <p>File Link:{project.file_link}</p>
             
