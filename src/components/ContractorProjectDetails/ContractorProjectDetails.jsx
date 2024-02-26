@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import "./ContractorProjectDetails.css";
 import { Box, Stack, IconButton, Tooltip }  from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
+import { DateTime } from 'luxon';
 
 function ContractorProjectDetails() {
     const dispatch = useDispatch();
@@ -136,7 +137,7 @@ function ContractorProjectDetails() {
 
                         </Stack>
                         <Stack direction='column'>
-                        <p>Deadline: {project.due_at}</p>
+                        <p>Deadline: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
                         <p>Service type: {project.service_type}</p>
                         <p>Project length: {project.duration}</p>
                         <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
