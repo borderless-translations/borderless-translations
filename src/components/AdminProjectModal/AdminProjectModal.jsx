@@ -17,10 +17,10 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         event.preventDefault();
         if (defaultValues === null) {
             dispatch({ type: 'CREATE_NEW_PROJECT', payload: project });
-            console.log("Sent client information to server");
+            console.log("Sent project information to server");
         } else {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
-            console.log("Updated client information on server", project);
+            console.log("Updated project information on server", project);
         }
         setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
         closeModal();
@@ -77,7 +77,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("due_at", event.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label htmlFor="project_id">project_id:</label>
                         <input
                             name="project_id"
@@ -85,7 +85,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             value={project.project_id}
                             onChange={(event) => handleChangeFor("project_id", event.target.value)}
                         />
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <label htmlFor="from_language_id">From Language:</label>
                         <input
