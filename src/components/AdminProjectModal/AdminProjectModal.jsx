@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Button, TextField } from '@mui/material';
-
+import { Stack, Select, MenuItem, TextField, FormControl, InputLabel, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
 
 function AdminProjectModal({ closeModal, defaultValues }) {
 
@@ -43,12 +42,23 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             <div className="modal">
                 <form onSubmit={handleSubmit}>
                     <Stack direction="column" justifyContent="flex-end">
-                        <TextField
+                        <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+                        <InputLabel id="client-select-label">Client</InputLabel>
+                        <Select
+                            labelId="client-select-label"
                             label="Client"
-                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.client_id}
-                            onChange={(event) => handleChangeFor("client_id", event.target.value)}
-                        />
+                            onChange={(event) => handleChangeFor("client_id", event.target.value)}>
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                            {clients.map((client) => {
+                                return (
+                                <MenuItem key={client.id} value={client.id}>{client.client}</MenuItem>
+                                )
+                            })};
+                            </Select>
+                        </FormControl>
                         <TextField
                             label="Description"
                             sx={{ width: '400px', margin: '20px 0' }}
