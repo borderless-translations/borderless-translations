@@ -12,8 +12,9 @@ function AdminProjectDetails(){
     const params = useParams();
     const project = useSelector(store => store.project);
 
+
     useEffect(() => {
-        dispatch({ type: "GET_PROJECT", payload: params.id });
+        dispatch({ type: "GET_PROJECT", payload: { id: params.id } });
     }, [params.id]);
 
 

@@ -70,7 +70,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("description", event.target.value)}
                         />
                         <TextField
-                            label="duration"
+                            label="Project Scope"
                             sx={{ width: '400px', margin: '20px 0' }}
                             value={project.duration}
                             onChange={(event) => handleChangeFor("duration", event.target.value)}
