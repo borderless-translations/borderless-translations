@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
+import { DateTime } from 'luxon';
 
 
 function AdminProjectDetails(){
@@ -35,7 +36,7 @@ function AdminProjectDetails(){
             <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
             <p>Client Name: {project.client_name}</p>
             <p>Description: {project.description}</p>
-            <p>Due By: {project.due_at}</p>
+            <p>Due By: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
             <p>Status: {project.status}</p>
             <p>Translator Status: {project.translator_status}</p>
             <p>Proofreader Status: {project.proofreader_status}</p>
