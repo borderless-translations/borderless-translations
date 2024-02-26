@@ -431,7 +431,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 				WHERE "project_language"."project_id" = $11;
 			`;
 			pool.query(querytext2, [
-				req.body.contractor_id,
+				req.body.translator_id,
 				req.body.proofreader_id,
 				req.body.from_language_id,
 				req.body.to_language_id,

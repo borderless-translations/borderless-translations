@@ -19,7 +19,8 @@ function AdminProjectModal({ closeModal, defaultValues }) {
     project_id: "",
     from_language_id: "",
     to_language_id: "",
-    service_id: ""
+    service_id: "",
+    file_link: '',
   });
 
   let currentDate = new Date();
@@ -34,6 +35,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log('PROJECT IS ', project)
     if (defaultValues === null) {
       dispatch({ type: 'CREATE_NEW_PROJECT', payload: project });
       console.log("Sent project information to server");
@@ -50,7 +52,8 @@ function AdminProjectModal({ closeModal, defaultValues }) {
       project_id: "",
       from_language_id: "",
       to_language_id: "",
-      service_id: ""
+      service_id: "",
+      file_link: ''
     });
     closeModal();
   };
@@ -94,7 +97,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
               onChange={(event) => handleChangeFor("description", event.target.value)}
             />
             <TextField
-              label="duration"
+              label="Duration"
               sx={{ width: '400px', margin: '20px 0' }}
               value={project.duration}
               onChange={(event) => handleChangeFor("duration", event.target.value)}
@@ -156,6 +159,12 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                 ))}
               </Select>
             </FormControl>
+            <TextField
+              label="File Link"
+              sx={{ width: '400px', margin: '20px 0' }}
+              value={project.file_link}
+              onChange={(event) => handleChangeFor("file_link", event.target.value)}
+            />
 
             <button className='btn btn_sizeSm' type="submit">Save</button>
           </Stack>
