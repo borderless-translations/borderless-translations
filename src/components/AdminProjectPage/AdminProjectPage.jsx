@@ -21,20 +21,20 @@ function AdminProjectPage(){
     //     {id: 2, name: "Sky Sports", description: "Translating a commercial for a premier league team that will air...", due_at: "04/30/24", status: "In Progress", translator_status: "In Progress", proofreader_status: "Not Started", flagged: ""},
     //     {id: 3, name: "Mayo Clinic", description: "Translating a documentary about a new breakthrough vaccine for...", due_at: "09/30/24", status: "Not Started", translator_status: "Not Started", proofreader_status:"Not Started", flagged: ""},
     // ]
-
     const projects = useSelector(store => store.allProjects);
     const clients = useSelector(store => store.allClients)
     // const segments = [
     //     {id: 1, segmentName: "Conditionals", translator: "Brock Nelson", status: "Available", proofreader: }
     // ]
+    const [modalOpen, setModalOpen] = useState(false);
     useEffect(() => {
         dispatch({ type: 'GET_ALL_PROJECTS' })
         dispatch({ type: 'GET_ALL_CLIENTS'})       
-      }, []);
+      }, [modalOpen]);
 
     
 
-      const [modalOpen, setModalOpen] = useState(false);
+      
 
       const handleAddProject = () => {
         setModalOpen(true)
