@@ -55,7 +55,7 @@ useEffect(() => {
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
             <TableHead>
-                <TableRow>
+                <TableRow className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                     <TableCell align="center">Name</TableCell>
                     <TableCell align="center">Languages</TableCell>
 

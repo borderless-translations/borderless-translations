@@ -119,9 +119,9 @@ useEffect(() => {
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                     <TableRow>
-                        <TableCell align="center" className="adminContractorDetailsHead">Name</TableCell>
-                        <TableCell align="center" className="adminContractorDetailsHead">Location</TableCell>
-                        <TableCell align="center" className="adminContractorDetailsHead">Timezone</TableCell>
+                        <TableCell align="center">Name</TableCell>
+                        <TableCell align="center">Location</TableCell>
+                        <TableCell align="center">Timezone</TableCell>
                         <TableCell align="center">Phone</TableCell>
                         <TableCell align="center">Signed NDA:</TableCell>
                         <TableCell align="center">LinkedIn</TableCell>
