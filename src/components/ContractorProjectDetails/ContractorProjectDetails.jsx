@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import "./ContractorProjectDetails.css";
-import { Box, Stack, IconButton, Tooltip, TextField, Button }  from '@mui/material';
+import { Box, Stack, IconButton, Tooltip, TextField, Button, Checkbox }  from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
 import { DateTime } from 'luxon';
 import WestIcon from '@mui/icons-material/West';
-import FlagToggle from '../FlagToggle/FlagToggle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 
 function ContractorProjectDetails() {
@@ -133,6 +134,13 @@ function ContractorProjectDetails() {
         '& fieldset': { borderColor: '#48a6cd', borderWidth: '2px'  }}
     }
 
+    const checkStyle = {
+        color: '#332c7b',
+        '&.Mui-checked': {
+            color: '#48a6cd',
+        }
+    }
+
     const toLink = (link) => {
         window.open(`${link}`);
     }
@@ -235,6 +243,17 @@ function ContractorProjectDetails() {
                     <Box sx={containerStyle} className="contractor-settings">
                         <h3>Settings</h3>
                         <Stack direction='column'>
+
+                        <Tooltip title="Click icon to change status" placement='top-start'>
+                            <p><Checkbox sx={checkStyle} disableRipple 
+                                icon={<RadioButtonUncheckedIcon />} 
+                                checkedIcon={<ErrorOutlineIcon />} 
+                                checked={flagged} 
+                                onClick={() => updateFlagged(!flagged)}/> 
+                                {flagged ? <span>Flagged</span> : <span>Not flagged</span>}
+                            </p>
+                        </Tooltip>
+
                         <p>Deadline: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
                         <p>Service type: {project.service_type}</p>
                         <p>Project length: {project.duration}</p>
@@ -242,6 +261,7 @@ function ContractorProjectDetails() {
                         <p>Translator: {project.translator_name}</p>
                         <p>Proofreader: {project.proofreader_name}</p>
                         <p><FlagToggle onClick={updateFlagged()}/> {project.flagged ? <span>Flagged</span> : <span>Not flagged</span>} </p>
+
                             <p>Notes</p>
                             {((buttonStatus === 'Complete') || 
                             (buttonStatus === 'Translation still in progress')) ?
