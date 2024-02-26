@@ -90,14 +90,11 @@ function AdminClientModal({ closeModal, defaultValues }) {
                         />
 
 
-                        <button  className='btn btn_sizeSm' type="submit">Save</button>
+                        <button className='btn btn_sizeSm' type="submit">Save</button>
                     </Stack>
-                    </div>
-         
-
-                </form>
+                    </form>
             </div>
-        </div>
+        </div >
     );
 };
 

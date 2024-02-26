@@ -32,24 +32,15 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         }}>
             <div className="modal">
                 <form onSubmit={handleSubmit}>
-                    {/* <div className="form-group">
-                        <label htmlFor="admin_id">admin_id:</label>
-                        <input
-                            name="admin_id"
-                            type="text"
-                            value={project.admin_id}
-                            onChange={(event) => handleChangeFor("admin_id", event.target.value)}
-                        />
-                    </div>
                     <div className="form-group">
-                        <label htmlFor="client_id">client_id:</label>
+                        <label htmlFor="client_id">Client:</label>
                         <input
                             name="client_id"
                             type="text"
                             value={project.client_id}
                             onChange={(event) => handleChangeFor("client_id", event.target.value)}
                         />
-                    </div> */}
+                    </div>
                     <div className="form-group">
                         <label htmlFor="description">Description:</label>
                         <input
