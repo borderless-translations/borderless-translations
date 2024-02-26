@@ -51,7 +51,7 @@ function AdminProjectPage(){
         <>
         <div>
             <h2>Admin Project Main</h2>
-            <button onClick={() => handleAddProject()}>Add Project</button>
+            <button  className='btn btn_sizeSm' onClick={() => handleAddProject()}>Add Project</button>
             <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -78,7 +78,7 @@ function AdminProjectPage(){
                                 <TableCell align="center">{project.translator_status}</TableCell>
                                 <TableCell align="center">{project.proofreader_status}</TableCell>
                                 <TableCell align="center">{project.flagged}</TableCell>
-                                <TableCell align="center"><button onClick={() => handleEditProject(project)}>Edit Project</button></TableCell>
+                                <TableCell align="center"><button  className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button></TableCell>
                             </TableRow>
                         )
                     })}
