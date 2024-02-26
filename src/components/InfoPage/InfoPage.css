@@ -42,3 +42,10 @@
 #currentProjects, #completedProjects {
     text-align: center;
 }
+
+.contractorDetails {
+    margin-left: 40px
+}
+.adminContractorDetailsHead {
+    font-weight: 700 !important;
+}
