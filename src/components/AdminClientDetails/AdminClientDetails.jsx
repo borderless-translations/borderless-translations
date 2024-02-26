@@ -70,29 +70,31 @@ function AdminClientDetails() {
                     {sortedProjects.map(project => (
                         <div key={project.status }>
                             <h4>{project.status}</h4>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Project Description</th>
-                                        <th>Start Date</th>
-                                        <th>Due Date</th>
-                                        <th>Translator Status</th>
-                                        <th>Proofreader Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                         <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                     <TableRow>   
+                                        <TableCell align="center">Project Description</TableCell>
+                                        <TableCell align="center">Start Date</TableCell>
+                                        <TableCell align="center">Due Date</TableCell>
+                                        <TableCell align="center">Translator Status</TableCell>
+                                        <TableCell align="center">Proofreader Status</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
                                     {project.project.map((project, index) => (
-                                        <tr key={index}>
-                                            <td>{project.description}</td>
-                                            <td>{project.created_at}</td>
-                                            <td>{project.due_at}</td>
-                                            <td>{project.translator_status}</td>
-                                            <td>{project.proofreader_status}</td>
-                                        </tr>
+                                        <TableRow key={index}>
+                                            <TableCell align="center">{project.description}</TableCell>
+                                            <TableCell align="center">{project.created_at}</TableCell>
+                                            <TableCell align="center">{project.due_at}</TableCell>
+                                            <TableCell align="center">{project.translator_status}</TableCell>
+                                            <TableCell align="center">{project.proofreader_status}</TableCell>
+                                        </TableRow>
                                     ))}
-                                </tbody>
+                                </TableBody>
                                
-                            </table>
+                            </Table>
+                        </TableContainer>
                         </div>
                     ))}
                 </div>
