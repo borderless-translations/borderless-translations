@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
@@ -8,9 +8,8 @@ import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
+import EastIcon from '@mui/icons-material/East';
 
-import axios from "axios";
-import { select } from 'redux-saga/effects';
 
 function AdminContractorDetailsPage() {
     // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
@@ -135,16 +134,15 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            <h3>{JSON.stringify(now)}</h3>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
-                <TableHead>
+                <TableHead className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                     <TableRow>
-                        <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Location</TableCell>
-                        <TableCell align="center">Timezone</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Name</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Location</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Timezone</TableCell>
                         <TableCell align="center">Phone</TableCell>
                         <TableCell align="center">Signed NDA:</TableCell>
                         <TableCell align="center">LinkedIn</TableCell>
@@ -166,10 +164,10 @@ useEffect(() => {
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
-                        <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
-                            <button onClick={() => handleAdmin()}>
-                                {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
+                            <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
+                                {contractorDetails.user_type === "admin" ? <><p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
                             </button>
                         </TableCell>
@@ -177,36 +175,52 @@ useEffect(() => {
                 </TableBody>
             </Table>
             </TableContainer>
-            <button onClick={editContractor}>Edit Contractor Info</button>
+            <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
-            <p><strong>Notes:</strong> {contractorDetails.notes}</p>
-            {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
-            <div><h3><strong>Languages:</strong></h3>
+            <div className='contractorDetails'>
+                <div className="form-group">
+                    <h3><strong>Notes:</strong></h3>
+                        <p>{contractorDetails.notes}</p>
+                </div>
+
+            <div className="form-group">
+                <h3><strong>Languages:</strong></h3>
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
-                            From: {lang.first_language} To: {lang.second_language}
+                            {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
                         </li>
                         ))}
                     </ul>
             </div>
-            
+
+            <div className="form-group">
+                <h3><strong>Expertise:</strong></h3>
+                    <ul>
+                        {contractorDetails.expertise.map((expertise, index) => (
+                        <li key={index}>
+                            {expertise.type}
+                        </li>
+                        ))}
+                    </ul>
+            </div>
             <div className="form-group">
                 <h3><strong>Services:</strong></h3>
                     <ul>
                         {contractorDetails.services.map((service, index) => (
                         <li key={index}>
-                            From: {service.type} To: {service.type}
+                            {service.type}
                         </li>
                         ))}
                     </ul>
+            </div>
             </div>
             <div>
             <h3 id="currentProjects">Current Projects</h3>
             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
-                    <TableRow>
+                    <TableRow sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
                         <TableCell align="center">#</TableCell>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
@@ -247,7 +261,7 @@ useEffect(() => {
             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
-                    <TableRow>
+                    <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                         <TableCell align="center">#</TableCell>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
@@ -285,7 +299,7 @@ useEffect(() => {
             </div>
 
             
-            <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+            <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
             {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}

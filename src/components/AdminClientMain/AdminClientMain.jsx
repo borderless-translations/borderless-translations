@@ -28,9 +28,10 @@ function AdminClientMain() {
 
   return (
     <div className="container">
-      <h2 style={{ margin: '20px 50px' }}>Admin Client Main</h2>
 
-      <Button variant='contained' onClick={() => handleAddClient()}>Add Client</Button>
+      <h2 style={{ margin: '20px 50px' }}>Admin Client Main</h2>
+      <button className='btn btn_sizeSm' onClick={() => handleAddClient()}>Add Client</button>
+
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>

@@ -89,8 +89,12 @@ function AdminClientModal({ closeModal, defaultValues }) {
                             onChange={(event) => handleChangeFor("client_notes", event.target.value)}
                         />
 
-                        <Button variant='contained' type="submit">Save</Button>
+
+                        <button  className='btn btn_sizeSm' type="submit">Save</button>
                     </Stack>
+                    </div>
+         
+
                 </form>
             </div>
         </div>

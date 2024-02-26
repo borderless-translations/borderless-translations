@@ -56,6 +56,7 @@ function SettingsExpertise() {
 
     return (
         <div>
+
             <Stack direction="column" justifyContent="flex-end">
                 <h3>Expertise</h3>
 
