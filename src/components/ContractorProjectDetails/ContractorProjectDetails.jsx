@@ -4,8 +4,10 @@ import { useParams, useHistory } from 'react-router-dom';
 import "./ContractorProjectDetails.css";
 import { Box, Stack, IconButton, Tooltip, TextField, Button }  from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
+import { DateTime } from 'luxon';
 import WestIcon from '@mui/icons-material/West';
 import FlagToggle from '../FlagToggle/FlagToggle';
+
 
 function ContractorProjectDetails() {
     const dispatch = useDispatch();
@@ -233,6 +235,12 @@ function ContractorProjectDetails() {
                     <Box sx={containerStyle} className="contractor-settings">
                         <h3>Settings</h3>
                         <Stack direction='column'>
+                        <p>Deadline: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
+                        <p>Service type: {project.service_type}</p>
+                        <p>Project length: {project.duration}</p>
+                        <p>Languages: {project.from_language_name}→{project.to_language_name}</p>
+                        <p>Translator: {project.translator_name}</p>
+                        <p>Proofreader: {project.proofreader_name}</p>
                         <p><FlagToggle onClick={updateFlagged()}/> {project.flagged ? <span>Flagged</span> : <span>Not flagged</span>} </p>
                             <p>Notes</p>
                             {((buttonStatus === 'Complete') || 
