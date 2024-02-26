@@ -68,7 +68,7 @@ function SettingsService() {
                             fullWidth
                             margin='normal'
                         />
-                        <Button variant='contained' type="submit">Add Service</Button>
+                        <button className='btn btn_sizeSm' type="submit">Add Service</button>
                     
                 </form>
 
