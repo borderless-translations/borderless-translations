@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
 
@@ -31,6 +31,7 @@ function AdminProjectDetails(){
     return(
         <div className="container"> 
             <h2 style={{ margin: '20px 50px'}}>Admin Project Details</h2>
+            {JSON.stringify(project)}
             <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
             <p>Client Name: {project.client_name}</p>
             <p>Description: {project.description}</p>
@@ -41,7 +42,7 @@ function AdminProjectDetails(){
             <p>From Language: {project.from_language_name}</p>
             <p>To Language: {project.to_language_name}</p>
             <p>Service Notes: {project.service}</p>
-            <p>File Link:{project.file_link}</p>
+            <p>File Link: <a href={project.file_link} target="_blank">{project.file_link}</a></p>
             
         
 
