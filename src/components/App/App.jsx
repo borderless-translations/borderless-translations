@@ -28,6 +28,7 @@ import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContr
 import ContractorDashboard from '../ContractorDashboard/ContractorDashboard';
 import ContractorProfileSettings from '../ContractorProfileSettings/ContractorProfileSettings';
 import ContractorProjectDetails from '../ContractorProjectDetails/ContractorProjectDetails';
+import ContractorViewFile from '../ContractorViewFile/ContractorViewFile';
 import Settings from '../Settings/Settings';
 
 
@@ -154,6 +155,14 @@ function App() {
             path="/user/project/details/:id"
           >
             <ContractorProjectDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Contractor Project Details Page else shows LoginPage
+            exact
+            path="/user/project/file/:id"
+          >
+            <ContractorViewFile />
           </ProtectedRoute>
 
           <ProtectedRoute
