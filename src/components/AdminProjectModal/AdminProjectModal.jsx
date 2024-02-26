@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import './AdminClientModal.css';
+import { Stack, Button, TextField } from '@mui/material';
 
 
 function AdminProjectModal({ closeModal, defaultValues }) {
@@ -32,80 +32,61 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         }}>
             <div className="modal">
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="client_id">Client:</label>
-                        <input
-                            name="client_id"
-                            type="text"
+                    <Stack direction="column" justifyContent="flex-end">
+                        <TextField
+                            label="Client"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.client_id}
                             onChange={(event) => handleChangeFor("client_id", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Description:</label>
-                        <input
-                            name="description"
-                            type="text"
+                        <TextField
+                            label="Description"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.description}
                             onChange={(event) => handleChangeFor("description", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="duration">Duration:</label>
-                        <input
-                            name="duration"
-                            type="text"
+                        <TextField
+                            label="duration"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.duration}
                             onChange={(event) => handleChangeFor("duration", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="due_at">Due By:</label>
-                        <input
-                            name="due_at"
-                            type="text"
+                        <TextField
+                            label="due_at"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.due_at}
                             onChange={(event) => handleChangeFor("due_at", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="project_id">project_id:</label>
-                        <input
-                            name="project_id"
-                            type="text"
+                        <TextField
+                            label="project_id"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.project_id}
                             onChange={(event) => handleChangeFor("project_id", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="from_language_id">From Language:</label>
-                        <input
-                            name="from_language_id"
-                            type="text"
+                        <TextField
+                            label="from_language_id"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.from_language_id}
                             onChange={(event) => handleChangeFor("from_language_id", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="to_language_id">To Language:</label>
-                        <input
-                            name="to_language_id"
-                            type="text"
+                        <TextField
+                            label="to_language_id"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.to_language_id}
                             onChange={(event) => handleChangeFor("to_language_id", event.target.value)}
                         />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="service_id">Service:</label>
-                        <input
-                            name="service_id"
-                            type="text"
+                    
+                        <TextField
+                            label="service_id"
+                            sx={{ width: '400px', margin: '20px 0' }}
                             value={project.service_id}
                             onChange={(event) => handleChangeFor("service_id", event.target.value)}
                         />
-                    </div>
+                    
                     <button className='btn btn_sizeSm' type="submit">Save</button>
+                    </Stack>
                 </form>
+                
             </div>
         </div>
     );
