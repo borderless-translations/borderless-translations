@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Select, MenuItem, TextField, FormControl, InputLabel} from '@mui/material';
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -48,7 +46,6 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                 <form onSubmit={handleSubmit}>
                     
                     <Stack direction="column" justifyContent="flex-end">
-                    {JSON.stringify(project)}
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
                             <InputLabel id="client-select-label">Client</InputLabel>
                             <Select
