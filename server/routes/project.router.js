@@ -54,8 +54,8 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		projects.id,
 		projects.admin_id, "admin".username AS admin_name, 
 		projects.client_id, clients.client AS client_name,
-		project_language.contractor_id AS translator_id, translator.username AS translator_name, projects.translator_status,
-		project_language.proofreader_id, proofreader.username AS proofreader_name, projects.proofreader_status,
+		project_language.contractor_id AS translator_id, translator.contractor_name AS translator_name, projects.translator_status,
+		project_language.proofreader_id, proofreader.contractor_name AS proofreader_name, projects.proofreader_status,
 		projects.description, projects.duration, 
 		projects.due_at,
 		project_language.translator_notes AS notes,
@@ -66,8 +66,8 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		project_language.text_to_translate, project_language.file_link
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
-		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
-		JOIN "user" AS proofreader ON proofreader."id" = project_language.proofreader_id
+		LEFT JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+		LEFT JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 		JOIN "user" AS "admin" ON "admin"."id" = projects.admin_id
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN services ON services."id" = project_language.service_id
@@ -114,19 +114,20 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 		projects.id,
 		projects.admin_id, "admin".username AS admin_name, 
 		projects.client_id, clients.client AS client_name,
-		project_language.contractor_id AS translator_id, translator.username AS translator_name, projects.translator_status,
-		project_language.proofreader_id, proofreader.username AS proofreader_name, projects.proofreader_status,
+		project_language.contractor_id AS translator_id, translator.contractor_name AS translator_name, projects.translator_status,
+		project_language.proofreader_id, proofreader.contractor_name AS proofreader_name, projects.proofreader_status,
 		projects.description, projects.duration, 
 		projects.due_at,
 		project_language.translator_notes AS notes,
 		project_language.from_language_id, from_language."name" AS from_language_name, 
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
-		project_language.translator_notes, project_language.flagged
+		project_language.translator_notes, project_language.flagged,
+		project_language.text_to_translate, project_language.file_link
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
-		JOIN "user" AS translator ON translator."id" = project_language.contractor_id
-		JOIN "user" AS proofreader ON proofreader."id" = project_language.proofreader_id
+		LEFT JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
+		LEFT JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 		JOIN "user" AS "admin" ON "admin"."id" = projects.admin_id
 		JOIN clients ON clients."id" = projects.client_id
 		JOIN services ON services."id" = project_language.service_id
@@ -382,11 +383,11 @@ router.post('/', requireAdmin, (req, res) => {
 			let project_id = result.rows[0].id
 			let querytext2 = `
 				INSERT INTO
-					"project_language" ("project_id", "from_language_id", "to_language_id", "service_id")
+					"project_language" ("project_id", "from_language_id", "to_language_id", "service_id", "contractor_id", "proofreader_id")
 				VALUES
-					($1,$2,$3,$4);
+					($1,$2,$3,$4,$5,$6);
 			`;
-			pool.query(querytext2,[project_id, newProject.from_language_id, newProject.to_language_id, newProject.service_id])
+			pool.query(querytext2,[project_id, newProject.from_language_id, newProject.to_language_id, newProject.service_id, newProject.contractor_id, newProject.proofreader_id])
 				.then(() => res.sendStatus(201))
 				.catch((error)=> {
 					console.error("Error in secondary query POST new project", error);
@@ -401,6 +402,8 @@ router.post('/', requireAdmin, (req, res) => {
 	;
 });
 
+
+
 // PUT route for updating project details
 router.put('/:id', rejectUnauthenticated, (req, res) => {
 	let querytext = `
@@ -409,16 +412,14 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 			"description" = $1,
 			"duration" = $2, 
 			"due_at" = $3,
-			"status" = $4,
-			"translator_status" = $5,
-			"proofreader_status" = $6
-		WHERE "projects"."id" = $7;
+			"translator_status" = $4,
+			"proofreader_status" = $5
+		WHERE "projects"."id" = $6;
 	`;
 	pool.query(querytext,[
 		req.body.description,
 		req.body.duration,
 		req.body.due_at,
-		req.body.staus,
 		req.body.translator_status,
 		req.body.proofreader_status,
 		req.params.id
@@ -434,20 +435,19 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 					"text_to_translate" = $5,
 					"translator_notes" = $6,
 					"service_id" = $7,
-					"service_notes" = $8,
-					"file_link" = $9,
-					"flagged" = $10
-				WHERE "project_language"."project_id" = $11;
+					"file_link" = $8,
+					"flagged" = $9
+				WHERE "project_language"."project_id" = $10;
 			`;
 			pool.query(querytext2, [
-				req.body.contractor_id,
+				req.body.translator_id,
 				req.body.proofreader_id,
 				req.body.from_language_id,
 				req.body.to_language_id,
 				req.body.text_to_translate,
 				req.body.translator_notes,
 				req.body.service_id,
-				req.body.service_notes,
+				// req.body.service_notes,
 				req.body.file_link,
 				req.body.flagged,
 				req.params.id
