@@ -40,15 +40,6 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="email">E-Mail:</label>
-                        <input
-                            name="email"
-                            type="text"
-                            value={contractor.email}
-                            onChange={(event) => handleChangeFor("email", event.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="phone">Phone:</label>
                         <input
                             name="phone"
@@ -62,7 +53,7 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                         <input
                             name="signed_nda"
                             type="checkbox"
-
+                            checked={contractor.signed_nda}
                             onChange={(event) => handleChangeFor("signed_nda", event.target.checked)}
                         />
                     </div>
@@ -87,15 +78,16 @@ function AdminContractorModal({ closeModal, defaultValues }) {
                     <div className="form-group">
                         <label htmlFor="linkedin">LinkedIn:</label>
                         <input
-                            name="linkedIn"
+                            name="linked_in"
                             type="text"
-                            value={contractor.linkedIn}
-                            onChange={(event) => handleChangeFor("linkedIn", event.target.value)}
+                            value={contractor.linked_in}
+                            onChange={(event) => handleChangeFor("linked_in", event.target.value)}
                         />
                     </div>
                     <div className="form-group">
                         <label htmlFor="writtenRate">Notes:</label>
                         <textarea
+                            rows="8"
                             name="notes"
                             type="text"
                             value={contractor.notes}

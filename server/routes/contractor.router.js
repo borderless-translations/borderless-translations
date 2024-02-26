@@ -279,7 +279,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
         req.body.location,
         req.body.phone,
         req.body.signed_nda,
-        req.body.linkedIn,
+        req.body.linked_in,
         req.body.base_written_rate,
         req.body.base_audio_video_rate,
         req.body.notes,
