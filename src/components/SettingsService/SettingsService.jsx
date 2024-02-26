@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../Settings/Settings.css';
+import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 function SettingsService() {
     const dispatch = useDispatch();
@@ -46,63 +51,75 @@ function SettingsService() {
             payload: { type: serviceType }
         });
         setServiceType("");
-        };
+    };
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={serviceType}
-                    onChange={(e) => setServiceType(e.target.value)}
-                />
-            <button  className='btn btn_sizeSm' type="submit">Add Service</button>
-            </form>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Service</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {services.map(service => (
-                        <tr key={service.id}>
-                            {editServiceId === service.id ? (
-                                <>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            value={editServiceType}
-                                            onChange={(e) => setEditServiceType(e.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleSave(service.id)}>Save</button>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleCancel()}>Cancel</button>
-                                    </td>
+            <Stack direction="column" justifyContent="flex-end">
+                <h3>Services</h3>
 
-                                </>
-                            ) : (
-                                <>
-                                    <td>
-                                        {service.type}
-                                    </td>
-                                    <td>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleEdit(service)}>Edit</button>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleDelete(service.id)}>Delete</button>
-                                    </td>
-
-                                </>
-                            )}
-                        </tr>
-                    ))}
-                </tbody>
-
-            </table>
+                <form onSubmit={handleSubmit}>
+                    
+                        <TextField
+                            label="Service"
+                            variant="standard"
+                            value={serviceType}
+                            onChange={(e) => setServiceType(e.target.value)}
+                            fullWidth
+                            margin='normal'
+                        />
+                        <Button variant='contained' type="submit">Add Service</Button>
+                    
+                </form>
 
 
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Service</TableCell>
+                                <TableCell>Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {services.map(service => (
+                                <TableRow key={service.id}>
+                                    {editServiceId === service.id ? (
+                                        <>
+                                            <TableCell>
+                                                <TextField
+                                                    label="Service"
+                                                    variant="standard"
+                                                    value={editServiceType}
+                                                    onChange={(e) => setEditServiceType(e.target.value)}
+                                                    fullWidth
+                                                    margin='normal'
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button startIcon={<SaveIcon />} onClick={() => handleSave(service.id)}></Button>
+                                                <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    ) : (
+                                        <>
+                                            <TableCell>
+                                                {service.type}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button startIcon={<EditIcon />} onClick={() => handleEdit(service)}></Button>
+                                                <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(service.id)}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    )}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Stack>
         </div>
 
 

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../Settings/Settings.css';
+import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+
 
 function SettingsExpertise() {
     const dispatch = useDispatch();
@@ -46,63 +52,78 @@ function SettingsExpertise() {
             payload: { type: expertiseType }
         });
         setExpertiseType("");
-        };
+    };
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={expertiseType}
-                    onChange={(e) => setExpertiseType(e.target.value)}
-                />
-            <button className='btn btn_sizeSm' type="submit">Add Expertise</button>
-            </form>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Expertise</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {expertises.map(expertise => (
-                        <tr key={expertise.id}>
-                            {editExpertiseId === expertise.id ? (
-                                <>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            value={editExpertiseType}
-                                            onChange={(e) => setEditExpertiseType(e.target.value)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleSave(expertise.id)}>Save</button>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleCancel()}>Cancel</button>
-                                    </td>
 
-                                </>
-                            ) : (
-                                <>
-                                    <td>
-                                        {expertise.type}
-                                    </td>
-                                    <td>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleEdit(expertise)}>Edit</button>
-                                        <button  className='btn btn_sizeSm' onClick={() => handleDelete(expertise.id)}>Delete</button>
-                                    </td>
+            <Stack direction="column" justifyContent="flex-end">
+                <h3>Expertise</h3>
 
-                                </>
-                            )}
-                        </tr>
-                    ))}
-                </tbody>
-
-            </table>
+                <form onSubmit={handleSubmit}>
+                    
+                        <TextField
+                            label='Expertiese'
+                            variant='standard'
+                            value={expertiseType}
+                            onChange={(e) => setExpertiseType(e.target.value)}
+                            fullWidth
+                            margin='normal'
+                        />
+                        <Button variant='contained' type="submit">Add Expertise</Button>
+                    
+                </form>
 
 
+
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">Expertise</TableCell>
+                                <TableCell align="center">Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {expertises.map(expertise => (
+                                <TableRow key={expertise.id}>
+                                    {editExpertiseId === expertise.id ? (
+                                        <>
+                                            <TableCell>
+                                                <TextField
+                                                    label="Expertise"
+                                                    variant='standard'
+                                                    value={editExpertiseType}
+                                                    onChange={(e) => setEditExpertiseType(e.target.value)}
+                                                    fullWidth
+                                                    margin='normal'
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button startIcon={<SaveIcon />} onClick={() => handleSave(expertise.id)}></Button>
+                                                <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    ) : (
+                                        <>
+                                            <TableCell>
+                                                {expertise.type}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Button startIcon={<EditIcon />} onClick={() => handleEdit(expertise)}></Button>
+                                                <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(expertise.id)}></Button>
+                                            </TableCell>
+
+                                        </>
+                                    )}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+            </Stack>
         </div>
 
 
