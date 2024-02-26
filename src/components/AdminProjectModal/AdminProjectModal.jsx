@@ -6,7 +6,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-    let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
+    let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
 
     const handleChangeFor = (key, value) => {
         setProject({ ...project, [key]: value });
@@ -21,7 +21,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_PROJECT", payload: project });
             console.log("Updated client information on server", project);
         }
-        setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
+        setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: "" });
         closeModal();
     };
 
@@ -43,24 +43,24 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                 <form onSubmit={handleSubmit}>
                     <Stack direction="column" justifyContent="flex-end">
                         <FormControl sx={{ width: '400px', margin: '20px 0' }}>
-                        <InputLabel id="client-select-label">Client</InputLabel>
-                        <Select
-                            labelId="client-select-label"
-                            label="Client"
-                            value={project.client_id}
-                            onChange={(event) => handleChangeFor("client_id", event.target.value)}>
+                            <InputLabel id="client-select-label">Client</InputLabel>
+                            <Select
+                                labelId="client-select-label"
+                                label="Client"
+                                value={project.client_id}
+                                onChange={(event) => handleChangeFor("client_id", event.target.value)}>
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                            {clients.map((client) => {
-                                return (
-                                <MenuItem key={client.id} value={client.id}>{client.client}</MenuItem>
-                                )
-                            })};
+                                {clients.map((client) => {
+                                    return (
+                                        <MenuItem key={client.id} value={client.id}>{client.client}</MenuItem>
+                                    )
+                                })};
                             </Select>
                         </FormControl>
                         <TextField
-                            label="Description"
+                            label="Project Name"
                             sx={{ width: '400px', margin: '20px 0' }}
                             value={project.description}
                             onChange={(event) => handleChangeFor("description", event.target.value)}
@@ -77,38 +77,69 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                             value={project.due_at}
                             onChange={(event) => handleChangeFor("due_at", event.target.value)}
                         />
-                        <TextField
-                            label="project_id"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={project.project_id}
-                            onChange={(event) => handleChangeFor("project_id", event.target.value)}
-                        />
-                        <TextField
-                            label="from_language_id"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={project.from_language_id}
-                            onChange={(event) => handleChangeFor("from_language_id", event.target.value)}
-                        />
-                        <TextField
-                            label="to_language_id"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={project.to_language_id}
-                            onChange={(event) => handleChangeFor("to_language_id", event.target.value)}
-                        />
-                    
-                        <TextField
-                            label="service_id"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={project.service_id}
-                            onChange={(event) => handleChangeFor("service_id", event.target.value)}
-                        />
-                    
-                    <button className='btn btn_sizeSm' type="submit">Save</button>
+                        <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+                            <InputLabel id="select-from-language">From Language</InputLabel>
+                            <Select
+                                labelId="select-from-language"
+                                label="From Language"
+                                value={project.from_language_id}
+                                onChange={(event) => handleChangeFor("from_language_id", event.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {languages.map((language) => {
+                                    return (
+                                        <MenuItem key={language.id} value={language.id}>{language.name}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+                            <InputLabel id="select-to-language">To Language</InputLabel>
+                            <Select
+                                labelId="select-to-language"
+                                label="To Language"
+                                value={project.to_language_id}
+                                onChange={(event) => handleChangeFor("to_language_id", event.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {languages.map((language) => {
+                                    return (
+                                        <MenuItem key={language.id} value={language.id}>{language.name}</MenuItem>
+                                    )
+                                })};
+
+                            </Select>
+                        </FormControl>
+
+                        <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+                            <InputLabel id="service-select-label">Service</InputLabel>
+                            <Select
+                                labelId="service-select-label"
+                                label="Service"
+                                value={project.service_id}
+                                onChange={(event) => handleChangeFor("service_id", event.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {services.map((service) => {
+                                    return (
+                                        <MenuItem key={service.id} value={service.id}>{service.type}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+
+                        <button className='btn btn_sizeSm' type="submit">Save</button>
                     </Stack>
                 </form>
-                
+
             </div>
-        </div>
+        </div >
     );
 };
 
