@@ -112,7 +112,7 @@ useEffect(() => {
     // Once reducers are loaded:
     return (
         <>
-            <h1>Admin Contractor Details View</h1>
+            <h1>Contractor Details</h1>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>

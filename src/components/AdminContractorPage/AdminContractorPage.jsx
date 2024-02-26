@@ -71,7 +71,7 @@ useEffect(() => {
                     {/* names of keys may change depending on DB */}
                 {allContractors.map((contractor, i) => {
                     return <TableRow key={contractor.user_id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        
                         >
                             
                         <TableCell align="center">{contractor.contractor_name}</TableCell>
