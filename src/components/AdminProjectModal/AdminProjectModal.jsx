@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Button, TextField } from '@mui/material';
 
 
@@ -7,7 +7,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
 
     const dispatch = useDispatch();
 
-        let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
+    let [project, setProject] = useState(defaultValues || { admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
 
     const handleChangeFor = (key, value) => {
         setProject({ ...project, [key]: value });
@@ -25,6 +25,16 @@ function AdminProjectModal({ closeModal, defaultValues }) {
         setProject({ admin_id: "", client_id: "", description: "", duration: "", due_at: "", project_id: "", from_language_id: "", to_language_id: "", service_id: ""});
         closeModal();
     };
+
+    useEffect(() => {
+        dispatch({ type: 'GET_ALL_CLIENTS' });
+        dispatch({ type: 'GET_ALL_LANGUAGES' });
+        dispatch({ type: 'GET_ALL_SERVICES' });
+    }, []);
+
+    const clients = useSelector(store => store.allClients);
+    const languages = useSelector(store => store.allLanguages);
+    const services = useSelector(store => store.allServices);
 
     return (
         <div className="modal-container" onClick={(e) => {
