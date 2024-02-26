@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
@@ -8,11 +8,6 @@ import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
-
-import axios from "axios";
-import { select } from 'redux-saga/effects';
-
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import EastIcon from '@mui/icons-material/East';
 
 
@@ -143,11 +138,11 @@ useEffect(() => {
 
              <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
-                <TableHead>
+                <TableHead className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                     <TableRow>
-                        <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Location</TableCell>
-                        <TableCell align="center">Timezone</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Name</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Location</TableCell>
+                        <TableCell align="center" className="adminContractorDetailsHead">Timezone</TableCell>
                         <TableCell align="center">Phone</TableCell>
                         <TableCell align="center">Signed NDA:</TableCell>
                         <TableCell align="center">LinkedIn</TableCell>
@@ -183,9 +178,13 @@ useEffect(() => {
             <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <div className='contractorDetails'>
-            <p><strong>Notes:</strong><br/> {contractorDetails.notes}</p>
-            {/* ! LANGUAGES WILL BE FROM LANGUAGES AND TO LANGUAGES */}
-            <div><h3><strong>Languages:</strong></h3>
+                <div className="form-group">
+                    <h3><strong>Notes:</strong></h3>
+                        <p>{contractorDetails.notes}</p>
+                </div>
+
+            <div className="form-group">
+                <h3><strong>Languages:</strong></h3>
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
@@ -194,6 +193,7 @@ useEffect(() => {
                         ))}
                     </ul>
             </div>
+
             <div className="form-group">
                 <h3><strong>Expertise:</strong></h3>
                     <ul>
@@ -220,7 +220,7 @@ useEffect(() => {
             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
-                    <TableRow>
+                    <TableRow sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
                         <TableCell align="center">#</TableCell>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
@@ -261,7 +261,7 @@ useEffect(() => {
             <TableContainer component={Paper}>
              <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
                 <TableHead>
-                    <TableRow>
+                    <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
                         <TableCell align="center">#</TableCell>
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
