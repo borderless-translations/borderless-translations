@@ -44,7 +44,7 @@ function AdminProjectDetails(){
             <p>File Link:{project.file_link}</p>
             
         
-        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button  className='btn btn_sizeSm' onClick={() => handleEditClient(project)}>Edit</button>
+
         {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null) }} defaultValues={project} />}
 
 
