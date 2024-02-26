@@ -9,9 +9,32 @@ const router = express.Router();
 // Get all projects. Requires admin
 router.get('/', requireAdmin, (req, res) => {
     let querytext = `
-	SELECT "projects".*, "clients"."client" AS "client_name" FROM "projects"
-	JOIN "clients" ON "clients"."id" = "projects"."client_id"
-	JOIN "project_language" ON "project_language"."project_id" = "projects"."id";
+	SELECT 
+    projects.id AS project_id,
+    projects.description AS project_description,
+    projects.duration,
+    projects.created_at,
+    projects.due_at,
+    projects.status AS project_status,
+    projects.translator_status,
+    projects.proofreader_status,
+    clients.client AS client_name,
+    STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
+    STRING_AGG(DISTINCT to_languages.name, ', ') AS to_language_names,
+    STRING_AGG(project_language.text_to_translate, ', ') AS texts_to_translate,
+    STRING_AGG(project_language.translator_notes, ', ') AS translator_notes
+FROM 
+    projects
+JOIN 
+    clients ON projects.client_id = clients.id
+LEFT JOIN 
+    project_language ON projects.id = project_language.project_id
+LEFT JOIN 
+    languages AS from_languages ON project_language.from_language_id = from_languages.id
+LEFT JOIN 
+    languages AS to_languages ON project_language.to_language_id = to_languages.id
+GROUP BY 
+    projects.id, clients.client;
     `;
     pool.query(querytext)
         .then((result) => {
