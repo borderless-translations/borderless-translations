@@ -51,7 +51,7 @@ function ContractorDashboard() {
     const headerFontStyle = {
         color: 'white',
         border: '0px',
-        fontSize: '20px'
+        fontSize: '16px'
     }
 
     const tableCellStyle = {
@@ -66,7 +66,7 @@ function ContractorDashboard() {
     return (
         <div className="container">
             <h2>Ongoing Projects</h2>
-            <TableContainer component={Paper} sx={{ minWidth: '650px', maxWidth: '80%', border: '2px solid #332c7b' }}>
+            <TableContainer component={Paper} sx={{ minWidth: '650px', maxWidth: '100%', border: '2px solid #332c7b' }}>
             <Table  aria-label="simple table">
                 <TableHead>
                     <TableRow sx={headerStyle}>
@@ -108,7 +108,7 @@ function ContractorDashboard() {
             </TableContainer>
 
             <h2>Past Projects</h2>
-            <TableContainer component={Paper} sx={{ minWidth: '650px', maxWidth: '80%', border: '2px solid #332c7b'  }}>
+            <TableContainer component={Paper} sx={{ minWidth: '650px', maxWidth: '100%', border: '2px solid #332c7b'  }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow sx={headerStyle}>
