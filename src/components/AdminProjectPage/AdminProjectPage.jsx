@@ -70,7 +70,7 @@ function AdminProjectPage(){
                         return (
                             <TableRow key={project.id}>
                                 <TableCell component="th" scope="row">
-                                    <Link to={`/project/details/${project.id}`}>{project.client_id}</Link>
+                                    <Link to={`/project/details/${project.id}`}>{project.client_name}</Link>
                                     </TableCell>
                                 <TableCell align="center">{project.description}</TableCell>
                                 <TableCell align="center">{project.due_at}</TableCell>
