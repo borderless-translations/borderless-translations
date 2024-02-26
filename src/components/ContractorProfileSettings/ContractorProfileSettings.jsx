@@ -30,8 +30,33 @@ function ContractorProfileSettings() {
     const [toLanguage, setToLanguage] = useState({});
     const [skill, setSkill] = useState({});
     const [service, setService] = useState({});
-    const timezoneList = [{id: 1, tz: "UTC -1:00"}, {id: 2, tz: "UTC -2:00"},
-        {id: 3, tz: "UTC -3:00"}, {id: 4, tz: "UTC -4:00"}, {id: 5, tz: "UTC -5:00"}, {id: 6, tz: "UTC -6:00"}];
+    const timezoneList = [
+
+        {id: 1, tz: "UTC -11:00", city: 'American Samoa'}, 
+        {id: 2, tz: "UTC -10:00", city: 'Honolulu'},
+        {id: 3, tz: "UTC -9:00", city: 'Anchorage'}, 
+        {id: 4, tz: "UTC -8:00", city: 'Los Angeles'}, 
+        {id: 5, tz: "UTC -7:00", city: 'Denver'}, 
+        {id: 6, tz: "UTC -6:00", city: 'Chicago'},
+        {id: 7, tz: "UTC -5:00", city: 'New York'}, 
+        {id: 8, tz: "UTC -4:00", city: 'Halifax'},
+        {id: 9, tz: "UTC -3:00", city: 'Rio de Janeiro'}, 
+        {id: 10, tz: "UTC -2:00", city: 'Ponta Delgada'}, 
+        {id: 11, tz: "UTC -1:00", city: "Reykjavik"}, 
+        {id: 13, tz: "UTC 0:00", city: 'London'}, 
+        {id: 14, tz: "UTC +1:00", city: 'Paris'},
+        {id: 15, tz: "UTC +2:00", city: 'Helsinki'}, 
+        {id: 16, tz: "UTC +3:00", city: 'Moscow'}, 
+        {id: 17, tz: "UTC +4:00", city: 'Dubai'}, 
+        {id: 18, tz: "UTC +5:00", city: 'Karachi'},
+        {id: 19, tz: "UTC +6:00", city: 'Dhaka'}, 
+        {id: 20, tz: "UTC +7:00", city: 'Bangkok'},
+        {id: 21, tz: "UTC +8:00", city: 'Beijing'}, 
+        {id: 22, tz: "UTC +9:00", city: 'Tokyo'}, 
+        {id: 23, tz: "UTC +10:00", city: 'Brisbane'}, 
+        {id: 24, tz: "UTC +11:00", city: 'Sydney'},
+        {id: 25, tz: "UTC +12:00", city: 'Tarawa'},
+        {id: 26, tz: "UTC +13:00", city: 'Auckland'}];
     console.log(languages);
 
 
@@ -216,7 +241,7 @@ function ContractorProfileSettings() {
                                     <MenuItem 
                                         key={timezone.id} 
                                         value={timezone.tz}>
-                                            {timezone.tz}
+                                            {timezone.tz} - {timezone.city}
                                     </MenuItem>
                                 )
                             })}
