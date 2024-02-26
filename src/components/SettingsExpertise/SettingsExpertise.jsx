@@ -4,6 +4,8 @@ import '../Settings/Settings.css';
 import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 function SettingsExpertise() {
@@ -90,8 +92,8 @@ function SettingsExpertise() {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <button onClick={() => handleSave(expertise.id)}>Save</button>
-                                        <button onClick={() => handleCancel()}>Cancel</button>
+                                        <Button startIcon={<EditIcon />} onClick={() => handleSave(expertise.id)}></Button>
+                                        <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
                                     </TableCell>
 
                                 </>

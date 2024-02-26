@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './AdminclientModal.css';
-import { Stack,Button, TextField } from '@mui/material';
+import { Stack, Button, TextField } from '@mui/material';
 
 
 function AdminClientModal({ closeModal, defaultValues }) {

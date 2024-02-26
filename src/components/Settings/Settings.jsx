@@ -16,7 +16,7 @@ return(
         <h3>Languages</h3>
             <SettingsLanguage />
         
-        <h3>Services</h3>
+        
             <SettingsService />
 
         
