@@ -24,6 +24,14 @@
     color: white !important;   
 }
 
+.infoPage {
+    text-align: center;
+}
+
+.cohortList {
+    list-style-type: none;      
+}
+
 .aboutPage {
     margin: auto;
     text-align: center;

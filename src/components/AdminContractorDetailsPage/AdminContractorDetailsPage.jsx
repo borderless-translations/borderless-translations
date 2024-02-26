@@ -8,8 +8,13 @@ import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '
 import Paper from '@mui/material/Paper';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
+
 import axios from "axios";
 import { select } from 'redux-saga/effects';
+
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import EastIcon from '@mui/icons-material/East';
+
 
 function AdminContractorDetailsPage() {
     // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
@@ -134,7 +139,6 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            <h3>{JSON.stringify(now)}</h3>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
@@ -184,7 +188,7 @@ useEffect(() => {
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
-                            From: {lang.first_language} To: {lang.second_language}
+                            {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
                         </li>
                         ))}
                     </ul>
