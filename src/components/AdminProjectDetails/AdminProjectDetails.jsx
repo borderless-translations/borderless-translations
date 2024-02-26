@@ -35,7 +35,7 @@ function AdminProjectDetails(){
             {/* <p>Sample Data</p> */}
         
 
-        <button onClick={() => history.push("/admin/project")}>Return to Project List</button><button>Edit</button>
+        <button  className='btn btn_sizeSm' onClick={() => history.push("/admin/project")}>Return to Project List</button><button  className='btn btn_sizeSm' >Edit</button>
         </div>
     )
 }

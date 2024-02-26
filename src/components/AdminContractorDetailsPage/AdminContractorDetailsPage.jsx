@@ -12,6 +12,10 @@ import { DateTime } from 'luxon';
 import axios from "axios";
 import { select } from 'redux-saga/effects';
 
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import EastIcon from '@mui/icons-material/East';
+
+
 function AdminContractorDetailsPage() {
     // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
     // timezone: 'UTC +3:00', phone: '123-456-7891', linkedIn: 'bRockNelson', signed_nda: true,
@@ -135,7 +139,6 @@ useEffect(() => {
     return (
         <>
             <h1>Admin Contractor Details View</h1>
-            <h3>{JSON.stringify(now)}</h3>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
 
              <TableContainer component={Paper}>
@@ -166,10 +169,10 @@ useEffect(() => {
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
                         <TableCell align="center">{contractorDetails.status}</TableCell>
-                        <TableCell align="center"><button onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
+                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
-                            <button onClick={() => handleAdmin()}>
-                                {contractorDetails.user_type === "admin" ? <><h3>* Admin Account</h3> <p>Remove Admin Status</p></> : 
+                            <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
+                                {contractorDetails.user_type === "admin" ? <><p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
                             </button>
                         </TableCell>
@@ -177,7 +180,7 @@ useEffect(() => {
                 </TableBody>
             </Table>
             </TableContainer>
-            <button onClick={editContractor}>Edit Contractor Info</button>
+            <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <div className='contractorDetails'>
             <p><strong>Notes:</strong><br/> {contractorDetails.notes}</p>
@@ -186,7 +189,7 @@ useEffect(() => {
                     <ul>
                         {contractorDetails.languages.map((lang, index) => (
                         <li key={index}>
-                            From: {lang.first_language} To: {lang.second_language}
+                            {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
                         </li>
                         ))}
                     </ul>
@@ -296,7 +299,7 @@ useEffect(() => {
             </div>
 
             
-            <button onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+            <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
             {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}
