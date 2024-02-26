@@ -82,7 +82,7 @@ function SettingsLanguage() {
                         <MenuItem value="4">4</MenuItem>
                     </Select>
                     </Stack>
-                    <Button variant='contained' type="submit">Add Language</Button>
+                    <button className='btn btn_sizeSm' type="submit">Add Language</button>
                 </form>
                 <TableContainer component={Paper}>
                     <Table>

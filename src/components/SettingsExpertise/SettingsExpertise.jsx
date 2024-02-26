@@ -70,7 +70,7 @@ function SettingsExpertise() {
                             fullWidth
                             margin='normal'
                         />
-                        <Button variant='contained' type="submit">Add Expertise</Button>
+                        <button className='btn btn_sizeSm' type="submit">Add Expertise</button>
                     
                 </form>
 
