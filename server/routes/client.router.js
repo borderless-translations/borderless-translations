@@ -25,9 +25,9 @@ router.get('/projects', requireAdmin, (req, res) => {
     SELECT 
 	"clients"."id",
 	"clients"."client",
-	COUNT(1) FILTER(WHERE "status" = 'NOT STARTED') AS not_started,
-	COUNT(1) FILTER(WHERE "status" = 'IN PROCESS') AS in_process,
-	COUNT(1) FILTER(WHERE "status" = 'COMPLETE') AS complete
+	COUNT(1) FILTER(WHERE "status" = 'Not Started') AS not_started,
+	COUNT(1) FILTER(WHERE "status" = 'In Progress') AS in_process,
+	COUNT(1) FILTER(WHERE "status" = 'Complete') AS complete
     FROM "clients"
     LEFT JOIN "projects" ON "clients"."id" = "client_id"
     GROUP BY "clients"."id", "clients"."client"
