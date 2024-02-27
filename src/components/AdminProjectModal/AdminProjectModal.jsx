@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 
 function AdminProjectModal({ closeModal, defaultValues }) {
   const dispatch = useDispatch();
+  const contractors = useSelector(store => store.allContractors);
 
   // Ensure that project is initialized with defaultValues or an empty object
   const [project, setProject] = useState(defaultValues || {
@@ -19,6 +20,8 @@ function AdminProjectModal({ closeModal, defaultValues }) {
     project_id: "",
     from_language_id: "",
     to_language_id: "",
+    contractor_id: "",
+    proofreader_id: "",
     service_id: "",
     file_link: '',
   });
@@ -40,7 +43,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
       dispatch({ type: 'CREATE_NEW_PROJECT', payload: project });
       console.log("Sent project information to server");
     } else {
-      dispatch({ type: "UPDATE_PROJECT", payload: project });
+      dispatch({ type: "UPDATE_PROJECT", payload: [project, project.id] });
       console.log("Updated project information on server", project);
     }
     setProject({
@@ -52,6 +55,8 @@ function AdminProjectModal({ closeModal, defaultValues }) {
       project_id: "",
       from_language_id: "",
       to_language_id: "",
+      contractor_id: "",
+      proofreader_id: "",
       service_id: "",
       file_link: ''
     });
@@ -62,6 +67,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
     dispatch({ type: 'GET_ALL_CLIENTS' });
     dispatch({ type: 'GET_ALL_LANGUAGES' });
     dispatch({ type: 'GET_ALL_SERVICES' });
+    dispatch({ type: 'GET_ALL_CONTRACTORS' })
   }, []);
 
   const clients = useSelector(store => store.allClients);
@@ -139,6 +145,40 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                 </MenuItem>
                 {languages.map((language) => (
                   <MenuItem key={language.id} value={language.id}>{language.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+              <InputLabel id="select-translator">Translator</InputLabel>
+              <Select
+                labelId="select-to-language"
+                label="To Language"
+                value={project.translator_id}
+                onChange={(event) => handleChangeFor("translator_id", event.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Choose translator</em>
+                </MenuItem>
+                {contractors.map((contractor) => (
+                  <MenuItem key={contractor.id} value={contractor.id}>{contractor.contractor_name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+              <InputLabel id="select-proofreader">Proofreader</InputLabel>
+              <Select
+                labelId="select-to-language"
+                label="To Language"
+                value={project.proofreader_id}
+                onChange={(event) => handleChangeFor("proofreader_id", event.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Choose proofreader</em>
+                </MenuItem>
+                {contractors.map((proofreader) => (
+                  <MenuItem key={proofreader.id} value={proofreader.id}>{proofreader.contractor_name}</MenuItem>
                 ))}
               </Select>
             </FormControl>

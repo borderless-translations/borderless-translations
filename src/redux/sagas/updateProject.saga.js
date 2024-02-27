@@ -10,8 +10,8 @@ function* updateProject(action) {
             withCredentials: true,
         };
 
-        yield axios.put(`/api/project/${action.payload.id}`, action.payload); // PUT route updating project
-        const response = yield axios.get(`/api/project/specific/${action.payload.id}`) // GET updated project
+        yield axios.put(`/api/project/${action.payload[1]}`, action.payload[0], config); // PUT route updating project
+        const response = yield axios.get(`/api/project/contractor/${action.payload[1]}`) // GET updated project
 
         // Store updated project in reducer project
         yield put({ type: 'SET_PROJECT', payload: response.data });

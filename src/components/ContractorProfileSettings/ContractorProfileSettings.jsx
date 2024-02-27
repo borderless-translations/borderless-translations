@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 import "./ContractorProfileSettings.css";
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
@@ -83,11 +84,23 @@ function ContractorProfileSettings() {
         };
         let userUpdate = {username: email};
 
-        dispatch({ type: 'UPDATE_CONTRACTOR_SELF', payload: {contractor: contractorUpdate, user: userUpdate}});
-        setTimeout(() => {
-            refreshPage();
-        }, 500);
-  
+        Swal.fire({
+            title: "Save changes?",
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#48a6cd",
+            cancelButtonColor: "#332c7b",
+            confirmButtonText: "Save",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({ type: 'UPDATE_CONTRACTOR_SELF', payload: {contractor: contractorUpdate, user: userUpdate}});
+                setTimeout(() => {
+                    refreshPage();
+                }, 500);
+            }
+        })
     }
 
     // Service editing

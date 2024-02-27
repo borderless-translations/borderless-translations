@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { DateTime } from 'luxon';
+import Swal from 'sweetalert2';
 import "./ContractorProjectDetails.css";
 import { Box, Stack, IconButton, Tooltip, TextField, Button, Checkbox }  from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
@@ -29,39 +30,50 @@ function ContractorProjectDetails() {
     // Updates the project's notes on the DOM and in the database
     const updateNotes = (text) => {
         setNotes(text);
-        dispatch({ type: 'ADD_PROJECT_NOTE', payload: [text, params.id]})
+        dispatch({ type: 'ADD_PROJECT_NOTE', payload: [text, project.id]})
     }
 
     // Updates the project status and the button text
     const handleStatusChange = (status) => {
-        console.log(status);
-        if (user.id === project.translator_id) {
-            // Set translator status to 'in progress'
-            if (status.translator === 'Not started') {
-                project.translator_status = 'In progress';
+        Swal.fire({
+            title: "You are about to change the project status",
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#48a6cd",
+            cancelButtonColor: "#332c7b",
+            confirmButtonText: "Change Status",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (user.id === project.translator_id) {
+                    // Set translator status to 'in progress'
+                    if (status.translator === 'Not started') {
+                        project.translator_status = 'In progress';
+                    }
+                    // Set translator status to 'complete'
+                    else if (status.translator === 'In progress') {
+                        project.translator_status = 'Complete';
+                        // TODO: This is where to integrate email notifications if we get to it
+                    }
+                    setButtonStatus();
+                    dispatch({ type: 'UPDATE_TRANSLATOR_STATUS', payload: [project.translator_status, params.id] });
+                }
+                else if ((user.id === project.proofreader_id) && (status.translator === 'complete')) {
+                    // Set proofreader status to 'in progress'
+                    if (status.proofreader === 'Not started') {
+                        project.proofreader_status = 'In progress';
+                    }
+                    // Set proofreader status to 'complete'
+                    else if (status.proofreader === 'in progress') {
+                        project.proofreader_status = 'Complete';
+                        // TODO: This is where to integrate email notifications if we get to it
+                    }
+                    setButtonStatus();
+                    dispatch({ type: 'UPDATE_PROOFREADER_STATUS', payload: [project.proofreader_status, params.id] });
+                }
             }
-            // Set translator status to 'complete'
-            else if (status.translator === 'In progress') {
-                project.translator_status = 'Complete';
-                // TODO: This is where to integrate email notifications if we get to it
-            }
-            setButtonStatus();
-            dispatch({ type: 'UPDATE_TRANSLATOR_STATUS', payload: [project.translator_status, params.id] });
-        }
-        else if ((user.id === project.proofreader_id) && (status.translator === 'complete')) {
-            // Set proofreader status to 'in progress'
-            if (status.proofreader === 'Not started') {
-                project.proofreader_status = 'In progress';
-            }
-            // Set proofreader status to 'complete'
-            else if (status.proofreader === 'in progress') {
-                project.proofreader_status = 'Complete';
-                // TODO: This is where to integrate email notifications if we get to it
-            }
-            setButtonStatus();
-            dispatch({ type: 'UPDATE_PROOFREADER_STATUS', payload: [project.proofreader_status, params.id] });
-        }
-        console.log(buttonStatus);
+        })
     }
 
     // Sets submit button's status
@@ -97,8 +109,6 @@ function ContractorProjectDetails() {
                 setStatus('Translation still in progress'); 
             }
         }
-        console.log('user:', user.id, 'translator:', project.translator_id, project.translator_status, 
-        'proofreader:', project.proofreader_id, project.proofreader_status);
     }
 
     const containerStyle = {
@@ -134,9 +144,9 @@ function ContractorProjectDetails() {
     }
 
     const checkStyle = {
-        color: '#332c7b',
+        color: '#48a6cd',
         '&.Mui-checked': {
-            color: '#48a6cd',
+            color: '#332c7b',
         }
     }
 

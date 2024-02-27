@@ -15,6 +15,7 @@ function AdminProjectDetails(){
 
     useEffect(() => {
         dispatch({ type: "GET_PROJECT", payload: params.id });
+        dispatch({ type: "GET_ALL_CONTRACTORS" });
     }, [params.id]);
 
 
@@ -37,7 +38,9 @@ function AdminProjectDetails(){
             <p>Description: {project.description}</p>
             <p>Due By: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
             <p>Status: {project.status}</p>
+            <p>Translator: {project.translator_name}</p>
             <p>Translator Status: {project.translator_status}</p>
+            <p>Proofreader: {project.proofreader_name}</p>
             <p>Proofreader Status: {project.proofreader_status}</p>
             <p>From Language: {project.from_language_name}</p>
             <p>To Language: {project.to_language_name}</p>

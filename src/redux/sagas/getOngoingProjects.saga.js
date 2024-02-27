@@ -9,7 +9,6 @@ function* getOngoingProjects() {
             withCredentials: true,
         };
         const response = yield axios.get(`/api/project/ongoing`, config); // GET ongoing projects
-        console.log(response.data);
         yield put({ type: 'SET_ONGOING_PROJECTS', payload: response.data }); // Stores in ongoingProjects.reducer
 
     }
