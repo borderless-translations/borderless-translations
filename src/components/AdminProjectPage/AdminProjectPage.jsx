@@ -50,7 +50,7 @@ function AdminProjectPage() {
                             <TableRow>
                                 <TableCell align="center">Name</TableCell>
                                 <TableCell align="center">Description</TableCell>
-                                <TableCell align="center">Due By</TableCell>
+                                <TableCell align="center">Due Date</TableCell>
                                 <TableCell align="center">Status</TableCell>
                                 <TableCell align="center">Translator Status</TableCell>
                                 <TableCell align="center">Proofreader Status</TableCell>
@@ -67,8 +67,8 @@ function AdminProjectPage() {
                                     <TableCell align="center">{project.project_description}</TableCell>
                                     <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                     <TableCell align="center">{project.project_status}</TableCell>
-                                    <TableCell align="center">{project.translator_status}</TableCell>
-                                    <TableCell align="center">{project.proofreader_status}</TableCell>
+                                    <TableCell align="center">{project.translator_name}<br/>{project.translator_status}</TableCell>
+                                    <TableCell align="center">{project.proofreader_name}<br/>{project.proofreader_status}</TableCell>
                                     <TableCell align="center">{project.duration}</TableCell>
                                     <TableCell align="center">
                                         <button className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button>

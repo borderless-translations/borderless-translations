@@ -16,7 +16,9 @@ router.get('/', requireAdmin, (req, res) => {
     projects.created_at,
     projects.due_at,
     projects.status AS project_status,
+    translator.contractor_name AS translator_name,
     projects.translator_status,
+    proofreader.contractor_name AS proofreader_name,
     projects.proofreader_status,
     clients.client AS client_name,
     STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
@@ -33,11 +35,13 @@ LEFT JOIN
     languages AS from_languages ON project_language.from_language_id = from_languages.id
 LEFT JOIN 
     languages AS to_languages ON project_language.to_language_id = to_languages.id
+    JOIN "contractor_profile" AS translator ON translator."id" = project_language.contractor_id
+JOIN "contractor_profile" AS proofreader ON proofreader."id" = project_language.proofreader_id
 GROUP BY 
-    projects.id, clients.client
+    projects.id, clients.client, translator.contractor_name, proofreader.contractor_name;
 ORDER BY
-	projects.due_at ASC;
-    `;
+	projects.due_at ASC;`;
+
     pool.query(querytext)
         .then((result) => {
             res.send(result.rows);
@@ -65,7 +69,9 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
 		project_language.translator_notes, project_language.flagged,
+
 		project_language.text_to_translate, project_language.file_link
+
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		LEFT JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
@@ -363,6 +369,7 @@ router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
 // POST for creating a new project
 router.post('/', requireAdmin, (req, res) => {
 	let newProject = req.body;
+	console.log('New Project', newProject)
 	if(Object.hasOwn(newProject, "description") == false){
 		newProject.description = null;
 	}
@@ -381,6 +388,7 @@ router.post('/', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.user.id, newProject.client_id, newProject.description, newProject.duration, newProject.due_at])
 		.then((result) => {
+			console.log('Result rows', result.rows)
 			let project_id = result.rows[0].id
 			let querytext2 = `
 				INSERT INTO
