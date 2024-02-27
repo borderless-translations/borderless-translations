@@ -16,9 +16,7 @@ router.get('/', requireAdmin, (req, res) => {
     projects.created_at,
     projects.due_at,
     projects.status AS project_status,
-    translator.contractor_name AS translator_name,
     projects.translator_status,
-    proofreader.contractor_name AS proofreader_name,
     projects.proofreader_status,
     clients.client AS client_name,
     STRING_AGG(DISTINCT from_languages.name, ', ') AS from_language_names,
@@ -35,10 +33,8 @@ LEFT JOIN
     languages AS from_languages ON project_language.from_language_id = from_languages.id
 LEFT JOIN 
     languages AS to_languages ON project_language.to_language_id = to_languages.id
-    JOIN "contractor_profile" AS translator ON translator."id" = project_language.contractor_id
-JOIN "contractor_profile" AS proofreader ON proofreader."id" = project_language.proofreader_id
 GROUP BY 
-    projects.id, clients.client, translator.contractor_name, proofreader.contractor_name;
+    projects.id, clients.client
 ORDER BY
 	projects.due_at ASC;`;
 

@@ -86,7 +86,7 @@ function ContractorProfileSettings() {
 
         Swal.fire({
             title: "Save changes?",
-            text: "This action cannot be undone.",
+            text: "This action saves contact and rate settings. Skills are updated automatically.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#48a6cd",
@@ -156,7 +156,7 @@ function ContractorProfileSettings() {
 
     const containerStyle = {
         border: '1px solid #332c7b', 
-        borderRadius: '10px', 
+        borderRadius: '5px', 
         backgroundColor: 'white',
         padding: '20px',
         marginRight: '30px',

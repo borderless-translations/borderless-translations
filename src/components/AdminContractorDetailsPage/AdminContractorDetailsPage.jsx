@@ -4,8 +4,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
-import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow} from '@mui/material';
-import Paper from '@mui/material/Paper';
+import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow, Stack, Paper} from '@mui/material';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 import EastIcon from '@mui/icons-material/East';
@@ -157,42 +156,43 @@ useEffect(() => {
             <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
             <br/>
             <div className='contractorDetails'>
+            <Stack direction='row' sx={{ justifyContent: 'space-between', margin: '0% 10%' }}>
                 <div className="form-group">
                     <h3 className="adminDetails"><strong>Notes:</strong></h3>
                         <p>{contractorDetails.notes}</p>
                 </div>
+                <div className="form-group">
+                    <h3 className="adminDetails"><strong>Languages:</strong></h3>
+                        <ul>
+                            {contractorDetails.languages.map((lang, index) => (
+                            <li key={index}>
+                                {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
+                            </li>
+                            ))}
+                        </ul>
+                </div>
 
-            <div className="form-group">
-                <h3 className="adminDetails"><strong>Languages:</strong></h3>
-                    <ul>
-                        {contractorDetails.languages.map((lang, index) => (
-                        <li key={index}>
-                            {lang.first_language} <EastIcon fontSize="medium"/> {lang.second_language}
-                        </li>
-                        ))}
-                    </ul>
-            </div>
-
-            <div className="form-group">
-                <h3 className="adminDetails"><strong>Expertise:</strong></h3>
-                    <ul>
-                        {contractorDetails.expertise.map((expertise, index) => (
-                        <li key={index}>
-                            {expertise.type}
-                        </li>
-                        ))}
-                    </ul>
-            </div>
-            <div className="form-group">
-                <h3 className="adminDetails"><strong>Services:</strong></h3>
-                    <ul>
-                        {contractorDetails.services.map((service, index) => (
-                        <li key={index}>
-                            {service.type}
-                        </li>
-                        ))}
-                    </ul>
-            </div>
+                <div className="form-group">
+                    <h3 className="adminDetails"><strong>Expertise:</strong></h3>
+                        <ul>
+                            {contractorDetails.expertise.map((expertise, index) => (
+                            <li key={index}>
+                                {expertise.type}
+                            </li>
+                            ))}
+                        </ul>
+                </div>
+                <div className="form-group">
+                    <h3 className="adminDetails"><strong>Services:</strong></h3>
+                        <ul>
+                            {contractorDetails.services.map((service, index) => (
+                            <li key={index}>
+                                {service.type}
+                            </li>
+                            ))}
+                        </ul>
+                </div>
+            </Stack>
             </div>
             <div>
             <h3 id="currentProjects">Current Projects</h3>
@@ -277,7 +277,7 @@ useEffect(() => {
             </TableContainer>     
             </div>
 
-            
+            <br /> <br />
             <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
