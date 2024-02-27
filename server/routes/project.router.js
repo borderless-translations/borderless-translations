@@ -35,6 +35,7 @@ LEFT JOIN
     languages AS to_languages ON project_language.to_language_id = to_languages.id
 GROUP BY 
     projects.id, clients.client
+
 ORDER BY
 	projects.due_at ASC;`;
 
