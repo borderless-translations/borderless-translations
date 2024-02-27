@@ -230,7 +230,7 @@ useEffect(() => {
                 <TableBody>
                     
             {contractorProjects.map((project, i) => {
-                if (project.status !== 'complete' && project.status !== 'completed') {
+                if (project.status !== 'Complete' && project.status !== 'Completed') {
                 return (
                     <TableRow key={i}>
                         <TableCell align="center">{i + 1}</TableCell>
@@ -271,7 +271,7 @@ useEffect(() => {
                 <TableBody>
                     
             {contractorProjects.map((project, i) => {
-                if (project.status == 'complete' || project.status == 'completed') {
+                if (project.status == 'Complete' || project.status == 'Completed') {
                 return (
                     <TableRow key={i}>
                         <TableCell align="center">{i + 1}</TableCell>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './AdminclientModal.css';
 import { Stack, Button, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
+import Swal from 'sweetalert2';
 
 
 function AdminClientModal({ closeModal, defaultValues }) {
@@ -50,7 +51,12 @@ function AdminClientModal({ closeModal, defaultValues }) {
             dispatch({ type: "UPDATE_CLIENT", payload: client });
             console.log("Updated client information on server", client);
         }
+        Swal.fire({
+            title: "Info saved!",
+            icon: "success"
+          });
         setClient({ id: "", client: "", contact: "", country: "", timezone: "", location: "", email: "", phone: "", client_notes: "" });
+        dispatch({ type: "GET_ALL_CLIENTS" });
         closeModal();
     };
 
