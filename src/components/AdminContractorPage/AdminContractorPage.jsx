@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Stack, Button, TableContainer, Paper, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
+import { Stack, Button, TableContainer, Paper, Table, TableBody, TableHead, 
+    TableRow, TableCell, IconButton, Tooltip } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import './AdminContractorPage.css';
 import { DateTime } from 'luxon';
@@ -78,7 +80,7 @@ function AdminContractorPage() {
                     <TableCell align="center" >Written Rate</TableCell>
                     <TableCell align="center" >A/V Rate</TableCell>
                     <TableCell align="center" >Availability</TableCell>
-                    <TableCell align="center" >Details</TableCell>
+                    <TableCell align="center" >View</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -106,10 +108,16 @@ function AdminContractorPage() {
                             onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}
                             </Button>
                         </TableCell>
-                        <TableCell align="center"><Link to={`/admin/contractors/details/${contractor.user_id}`}>
-                            <Button  className='btn btn_sizeSm' disableRipple variant='contained' sx={buttonStyle} 
-                                onClick={() => handleDetails(contractor.user_id)}>Details</Button>
-                            </Link>
+                        <TableCell align="center">
+                            <IconButton onClick={() => history.push(`/admin/contractors/details/${contractor.user_id}`)}
+                                disableElevation
+                                disableRipple
+                                size="small"
+                                sx={buttonStyle}>
+                                <Tooltip title="View contractor information">
+                                    <VisibilityIcon />  
+                                </Tooltip>
+                            </IconButton>
                         </TableCell>
                    </TableRow>
         })}

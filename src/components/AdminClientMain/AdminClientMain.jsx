@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Paper, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
-
+import { Link, useHistory } from 'react-router-dom';
+import { Paper, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell, IconButton, Tooltip } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
 
 function AdminClientMain() {
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const [modalOpen, setModalOpen] = useState(false);
   const clients = useSelector(store => store.projectSummaryByClient);
 
   useEffect(() => {
     dispatch({ type: "GET_ALL_CLIENTS" });
     dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
-  }, []);
+  }, [modalOpen]);
 
   // useEffect(() => {
   //   dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
@@ -56,18 +57,28 @@ function AdminClientMain() {
               <TableCell align="center">Not Started</TableCell>
               <TableCell align="center">In Progress</TableCell>
               <TableCell align="center">Complete Projects</TableCell>
+              <TableCell align="center">View</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {clients.map(client => {
               return (
                 <TableRow key={client.id} sx={tableRowStyle}>
-                  <TableCell component="th" scope="row">
-                    <Link to={`/client/details/${client.id}`}>{client.client}</Link>
-                  </TableCell>
+                  <TableCell align='center'>{client.client}</TableCell>
                   <TableCell align="center">{client.not_started}</TableCell>
                   <TableCell align="center">{client.in_process}</TableCell>
                   <TableCell align="center">{client.complete}</TableCell>
+                  <TableCell align="center">
+                    <IconButton onClick={() => history.push(`/client/details/${client.id}`)}
+                      disableElevation
+                      disableRipple
+                      size="small"
+                      sx={buttonStyle}>
+                      <Tooltip title="View client information">
+                          <VisibilityIcon />  
+                      </Tooltip>
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               );
             })}
