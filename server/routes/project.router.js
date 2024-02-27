@@ -182,7 +182,8 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 				projects.description, 
 				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
 				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-				projects.due_at
+				projects.due_at,
+				project_language.flagged AS flagged
 
 			FROM "projects"
 				JOIN project_language ON project_language.project_id = projects."id"
@@ -190,7 +191,7 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 			LEFT JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
 			LEFT JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 				GROUP BY projects.id, clients.client, project_language.contractor_id, 
-					translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
+					translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name, flagged
 			ORDER BY due_at ASC;
 		`;
 		pool.query(querytext)
@@ -211,7 +212,8 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 				projects.description, 
 				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
 				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-				projects.due_at
+				projects.due_at,
+				project_language.flagged AS flagged
 
 			FROM "projects"
 				JOIN project_language ON project_language.project_id = projects."id"
@@ -220,7 +222,7 @@ router.get('/ongoing', rejectUnauthenticated, (req, res) => {
 			LEFT JOIN contractor_profile AS proofreader ON proofreader.user_id = project_language.proofreader_id
 			WHERE (translator.user_id = $1 OR proofreader.user_id = $1)
 			GROUP BY projects.id, clients.client, project_language.contractor_id, 
-				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name, flagged
 			ORDER BY due_at ASC;
 		`;
 		pool.query(querytext,[req.user.id])
@@ -246,7 +248,8 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 				projects.description, 
 				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
 				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-				projects.due_at
+				projects.due_at,
+				project_language.flagged AS flagged
 
 			FROM projects 
 				JOIN project_language ON project_language.project_id = projects."id"
@@ -256,7 +259,7 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 			WHERE 
 				(translator_status = 'Complete' AND proofreader_status = 'Complete')
 			GROUP BY projects.id, clients.client, project_language.contractor_id, 
-				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name, flagged
 			ORDER BY 
 				due_at ASC; 
 		`;
