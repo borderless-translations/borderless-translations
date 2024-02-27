@@ -14,7 +14,7 @@ function* updateProject(action) {
         const response = yield axios.get(`/api/project/contractor/${action.payload[1]}`) // GET updated project
 
         // Store updated project in reducer project
-        yield put({ type: 'SET_PROJECT', payload: response.data });
+        yield put({ type: 'SET_PROJECT', payload: response.data[0] });
     }
     catch (error) {
         console.error('Error in PUT updateProject', error);

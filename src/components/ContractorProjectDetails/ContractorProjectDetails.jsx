@@ -185,7 +185,7 @@ function ContractorProjectDetails() {
                 </h2>
                 <Stack direction='row'>
                     <Box sx={containerStyle} className="contractor-details">
-                        <h3>Details</h3>
+                        <h3 style={{textAlign: 'center'}}>Details</h3>
                         <Stack direction='row' sx={{justifyContent: 'space-between', margin: '0px 50px'}}>
                             <Stack direction='column'>
                             <p>Client: {project.client_name}</p>
@@ -250,8 +250,8 @@ function ContractorProjectDetails() {
                     </Box>
 
                     <Box sx={containerStyle} className="contractor-settings">
-                        <h3>Settings</h3>
-                        <Stack direction='column'>
+                        <h3 style={{textAlign: 'center'}}>Settings</h3>
+                        <Stack direction='column' sx={{ margin: '0px 50px'}}>
                         <Tooltip title="Click icon to change status" placement='top-start'>
                             <p><Checkbox sx={checkStyle} disableRipple 
                                 icon={<RadioButtonUncheckedIcon />} 

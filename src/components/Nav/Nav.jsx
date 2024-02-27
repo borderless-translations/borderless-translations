@@ -16,9 +16,21 @@ function Nav() {
   return (
     <div className="nav">
       <div className="left-nav">
-        <Link to="/dashboard">
-          <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
-        </Link>
+        {!user.id &&
+          <Link to="/login">
+            <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
+          </Link>
+        }
+        {user.type === 'admin' &&
+          <Link to="/admin/project">
+            <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
+          </Link>
+        }
+        {user.type === 'contractor' &&
+          <Link to="/dashboard">
+            <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
+          </Link>
+        }
         <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
           <option value={'en'}>English</option>
           <option value={'de'}>German</option>
@@ -40,8 +52,12 @@ function Nav() {
               Dashboard
             </Link>
 
-            <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
+            <Link className="navLink" to="/contractor/profile">
               Profile
+            </Link>
+
+            <Link className="navLink" to="/about">
+              About Us
             </Link>
             
             <LogOutButton className='logout-btn navLink' />
@@ -51,10 +67,6 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {(user.id && user.type === 'admin') && (
           <>
-            <Link className="navLink" to="/dashboard">
-              Dashboard
-            </Link>
-
             <Link className="navLink" to="/admin/client">
               Clients
             </Link>
@@ -67,25 +79,21 @@ function Nav() {
               Projects
             </Link>
 
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
             <Link className="navLink" to="/settings">
               Settings Page
             </Link>
 
-            <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
-              Profile
+            <Link className="navLink" to="/info">
+              Info Page
+            </Link>
+
+            <Link className="navLink" to="/about">
+              About Us
             </Link>
 
             <LogOutButton className='logout-btn navLink' />
           </>
         )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
       </div>
     </div>
   );
