@@ -282,7 +282,8 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 				projects.description, 
 				project_language.contractor_id, projects.translator_status, translator.contractor_name AS translator_name,
 				project_language.proofreader_id, projects.proofreader_status, proofreader.contractor_name AS proofreader_name,
-				projects.due_at
+				projects.due_at,
+				project_language.flagged AS flagged
 			FROM projects 
 				JOIN project_language ON project_language.project_id = projects."id"
 				JOIN clients ON clients."id" = projects.client_id
@@ -292,7 +293,7 @@ router.get('/completed', rejectUnauthenticated, (req, res) => {
 				(translator.user_id = $1 OR proofreader.user_id = $1)
 				AND (projects.translator_status = 'Complete' AND projects.proofreader_status = 'Complete')
 			GROUP BY projects.id, clients.client, project_language.contractor_id, 
-				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name
+				translator.contractor_name, project_language.proofreader_id, proofreader.contractor_name, flagged
 			ORDER BY 
 				due_at ASC; 
 		`;
