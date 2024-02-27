@@ -186,7 +186,7 @@ function ContractorProjectDetails() {
                             <Stack direction='column'>
                             <p>Client: {project.client_name}</p>
                             <p>Project description: {project.description}</p>
-                            {project.text_to_translate !== null && project.file_link !== null &&
+                            {project.text_to_translate !== undefined && project.file_link !== undefined &&
                                 <div>
                                     <p>View text file: 
                                         <IconButton onClick={() => viewFile(project.id)}
@@ -209,7 +209,7 @@ function ContractorProjectDetails() {
                                     </p>
                                 </div>
                             }
-                            {project.text_to_translate !== null && project.file_link === null &&
+                            {project.text_to_translate !== undefined && project.file_link === undefined &&
                                 <p>View text file: 
                                 <IconButton onClick={() => viewFile(project.id)}
                                     disableElevation
@@ -220,7 +220,7 @@ function ContractorProjectDetails() {
                                     </Tooltip>
                                 </IconButton></p>
                             }
-                            {project.text_to_translate === null && project.file_link !== null &&
+                            {project.text_to_translate === undefined && project.file_link !== undefined &&
                                 <p>External link:
                                     <IconButton onClick={() => toLink(project.file_link)}
                                         disableElevation

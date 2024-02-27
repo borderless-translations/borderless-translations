@@ -37,7 +37,11 @@ function ContractorDashboard() {
     useEffect(() => {
         dispatch({ type: "GET_ONGOING_PROJECTS" });
         dispatch({ type: "GET_COMPLETED_PROJECTS" });
-      }, [user.id]);
+        dispatch({ type: "GET_CONTRACTOR_SELF" });
+        dispatch({ type: "GET_ALL_LANGUAGES" });
+        dispatch({ type: "GET_ALL_SERVICES" });
+        dispatch({ type: "GET_ALL_EXPERTISE" });
+      }, []);
 
     const headerStyle = {
         backgroundColor: '#332c7b',
