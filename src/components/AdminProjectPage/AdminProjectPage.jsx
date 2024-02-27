@@ -75,7 +75,8 @@ function AdminProjectPage() {
                         </TableHead>
                         <TableBody>
                             {projects.map(project => (
-                                <TableRow key={project.project_id}  sx={tableRowStyle}>
+                                <TableRow key={project.project_id}  sx={tableRowStyle}
+                                style={{backgroundColor: project.flagged ? 'pink' : ''}}>
                                     <TableCell component="th" scope="row" align="center">{project.client_name}</TableCell>
                                     <TableCell align="center">{project.project_description}</TableCell>
                                     <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
