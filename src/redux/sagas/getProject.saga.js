@@ -9,10 +9,10 @@ function* getProject(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-
+console.log (action.payload);
         // TODO: Set to correct URL and request type
         const response = yield axios.get(`/api/project/contractor/${action.payload}`, config);
-        console.log('response data for get project', response.data)
+
         yield put({ type: 'SET_PROJECT', payload: response.data[0] });
 
     }

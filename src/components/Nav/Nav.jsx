@@ -36,10 +36,6 @@ function Nav() {
         {/* If a user is logged in as contractor, show these links */}
         {(user.id && user.type === 'contractor') && (
           <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
             <Link className="navLink" to="/dashboard">
               Dashboard
             </Link>
@@ -48,6 +44,7 @@ function Nav() {
               Profile
             </Link>
             
+            <LogOutButton className='logout-btn navLink' />
           </>
         )}
 
@@ -81,14 +78,14 @@ function Nav() {
             <Link className="navLink" to={{pathname:`/contractor/profile/${user.id}`}}>
               Profile
             </Link>
+
+            <LogOutButton className='logout-btn navLink' />
           </>
         )}
 
         <Link className="navLink" to="/about">
           About
         </Link>
-
-        <LogOutButton className='logout-btn navLink' />
       </div>
     </div>
   );

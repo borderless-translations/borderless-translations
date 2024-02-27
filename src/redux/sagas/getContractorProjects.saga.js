@@ -2,7 +2,6 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getContractorProjects(action) {
-    console.log('getContractorProjects firing')
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
@@ -10,7 +9,6 @@ function* getContractorProjects(action) {
             withCredentials: true,
         };
         const response = yield axios.get(`/api/contractor/project/${action.payload}`, config); // GET services from DB.
-        console.log('contractor project response data', response.data)
         // Stores result in contractorProjects.reducer
         yield put({ type: 'SET_CONTRACTOR_PROJECTS', payload: response.data });
     }

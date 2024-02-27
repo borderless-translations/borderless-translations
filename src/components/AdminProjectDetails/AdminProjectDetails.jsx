@@ -17,6 +17,7 @@ function AdminProjectDetails(){
 
     useEffect(() => {
         dispatch({ type: "GET_PROJECT", payload: params.id });
+        dispatch({ type: "GET_ALL_CONTRACTORS" });
     }, [params.id]);
 
 
@@ -66,7 +67,6 @@ function AdminProjectDetails(){
                 </TableBody>
               </Table>
             </TableContainer>
-        
 
         {modalOpen && <AdminProjectModal closeModal={() => { setModalOpen(false), setProjectToEdit(null) }} defaultValues={project} />}
 

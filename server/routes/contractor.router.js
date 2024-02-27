@@ -43,7 +43,6 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 
 // Get all projects for a specific contractor (requires Admin).
 router.get('/project/:id', requireAdmin, (req, res) => {
-	console.log('req params', req.params.id)
     let querytext = `
     SELECT "projects".*, "clients"."client" AS "client_name", 
             "l1"."name" AS "from_language", "l2"."name" AS "to_language" FROM "projects"
@@ -69,7 +68,6 @@ router.get('/project/:id', requireAdmin, (req, res) => {
 // Does not require admin status
 // DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
-    console.log('USER.ID', req.user.id)
     let querytext = `
         SELECT
         contractor_profile.id, contractor_profile.user_id, 

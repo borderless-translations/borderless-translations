@@ -35,7 +35,6 @@ function AdminContractorPage() {
     }
 
     const handleAvail = (id) => {
-        console.log('Set available to the opposite, user_id', id)
         dispatch({type: 'TOGGLE_AVAILABILITY_ADMIN', payload: id})
         getContractors();
     }

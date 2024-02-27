@@ -10,7 +10,7 @@ function* toggleProjectFlag(action) {
         };
 
         yield axios.put(`/api/project/flagged`, action.payload, config); // Toggle flag in DB
-        const response = yield axios.get(`/api/project/specific/${action.payload}`, config); // GET updated project
+        const response = yield axios.get(`/api/project/contractor/${action.payload}`, config); // GET updated project
 
         yield put({ type: 'SET_PROJECT', payload: response.data[0] }); // Store updated project in project.reducer
     }
