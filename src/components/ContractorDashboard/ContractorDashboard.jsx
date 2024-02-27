@@ -126,6 +126,7 @@ function ContractorDashboard() {
                         return (
                             <TableRow key={project.id}
                                 sx={tableRowStyle}
+                                style={{backgroundColor: project.flagged ? 'pink' : ''}}
                             >
                                 <TableCell sx={tableCellStyle} align="left">{project.client_name}</TableCell>
                                 <TableCell sx={tableCellStyle} align="left">{project.description}</TableCell>
