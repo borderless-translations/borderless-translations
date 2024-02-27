@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+import { Button } from '@mui/material';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -24,6 +25,14 @@ function LoginForm() {
     }
   }; // end login
 
+  const buttonStyle = {
+    backgroundColor: '#48a6cd',
+    color: 'white',
+    "&:hover": {
+        backgroundColor: '#332c7b'
+    }
+  }
+
   return (
     <form className="formPanel" onSubmit={login}>
       <h2>Login</h2>
@@ -34,7 +43,7 @@ function LoginForm() {
       )}
       <div>
         <label htmlFor="username">
-          Username:
+          Email:
           <input
             type="text"
             name="username"
@@ -57,7 +66,10 @@ function LoginForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        <Button sx={buttonStyle} variant='contained' disableRipple 
+          className="btn" type="submit" >
+          Log In
+        </Button>
       </div>
     </form>
   );

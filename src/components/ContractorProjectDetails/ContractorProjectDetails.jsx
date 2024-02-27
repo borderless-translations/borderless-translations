@@ -156,6 +156,10 @@ function ContractorProjectDetails() {
         }, 500);
     }
 
+    const toLink = (link) => {
+        window.open(`${link}`);
+    }
+
     const toDashboard = () => {
         history.push('/dashboard');
     }
@@ -186,7 +190,7 @@ function ContractorProjectDetails() {
                             <Stack direction='column'>
                             <p>Client: {project.client_name}</p>
                             <p>Project description: {project.description}</p>
-                            {project.text_to_translate !== undefined && project.file_link !== undefined &&
+                            {project.text_to_translate !== null && project.file_link !== null &&
                                 <div>
                                     <p>View text file: 
                                         <IconButton onClick={() => viewFile(project.id)}
@@ -209,7 +213,7 @@ function ContractorProjectDetails() {
                                     </p>
                                 </div>
                             }
-                            {project.text_to_translate !== undefined && project.file_link === undefined &&
+                            {project.text_to_translate !== null && project.file_link === null &&
                                 <p>View text file: 
                                 <IconButton onClick={() => viewFile(project.id)}
                                     disableElevation
@@ -220,7 +224,7 @@ function ContractorProjectDetails() {
                                     </Tooltip>
                                 </IconButton></p>
                             }
-                            {project.text_to_translate === undefined && project.file_link !== undefined &&
+                            {project.text_to_translate === null && project.file_link !== null &&
                                 <p>External link:
                                     <IconButton onClick={() => toLink(project.file_link)}
                                         disableElevation

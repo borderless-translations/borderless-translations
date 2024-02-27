@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
@@ -21,6 +22,14 @@ function RegisterForm() {
     });
   }; // end registerUser
 
+  const buttonStyle = {
+    backgroundColor: '#48a6cd',
+    color: 'white',
+    "&:hover": {
+        backgroundColor: '#332c7b'
+    }
+  }
+
   return (
     <form className="formPanel" onSubmit={registerUser}>
       <h2>Register User</h2>
@@ -31,7 +40,7 @@ function RegisterForm() {
       )}
       <div>
         <label htmlFor="contractor_name">
-          Contractor Name:
+          Name:
           <input
             type="text"
             name="contractor_name"
@@ -43,7 +52,7 @@ function RegisterForm() {
       </div>
       <div>
         <label htmlFor="username">
-          Username:
+          Email:
           <input
             type="text"
             name="username"
@@ -66,7 +75,10 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        <Button className="btn" type="submit" name="submit" variant='contained' disableRipple 
+          sx={buttonStyle}>
+          Register
+        </Button>
       </div>
     </form>
   );
