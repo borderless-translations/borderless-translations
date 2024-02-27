@@ -22,9 +22,9 @@ CREATE TABLE "projects" (
 	"duration" TEXT,
 	"created_at" DATE DEFAULT CURRENT_TIMESTAMP, 
 	"due_at" DATE NOT NULL,
-	"status" VARCHAR DEFAULT 'NOT STARTED',
-	"translator_status" TEXT DEFAULT 'NOT STARTED',
-	"proofreader_status" TEXT DEFAULT 'NOT STARTED',
+	"status" VARCHAR DEFAULT 'Not Started',
+	"translator_status" TEXT DEFAULT 'Not Started',
+	"proofreader_status" TEXT DEFAULT 'Not Started',
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
 
@@ -160,9 +160,9 @@ INSERT INTO "contractor_language" ("user_id", "from_language_id", "to_language_i
 VALUES (7,	1,	2), (7,	3,	4), (7,	2,	1), (7,	4,	3), (2,	1,	2), (2,	3,	4), (2,	2,	1), (2,	4,	3);
 
 INSERT INTO "projects" ("admin_id", "client_id", "description", "duration", "created_at", "due_at", "translator_status", "proofreader_status")
-VALUES (1, 1, 'short description', '9 min', '2024-02-20', '2024-02-21', 'Not started',	'Not started'),
+VALUES (1, 1, 'short description', '9 min', '2024-02-20', '2024-02-21', 'Not Started',	'Not Started'),
 (1, 1, 'long description long description long description long description', '30000 words', '2024-02-20', '2024-02-21', 'Complete', 'Complete'),
-(1, 1, 'short description', '5 min', '2024-02-12', '2024-02-16', 'Complete', 'Not started'),
+(1, 1, 'short description', '5 min', '2024-02-12', '2024-02-16', 'Complete', 'Not Started'),
 (1, 1, 'long description long description long description long description', '50000 words', '2024-02-10', '2024-02-15', 'Complete', 'Complete');
 
 INSERT INTO "project_language" ("project_id", "contractor_id", "proofreader_id", "from_language_id", "to_language_id", "text_to_translate", "translator_notes", "service_id", "flagged")

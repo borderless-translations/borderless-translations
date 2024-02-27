@@ -38,7 +38,7 @@ LEFT JOIN
     JOIN "contractor_profile" AS translator ON translator."id" = project_language.contractor_id
 JOIN "contractor_profile" AS proofreader ON proofreader."id" = project_language.proofreader_id
 GROUP BY 
-    projects.id, clients.client, translator.contractor_name, proofreader.contractor_name;
+    projects.id, clients.client, translator.contractor_name, proofreader.contractor_name
 ORDER BY
 	projects.due_at ASC;`;
 
