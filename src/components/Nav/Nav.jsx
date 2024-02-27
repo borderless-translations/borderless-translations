@@ -4,6 +4,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { TextField, MenuItem, InputAdornment } from '@mui/material';
 
 function Nav() {
   const {t,i18n} = useTranslation();
@@ -11,6 +12,13 @@ function Nav() {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+  }
+
+  const langStyle = {
+    marginLeft: '20px',
+    borderRadius: '20px',
+    backgroundColor: 'white',
+    width: '200px',
   }
 
   return (
@@ -31,10 +39,23 @@ function Nav() {
             <img className="logo" src='../../../images/Borderless_Translations_Logo_White.png' />
           </Link>
         }
-        <select onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
-          <option value={'en'}>English</option>
-          <option value={'de'}>German</option>
-        </select>
+        <TextField select sx={langStyle} size='small' 
+          InputProps={{
+              startAdornment: <InputAdornment sx={{marginRight: '20px', marginLeft: '0px', minHeight: '40px',
+                minHeight: '110%'
+               }}
+              position="start">&#127760;</InputAdornment>,
+          }}
+        onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
+          <MenuItem 
+              value={'en'}>
+              <span>English</span>
+          </MenuItem>
+          <MenuItem 
+              value={'de'}>
+              <span>German</span>
+          </MenuItem>
+        </TextField>
       </div>
       <div className="right-nav">
         {/* If no user is logged in, show these links */}
@@ -67,6 +88,9 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {(user.id && user.type === 'admin') && (
           <>
+            <Link className="navLink" to="/dashboard">
+              Dashboard
+            </Link>
             <Link className="navLink" to="/admin/client">
               Clients
             </Link>
@@ -77,6 +101,10 @@ function Nav() {
 
             <Link className="navLink" to="/admin/project">
               Projects
+            </Link>
+
+            <Link className="navLink" to="/contractor/profile">
+              Profile
             </Link>
 
             <Link className="navLink" to="/settings">
