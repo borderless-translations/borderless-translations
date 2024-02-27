@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { Select, MenuItem, Stack, Tooltip, IconButton, Button, TextField, InputAdornment, Box } from '@mui/material';
 import AdminProjectModal from '../AdminProjectModal/AdminProjectModal';
+import { DateTime } from 'luxon';
 
 
 function AdminProjectDetails(){
@@ -35,7 +36,7 @@ function AdminProjectDetails(){
             <Stack direction='row' sx={{ margin: '0px 100px', justifyContent: 'center' }}></Stack>
             <p>Client Name: {project.client_name}</p>
             <p>Description: {project.description}</p>
-            <p>Due By: {project.due_at}</p>
+            <p>Due By: {DateTime.fromISO(project.due_at).toFormat('DDD')}</p>
             <p>Status: {project.status}</p>
             <p>Translator: {project.translator_name}</p>
             <p>Translator Status: {project.translator_status}</p>
@@ -44,7 +45,7 @@ function AdminProjectDetails(){
             <p>From Language: {project.from_language_name}</p>
             <p>To Language: {project.to_language_name}</p>
             <p>Service Notes: {project.service}</p>
-            <p>File Link:{project.file_link}</p>
+            <p>File Link: <a href={project.file_link} target="_blank">{project.file_link}</a></p>
             
         
 

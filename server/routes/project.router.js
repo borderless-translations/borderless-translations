@@ -63,7 +63,9 @@ router.get('/contractor/:id', rejectUnauthenticated, (req, res) => {
 		project_language.to_language_id, to_language."name" AS to_language_name,
 		services."type" AS service_type, services.id AS service_id,
 		project_language.translator_notes, project_language.flagged,
+
 		project_language.text_to_translate, project_language.file_link
+
 		FROM projects 
 		JOIN project_language ON project_language.project_id = projects."id"
 		LEFT JOIN contractor_profile AS translator ON translator.user_id = project_language.contractor_id
