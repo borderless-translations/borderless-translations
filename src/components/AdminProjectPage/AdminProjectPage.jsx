@@ -83,7 +83,7 @@ function AdminProjectPage() {
                                     <TableCell align="center">{project.proofreader_name}<br/>{project.proofreader_status}</TableCell>
                                     <TableCell align="center">{project.duration}</TableCell>
                                     <TableCell align="center">
-                                    <IconButton onClick={() => toProject(project.id)}
+                                    <IconButton onClick={() => toProject(project.project_id)}
                                         disableElevation
                                         disableRipple
                                         size="small"
