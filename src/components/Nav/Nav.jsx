@@ -19,6 +19,11 @@ function Nav() {
     borderRadius: '20px',
     backgroundColor: 'white',
     width: '200px',
+    "& .MuiOutlinedInput-root.Mui-focused": {
+      "& > fieldset": {
+        borderRadius: '20px'
+      }
+    }
   }
 
   return (
@@ -46,7 +51,23 @@ function Nav() {
                }}
               position="start">&#127760;</InputAdornment>,
           }}
-        onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
+          SelectProps={{
+            MenuProps: {
+                style: {
+                    maxHeight: '200px',
+                    maxWidth: '100px'
+                },
+                anchorOrigin: {
+                    vertical: "bottom",
+                    horizontal: "right"
+                },
+                transformOrigin: {
+                    vertical: "top",
+                    horizontal: "right"
+                }
+            }
+          }}
+          onChange={(e)=>changeLanguage(e.target.value)} value={i18n.language}>
           <MenuItem 
               value={'en'}>
               <span>English</span>

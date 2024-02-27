@@ -58,10 +58,10 @@ function ContractorProfileSettings() {
         {id: 26, tz: "UTC +13:00 - Auckland"}];
     console.log(languages);
 
-
-    useEffect(() => {
-        refreshPage();
-    }, [])
+    const [refresh, setRefresh] = useState(1);
+    const reset = () => {
+         setRefresh(Math.random());
+     }
 
     const refreshPage = () => {
         dispatch({ type: "GET_CONTRACTOR_SELF" });
@@ -69,6 +69,10 @@ function ContractorProfileSettings() {
         dispatch({ type: "GET_ALL_SERVICES" });
         dispatch({ type: "GET_ALL_EXPERTISE" });
     }
+
+    useEffect(() => {
+
+    }, [refresh])
 
     // Saves updated contractor settings
     const saveUser = () => {
@@ -111,8 +115,9 @@ function ContractorProfileSettings() {
         }
         console.log(newService);
         dispatch({ type: 'ADD_SERVICE_TO_CONTRACTOR', payload: newService });
+        refreshPage();
         setTimeout(() => {
-            refreshPage();
+            reset();
         }, 500);
     }
 
@@ -223,7 +228,7 @@ function ContractorProfileSettings() {
     else {
         return (
             <div className="container">
-                <Stack direction='column' sx={{ margin: '0px 5%', justifyContent: 'center' }}>
+                <Stack direction='column' sx={{ margin: '0px 5%', justifyContent: 'center' }} key={refresh}>
                     <h2 style={{ margin: '20px 0px'}}>Profile Settings</h2>
                     <Stack direction='row' >
                         {/* Contact Info */}
@@ -353,7 +358,7 @@ function ContractorProfileSettings() {
                                             SelectProps={{
                                                 MenuProps: {
                                                     style: {
-                                                        maxHeight: 280,
+                                                        maxHeight: 280
                                                     },
                                                     anchorOrigin: {
                                                         vertical: "bottom",
@@ -458,7 +463,7 @@ function ContractorProfileSettings() {
                             </Box>  
                                                 
                             <p style={{margin: '0px 0px 0px 20px'}}>Services</p>
-                            <Box sx={boxStyle}>
+                            <Box sx={boxStyle} key={refresh}>
                                 {services != undefined ? 
                                     services.map((service) => {
                                         return (
