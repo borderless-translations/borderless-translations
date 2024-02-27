@@ -368,6 +368,7 @@ router.put('/status/proofreader', rejectUnauthenticated, (req, res) => {
 // POST for creating a new project
 router.post('/', requireAdmin, (req, res) => {
 	let newProject = req.body;
+	console.log('New Project', newProject)
 	if(Object.hasOwn(newProject, "description") == false){
 		newProject.description = null;
 	}
@@ -386,6 +387,7 @@ router.post('/', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.user.id, newProject.client_id, newProject.description, newProject.duration, newProject.due_at])
 		.then((result) => {
+			console.log('Result rows', result.rows)
 			let project_id = result.rows[0].id
 			let querytext2 = `
 				INSERT INTO

@@ -29,6 +29,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
   let currentDate = new Date();
 
   const handleChangeFor = (key, value) => {
+    console.log('contractor id', project.contractor_id)
     setProject({ ...project, [key]: value });
   };
 
@@ -155,7 +156,7 @@ function AdminProjectModal({ closeModal, defaultValues }) {
                 labelId="select-to-language"
                 label="To Language"
                 value={project.translator_id}
-                onChange={(event) => handleChangeFor("translator_id", event.target.value)}
+                onChange={(event) => handleChangeFor("contractor_id", event.target.value)}
               >
                 <MenuItem value="">
                   <em>Choose translator</em>
