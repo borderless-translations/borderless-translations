@@ -4,7 +4,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
-import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow, Stack, Paper} from '@mui/material';
+import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow, Stack, Paper, Box} from '@mui/material';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 import EastIcon from '@mui/icons-material/East';
@@ -85,9 +85,17 @@ function AdminContractorDetailsPage() {
                   refreshPage();
                 }
               })
-          };
-        
-        
+          };   
+    }
+
+    const boxStyle = {
+        border: '1px solid #48a6cd',
+        borderRadius: '15px',
+        padding: '10px',
+        margin: '10px 20px 30px 20px',
+        fontSize: '16px',
+        minWidth: '200px',
+        minHeight: '193px'
     }
 
     const editContractor = () => {
@@ -158,10 +166,13 @@ useEffect(() => {
             <div className='contractorDetails'>
             <Stack direction='row' sx={{ justifyContent: 'space-between', margin: '0% 10%' }}>
                 <div className="form-group">
+                    <Box sx={boxStyle}>
                     <h3 className="adminDetails"><strong>Notes:</strong></h3>
                         <p>{contractorDetails.notes}</p>
+                    </Box>
                 </div>
                 <div className="form-group">
+                    <Box sx={boxStyle}>
                     <h3 className="adminDetails"><strong>Languages:</strong></h3>
                         <ul>
                             {contractorDetails.languages.map((lang, index) => (
@@ -170,9 +181,10 @@ useEffect(() => {
                             </li>
                             ))}
                         </ul>
+                        </Box>
                 </div>
-
                 <div className="form-group">
+                    <Box sx={boxStyle}>
                     <h3 className="adminDetails"><strong>Expertise:</strong></h3>
                         <ul>
                             {contractorDetails.expertise.map((expertise, index) => (
@@ -181,8 +193,10 @@ useEffect(() => {
                             </li>
                             ))}
                         </ul>
+                        </Box>
                 </div>
                 <div className="form-group">
+                <Box sx={boxStyle}>
                     <h3 className="adminDetails"><strong>Services:</strong></h3>
                         <ul>
                             {contractorDetails.services.map((service, index) => (
@@ -191,6 +205,7 @@ useEffect(() => {
                             </li>
                             ))}
                         </ul>
+                </Box>
                 </div>
             </Stack>
             </div>
