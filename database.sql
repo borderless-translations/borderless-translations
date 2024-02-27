@@ -149,7 +149,7 @@ VALUES ('Stinger Attachments', 'Dustin Smith', 'USA', 'CST', 'Minneapolis, MN', 
 INSERT INTO "expertise" ("type")
 VALUES ('Medical'), ('Legal'), ('Academic'), ('Certified Translator'), ('Tech'), ('Finance');
 
-INSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linkedIn", "base_written_rate", "base_audio_video_rate")
+INSERT INTO "contractor_profile" ("user_id", "contractor_name", "phone", "available", "timezone", "location", "linked_in", "base_written_rate", "base_audio_video_rate")
 VALUES (7, 'translator 1', '1-222-333-4444', FALSE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8),
 (2, 'translator 2', '1-222-333-4444', TRUE, '-6:00 UTC', 'Minneapolis, MN, USA', 'linkedInName', 0.25, 8);
 
@@ -171,5 +171,5 @@ VALUES (1, 7, 2, 3, 4, 'this is the text to translate', 'current notes', 5, TRUE
 (1, 7, 2, 3, 4, 'this is the text  to translate', 'current notes', 5, FALSE),
 (2, 2, 7, 5, 6, 'this is the text to translate', '', 3, TRUE);
 
-INSERT INTO "contractor_expertise" ("expertise_id", "contractor_id")
+INSERT INTO "contractor_expertise" ("expertise_id", "user_id")
 VALUES (2, 2), (7, 3);
