@@ -63,7 +63,7 @@ function SettingsExpertise() {
                 <form onSubmit={handleSubmit}>
                     
                         <TextField
-                            label='Expertiese'
+                            label='Expertise'
                             variant='standard'
                             value={expertiseType}
                             onChange={(e) => setExpertiseType(e.target.value)}
