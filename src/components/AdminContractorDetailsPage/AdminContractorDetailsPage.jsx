@@ -215,7 +215,7 @@ useEffect(() => {
                 <TableBody>
                     
             {contractorProjects.map((project, i) => {
-                if (project.status.toLowerCase() !== 'complete' && project.status.toLowerCase() !== 'completed') {
+                if (project.status !== 'complete' && project.status !== 'completed') {
                 return (
                     <TableRow key={i}>
                         <TableCell align="center">{i + 1}</TableCell>
@@ -256,7 +256,7 @@ useEffect(() => {
                 <TableBody>
                     
             {contractorProjects.map((project, i) => {
-                if (project.status.toLowerCase() == 'complete' || project.status.toLowerCase() == 'completed') {
+                if (project.status == 'complete' || project.status == 'completed') {
                 return (
                     <TableRow key={i}>
                         <TableCell align="center">{i + 1}</TableCell>
