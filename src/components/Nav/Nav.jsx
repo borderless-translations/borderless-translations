@@ -46,7 +46,7 @@ function Nav() {
         }
         <TextField select sx={langStyle} size='small' 
           InputProps={{
-              startAdornment: <InputAdornment sx={{marginRight: '20px', marginLeft: '0px', minHeight: '40px',
+              startAdornment: <InputAdornment sx={{marginRight: '20px', marginLeft: '0px',
                 minHeight: '110%'
                }}
               position="start">&#127760;</InputAdornment>,

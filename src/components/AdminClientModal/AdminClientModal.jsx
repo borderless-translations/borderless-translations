@@ -53,12 +53,22 @@ function AdminClientModal({ closeModal, defaultValues }) {
         }
         Swal.fire({
             title: "Info saved!",
-            icon: "success"
+            icon: "success",
+            confirmButtonColor: "#48a6cd",
           });
         setClient({ id: "", client: "", contact: "", country: "", timezone: "", location: "", email: "", phone: "", client_notes: "" });
         dispatch({ type: "GET_ALL_CLIENTS" });
         closeModal();
     };
+
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        },
+        marginBottom: '10px'   
+    }
 
     return (
         <div className="modal-container" onClick={(e) => {
@@ -67,70 +77,76 @@ function AdminClientModal({ closeModal, defaultValues }) {
             <div className="modal">
 
                 <form onSubmit={handleSubmit}>
-                    <Stack direction="column" justifyContent="flex-end">
-                        <TextField
-                            label="Client Name"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.client}
-                            onChange={(event) => handleChangeFor("client", event.target.value)}
-                        />
-                        <TextField
-                            label="Contact"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.contact}
-                            onChange={(event) => handleChangeFor("contact", event.target.value)}
-                        />
+                    <Stack direction='column'>
+                        <Stack direction='row' >
+                            <Stack direction='column' sx={{margin: '0px 20px'}}>
+                                <TextField
+                                    label="Client Name"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.client}
+                                    onChange={(event) => handleChangeFor("client", event.target.value)}
+                                />
+                                <TextField
+                                    label="Contact"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.contact}
+                                    onChange={(event) => handleChangeFor("contact", event.target.value)}
+                                />
 
-                        <TextField
-                            label="country"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.country}
-                            onChange={(event) => handleChangeFor("country", event.target.value)}
-                        />
+                                <TextField
+                                    label="Country"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.country}
+                                    onChange={(event) => handleChangeFor("country", event.target.value)}
+                                />
 
-                        <TextField
-                            label="location"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.location}
-                            onChange={(event) => handleChangeFor("location", event.target.value)}
-                        />
-                        <FormControl sx={{ width: '400px', margin: '20px 0' }}>
-                            <InputLabel id="timezone-select">Timezone</InputLabel>
-                            <Select
-                                labelId="timezone-select"
-                                label="Timezone"
-                                value={client.timezone}
-                                onChange={(event) => handleChangeFor("timezone", event.target.value)}>
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                {timezoneList.map((timezone) => (
-                                    <MenuItem key={timezone.tz} value={timezone.tz}>{timezone.tz}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <TextField
-                            label="email"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.email}
-                            onChange={(event) => handleChangeFor("email", event.target.value)}
-                        />
+                                <TextField
+                                    label="Location"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.location}
+                                    onChange={(event) => handleChangeFor("location", event.target.value)}
+                                />
+                            </Stack>
+                            <Stack direction='column'>
+                                <FormControl sx={{ width: '400px', margin: '20px 0' }}>
+                                    <InputLabel id="timezone-select">Timezone</InputLabel>
+                                    <Select
+                                        labelId="timezone-select"
+                                        label="Timezone"
+                                        value={client.timezone}
+                                        onChange={(event) => handleChangeFor("timezone", event.target.value)}>
+                                        <MenuItem value="">
+                                            <em>None</em>
+                                        </MenuItem>
+                                        {timezoneList.map((timezone) => (
+                                            <MenuItem key={timezone.tz} value={timezone.tz}>{timezone.tz}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <TextField
+                                    label="Email"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.email}
+                                    onChange={(event) => handleChangeFor("email", event.target.value)}
+                                />
 
-                        <TextField
-                            label="phone"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.phone}
-                            onChange={(event) => handleChangeFor("phone", event.target.value)}
-                        />
-                        <TextField
-                            label="client_notes"
-                            sx={{ width: '400px', margin: '20px 0' }}
-                            value={client.client_notes}
-                            onChange={(event) => handleChangeFor("client_notes", event.target.value)}
-                        />
-
-
-                        <button className='btn btn_sizeSm' type="submit">Save</button>
+                                <TextField
+                                    label="Phone"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.phone}
+                                    onChange={(event) => handleChangeFor("phone", event.target.value)}
+                                />
+                                <TextField
+                                    label="Client Notes"
+                                    sx={{ width: '400px', margin: '20px 0' }}
+                                    value={client.client_notes}
+                                    onChange={(event) => handleChangeFor("client_notes", event.target.value)}
+                                />
+                            </Stack>
+                        </Stack>
+                        <Button className='btn btn_sizeSm' sx={buttonStyle} disableRipple variant='contained' type="submit">
+                            Save
+                        </Button>
                     </Stack>
                 </form>
             </div>

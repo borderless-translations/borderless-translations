@@ -56,12 +56,10 @@ function ContractorProfileSettings() {
         {id: 24, tz: "UTC +11:00 - Sydney"},
         {id: 25, tz: "UTC +12:00 - Tarawa"},
         {id: 26, tz: "UTC +13:00 - Auckland"}];
-    console.log(languages);
 
-    const [refresh, setRefresh] = useState(1);
-    const reset = () => {
-         setRefresh(Math.random());
-     }
+    useEffect(() => {
+        refreshPage();
+    }, [])
 
     const refreshPage = () => {
         dispatch({ type: "GET_CONTRACTOR_SELF" });
@@ -69,10 +67,6 @@ function ContractorProfileSettings() {
         dispatch({ type: "GET_ALL_SERVICES" });
         dispatch({ type: "GET_ALL_EXPERTISE" });
     }
-
-    useEffect(() => {
-
-    }, [refresh])
 
     // Saves updated contractor settings
     const saveUser = () => {
@@ -115,9 +109,8 @@ function ContractorProfileSettings() {
         }
         console.log(newService);
         dispatch({ type: 'ADD_SERVICE_TO_CONTRACTOR', payload: newService });
-        refreshPage();
         setTimeout(() => {
-            reset();
+            refreshPage();
         }, 500);
     }
 
@@ -228,7 +221,7 @@ function ContractorProfileSettings() {
     else {
         return (
             <div className="container">
-                <Stack direction='column' sx={{ margin: '0px 5%', justifyContent: 'center' }} key={refresh}>
+                <Stack direction='column' sx={{ margin: '0px', justifyContent: 'center' }}>
                     <h2 style={{ margin: '20px 0px'}}>Profile Settings</h2>
                     <Stack direction='row' >
                         {/* Contact Info */}
@@ -463,7 +456,7 @@ function ContractorProfileSettings() {
                             </Box>  
                                                 
                             <p style={{margin: '0px 0px 0px 20px'}}>Services</p>
-                            <Box sx={boxStyle} key={refresh}>
+                            <Box sx={boxStyle}>
                                 {services != undefined ? 
                                     services.map((service) => {
                                         return (

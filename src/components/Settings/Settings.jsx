@@ -11,14 +11,16 @@ function Settings() {
 
 return(
     <div className="container">
-        <h2>Settings</h2>
-        <Stack direction="row" sx={{ margin: '0px 100px', justifyContent:'center'}} spacing={2}>
-        
-            <SettingsLanguage />
-        
-            <SettingsService />
-        
-            <SettingsExpertise />
+        <Stack direction='column' sx={{margin: '0px 0px'}}>
+            <h2>Settings</h2>
+            <Stack direction="row" sx={{justifyContent:'start'}} spacing={2}>
+            
+                <SettingsLanguage />
+            
+                <SettingsService />
+            
+                <SettingsExpertise />
+            </Stack>
         </Stack>
 
     </div>

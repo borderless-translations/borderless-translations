@@ -25,14 +25,6 @@ function AdminProjectPage() {
             history.push(`/project/details/${id}`);
         }, 500);
     }
-
-    const buttonStyle = {
-        backgroundColor: '#48a6cd',
-        color: 'white',
-        "&:hover": {
-            backgroundColor: '#332c7b'
-        }
-    }
    
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() => {
@@ -55,14 +47,24 @@ function AdminProjectPage() {
         '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
     }
 
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        },
+        marginBottom: '10px'
+    }
+
     return (
         <>
-            <div>
+            <div className='container'>
                 <h2>Admin Project Main</h2>
-                <button className='btn btn_sizeSm' onClick={() => handleAddProject()}>Add Project</button>
+                <Button className='btn btn_sizeSm' disableRipple  variant='contained' sx={buttonStyle} 
+                    onClick={() => handleAddProject()}>Add Project</Button>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b"}}}>
+                    <Table sx={{ minWidth: 650, border: '2px solid #332c7b' }} aria-label="simple table">
+                        <TableHead sx={{"& th": {color: "white", fontWeight: 700, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}>
                             <TableRow>
                                 <TableCell align="center">Name</TableCell>
                                 <TableCell align="center">Description</TableCell>
@@ -78,7 +80,7 @@ function AdminProjectPage() {
                                 <TableRow key={project.project_id}  sx={tableRowStyle}
                                 style={{backgroundColor: project.flagged ? 'pink' : ''}}>
                                     <TableCell component="th" scope="row" align="center">{project.client_name}</TableCell>
-                                    <TableCell align="center">{project.project_description}</TableCell>
+                                    <TableCell align="left">{project.project_description}</TableCell>
                                     <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
                                     <TableCell align="center">{project.translator_name}<br/>{project.translator_status}</TableCell>
                                     <TableCell align="center">{project.proofreader_name}<br/>{project.proofreader_status}</TableCell>

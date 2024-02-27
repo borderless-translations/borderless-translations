@@ -8,19 +8,24 @@ import "./ContractorViewFile.css";
 function ContractorViewFile() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector(store => store.user);
     const params = useParams();
     const project = useSelector(store => store.project);
 
     const containerStyle = {
-        border: '1px solid #332c7b', 
+        border: '2px solid #332c7b', 
         borderRadius: '10px', 
         backgroundColor: 'white',
         padding: '20px',
         maxWidth: '80%'
     }
 
-    const goBack = (projectId) => {
+    const goBackContractor = (projectId) => {
         history.push(`/user/project/details/${projectId}`);
+    }
+
+    const goBackAdmin = (projectId) => {
+        history.push(`/project/details/${projectId}`);
     }
     
     useEffect(() => {
@@ -31,14 +36,26 @@ function ContractorViewFile() {
         <div className="container">
             <Stack direction='column' sx={{margin: '0px 30px'}}>
                 <h2>
-                    <IconButton onClick={() => goBack(project.id)}
-                        disableElevation
-                        disableRipple
-                        size="small">
-                        <Tooltip title="Back">
-                            <WestIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
-                        </Tooltip>
-                    </IconButton>
+                    {user.type == 'contractor' &&
+                        <IconButton onClick={() => goBackContractor(project.id)}
+                            disableElevation
+                            disableRipple
+                            size="small">
+                            <Tooltip title="Back">
+                                <WestIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                            </Tooltip>
+                        </IconButton>
+                    }
+                    {user.type == 'admin' &&
+                        <IconButton onClick={() => goBackAdmin(project.id)}
+                            disableElevation
+                            disableRipple
+                            size="small">
+                            <Tooltip title="Back">
+                                <WestIcon sx={{fontSize: '24px', color: '#48a6cd'}} />   
+                            </Tooltip>
+                        </IconButton>
+                    }
                     Back to project details</h2>
                 <Box sx={containerStyle} className="contractor-details">
                     <h3>Text to be translated:</h3>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
-import { Select, MenuItem, Stack, Tooltip, IconButton, TextField, InputAdornment, Box } from '@mui/material';
+import { Paper, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
 
 import AdminClientModal from '../AdminClientModal/AdminClientModal';
 import './AdminClientMain.css';
@@ -31,16 +30,28 @@ function AdminClientMain() {
     setModalOpen(true)
   }
 
+  const buttonStyle = {
+    backgroundColor: '#48a6cd',
+    color: 'white',
+    "&:hover": {
+        backgroundColor: '#332c7b'
+    },
+    fontSize: '14px',
+    marginBottom: '10px'
+  }
+
   return (
     <div className="container">
 
-      <h2 style={{ margin: '20px 50px' }}>Admin Client Main</h2>
-      <button className='btn btn_sizeSm' onClick={() => handleAddClient()}>Add Client</button>
-
+      <h2>Admin Client Main</h2>
+      <Button className='btn btn_sizeSm' disableRipple variant='contained' sx={buttonStyle} 
+        onClick={() => handleAddClient()}>Add Client
+      </Button>
+      <br />
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table aria-label="simple table" sx={{ border: '2px solid #332c7b' }} >
           <TableHead>
-            <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
+            <TableRow sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Not Started</TableCell>
               <TableCell align="center">In Progress</TableCell>
