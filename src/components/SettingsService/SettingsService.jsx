@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../Settings/Settings.css';
-import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, TableRow, TableHead, TableBody, IconButton } from '@mui/material';
+import { Stack, TextField, Button, TableContainer, Paper, Table, TableCell, 
+    Tooltip, TableRow, TableHead, TableBody } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -13,6 +14,7 @@ function SettingsService() {
     const [editServiceId, setEditServiceId] = useState(null);
     const [editServiceType, setEditServiceType] = useState('');
     const [serviceType, setServiceType] = useState('');
+    const [expanded, setExpanded] = useState(false);
 
     useEffect(() => {
         dispatch({ type: 'GET_ALL_SERVICES' });
@@ -53,9 +55,18 @@ function SettingsService() {
         setServiceType("");
     };
 
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        },
+        marginBottom: '10px'   
+    }
+
     return (
         <div>
-            <Stack direction="column" justifyContent="flex-end">
+            <Stack direction="column" justifyContent="flex-end" sx={{minWidth: '550px'}}>
                 <h3>Services</h3>
 
                 <form onSubmit={handleSubmit}>
@@ -68,19 +79,25 @@ function SettingsService() {
                             fullWidth
                             margin='normal'
                         />
-                        <button className='btn btn_sizeSm' type="submit">Add Service</button>
+                        <Button className='btn btn_sizeSm' type="submit" 
+                            disableRipple variant='contained' sx={buttonStyle}>
+                            Add Service
+                        </Button>
                     
                 </form>
 
-
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Service</TableCell>
-                                <TableCell>Actions</TableCell>
-                            </TableRow>
-                        </TableHead>
+                {expanded ?
+                    <TableContainer component={Paper}>
+                    <Table sx={{border: '2px solid #332c7b'}}>
+                        <Tooltip title="Click to minimize" placement="top-end">
+                            <TableHead sx={{backgroundColor: '#332c7b', border: '1px solid #332c7b'}}>
+                                <TableRow sx={{"& th": {color: "white",fontWeight: 500, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}
+                                    onClick={() => setExpanded(false)}>
+                                    <TableCell sx={{color: 'white'}} align='center'>Service</TableCell>
+                                    <TableCell sx={{color: 'white'}} align='center'>Actions</TableCell>
+                                </TableRow>
+                            </TableHead>
+                        </Tooltip>
                         <TableBody>
                             {services.map(service => (
                                 <TableRow key={service.id}>
@@ -97,8 +114,10 @@ function SettingsService() {
                                                 />
                                             </TableCell>
                                             <TableCell>
-                                                <Button startIcon={<SaveIcon />} onClick={() => handleSave(service.id)}></Button>
-                                                <Button startIcon={<CancelIcon />} onClick={() => handleCancel()}></Button>
+                                                <Stack direction='row'>
+                                                    <Button startIcon={<SaveIcon sx={{color: '#48a6cd' }}/>} onClick={() => handleSave(service.id)}></Button>
+                                                    <Button startIcon={<CancelIcon sx={{color: '#48a6cd' }}/>} onClick={() => handleCancel()}></Button>
+                                                </Stack>
                                             </TableCell>
 
                                         </>
@@ -108,8 +127,10 @@ function SettingsService() {
                                                 {service.type}
                                             </TableCell>
                                             <TableCell>
-                                                <Button startIcon={<EditIcon />} onClick={() => handleEdit(service)}></Button>
-                                                <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(service.id)}></Button>
+                                                <Stack direction='row'>
+                                                    <Button startIcon={<EditIcon sx={{color: '#48a6cd' }}/>} onClick={() => handleEdit(service)}></Button>
+                                                    <Button startIcon={<DeleteIcon sx={{color: '#48a6cd' }}/>} onClick={() => handleDelete(service.id)}></Button>
+                                                </Stack>
                                             </TableCell>
 
                                         </>
@@ -118,7 +139,21 @@ function SettingsService() {
                             ))}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                    </TableContainer>
+                :
+                    <TableContainer component={Paper} onClick={() => setExpanded(true)}>
+                    <Tooltip title="Click to expand" placement="top-end">
+                        <Table sx={{border: '2px solid #332c7b'}}>
+                            <TableHead sx={{backgroundColor: '#332c7b', border: '1px solid #332c7b'}}>
+                                <TableRow sx={{"& th": {color: "white",fontWeight: 500, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}>
+                                    <TableCell sx={{color: 'white', width: '180px'}} align='center'>Service</TableCell>
+                                    <TableCell sx={{color: 'white', width: '68px'}} align='center'>Actions</TableCell>
+                                </TableRow>
+                            </TableHead>
+                        </Table>
+                    </Tooltip>
+                    </TableContainer>
+                }
             </Stack>
         </div>
 

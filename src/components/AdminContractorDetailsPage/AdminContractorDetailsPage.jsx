@@ -4,7 +4,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import AdminContractorModal from '../AdminContractorModal/AdminContractorModal';
 import AdminContractorServicesModal from '../AdminContractorServicesModal/AdminContractorServicesModal';
 import AdminContractorLanguagesModal from '../AdminContractorLanguagesModal/AdminContractorLanguagesModal';
-import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow, Stack, Paper, Box} from '@mui/material';
+import {TableContainer, Table, TableCell, TableBody, TableHead, TableRow, Stack, Paper, Box, Button} from '@mui/material';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 import EastIcon from '@mui/icons-material/East';
@@ -48,9 +48,10 @@ function AdminContractorDetailsPage() {
             text: "They will have access to everything on this site",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, give them the power"
+            confirmButtonColor: "#48a6cd",
+            cancelButtonColor: "#332c7b",
+            confirmButtonText: "Yes, give them the power",
+            reverseButtons: true
           }).then((result) => {
             if (result.isConfirmed) {
                 const userAuth = {id: id, type: 'admin'}
@@ -59,7 +60,8 @@ function AdminContractorDetailsPage() {
               Swal.fire({
                 title: "Admin Status!",
                 text: "This contractor is now an admin.",
-                icon: "success"
+                icon: "success",
+                confirmButtonColor: "#48a6cd",
               });
               refreshPage();
             }
@@ -69,9 +71,10 @@ function AdminContractorDetailsPage() {
                 text: "This action will restrict their access to only their projects.",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, they do not need admin status"
+                confirmButtonColor: "#48a6cd",
+                cancelButtonColor: "#332c7b",
+                confirmButtonText: "Yes, they do not need admin status",
+                reverseButtons: true
               }).then((result) => {
                 if (result.isConfirmed) {
                     const userAuth = {id: id, type: 'contractor'}
@@ -80,7 +83,8 @@ function AdminContractorDetailsPage() {
                   Swal.fire({
                     title: "Contractor Status!",
                     text: "This contractor is no longer an admin.",
-                    icon: "success"
+                    icon: "success",
+                    confirmButtonColor: "#48a6cd",
                   });
                   refreshPage();
                 }
@@ -89,13 +93,22 @@ function AdminContractorDetailsPage() {
     }
 
     const boxStyle = {
-        border: '1px solid #48a6cd',
-        borderRadius: '15px',
-        padding: '10px',
-        margin: '10px 20px 30px 20px',
+        border: '2px solid #332c7b',
+        borderRadius: '5px',
+        padding: '20px 20px',
+        margin: '10px 10px',
         fontSize: '16px',
         minWidth: '200px',
-        minHeight: '193px'
+        minHeight: '193px',
+        backgroundColor: 'white'
+    }
+
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        }
     }
 
     const editContractor = () => {
@@ -121,20 +134,23 @@ useEffect(() => {
         <>
             <h1>Contractor Details</h1>
             {contractorDetails.user_type === "admin" ? <h3>* Admin Account</h3> : ''}
-
+            <Button  className='btn btn_sizeSm' variant='contained' disableRipple style={buttonStyle}
+                onClick={editContractor}>Edit Contractor Info
+            </Button>
+            <br/><br/>
              <TableContainer component={Paper}>
-             <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorDetailsTable">
-                <TableHead className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
+             <Table sx={{ minWidth: 650, border: '2px solid #332c7b' }} aria-label="simple table" className="adminContractorDetailsTable">
+                <TableHead className="adminContractorDetailsHead" 
+                    sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}>
                     <TableRow>
                         <TableCell align="center">Name</TableCell>
                         <TableCell align="center">Location</TableCell>
                         <TableCell align="center">Timezone</TableCell>
                         <TableCell align="center">Phone</TableCell>
-                        <TableCell align="center">Signed NDA:</TableCell>
+                        <TableCell align="center">Signed NDA</TableCell>
                         <TableCell align="center">LinkedIn</TableCell>
                         <TableCell align="center">Written Rate</TableCell>
                         <TableCell align="center">A/V Rate</TableCell>
-                        <TableCell align="center">Status</TableCell>
                         <TableCell align="center">Availability</TableCell>
                         <TableCell align="center">Admin</TableCell>
                     </TableRow>
@@ -149,31 +165,33 @@ useEffect(() => {
                         <TableCell align="center">{contractorDetails.linked_in}</TableCell>
                         <TableCell align="center">${contractorDetails.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractorDetails.base_audio_video_rate}/minute</TableCell>
-                        <TableCell align="center">{contractorDetails.status}</TableCell>
-                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractorDetails.user_id)}>{contractorDetails.available ? "Available" : "Unavailable"}</button></TableCell>
                         <TableCell align="center">
-                            <button className='btn btn_sizeSm' onClick={() => handleAdmin()}>
+                            <Button className='btn btn_sizeSm' variant='contained' disableRipple style={buttonStyle}  onClick={() => handleAvail(contractorDetails.user_id)}>
+                                {contractorDetails.available ? "Available" : "Unavailable"}
+                            </Button>
+                        </TableCell>
+                        <TableCell align="center">
+                            <Button className='btn btn_sizeSm' variant='contained' disableRipple style={buttonStyle} onClick={() => handleAdmin()}>
                                 {contractorDetails.user_type === "admin" ? <><p>Remove Admin Status</p></> : 
                                 <p>Grant Admin Status</p>}
-                            </button>
+                            </Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
             </TableContainer>
-            <button  className='btn btn_sizeSm' onClick={editContractor}>Edit Contractor Info</button>
-            <br/>
+            <br />
             <div className='contractorDetails'>
-            <Stack direction='row' sx={{ justifyContent: 'space-between', margin: '0% 10%' }}>
+            <Stack direction='row' sx={{ justifyContent: 'space-between', margin: '0px' }}>
                 <div className="form-group">
                     <Box sx={boxStyle}>
-                    <h3 className="adminDetails"><strong>Notes:</strong></h3>
+                    <h3 className="adminDetails"><strong>Notes</strong></h3>
                         <p>{contractorDetails.notes}</p>
                     </Box>
                 </div>
                 <div className="form-group">
                     <Box sx={boxStyle}>
-                    <h3 className="adminDetails"><strong>Languages:</strong></h3>
+                    <h3 className="adminDetails"><strong>Languages</strong></h3>
                         <ul>
                             {contractorDetails.languages.map((lang, index) => (
                             <li key={index}>
@@ -185,7 +203,7 @@ useEffect(() => {
                 </div>
                 <div className="form-group">
                     <Box sx={boxStyle}>
-                    <h3 className="adminDetails"><strong>Expertise:</strong></h3>
+                    <h3 className="adminDetails"><strong>Expertise</strong></h3>
                         <ul>
                             {contractorDetails.expertise.map((expertise, index) => (
                             <li key={index}>
@@ -197,7 +215,7 @@ useEffect(() => {
                 </div>
                 <div className="form-group">
                 <Box sx={boxStyle}>
-                    <h3 className="adminDetails"><strong>Services:</strong></h3>
+                    <h3 className="adminDetails"><strong>Services</strong></h3>
                         <ul>
                             {contractorDetails.services.map((service, index) => (
                             <li key={index}>
@@ -293,7 +311,9 @@ useEffect(() => {
             </div>
 
             <br /> <br />
-            <button  className='btn btn_sizeSm' onClick={() => history.push('/admin/contractors')}>Return to Contractors</button>
+            <Button className='btn btn_sizeSm' variant='contained' disableRipple style={buttonStyle}
+                onClick={() => history.push('/admin/contractors')}>Return to Contractors
+            </Button>
 
             {toggleEditContractor && <AdminContractorModal closeModal={() => { setToggleEditContractor(!toggleEditContractor)}} defaultValues={contractorDetails} />}
             {toggleEditServices && <AdminContractorServicesModal closeModal={() => { setToggleEditServices(!toggleEditServices)}} defaultValues={contractorDetails} />}

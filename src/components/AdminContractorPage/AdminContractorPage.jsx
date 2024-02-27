@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
+import { Stack, Button, TableContainer, Paper, Table, TableBody, TableHead, 
+    TableRow, TableCell, IconButton, Tooltip } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AdminContractorDetailsPage from '../AdminContractorDetailsPage/AdminContractorDetailsPage';
 import './AdminContractorPage.css';
 import { DateTime } from 'luxon';
@@ -46,20 +48,30 @@ function AdminContractorPage() {
     }
     const tableRowStyle = {
         '&:nth-of-type(odd)': { backgroundColor: "white" },
-        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" }
+        '&:nth-of-type(even)': { backgroundColor: "#e3fbfb" },
     }
 
-useEffect(() => {
-    getContractors();
-}, []);
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        },
+        fontSize: '16px'   
+    }
+
+    useEffect(() => {
+        getContractors();
+    }, []);
 
     return (
         <div className="container">
-        <h1>Contractor List</h1>
+        <Stack direction='column' sx={{margin: '0px 0px'}}>
+        <h2>Contractor List</h2>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" className="adminContractorTable">
+        <Table sx={{ minWidth: 650, border: '2px solid #332c7b', borderRadius: '10px' }} aria-label="simple table" className="adminContractorTable">
             <TableHead>
-                <TableRow className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b"}}}>
+                <TableRow className="adminContractorDetailsHead" sx={{"& th": {color: "white",fontWeight: 700, backgroundColor: "#332c7b", border: '1px solid #332c7b'}}}>
                     <TableCell align="center" >Name</TableCell>
                     <TableCell align="center" >Languages</TableCell>
 
@@ -68,7 +80,7 @@ useEffect(() => {
                     <TableCell align="center" >Written Rate</TableCell>
                     <TableCell align="center" >A/V Rate</TableCell>
                     <TableCell align="center" >Availability</TableCell>
-                    <TableCell align="center" >Details</TableCell>
+                    <TableCell align="center" >View</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -92,13 +104,27 @@ useEffect(() => {
                         <TableCell align="center">{contractor.timezone}</TableCell>
                         <TableCell align="center">${contractor.base_written_rate}/word</TableCell>
                         <TableCell align="center">${contractor.base_audio_video_rate}/minute</TableCell>
-                        <TableCell align="center"><button className='btn btn_sizeSm' onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}</button></TableCell>
-                        <TableCell align="center"><Link to={`/admin/contractors/details/${contractor.user_id}`}><button  className='btn btn_sizeSm' onClick={() => handleDetails(contractor.user_id)} >Details</button></Link></TableCell>
+                        <TableCell align="center"><Button className='btn btn_sizeSm' disableRipple  variant='contained' sx={buttonStyle} 
+                            onClick={() => handleAvail(contractor.user_id)}>{contractor.available ? "Available" : "Unavailable"}
+                            </Button>
+                        </TableCell>
+                        <TableCell align="center">
+                            <IconButton onClick={() => history.push(`/admin/contractors/details/${contractor.user_id}`)}
+                                disableElevation
+                                disableRipple
+                                size="small"
+                                sx={buttonStyle}>
+                                <Tooltip title="View contractor information">
+                                    <VisibilityIcon />  
+                                </Tooltip>
+                            </IconButton>
+                        </TableCell>
                    </TableRow>
         })}
         </TableBody>
         </Table>
         </TableContainer>
+        </Stack>
         </div>
     );
 }

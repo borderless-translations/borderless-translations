@@ -150,14 +150,14 @@ function ContractorProjectDetails() {
         }
     }
 
-    const toLink = (link) => {
-        window.open(`${link}`);
-    }
-
     const viewFile = (projectId) => {
         setTimeout(() => {
             history.push(`/user/project/file/${projectId}`);
         }, 500);
+    }
+
+    const toLink = (link) => {
+        window.open(`${link}`);
     }
 
     const toDashboard = () => {

@@ -121,7 +121,7 @@ router.get('/specific/:id', requireAdmin, (req, res) => {
 		projects.admin_id, "admin".username AS admin_name, 
 		projects.client_id, clients.client AS client_name,
 		project_language.contractor_id AS translator_id, translator.contractor_name AS translator_name, projects.translator_status,
-		project_language.proofreader_id, proofreader.contractor_name AS proofreader_name, projects.proofreader_status,
+		project_language.proofreader_id, proofreader.proofreader_name AS proofreader_name, projects.proofreader_status,
 		projects.description, projects.duration, 
 		projects.due_at,
 		project_language.translator_notes AS notes,
