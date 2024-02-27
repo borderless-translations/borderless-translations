@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import { Card, CardContent, Typography, Paper, Grid, Button, TableContainer, Table, TableBody, TableHead, TableRow, TableCell } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow, Button, IconButton, Tooltip } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,23 @@ function AdminProjectPage() {
     const history = useHistory();
 
     const projects = useSelector(store => store.allProjects);
-    const clients = useSelector(store => store.allClients)
+    const clients = useSelector(store => store.allClients);
+
+    const toProject = (id) => {
+        const action = { type: 'GET_ALL_PROJECTS', payload: id };
+        dispatch(action);
+        setTimeout(() => {
+            history.push(`/project/details/${id}`);
+        }, 500);
+    }
+
+    const buttonStyle = {
+        backgroundColor: '#48a6cd',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: '#332c7b'
+        }
+    }
    
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() => {
@@ -51,28 +67,33 @@ function AdminProjectPage() {
                                 <TableCell align="center">Name</TableCell>
                                 <TableCell align="center">Description</TableCell>
                                 <TableCell align="center">Due Date</TableCell>
-                                <TableCell align="center">Status</TableCell>
                                 <TableCell align="center">Translator Status</TableCell>
                                 <TableCell align="center">Proofreader Status</TableCell>
                                 <TableCell align="center">Project Scope</TableCell>
-                                <TableCell align="center">Edit</TableCell>
+                                <TableCell align="center">View</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {projects.map(project => (
                                 <TableRow key={project.project_id}  sx={tableRowStyle}>
-                                    <TableCell component="th" scope="row">
-                                        <Link to={`/project/details/${project.project_id}`}>{project.client_name}</Link>
-                                    </TableCell>
+                                    <TableCell component="th" scope="row" align="center">{project.client_name}</TableCell>
                                     <TableCell align="center">{project.project_description}</TableCell>
                                     <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
-                                    <TableCell align="center">{project.project_status}</TableCell>
                                     <TableCell align="center">{project.translator_name}<br/>{project.translator_status}</TableCell>
                                     <TableCell align="center">{project.proofreader_name}<br/>{project.proofreader_status}</TableCell>
                                     <TableCell align="center">{project.duration}</TableCell>
                                     <TableCell align="center">
-                                        <button className='btn btn_sizeSm' onClick={() => handleEditProject(project)}>Edit Project</button>
-                                    </TableCell>
+                                    <IconButton onClick={() => toProject(project.id)}
+                                        disableElevation
+                                        disableRipple
+                                        size="small"
+                                        sx={buttonStyle}
+                                        >
+                                        <Tooltip title="View project details">
+                                            <VisibilityIcon />
+                                        </Tooltip>
+                                    </IconButton>
+                                </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
