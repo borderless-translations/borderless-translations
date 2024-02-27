@@ -2,14 +2,12 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* getProject(action) {
-    console.log('GET PROJECT SAGA')
     try {
         // the config includes credentials which allow the server session to recognize the user
         const config = {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-console.log (action.payload);
         // TODO: Set to correct URL and request type
         const response = yield axios.get(`/api/project/contractor/${action.payload}`, config);
 

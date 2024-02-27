@@ -44,7 +44,6 @@ function AdminProjectDetails(){
                         <TableCell align="center">Client Name</TableCell>
                         <TableCell align="center">Description</TableCell>
                         <TableCell align="center">Due Date</TableCell>
-                        <TableCell align="center">Status</TableCell>
                         <TableCell align="center">Translator Status</TableCell>
                         <TableCell align="center">Proofreader Status</TableCell>
                         <TableCell align="center">From Language</TableCell>
@@ -57,7 +56,6 @@ function AdminProjectDetails(){
                         <TableCell align="center">{project.client_name}</TableCell>
                         <TableCell align="center">{project.description}</TableCell>
                         <TableCell align="center">{DateTime.fromISO(project.due_at).toFormat('DDD')}</TableCell>
-                        <TableCell align="center">{project.status}</TableCell>
                         <TableCell align="center">{project.translator_name}<br/>{project.translator_status}</TableCell>
                         <TableCell align="center">{project.proofreader_name}<br/>{project.proofreader_status}</TableCell>
                         <TableCell align="center">{project.from_language_name}</TableCell>

@@ -48,24 +48,24 @@ function ContractorProjectDetails() {
             if (result.isConfirmed) {
                 if (user.id === project.translator_id) {
                     // Set translator status to 'in progress'
-                    if (status.translator === 'Not started') {
-                        project.translator_status = 'In progress';
+                    if (status.translator === 'Not Started') {
+                        project.translator_status = 'In Progress';
                     }
                     // Set translator status to 'complete'
-                    else if (status.translator === 'In progress') {
+                    else if (status.translator === 'In Progress') {
                         project.translator_status = 'Complete';
                         // TODO: This is where to integrate email notifications if we get to it
                     }
                     setButtonStatus();
                     dispatch({ type: 'UPDATE_TRANSLATOR_STATUS', payload: [project.translator_status, params.id] });
                 }
-                else if ((user.id === project.proofreader_id) && (status.translator === 'complete')) {
+                else if ((user.id === project.proofreader_id) && (status.translator === 'Complete')) {
                     // Set proofreader status to 'in progress'
-                    if (status.proofreader === 'Not started') {
-                        project.proofreader_status = 'In progress';
+                    if (status.proofreader === 'Not Started') {
+                        project.proofreader_status = 'In Progress';
                     }
                     // Set proofreader status to 'complete'
-                    else if (status.proofreader === 'in progress') {
+                    else if (status.proofreader === 'in Progress') {
                         project.proofreader_status = 'Complete';
                         // TODO: This is where to integrate email notifications if we get to it
                     }
@@ -81,10 +81,10 @@ function ContractorProjectDetails() {
     const setButtonStatus = () => {
         // Sets status for translator
         if (user.id === project.translator_id) {
-            if (project.translator_status === 'Not started') {
+            if (project.translator_status === 'Not Started') {
                 setStatus('Start project'); 
             }
-            else if (project.translator_status === 'In progress') {
+            else if (project.translator_status === 'In Progress') {
                 setStatus('Send to proofreader');
             }
             else if (project.translator_status === 'Complete') {
@@ -94,10 +94,10 @@ function ContractorProjectDetails() {
         // Sets status for proofreader
         else if (user.id === project.proofreader_id) {
             if (project.translator_status === 'Complete') {
-                if (project.proofreader_status === 'Not started') {
+                if (project.proofreader_status === 'Not Started') {
                     setStatus('Send to admin');
                 }
-                else if (project.proofreader_status === 'In progress') {
+                else if (project.proofreader_status === 'In Progress') {
                     setStatus('Complete');
                 }
                 else if (project.proofreader_status === 'Complete') {
