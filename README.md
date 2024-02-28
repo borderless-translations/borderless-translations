@@ -49,7 +49,7 @@
 
 Login Credentials for Heroku have been provided in the hand off document.
 
-If you need make changes you wish to push to the deployed app, you must login, go into the pet-star section, go to the deploy tab, and then manually deploy. You can reconfigure this to redeploy automatically if you wish, which is on the same page.
+If you need make changes you wish to push to the deployed app, you must login, go into the borderless-translations section, go to the deploy tab, and then manually deploy. You can reconfigure this to redeploy automatically if you wish, which is on the same page.
 
 Environment variables are kept on Heroku in the Settings tab, just click the Reveal Config Vars button
 
