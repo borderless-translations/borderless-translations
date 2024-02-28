@@ -1,2 +1,52 @@
 # borderless-translations
-Group project for Prime Digital Academy
+<!-- Table of Contents -->
+
+
+
+
+
+<!-- Description goes here -->
+
+
+
+
+<!-- Built With -->
+
+
+
+
+
+
+<!-- Getting Started -->
+
+
+
+
+
+
+<!-- Prerequisites -->
+
+
+
+
+
+
+<!-- Local Installation Instructions -->
+
+
+
+
+
+<!-- Usage -->
+
+
+
+
+
+
+<!-- Deployment Instructions -->
+
+
+
+
+
