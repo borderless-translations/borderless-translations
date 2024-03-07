@@ -67,9 +67,6 @@ Admins can also navigate to the projects page to see all the projects the compan
 Admins will be able to view their contractors, see their availability, as well as see more details about each contractor with which projects they have been assigned.
 ![Admin view of Contractor page](./public/images/ContractorsMain.png)
 
-
-
-
 ### Deployment Instructions
 
 Login Credentials for Heroku have been provided in the hand off document.
