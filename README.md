@@ -4,7 +4,6 @@
 <ul dir="auto">
 <li><a href="#description">Description</a></li>
 <li><a href="#built-with">Built With</a></li>
-<li><a href="#prerequisite">Prerequisites</a></li>
 <li><a href="#local-installation-instructions">Local Installation Instructions</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#deployment">Deployment Instructions</a></li>
@@ -37,21 +36,6 @@ to coordinate assignments with Borderless Translations as well as their fellow t
 <img src="https://moment.github.io/luxon/docs/_media/Luxon_icon_64x64.png" alt="luxon" width="60" height="60"/>
 <img src="https://cdn.worldvectorlogo.com/logos/postman.svg" alt="postman" width="60" height="60"/>
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="60" /></p>
-
-
-### Getting Started
-<!-- Getting Started -->
-
-
-
-
-
-### Prerequisites
-<!-- Prerequisites -->
-
-
-
-
 
 ### Local Installation Instructions
 
