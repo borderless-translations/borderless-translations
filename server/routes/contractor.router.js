@@ -66,7 +66,6 @@ router.get('/project/:id', requireAdmin, (req, res) => {
 
 // GET contractor info for requesting user only.
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.get('/self/user', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -93,7 +92,6 @@ router.get('/self/user', rejectUnauthenticated, (req, res) => {
 
 // GET contractor languages for requesting user only.
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.get('/self/languages', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -117,7 +115,6 @@ router.get('/self/languages', rejectUnauthenticated, (req, res) => {
 
 // GET contractor service info for requesting user only.
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.get('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -141,7 +138,6 @@ router.get('/self/services', rejectUnauthenticated, (req, res) => {
 
 // GET contractor service info for requesting user only.
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.get('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
         SELECT
@@ -219,7 +215,7 @@ router.get('/:id/expertise', requireAdmin, (req, res) => {
     ;
 });
 
-// TODO: Needs updated column names
+
 // GET contractor id/names without additional info
 router.get('/list', rejectUnauthenticated, (req, res) => {
     let querytext = `
@@ -236,17 +232,14 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
     ;
 });
 
-// TODO: Need finalized columns to create PUT
-/**
- * PUT route template
- */
+
 router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 	    // QUERY GOES HERE
 	`;
 	pool.query(querytext,[])
         .then((result) => {
-            // Code to send goes here
+            
             res.sendStatus(200)
         })
         .catch((error) => {
@@ -332,7 +325,6 @@ router.put('/availability-admin/:id', requireAdmin, (req, res) => {
 
 // PUT contractor settings for requesting user only.
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.put('/self/settings', rejectUnauthenticated, (req, res) => {
     let queryValues = [req.body.contractor.available, req.body.contractor.name, req.body.contractor.linked_in,
         req.body.contractor.phone, req.body.contractor.timezone, req.body.contractor.location,
@@ -371,7 +363,6 @@ router.put('/self/settings', rejectUnauthenticated, (req, res) => {
 
 // POST contractor languages for contractor view
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.post('/self/languages', rejectUnauthenticated, (req, res) => {
     let querytext = `
         INSERT INTO contractor_language (user_id, from_language_id, to_language_id)
@@ -390,7 +381,6 @@ router.post('/self/languages', rejectUnauthenticated, (req, res) => {
 
 // POST contractor services for contractor view
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.post('/self/services', rejectUnauthenticated, (req, res) => {
     let querytext = `
         INSERT INTO contractor_services (service_id, user_id)
@@ -409,7 +399,6 @@ router.post('/self/services', rejectUnauthenticated, (req, res) => {
 
 // POST contractor expertise for contractor view
 // Does not require admin status
-// DO NOT EDIT THIS!!!!
 router.post('/self/expertise', rejectUnauthenticated, (req, res) => {
     let querytext = `
         INSERT INTO contractor_expertise (expertise_id, user_id)
