@@ -250,7 +250,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 })
 
 //PUT Route for updating a single contractor's info
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
 	let querytext = `
 	    UPDATE "contractor_profile" 
         SET "contractor_name" = $1, 
@@ -274,7 +274,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
         req.body.base_written_rate,
         req.body.base_audio_video_rate,
         req.body.notes,
-        req.params.id
+        req.user.id
     ])
         .then((result) => {
             // Code to send goes here
