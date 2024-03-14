@@ -74,7 +74,6 @@ router.delete('/language', requireAdmin, (req, res) => {
 	
 	pool.query(querytext,[req.body.id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {
@@ -108,7 +107,6 @@ router.post('/service', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.type])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(201)
 		})
 		.catch((error) => {
@@ -149,7 +147,6 @@ router.delete('/service', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {
@@ -183,7 +180,6 @@ router.post('/expertise', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.type])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(201)
 		})
 		.catch((error) => {
@@ -224,7 +220,6 @@ router.delete('/expertise', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {
@@ -258,7 +253,6 @@ router.post('/rate', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.rate, req.body.service_id, req.body.tier])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(201)
 		})
 		.catch((error) => {
@@ -276,7 +270,6 @@ router.delete('/rate/', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.body.id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {
@@ -344,7 +337,6 @@ router.post('/contractor/language', requireAdmin, (req, res) => {
 	`;
 	pool.query(querytext,[req.user.id, req.body.from_language_id, req.body.to_language_id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(201)
 		})
 		.catch((error) => {
@@ -364,7 +356,6 @@ router.delete('/contractor/language/', rejectUnauthenticated, (req, res) => {
 	`;
 	pool.query(querytext,[req.params.id, req.user.id])
 		.then((result) => {
-			// Code to send goes here
 			res.sendStatus(200)
 		})
 		.catch((error) => {

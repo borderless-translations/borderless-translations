@@ -76,10 +76,7 @@ router.get('/list', rejectUnauthenticated, (req, res) => {
 	;
 });
 
-// TODO: Need finalized columns for POST
-/**
- * POST route template
- */
+
 router.post('/', requireAdmin, (req, res) => {
 	const queryText = `
 	   INSERT INTO "clients" ("client", "contact", "country", "timezone", "location", "email", "phone", "client_notes") 

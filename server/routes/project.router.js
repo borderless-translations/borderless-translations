@@ -111,9 +111,8 @@ router.get('/client/:id', requireAdmin, (req, res) => {
 });
 
 // Get specific project by id. Requires admin
-// PLEASE DON'T REMOVCE THE /SPECIFIC BEFORE ID, 
-// it will make it interpret every string in the othera routes as an ID!
-// Also there's a duplicate of this route below??
+// PLEASE DON'T REMOVE THE SPECIFIC BEFORE ID, 
+// it will make it interpret every string in the other routes as an ID!
 router.get('/specific/:id', requireAdmin, (req, res) => {
     let querytext = `
 		SELECT 
@@ -459,7 +458,6 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 				req.body.text_to_translate,
 				req.body.translator_notes,
 				req.body.service_id,
-				// req.body.service_notes,
 				req.body.file_link,
 				req.body.flagged,
 				req.params.id
