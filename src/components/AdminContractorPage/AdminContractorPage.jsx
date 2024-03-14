@@ -21,10 +21,6 @@ function AdminContractorPage() {
         const language = allLanguages.find(lang => lang.id === languageId);
         return language ? language.name : null;
         };
-        // const contractorLanguages = contractor.languages.data.map(({ from_language_id, to_language_id }) => ({
-        // from_language: findLanguageName(from_language_id),   
-        // to_language: findLanguageName(to_language_id),
-        // }))
     const dispatch = useDispatch();
     const history = useHistory();
     const allContractors = useSelector(store => store.allContractors);

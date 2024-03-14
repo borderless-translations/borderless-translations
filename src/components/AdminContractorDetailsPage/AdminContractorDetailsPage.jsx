@@ -11,11 +11,6 @@ import EastIcon from '@mui/icons-material/East';
 
 
 function AdminContractorDetailsPage() {
-    // const tempContractorDetails = {id: 2, user_id: 6, contractor_name: "Brock Nelson", available: true, location: "Sweden" , 
-    // timezone: 'UTC +3:00', phone: '123-456-7891', linkedIn: 'bRockNelson', signed_nda: true,
-    // base_audio_video_rate: '10', base_written_rate: '10', languages: ['Swedish', 'Norwegian', 'English'],
-    // project: [{name: 'Amity Island Diving Co', language: 'English to Fish', status: 'Incomplete'}, 
-    // {name: 'Spin City', language: 'German to Dutch German', status: 'Completed'}], services: [1] }
     const now = DateTime.now();
     const history = useHistory();
     const dispatch = useDispatch();

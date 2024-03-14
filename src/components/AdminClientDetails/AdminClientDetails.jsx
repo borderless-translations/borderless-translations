@@ -25,7 +25,7 @@ function AdminClientDetails() {
     }, [params.id]);
 
 
-    // Make this functional and remove dummy data when database is functional
+    
     const client = useSelector(store => store.client);
     const clientProjects = useSelector(store => store.clientProjects);
 

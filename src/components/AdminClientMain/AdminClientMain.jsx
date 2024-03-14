@@ -18,9 +18,6 @@ function AdminClientMain() {
     dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
   }, [modalOpen]);
 
-  // useEffect(() => {
-  //   dispatch({ type: 'GET_PROJECT_SUMMARY_BY_CLIENT' });
-  // }, []);
 
   const tableRowStyle = {
     '&:nth-of-type(odd)': { backgroundColor: "white" },

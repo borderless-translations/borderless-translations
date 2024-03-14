@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorServicesModal({ closeModal, defaultValues }) {
 
@@ -26,8 +25,6 @@ function AdminContractorServicesModal({ closeModal, defaultValues }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
-        // console.log("Updated contractor information on server", contractor);
         closeModal();
     };
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Select, MenuItem, Tooltip, IconButton } from '@mui/material';
 import { AddIcon} from '@mui/icons-material/Add';
-// import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
 
@@ -27,7 +26,8 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
                 )
             }   
     };
-// TODO: Where does this function need to be?
+
+
     const deleteLanguage = (languageId) => {
         dispatch({ type: 'DELETE_LANGUAGE_FROM_CONTRACTOR', payload: languageId })
     }
@@ -44,8 +44,6 @@ function AdminContractorLanguagesModal({ closeModal, defaultValues }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // dispatch({ type: "UPDATE_CONTRACTOR", payload: contractor });
-        // console.log("Updated contractor information on server", contractor);
         closeModal();
     };
 

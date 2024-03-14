@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { TextField, Checkbox, Stack, Button, MenuItem } from '@mui/material';
-// import '../AdminClientModal/AdminClientModal.css';
 
 function AdminContractorModal({ closeModal, defaultValues }) {
 
