@@ -13,7 +13,7 @@ const contractorRouter = require('./routes/contractor.router');
 const projectRouter = require('./routes/project.router');
 const clientRouter = require('./routes/client.router');
 const settingsRouter = require('./routes/settings.router');
-
+const emailRouter = require('./routes/email.router');
 
 // Express Middleware
 app.use(express.json());
@@ -33,6 +33,7 @@ app.use('/api/contractor', contractorRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/client', clientRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/email', emailRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
